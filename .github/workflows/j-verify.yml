@@ -1,0 +1,28 @@
+# j-verify — blocking check on PRs (SPEC.md M1 CI; CLAUDE.md build order §5).
+# J is GPLv3 and license-free, so this is the one green check independent of KX.
+#
+# STATUS: valid-but-empty. There are no `.ijs` lessons yet, so `make verify-j`
+# iterates over an empty file set and exits 0. It is wired now so the gate exists
+# before content lands; it turns real automatically when the first `.ijs` appears.
+#
+# TODO before the first J lesson lands: add a "Install J 9.7" step. Note the runner
+# is ubuntu (jconsole = the J interpreter there). On macOS `jconsole` collides with
+# the JDK's Java Monitoring console — see docs/toolchain.md. Pin the J version there.
+
+name: j-verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify-j:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # - name: Install J 9.7   # TODO: enable when the first lessons/**/*.ijs lands
+      #   run: ...              # pin version in docs/toolchain.md
+      - name: Verify J examples (no-op until lessons/**/*.ijs exists)
+        run: make verify-j
