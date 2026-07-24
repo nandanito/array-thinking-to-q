@@ -174,3 +174,30 @@ everything-executes teaching repo:
   Hand-typed "expected" output drifts from q's actual display; run it, then quote it.
 - Process: the Q-first rule (CLAUDE.md #1) paid off — pinning q's *actual* behavior (incl. three
   dead-end parse experiments) BEFORE writing narrative meant the prose had zero claims to walk back.
+
+## M4 — Part II lesson 02 (dict → table) (2026-07-24)
+
+The conceptual core lesson: a table is `flip` of a column dict (`98h`); a keyed table is a dict
+(`99h`) mapping a key-table to a value-table. Written q-first, `make verify` green. Transferable:
+
+- **Prefer a `~` equivalence proof over type-casting cleverness.** First draft tried
+  `99h$type each (cd;t)` to "show" the dict/table relationship — it errored AND obscured the point.
+  The clean teach is `t ~ flip cd` → `1b` and `t ~ ([] …)` → `1b`: q's own equality operator proves
+  "a table IS the flipped dict" and "the `([]` literal IS that flip," with zero ceremony. When
+  teaching an identity, assert the identity (`~`), don't reconstruct it.
+- **The type numbers ARE the lesson, so display them.** `type d`=`99h`, `type t`=`98h`,
+  `type kt`=`99h` — showing the *same* `99h` for a plain dict and a keyed table is the whole
+  "a keyed table is a dictionary" claim, made by the interpreter rather than by prose. Added
+  `show type d` purely so step 1 and step 6 rhyme numerically.
+- **J-twin recipe that works: find the ONE shared operation, show identical output, then name the
+  delta.** `|: (2 3 $ 1 2 3 4 5 6)` is byte-for-byte q's `flip (1 2 3;4 5 6)`. Identical bytes make
+  "transpose transfers" undeniable; the divergence (J transposes positions → a matrix; q transposes
+  *named* columns → a table) then lands as the real content. Ties back to lesson 01's wall from the
+  other side: J has the rank/plumbing q lacks; q has the named structure J lacks.
+- **Verify EVERY external URL in a public doc — memory is not a source.** Checked 6 links across the
+  two lessons; 2 were wrong: the J dictionary `d331.htm` is *Cut*, not Transpose, and
+  `code.jsoftware.com/wiki/*` returns 403 to all automated fetchers (live for humans, unverifiable
+  by me → don't cite it). Fix: cite only fetch-verifiable URLs (`code.kx.com`,
+  `jsoftware.com/help/learning`) and reframe the J reference to the *Ranks* chapter, which actually
+  supports the twin's thesis better than a transpose page would. Transferable to every doc with
+  citations: a plausible-looking URL from model memory is a coin flip; fetch it or drop it.

@@ -193,8 +193,8 @@ this wall.
 - **q has no forks.** Compose explicitly (`avg`, a named lambda) — the paradigm crosses over from J,
   the syntax does not.
 
-**Next:** [Lesson 02 — dict → table](../02-dict-to-table/) *(planned)*, where a table turns out to
-be nothing more than a flip of a dictionary of these lists.
+**Next:** [Lesson 02 — dict → table](../02-dict-to-table/), where a table turns out to be nothing
+more than a flip of a dictionary of these lists.
 
 ---
 

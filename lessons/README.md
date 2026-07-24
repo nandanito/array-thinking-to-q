@@ -22,7 +22,7 @@ and an as-of join, in the language people are actually paid to write.
 | # | Lesson | The core idea | Status |
 |---|--------|---------------|--------|
 | 01 | [Atoms, lists, and the death of the loop](01-atoms-and-lists/) | the list is the unit of work; `each`/`over`/`scan` replace the loop | ✅ done |
-| 02 | dict → table | a table is a flip of a column dictionary; a keyed table *is* a dictionary | planned |
+| 02 | [dict → table](02-dict-to-table/) | a table is a flip of a column dictionary; a keyed table *is* a dictionary | ✅ done |
 | 03 | qSQL | `select … by … from`; word frequency + moving average | planned |
 | 04 | attributes & sort discipline | `` s# ``/`` g# ``/`` p# `` — required **before** the showcase | planned |
 | — | [showcase: as-of join](../showcase/aj/) | trades matched to prevailing quotes, end-to-end | ✅ gate green |
