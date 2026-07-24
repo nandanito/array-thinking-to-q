@@ -1,0 +1,6 @@
+task,condition,correctness,idiom_no_loop,idiom_qsql,idiom_builtins,idiom_no_temps,idiom_cited,idiom_total,tokens,repairs
+# One row per (task, condition). condition: A=baseline (no plugin), B=q-knowledge plugin enabled.
+# correctness: 0/1 via `make verify-eval`-style golden diff (see README.md).
+# idiom_*: 0/1 per PROTOCOL.md binary checklist; idiom_total = their sum (0-5).
+# tokens: output tokens to first running solution. repairs: retries to first running solution.
+# Rows below are filled during the M2 run; header + comments only at harness-build time.
