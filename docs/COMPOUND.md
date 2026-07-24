@@ -146,3 +146,84 @@ a doc's *subject* must patch the whole body in one pass — a title-only update 
   changes before the instrument is trusted to score candidates. A broken instrument reports noise.
 - Eval is q-only (J cut, SPEC obj. 3). Subject pinned to `q-knowledge@kx-skills` — the trap set
   deliberately includes J-rank and pandas-`merge_asof` prompts to test precision, not just recall.
+
+## M4 — Part II kickoff: lesson 01 (atoms/lists) (2026-07-24)
+
+First curriculum lesson written q-first and verified end-to-end (`make verify` green: q +
+J twin + showcase + eval all pass). `lessons/01-atoms-and-lists/` + a Part II index
+(`lessons/README.md`). Transferable findings, mostly about the *authoring mechanics* of an
+everything-executes teaching repo:
+
+- **Erroring code cannot live in a verify-clean lesson file — so "this is wrong" demos must be
+  prose transcripts, not executable artifacts.** The lesson's whole payoff is that the J mean-fork
+  `(+/ % #) til 5` FAILS in q. But `make verify-q` requires every `*.q` to exit 0, so the failure
+  can't be a lesson file. Pattern that resolves the tension: the runnable file holds only the
+  CORRECT idioms; the failure is a captured REPL transcript embedded in the narrative, clearly
+  marked. Keeps rule 3 (everything executes) intact without lying about what runs.
+- **q's fork rejection is a PARSE error, not a runtime type error — and the distinction is
+  testable.** `@[{(+/ % #) til 5};::;...]` does NOT trap it (protected eval catches runtime
+  signals, but there's nothing to evaluate — the parse already failed). `@[value;"(+/ % #) til 5";...]`
+  DOES trap it, because now the parse happens inside the protected call. Sharpens the pedagogy
+  ("q has no fork *production* in its grammar") and is a transferable q-harness fact: to trap a
+  malformed-q string, wrap `value`/`parse`, not the expression.
+- **Derived functions (`/`, `\`) applied prefix must be parenthesized:** `(+/) til 5` → 10, bare
+  `+/ til 5` does not parse. Day-to-day you dodge it with the named fold (`sum`), but a lesson that
+  shows the mechanism has to wrap it. Verified on the pinned build, not asserted from memory.
+- **Every displayed output is captured from the real tool, then pasted into the narrative** (same
+  rule as goldens): `avg til 5` shows `2f` not `2` (float promotion), booleans render `00011b`.
+  Hand-typed "expected" output drifts from q's actual display; run it, then quote it.
+- Process: the Q-first rule (CLAUDE.md #1) paid off — pinning q's *actual* behavior (incl. three
+  dead-end parse experiments) BEFORE writing narrative meant the prose had zero claims to walk back.
+
+## M4 — Part II lesson 02 (dict → table) (2026-07-24)
+
+The conceptual core lesson: a table is `flip` of a column dict (`98h`); a keyed table is a dict
+(`99h`) mapping a key-table to a value-table. Written q-first, `make verify` green. Transferable:
+
+- **Prefer a `~` equivalence proof over type-casting cleverness.** First draft tried
+  `99h$type each (cd;t)` to "show" the dict/table relationship — it errored AND obscured the point.
+  The clean teach is `t ~ flip cd` → `1b` and `t ~ ([] …)` → `1b`: q's own equality operator proves
+  "a table IS the flipped dict" and "the `([]` literal IS that flip," with zero ceremony. When
+  teaching an identity, assert the identity (`~`), don't reconstruct it.
+- **The type numbers ARE the lesson, so display them.** `type d`=`99h`, `type t`=`98h`,
+  `type kt`=`99h` — showing the *same* `99h` for a plain dict and a keyed table is the whole
+  "a keyed table is a dictionary" claim, made by the interpreter rather than by prose. Added
+  `show type d` purely so step 1 and step 6 rhyme numerically.
+- **J-twin recipe that works: find the ONE shared operation, show identical output, then name the
+  delta.** `|: (2 3 $ 1 2 3 4 5 6)` is byte-for-byte q's `flip (1 2 3;4 5 6)`. Identical bytes make
+  "transpose transfers" undeniable; the divergence (J transposes positions → a matrix; q transposes
+  *named* columns → a table) then lands as the real content. Ties back to lesson 01's wall from the
+  other side: J has the rank/plumbing q lacks; q has the named structure J lacks.
+- **Verify EVERY external URL in a public doc — memory is not a source.** Checked 6 links across the
+  two lessons; 2 were wrong: the J dictionary `d331.htm` is *Cut*, not Transpose, and
+  `code.jsoftware.com/wiki/*` returns 403 to all automated fetchers (live for humans, unverifiable
+  by me → don't cite it). Fix: cite only fetch-verifiable URLs (`code.kx.com`,
+  `jsoftware.com/help/learning`) and reframe the J reference to the *Ranks* chapter, which actually
+  supports the twin's thesis better than a transpose page would. Transferable to every doc with
+  citations: a plausible-looking URL from model memory is a coin flip; fetch it or drop it.
+
+## M4 — independent review pass on lessons 01–02 (2026-07-24)
+
+Ran an independent reviewer (fresh subagent, handed the pinned binaries) over both lessons after
+they were committed and pushed. It found real defects a self-review had missed — the round-trip paid:
+
+- **`count each ("aa";"bbb";"c")`: `"c"` is a char ATOM (`type` `-10h`), not a one-char "string".**
+  Its count is 1 for the SAME reason lesson 01 §1 teaches (an atom answers `count` with 1), so
+  calling it a "string" quietly undercut the lesson's own opening. Chasing that flag surfaced a
+  NEIGHBOURING bug the reviewer had not named: plain `count (…)` is `3` (three items), not the
+  character total — so the old "each stops count drilling into the characters" was also false.
+  Lesson: a flagged inaccuracy usually has an adjacent one; fix the neighbourhood, not just the line.
+- **q stamps parse errors with a wall-clock timestamp in BOTH interactive and piped modes.** Verified
+  by driving q through a real pty (python `pty.fork`), not just a pipe — the doc had claimed the
+  timestamp was a non-interactive-only artifact, a claim a piped capture cannot disprove. Lesson: to
+  characterise a REPL's *interactive* output, run it through a pty; piped stdin is a different path.
+- **"Shown code" must equal "the file it points to."** The README J blocks had drifted from the
+  `.ijs` files (extra inline result-comments, reworded `NB.` text). Fixed by showing the file's lines
+  verbatim plus a separate captured-output block — the same code/output split already used for q.
+- Minor but telling: the lesson headers said "Run it: `q …`" while the index they link to stresses
+  the binaries are NOT on `PATH`; and one center/centre spelling split the same phrase. An
+  independent reader catches "contradicts our own stated rule" bugs the author is blind to.
+
+Process note: reviewer findings are not automatically correct (standing rule), so each was
+re-verified on the pinned build before applying — all held. Fixes shipped as a follow-up commit, not
+an amend, because the reviewed commits were already on the remote (no history rewrite of pushed work).

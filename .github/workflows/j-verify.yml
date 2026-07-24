@@ -1,13 +1,15 @@
 # j-verify — blocking check on PRs (SPEC.md M1 CI; CLAUDE.md build order §5).
 # J is GPLv3 and license-free, so this is the one green check independent of KX.
 #
-# STATUS: valid-but-empty. There are no `.ijs` lessons yet, so `make verify-j`
-# iterates over an empty file set and exits 0. It is wired now so the gate exists
-# before content lands; it turns real automatically when the first `.ijs` appears.
+# STATUS: LIVE. The first `.ijs` twins have landed (lessons/**/j/*.ijs), so this
+# now installs J 9.7 and actually runs `make verify-j`.
 #
-# TODO before the first J lesson lands: add a "Install J 9.7" step. Note the runner
-# is ubuntu (jconsole = the J interpreter there). On macOS `jconsole` collides with
-# the JDK's Java Monitoring console — see docs/toolchain.md. Pin the J version there.
+# Runner is ubuntu; on ubuntu `jconsole` on PATH would resolve to the JDK's Java
+# Monitoring console (same collision as macOS — see docs/toolchain.md), so we do
+# NOT rely on PATH: J is installed to ~/j9.7 by jsoftware's own headless installer
+# and passed explicitly as `make J=$HOME/j9.7/bin/jconsole`. The installer tracks
+# the current 9.7 patch (pin of record is 9.7.1 in docs/toolchain.md); these
+# trivial programs are patch-insensitive.
 
 name: j-verify
 
@@ -22,7 +24,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # - name: Install J 9.7   # TODO: enable when the first lessons/**/*.ijs lands
-      #   run: ...              # pin version in docs/toolchain.md
-      - name: Verify J examples (no-op until lessons/**/*.ijs exists)
-        run: make verify-j
+      - name: Install J 9.7 (headless, no Qt IDE, no addons)
+        run: |
+          set -euo pipefail
+          # NOTE: must be www.jsoftware.com — the bare host's TLS cert does not cover it.
+          # Download then run (do NOT `curl | sh`: the pipe masks a curl failure behind sh's exit 0).
+          curl -fsSL https://www.jsoftware.com/download/j9.7/jinstall.sh -o "$RUNNER_TEMP/jinstall.sh"
+          sh "$RUNNER_TEMP/jinstall.sh" --qt none --no-addons
+          test -x "$HOME/j9.7/bin/jconsole" || { echo "jconsole not at expected path; searching:"; find "$HOME" -name jconsole -type f; exit 1; }
+      - name: Show J version (banner)
+        run: echo "9!:14''" | $HOME/j9.7/bin/jconsole
+      - name: Verify J examples
+        run: make verify-j J=$HOME/j9.7/bin/jconsole
