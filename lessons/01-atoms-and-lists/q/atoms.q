@@ -22,4 +22,5 @@ show max til 5;
 / --- 4. each / over / scan: the three shapes of iteration -------------
 show sums til 5;         / running total = + SCANNED across the list
 show (+\) til 5;         / the scan mechanism sums names
-show count each ("aa"; "bbb"; "c");   / each dives one level down
+show count ("aa"; "bbb"; "c");        / the WHOLE list: three items
+show count each ("aa"; "bbb"; "c");   / each item's length, one level down

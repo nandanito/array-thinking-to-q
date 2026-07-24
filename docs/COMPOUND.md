@@ -201,3 +201,29 @@ The conceptual core lesson: a table is `flip` of a column dict (`98h`); a keyed 
   `jsoftware.com/help/learning`) and reframe the J reference to the *Ranks* chapter, which actually
   supports the twin's thesis better than a transpose page would. Transferable to every doc with
   citations: a plausible-looking URL from model memory is a coin flip; fetch it or drop it.
+
+## M4 — independent review pass on lessons 01–02 (2026-07-24)
+
+Ran an independent reviewer (fresh subagent, handed the pinned binaries) over both lessons after
+they were committed and pushed. It found real defects a self-review had missed — the round-trip paid:
+
+- **`count each ("aa";"bbb";"c")`: `"c"` is a char ATOM (`type` `-10h`), not a one-char "string".**
+  Its count is 1 for the SAME reason lesson 01 §1 teaches (an atom answers `count` with 1), so
+  calling it a "string" quietly undercut the lesson's own opening. Chasing that flag surfaced a
+  NEIGHBOURING bug the reviewer had not named: plain `count (…)` is `3` (three items), not the
+  character total — so the old "each stops count drilling into the characters" was also false.
+  Lesson: a flagged inaccuracy usually has an adjacent one; fix the neighbourhood, not just the line.
+- **q stamps parse errors with a wall-clock timestamp in BOTH interactive and piped modes.** Verified
+  by driving q through a real pty (python `pty.fork`), not just a pipe — the doc had claimed the
+  timestamp was a non-interactive-only artifact, a claim a piped capture cannot disprove. Lesson: to
+  characterise a REPL's *interactive* output, run it through a pty; piped stdin is a different path.
+- **"Shown code" must equal "the file it points to."** The README J blocks had drifted from the
+  `.ijs` files (extra inline result-comments, reworded `NB.` text). Fixed by showing the file's lines
+  verbatim plus a separate captured-output block — the same code/output split already used for q.
+- Minor but telling: the lesson headers said "Run it: `q …`" while the index they link to stresses
+  the binaries are NOT on `PATH`; and one center/centre spelling split the same phrase. An
+  independent reader catches "contradicts our own stated rule" bugs the author is blind to.
+
+Process note: reviewer findings are not automatically correct (standing rule), so each was
+re-verified on the pinned build before applying — all held. Fixes shipped as a follow-up commit, not
+an amend, because the reviewed commits were already on the remote (no history rewrite of pushed work).

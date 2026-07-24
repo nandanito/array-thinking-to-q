@@ -28,7 +28,7 @@ and an as-of join, in the language people are actually paid to write.
 | — | [showcase: as-of join](../showcase/aj/) | trades matched to prevailing quotes, end-to-end | ✅ gate green |
 
 Atoms and lists are deliberately **half** of lesson 01, not the payload: the payload is
-unlearning the loop. The conceptual center of Part II is lesson 02 (dict → table).
+unlearning the loop. The conceptual centre of Part II is lesson 02 (dict → table).
 
 ## Run the lessons yourself
 

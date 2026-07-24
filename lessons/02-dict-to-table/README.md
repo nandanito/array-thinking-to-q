@@ -1,6 +1,7 @@
 # Lesson 02 — dict → table
 
-> **Run it:** `q lessons/02-dict-to-table/q/dict-to-table.q -q < /dev/null`
+> **Run it:** `$HOME/.kx/bin/q lessons/02-dict-to-table/q/dict-to-table.q -q < /dev/null`
+> (the tool binaries are not on `PATH` — see the [Part II index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/dict-to-table.q`](q/dict-to-table.q), [`j/transpose.ijs`](j/transpose.ijs).
 
@@ -200,8 +201,16 @@ tower of four independent data types to memorise. It is dictionaries and lists, 
 
 ```j
 m =: 2 3 $ 1 2 3 4 5 6    NB. a 2x3 matrix, built by reshape ($)
-m                         NB. two rows of three:  1 2 3 / 4 5 6
-|: m                      NB. |: transposes it:   1 4 / 2 5 / 3 6
+m                         NB. two rows of three
+|: m                      NB. |: transposes it: three rows of two
+```
+
+```
+1 2 3
+4 5 6
+1 4
+2 5
+3 6
 ```
 
 `|: m` gives `1 4 / 2 5 / 3 6` — byte-for-byte what q's `flip (1 2 3; 4 5 6)` produced in step 3.

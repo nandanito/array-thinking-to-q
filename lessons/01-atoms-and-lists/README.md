@@ -1,6 +1,7 @@
 # Lesson 01 — Atoms, lists, and the death of the loop
 
-> **Run it:** `q lessons/01-atoms-and-lists/q/atoms.q -q < /dev/null`
+> **Run it:** `$HOME/.kx/bin/q lessons/01-atoms-and-lists/q/atoms.q -q < /dev/null`
+> (the tool binaries are not on `PATH` — see the [Part II index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/atoms.q`](q/atoms.q), [`j/mean-fork.ijs`](j/mean-fork.ijs).
 
@@ -120,15 +121,17 @@ sums til 5         / 0 1 3 6 10   — the cumulative sum
 - **each** (`'`) — apply a function to every item **one level down**:
 
 ```q
-count each ("aa"; "bbb"; "c")   / 2 3 1
+count ("aa"; "bbb"; "c")        / 3     — the WHOLE list: three items
+count each ("aa"; "bbb"; "c")   / 2 3 1 — each item's length, one level down
 ```
 
-Here is the subtlety that makes `each` click. The atomic operators from §2 already vectorize — they
-dive all the way to the atoms on their own. So `each` is not "how you loop"; it is how you **stop
-the diving one level early**. `count each` counts *each string* (2, 3, 1) instead of drilling into
-the characters. You reach for `each` precisely when the default all-the-way-down behavior is too
-deep. That reframing — `each` is about **controlling depth**, not about looping — is the thing to
-carry forward.
+Here is the subtlety that makes `each` click. The atomic operators from §2 (`+`, `*`, `>`) already
+go item-by-item down to the atoms on their own — you never write `each` for those. You reach for
+`each` with the operators that *don't* auto-map: `count` by itself measures the whole list (`3`);
+`count each` pushes it down a level to measure each item (`2 3 1`). That last `1` is `"c"` — a
+single-character **atom**, answering `count` with 1 exactly as §1 showed, not a one-character
+"string". So `each` is not "how you loop"; it is how you say **apply this one level down**. The
+reframing — `each` is about controlling *depth*, not looping — is the thing to carry forward.
 
 ---
 
@@ -140,9 +143,14 @@ wordless phrase.
 
 ```j
 sum  =: +/         NB. insert + between items
-mean =: +/ % #     NB. a FORK: (sum) divided-by (count), as one phrase
-sum  0 1 2 3 4     NB. 10
-mean 0 1 2 3 4     NB. 2
+mean =: +/ % #     NB. a FORK: (sum) divided-by (count), read as one phrase
+sum  0 1 2 3 4
+mean 0 1 2 3 4
+```
+
+```
+10
+2
 ```
 
 Read `+/ % #` left to right: *sum, divided by, count*. J notices the shape `(f g h)` and builds a
@@ -153,17 +161,16 @@ Now transliterate that phrase straight into q:
 
 ```q
 q)(+/ % #) til 5
-'
+'                     / the error MESSAGE is empty (q also stamps the line with a wall-clock time)
   [0]  (+/ % #) til 5
-          ^
+          ^           / the caret lands mid-fork — where the parser gives up
 ```
 
-It does not merely give a wrong answer — **it does not parse.** The caret points into the middle of
-the fork, where q's grammar gives up. (Run it non-interactively and q prefixes the error line with a
-timestamp; the error *message* itself is empty — the caret is the whole story.) Crucially this is a
-*parse-time* rejection, not a runtime type error: protected evaluation cannot catch it, because
-there is nothing to evaluate. **q has no tacit trains or forks.** A parenthesized run of functions
-is not a new function in q; it is a syntax error.
+It does not merely give a wrong answer — **it does not parse.** The message is empty; the caret,
+landing in the middle of the fork, is the whole story. Crucially this is a *parse-time* rejection,
+not a runtime type error: protected evaluation cannot catch it, because there is nothing to
+evaluate. **q has no tacit trains or forks.** A parenthesized run of functions is not a new function
+in q; it is a syntax error.
 
 What q wants instead is that you say the composition out loud — name it, or use the built-in:
 
@@ -189,7 +196,8 @@ this wall.
   rebuilds the shape. The index you used to write was scaffolding, not computation.
 - **A reduction is a binary operator folded across the list:** `sum` is `(+/)`, `sums` is `(+\)`.
   Name the common ones; know the machine underneath.
-- **`each` controls *depth*, not iteration** — it stops an operator diving one level too far.
+- **`each` controls *depth***, applying a function one level down — `count each` measures each item
+  (`2 3 1`) where plain `count` measures the whole list (`3`).
 - **q has no forks.** Compose explicitly (`avg`, a named lambda) — the paradigm crosses over from J,
   the syntax does not.
 
