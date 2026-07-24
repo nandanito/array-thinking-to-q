@@ -146,3 +146,31 @@ a doc's *subject* must patch the whole body in one pass — a title-only update 
   changes before the instrument is trusted to score candidates. A broken instrument reports noise.
 - Eval is q-only (J cut, SPEC obj. 3). Subject pinned to `q-knowledge@kx-skills` — the trap set
   deliberately includes J-rank and pandas-`merge_asof` prompts to test precision, not just recall.
+
+## M4 — Part II kickoff: lesson 01 (atoms/lists) (2026-07-24)
+
+First curriculum lesson written q-first and verified end-to-end (`make verify` green: q +
+J twin + showcase + eval all pass). `lessons/01-atoms-and-lists/` + a Part II index
+(`lessons/README.md`). Transferable findings, mostly about the *authoring mechanics* of an
+everything-executes teaching repo:
+
+- **Erroring code cannot live in a verify-clean lesson file — so "this is wrong" demos must be
+  prose transcripts, not executable artifacts.** The lesson's whole payoff is that the J mean-fork
+  `(+/ % #) til 5` FAILS in q. But `make verify-q` requires every `*.q` to exit 0, so the failure
+  can't be a lesson file. Pattern that resolves the tension: the runnable file holds only the
+  CORRECT idioms; the failure is a captured REPL transcript embedded in the narrative, clearly
+  marked. Keeps rule 3 (everything executes) intact without lying about what runs.
+- **q's fork rejection is a PARSE error, not a runtime type error — and the distinction is
+  testable.** `@[{(+/ % #) til 5};::;...]` does NOT trap it (protected eval catches runtime
+  signals, but there's nothing to evaluate — the parse already failed). `@[value;"(+/ % #) til 5";...]`
+  DOES trap it, because now the parse happens inside the protected call. Sharpens the pedagogy
+  ("q has no fork *production* in its grammar") and is a transferable q-harness fact: to trap a
+  malformed-q string, wrap `value`/`parse`, not the expression.
+- **Derived functions (`/`, `\`) applied prefix must be parenthesized:** `(+/) til 5` → 10, bare
+  `+/ til 5` does not parse. Day-to-day you dodge it with the named fold (`sum`), but a lesson that
+  shows the mechanism has to wrap it. Verified on the pinned build, not asserted from memory.
+- **Every displayed output is captured from the real tool, then pasted into the narrative** (same
+  rule as goldens): `avg til 5` shows `2f` not `2` (float promotion), booleans render `00011b`.
+  Hand-typed "expected" output drifts from q's actual display; run it, then quote it.
+- Process: the Q-first rule (CLAUDE.md #1) paid off — pinning q's *actual* behavior (incl. three
+  dead-end parse experiments) BEFORE writing narrative meant the prose had zero claims to walk back.
