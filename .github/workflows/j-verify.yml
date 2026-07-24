@@ -25,7 +25,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install J 9.7 (headless, no Qt IDE, no addons)
-        run: curl -fsSL https://jsoftware.com/download/j9.7/jinstall.sh | sh -s -- --qt none --no-addons
+        run: |
+          set -euo pipefail
+          # NOTE: must be www.jsoftware.com — the bare host's TLS cert does not cover it.
+          # Download then run (do NOT `curl | sh`: the pipe masks a curl failure behind sh's exit 0).
+          curl -fsSL https://www.jsoftware.com/download/j9.7/jinstall.sh -o "$RUNNER_TEMP/jinstall.sh"
+          sh "$RUNNER_TEMP/jinstall.sh" --qt none --no-addons
+          test -x "$HOME/j9.7/bin/jconsole" || { echo "jconsole not at expected path; searching:"; find "$HOME" -name jconsole -type f; exit 1; }
       - name: Show J version (banner)
         run: echo "9!:14''" | $HOME/j9.7/bin/jconsole
       - name: Verify J examples
