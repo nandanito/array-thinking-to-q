@@ -33,7 +33,8 @@ verify-eval:
 	@for f in $$(find eval/tasks/q -name '*.ref.q' | sort); do \
 		exp=$${f%.ref.q}.expected; \
 		echo "-- $$f"; \
-		$(Q) $$f -q < /dev/null > /tmp/eval-actual.txt || exit 1; \
+		$(Q) $$f -q < /dev/null > /tmp/eval-actual.txt 2> /tmp/eval-err.txt || { cat /tmp/eval-err.txt; exit 1; }; \
+		if [ -s /tmp/eval-err.txt ]; then echo "   q wrote to stderr (error masked by exit 0):"; cat /tmp/eval-err.txt; exit 1; fi; \
 		diff -u $$exp /tmp/eval-actual.txt || exit 1; \
 	done
 	@echo "eval refs: OK"

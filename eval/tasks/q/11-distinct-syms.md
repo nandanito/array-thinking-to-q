@@ -4,8 +4,8 @@
 
 ## Prompt (give verbatim to the model)
 
-> Given a list of symbols with duplicates, return the distinct symbols in order of first
-> appearance. Show it on `AAPL MSFT AAPL GOOG MSFT AAPL`.
+> Given `s:`AAPL`MSFT`AAPL`GOOG`MSFT`AAPL`, return the distinct symbols in order of first
+> appearance, and show the result.
 
 ## Reference (for scoring — do not show the model)
 

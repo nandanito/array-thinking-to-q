@@ -4,8 +4,12 @@
 
 ## Prompt (give verbatim to the model)
 
-> Given a trades table `t` with columns `sym` and `side`, count the number of trades for each
-> `(sym, side)` pair. Build a small `t` and show the result.
+> Given this trades table, count the number of trades for each `(sym, side)` pair (name the count
+> column `n`), and show the result:
+>
+> ```q
+> t:([] sym:`AAPL`AAPL`MSFT`AAPL`MSFT; side:`buy`sell`buy`buy`sell)
+> ```
 
 ## Reference (for scoring — do not show the model)
 

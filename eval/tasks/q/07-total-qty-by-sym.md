@@ -4,8 +4,11 @@
 
 ## Prompt (give verbatim to the model)
 
-> Given a trades table `t` with columns `sym` and `qty`, write a query returning the total `qty`
-> per `sym`. Build a small `t` and show the result.
+> Given this trades table, write a query returning the total `qty` per `sym`, and show the result:
+>
+> ```q
+> t:([] sym:`AAPL`MSFT`AAPL`MSFT`AAPL; qty:100 200 150 50 300)
+> ```
 
 ## Reference (for scoring — do not show the model)
 

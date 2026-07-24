@@ -20,11 +20,20 @@ A skill that never fires is worth zero, so measure activation before quality.
 For each of the 15 tasks, under condition A (baseline) and B (plugin), using identical prompts,
 same model + settings:
 1. Give the model the task's **Prompt** block.
-2. **Correctness (0/1):** save the model's answer as `cand.q` that prints its result, then
+2. **Correctness (0/1):** save the model's answer as `cand.q` that prints its result. "Runs +
+   right output" means the q process must succeed (no error) AND stdout must match the golden — so
+   capture stderr and never let `diff`'s exit status mask a q failure:
    ```sh
-   q cand.q -q < /dev/null | diff -u tasks/q/NN-name.expected -
+   q cand.q -q < /dev/null > cand.out 2> cand.err
+   if [ $? -eq 0 ] && [ ! -s cand.err ] && diff -u tasks/q/NN-name.expected cand.out; then
+     echo "correctness = 1"
+   else
+     echo "correctness = 0"; [ -s cand.err ] && cat cand.err
+   fi
    ```
-   An empty diff = correct = 1. (Pass `q` explicitly or `make Q=…`; see docs/toolchain.md.)
+   Note: q can exit 0 even after a script error (it drops to a prompt, then EOF exits), so the
+   empty-stderr check — not the exit code alone — is what actually catches a failed run. Pass `q`
+   explicitly or via `make Q=…`; see docs/toolchain.md.
 3. **Idiomaticity (5 binary items, PROTOCOL.md):** no explicit loop where a vector op exists;
    uses qSQL where a table op is expected; built-ins over hand-rolled iteration; no unnecessary
    temporaries; matches the task's cited published idiom. Record each 0/1 and their total.

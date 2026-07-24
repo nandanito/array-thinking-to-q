@@ -4,8 +4,11 @@
 
 ## Prompt (give verbatim to the model)
 
-> Given a trades table `t` with columns `sym`, `price`, `qty`, add a column `notional` equal to
-> `price * qty`. Build a small `t` and show the result.
+> Given this trades table, add a column `notional` equal to `price * qty`, and show the result:
+>
+> ```q
+> t:([] sym:`AAPL`MSFT`AAPL; price:190.0 410.0 191.0; qty:100 50 200)
+> ```
 
 ## Reference (for scoring — do not show the model)
 
