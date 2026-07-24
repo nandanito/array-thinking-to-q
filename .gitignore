@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# eval / verify scratch — candidate outputs and run artifacts (goldens ARE tracked)
+*.actual
+eval/.work/
+
+# editor
+*.swp
+*~
