@@ -24,7 +24,6 @@ d:`a`b`c!10 20 30
 ```
 
 ```
-q)d
 a| 10
 b| 20
 c| 30
@@ -53,7 +52,6 @@ cd:`sym`px!(`AAPL`MSFT`GOOG; 100 200 300)
 ```
 
 ```
-q)cd
 sym| AAPL MSFT GOOG
 px | 100  200  300
 ```
@@ -86,7 +84,6 @@ t:flip cd
 ```
 
 ```
-q)t
 sym  px
 --------
 AAPL 100
@@ -159,7 +156,6 @@ kt:`sym xkey t
 ```
 
 ```
-q)kt
 sym | px
 ----| ---
 AAPL| 100

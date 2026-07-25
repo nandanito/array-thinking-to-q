@@ -319,10 +319,20 @@ Two things the mechanised pass found that reading had missed:
   and then shows one test failing, the test must be attributed to the difference that actually
   caused it — otherwise the lesson teaches a false mechanism while displaying a true output.
   (Bonus: "attributes are metadata `~` does not look at" is a *better* hand-off to lesson 04.)
-- **Series drift: lessons 01–02 hand-add `q)` prompt lines inside output blocks** (4 in lesson 02,
-  1 in lesson 01). A piped `q file.q -q < /dev/null` emits no prompt, so those lines are typed, not
-  captured — the same class of defect as the side-by-side block caught above, sitting in merged
-  work. Lesson 03 is prompt-free and matches its capture byte-for-byte. NOT fixed here (out of
-  scope for this branch, and it is a deliberate-style call for the owner): flagged for a series
-  consistency pass. Same for a British/American split already in the tree (`vectorize`,
-  `parenthesized` in lesson 01 vs `memorise` in lesson 02).
+- **Series drift found in MERGED work, then fixed (owner-directed): lesson 02 hand-added `q)`
+  prompt lines inside 4 output blocks.** A piped `q file.q -q < /dev/null` emits no prompt, so
+  those lines were typed, not captured — the same class of defect as the side-by-side block above,
+  sitting on `main` since PR #1. Removing the prompt line is the whole fix: the preceding ```q
+  block already shows what produced the output, which is lesson 03's convention anyway.
+  **Running the checker over the whole series (not just the lesson under review) is what turned one
+  noticed defect into a complete list** — 31 output blocks across 3 lessons now verify. Generalise
+  the check before trusting it: scoping it to the file you are already suspicious of finds only
+  what you already knew.
+- **Lesson 01's `q)` line is NOT the same defect — context decides.** It sits inside a ```q block
+  as the deliberate interactive REPL transcript of the fork parse-error (the pattern this file
+  records for demos that cannot live in a verify-clean file), where a prompt is honest. A blind
+  `grep '^q)'` + bulk delete would have destroyed a correct artifact. Mechanised checks locate
+  candidates; they do not adjudicate them.
+- Spelling harmonised to British across lessons (`vectorise`, `parenthesised` in lesson 01, which
+  was the odd one out against `memorise`/`centre` in 02 and 03). Left `SPEC.md`'s "NumPy
+  vectorization" alone — it is a contract doc quoting a NumPy term of art, not lesson prose.
