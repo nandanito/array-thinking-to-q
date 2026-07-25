@@ -169,7 +169,7 @@ q)(+/ % #) til 5
 It does not merely give a wrong answer — **it does not parse.** The message is empty; the caret,
 landing in the middle of the fork, is the whole story. Crucially this is a *parse-time* rejection,
 not a runtime type error: protected evaluation cannot catch it, because there is nothing to
-evaluate. **q has no tacit trains or forks.** A parenthesized run of functions is not a new function
+evaluate. **q has no tacit trains or forks.** A parenthesised run of functions is not a new function
 in q; it is a syntax error.
 
 What q wants instead is that you say the composition out loud — name it, or use the built-in:
@@ -192,7 +192,7 @@ this wall.
 
 - An **atom** is not a length-1 list — `type`'s sign proves it (`-7h` vs `7h`), even though both
   answer `count` 1. The distinction is load-bearing.
-- **Atomic operators vectorize for you.** `2 * til 5` has no loop because `*` maps to the atoms and
+- **Atomic operators vectorise for you.** `2 * til 5` has no loop because `*` maps to the atoms and
   rebuilds the shape. The index you used to write was scaffolding, not computation.
 - **A reduction is a binary operator folded across the list:** `sum` is `(+/)`, `sums` is `(+\)`.
   Name the common ones; know the machine underneath.

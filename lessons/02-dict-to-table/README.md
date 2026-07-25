@@ -24,7 +24,6 @@ d:`a`b`c!10 20 30
 ```
 
 ```
-q)d
 a| 10
 b| 20
 c| 30
@@ -53,7 +52,6 @@ cd:`sym`px!(`AAPL`MSFT`GOOG; 100 200 300)
 ```
 
 ```
-q)cd
 sym| AAPL MSFT GOOG
 px | 100  200  300
 ```
@@ -86,7 +84,6 @@ t:flip cd
 ```
 
 ```
-q)t
 sym  px
 --------
 AAPL 100
@@ -159,7 +156,6 @@ kt:`sym xkey t
 ```
 
 ```
-q)kt
 sym | px
 ----| ---
 AAPL| 100
@@ -235,8 +231,8 @@ tacit array plumbing q lacks; q has the named, queryable structure J lacks.)
 - The entire model is **dictionaries and lists, composed** — `flip` to get a table, key it to get a
   dictionary back. Names are what q buys with the rank it gives up (the J twin).
 
-**Next:** Lesson 03 — qSQL (`select … by … from`) *(planned)*, where `select`, `exec`, and `update`
-turn out to be readable surface over the row-dict / column-list views you just met.
+**Next:** [Lesson 03 — qSQL](../03-qsql/) (`select … by … from`), where `select`, `exec`, and
+`update` turn out to be readable surface over the row-dict / column-list views you just met.
 
 ---
 
