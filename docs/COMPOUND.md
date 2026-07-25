@@ -297,3 +297,32 @@ Process findings:
   Cheapest honest fix is not to soften the prose but to add `mmax`/`mmin` to the `.q` file so
   `make verify` exercises the claim and the lesson can quote three real outputs. If a sentence
   generalises, make the harness generalise with it.
+
+### Review pass on lesson 03 — mechanise the "outputs are captured" rule
+
+`make verify` proves the lesson's *files* run. It says nothing about whether the outputs pasted
+into the *narrative* are the ones those files produce — the gap every previous lesson checked by
+eye. A ~30-line throwaway script closes it: extract every unlabelled fenced block from the README,
+rstrip both sides, and assert each appears as a contiguous run in a fresh capture — then assert the
+match positions increase monotonically, which also catches narrative shown out of execution order.
+Result on lesson 03: 22/22 blocks matched, in order. **Transferable to any everything-executes
+teaching repo: the golden-file discipline should cover the PROSE, not just the harness.** Cheap
+enough to run per-lesson; worth promoting to a `make` target if a fourth lesson needs it.
+
+Two things the mechanised pass found that reading had missed:
+
+- **`~` ignores attributes — so the lesson's own `0b` had the wrong explanation.** The draft said
+  `by` "sorts its keys AND marks them `` `s# ``" and then showed `(count each group w) ~ exec …`
+  → `0b`, inviting the reader to credit the attribute. Proved otherwise: `(`s#1 2 3) ~ 1 2 3` is
+  `1b`, and re-keying the `group` result into `by`'s order makes the two dictionaries `~`-identical
+  despite the attribute. The `0b` is ordering, full stop. Lesson: when prose lists two differences
+  and then shows one test failing, the test must be attributed to the difference that actually
+  caused it — otherwise the lesson teaches a false mechanism while displaying a true output.
+  (Bonus: "attributes are metadata `~` does not look at" is a *better* hand-off to lesson 04.)
+- **Series drift: lessons 01–02 hand-add `q)` prompt lines inside output blocks** (4 in lesson 02,
+  1 in lesson 01). A piped `q file.q -q < /dev/null` emits no prompt, so those lines are typed, not
+  captured — the same class of defect as the side-by-side block caught above, sitting in merged
+  work. Lesson 03 is prompt-free and matches its capture byte-for-byte. NOT fixed here (out of
+  scope for this branch, and it is a deliberate-style call for the owner): flagged for a series
+  consistency pass. Same for a British/American split already in the tree (`vectorize`,
+  `parenthesized` in lesson 01 vs `memorise` in lesson 02).

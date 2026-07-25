@@ -20,7 +20,7 @@ The table for this lesson:
 t:([] sym :`AAPL`MSFT`AAPL`MSFT`AAPL`GOOG;
       side:`B`S`S`B`B`S;
       qty :100 200 150 50 300 250;
-      px  :187.5 411.2 188.1 410.9 187.9 174.3);
+      px  :187.5 411.2 188.1 410.9 187.9 174.3)
 ```
 
 ```
@@ -229,12 +229,12 @@ MSFT| 2 250 411.05
 
 ---
 
-## 5. The primitive under `by` is `group` — and word frequency falls out
+## 5. The grouping behind `by` is a plain function: `group`
 
-`by` is a keyword, but the operation is a plain function you can call yourself:
+`by` is a keyword, but the operation it names is a function you can call yourself:
 
 ```q
-w:`the`cat`sat`on`the`mat`the;
+w:`the`cat`sat`on`the`mat`the
 group w
 ```
 
@@ -247,8 +247,8 @@ mat| ,5
 ```
 
 `group` maps each distinct value to the **indices** where it occurs — a dictionary, of course.
-That is the operation `by` performs on your behalf: everything a grouped query does is this
-dictionary plus something applied to each group's slice.
+That is the same grouping `by` performs, handed to you as an ordinary function: everything a
+grouped query does is this dictionary plus something applied to each group's slice.
 
 Which makes word frequency a one-liner, with no table and no query anywhere in sight:
 
@@ -287,14 +287,28 @@ the| 3
 Same counts — **different order**, and this one bites people:
 
 ```q
-attr key exec count i by w from ([] w:w)         / `s
 (count each group w) ~ exec count i by w from ([] w:w)   / 0b
+attr key exec count i by w from ([] w:w)                 / `s
 ```
 
-`group` preserves **first-appearance** order; `by` **sorts** its keys and marks the result sorted
-with the `` `s# `` attribute. The two results are not `~`-identical even though every count agrees.
-Pick deliberately: `group` when insertion order carries meaning, `by` when you want keys sorted (or
-want the sorted attribute for what comes next). That `` `s `` is lesson 04's whole subject.
+`group` preserves **first-appearance** order; `by` **sorts** its keys. That difference alone is why
+`~` says `0b` here, even though every count agrees.
+
+The `` `s `` is a second, separate thing: `by` also stamps its sorted keys with the `` `s# ``
+attribute. It is *not* what broke the `~`, because attributes are metadata about a value rather
+than part of it, and `~` does not look at them:
+
+```q
+(`s#1 2 3) ~ 1 2 3
+```
+
+```
+1b
+```
+
+So choose on ordering alone: `group` when first-appearance order carries meaning, `by` when you
+want keys sorted. The attribute rides along for free — and that `` `s `` is lesson 04's whole
+subject.
 
 ---
 
@@ -476,8 +490,10 @@ silently changes the length of its result is exactly the kind of bug that surviv
   closed by a keyword.
 - **`by` means "cut each column into one list per group"**, not "aggregate". Aggregation is
   whichever function you applied. This is why `by` is more general than `GROUP BY`.
-- **`group` is the primitive underneath**, mapping value → indices; `count each group w` *is* word
-  frequency. `group` keeps first-appearance order, `by` sorts keys and marks them `` s# ``.
+- **`group` is that same grouping as a plain function**, mapping value → indices; `count each
+  group w` *is* word frequency. `group` keeps first-appearance order, `by` sorts keys — that
+  ordering difference alone is what a `~` comparison catches, since `~` ignores the `` s# ``
+  attribute `by` also attaches.
 - **`mavg`/`msum` are windows without loops**, with partial windows at the start. Inside `update`,
   **`by` computes per group and writes back in row order** — and omitting it silently averages
   across instruments, the real imperative failure mode in q.

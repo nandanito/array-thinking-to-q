@@ -38,8 +38,9 @@ w:`the`cat`sat`on`the`mat`the;
 show group w;                 / value -> indices, in FIRST-APPEARANCE order
 show count each group w;      / word frequency, without a table in sight
 show exec count i by w from ([] w:w);   / same counts, qSQL spelling
-show attr key exec count i by w from ([] w:w);   / `s — by SORTS its keys (lesson 04)
-show (count each group w) ~ exec count i by w from ([] w:w);   / 0b: order differs
+show (count each group w) ~ exec count i by w from ([] w:w);   / 0b: ORDER differs
+show attr key exec count i by w from ([] w:w);   / `s — by also SORTS its keys (lesson 04)
+show (`s#1 2 3) ~ 1 2 3;  / 1b — ~ ignores attributes, so `s# is NOT what broke the ~ above
 
 / --- 6. windows: a moving average is not a loop either ------------------
 show 3 mavg 1 2 3 4 5 6f;     / partial windows at the start: 1, then 1.5, then 3-wide
