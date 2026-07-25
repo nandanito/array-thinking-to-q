@@ -227,3 +227,73 @@ they were committed and pushed. It found real defects a self-review had missed �
 Process note: reviewer findings are not automatically correct (standing rule), so each was
 re-verified on the pinned build before applying — all held. Fixes shipped as a follow-up commit, not
 an amend, because the reviewed commits were already on the remote (no history rewrite of pushed work).
+
+## M4 — CI enablement for the J twins (2026-07-24, recorded late)
+
+`j-verify.yml` had shipped as a valid-but-EMPTY stub: its "Install J" step was a commented TODO
+gated on "the first `.ijs` lands". When lesson 01–02's twins landed, the gate condition was met but
+the workflow was not updated, so the check went green having verified nothing. Two transferable
+findings, both about **green checks that are lying**:
+
+- **`curl … | sh` reports the SHELL's exit status, not curl's.** The install step was
+  `curl -fsSL <url> | sh -s -- …`; when the fetch failed, `sh` received an empty script, did
+  nothing, and exited 0 — so the step passed and J was never installed. Fix: download to a file,
+  assert the download, run it, then assert the artifact exists (`test -x …/jconsole`). Standing
+  rule for CI: **a pipeline's exit status is its LAST command; never let a network fetch be
+  anything but the last command in a step**, and always end an install step with a positive
+  assertion that the thing installed.
+- **`jsoftware.com`'s TLS cert does not cover the bare host** — only `www.jsoftware.com` (curl
+  error 60). Local installs used the bare host and worked from a browser-warmed context; CI did
+  not. Transferable: pin the exact host that the cert covers, and prefer `www.` when a vendor's
+  apex is a redirect.
+- Process: a "TODO, enable when X lands" comment in CI is a **time bomb with no alarm**. Nothing
+  fails when X lands; the check just keeps passing vacuously. If a gate cannot be enforced, make
+  the stub FAIL (`exit 1` with the reason) rather than pass, so landing X forces the update.
+
+## M4 — Part II lesson 03 (qSQL) (2026-07-25)
+
+`select … by … from` taught as a surface over lesson 02's row-dict / column-list views. Written
+q-first, `make verify` green (q + 3 J twins + `aj` golden + 15 eval refs). Content findings:
+
+- **The teachable core of `by` is that it does NOT aggregate.** `select px by sym from t` — illegal
+  in standard SQL — returns one *list per group*, and the aggregation in `select sum qty by sym`
+  happened only because `sum` of a list is an atom. Framing `by` as "cut each column into per-group
+  lists" (with aggregation as an optional second step) explains in one sentence why `by` is strictly
+  more general than `GROUP BY`, and why `select sum qty from t` returns one row without `select`
+  knowing anything about "aggregates".
+- **The real imperative failure mode in q is not the loop — it is forgetting a column spans every
+  group.** `update ma:2 mavg px from t` (no `by`) averages an AAPL price against an MSFT price and
+  returns a full column of confident nonsense, no error. Nobody wrote a loop; the bug is that any
+  operation *with memory* (window, delta, cumulative) runs straight across group boundaries by
+  default. This is a better "what the imperative instinct gets wrong" beat than the loop itself,
+  because the reader has already accepted vectorization by lesson 03 and would not see it coming.
+- **`group` vs `by` ORDER differs and is `~`-observable:** `group` preserves first-appearance order;
+  `by` sorts its keys and stamps them `` `s# ``. `(count each group w) ~ exec count i by w from …`
+  is `0b` even though every count agrees. That stray `` `s `` is a free, honest hand-off into
+  lesson 04 (attributes) — the curriculum's next beat is discovered in the output, not bolted on.
+- **J-twin recipe (second application, still works): one shared operation, then name the delta.**
+  `#/.~ w` is `count each group w` and gives the same five counts — but J returns bare counts with
+  the labels as a *separate* `~. w` result, aligned only by a documented ordering convention.
+  Same names-vs-positions delta as lesson 02, now with a consequence: q's grouped result is still
+  queryable/joinable because the labels ride along. Bonus trap: J's infix `3 (+/ % #)\` yields
+  COMPLETE windows only (4 results from 6 inputs) while q's `3 mavg` ramps up (6 from 6) — a
+  translated idiom that silently changes its result LENGTH is the kind of bug that survives review.
+
+Process findings:
+
+- **Consult COMPOUND.md BEFORE repeating a class of work, not just when appending to it.** The
+  lesson-02 entry already records that `code.jsoftware.com/wiki/*` 403s every automated fetcher and
+  must not be cited. This lesson's first draft cited two such URLs anyway, and the finding was
+  re-derived from scratch by curl. The file earned its keep — but only at review time, when it
+  should have been read at draft time. A compounding doc that is only ever *written* is a diary;
+  reading it first is what makes it an asset.
+- **Hand-assembled output is a rule violation even when every character is real.** A draft §7 laid
+  two captured q outputs side by side in one fenced block to save space. Both halves were genuine,
+  but the composite was typed by me and appears nowhere in any run — exactly what "outputs are
+  captured, never hand-typed" exists to forbid. Fix: separate blocks, each quoting one real run.
+  Transferable: the golden-file discipline covers *arrangement*, not just content.
+- **Make prose claims about a verb FAMILY verify-backed by exercising the family.** The draft
+  asserted the whole `m`-family ramps up the same way while the runnable file showed only `msum`.
+  Cheapest honest fix is not to soften the prose but to add `mmax`/`mmin` to the `.q` file so
+  `make verify` exercises the claim and the lesson can quote three real outputs. If a sentence
+  generalises, make the harness generalise with it.
