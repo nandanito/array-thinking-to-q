@@ -14,10 +14,15 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
 2. **J is illustrative, not installable.** Part I is 1–2 read-along lessons with captured outputs;
    readers need no J toolchain. J examples DO stay executable in author-side CI (jconsole is
    license-free — the only green check that never depends on KX). J is cut from skill scope.
-3. **Everything executes.** No code block lands in a lesson unless `make verify` runs it.
-   J via `jconsole`; q via KDB-X CE. If q isn't licensed/installed yet, the lesson stays in
-   `drafts/` and out of `lessons/`.
-4. **No commercial-friendliness claims about KDB-X CE** anywhere until TASK ZERO (below) is done.
+3. **Everything executes.** A q or J example does not land in a lesson unless `make verify` runs
+   it. J via `jconsole`; q via KDB-X CE. Exactly two blocks are exempt, both marked in place: an
+   illustrative Python snippet, and one q expression that fails to parse on purpose (it cannot
+   live in a verify-clean file, so it is quoted as a real REPL transcript). A lesson whose q side
+   does not yet run stays **on its feature branch** until `make verify` is green — never
+   half-verified on `main`. There is no `drafts/`; git branches already do this job.
+4. **No commercial-friendliness claims about KDB-X CE**, ever. TASK ZERO is DONE and settled this:
+   the license grants personal / internal-business use ONLY and restricts benchmark publication
+   (Clause 9). This is not a hold pending research — it is the finding. See docs/licensing-notes.md.
 5. **Narrative is the product.** Each lesson explains WHY the idiom is shaped that way and what
    the imperative instinct gets wrong. Two code blocks + a sentence = cut or merge.
 6. Names "q", "kdb+", "KDB-X", "J" are third-party marks used nominatively. Keep the
@@ -51,7 +56,8 @@ runs end-to-end, and the eval verify-harness exists.
 - Plain Makefile drives everything: `make verify-j`, `make verify-q`, `make verify`.
 - Pin and document exact J and KDB-X versions in `docs/toolchain.md`.
 - q golden files live next to the showcase only: `showcase/aj/expected.txt`.
-- Session state or scratch must never leak into lessons; use `drafts/`.
+- Session state or scratch must never leak into the repo at all — use a temp dir OUTSIDE it, so a
+  stray `git add` cannot pick it up. Nothing in the working tree is a scratchpad.
 
 ## Blog series duty (per milestone)
 

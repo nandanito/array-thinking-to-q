@@ -36,3 +36,10 @@ eval/.work/
 # --- python helpers ----------------------------------------------------------
 __pycache__/
 *.pyc
+
+# --- guard, not a workflow ---------------------------------------------------
+# There is no drafts/ (CLAUDE.md rule 3): an unfinished lesson stays on its
+# feature branch until `make verify` is green, so nothing half-verified ever
+# reaches the public default branch. This entry exists only so that if someone
+# creates one anyway, it cannot be committed by accident.
+drafts/
