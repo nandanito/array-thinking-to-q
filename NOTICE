@@ -1,0 +1,23 @@
+array-thinking-to-q
+Copyright 2026 Nandan
+
+This product includes software developed by Nandan
+(https://github.com/nandanito/array-thinking-to-q).
+
+Licensing is split by content type — see README.md:
+  - Code (Makefile, CI workflows, and all q/J code samples, including those
+    embedded in lesson prose): Apache License 2.0, see LICENSE.
+  - Prose (lesson narrative, docs, articles): Creative Commons
+    Attribution 4.0 International, see LICENSE-CC-BY-4.0.txt.
+
+TRADEMARKS: "q", "kdb+", and "KDB-X" are marks of KX Systems, Inc. "J" is a
+mark of Jsoftware, Inc. They are used here nominatively, to identify the
+technologies this material teaches. This project is not affiliated with,
+sponsored by, or endorsed by KX Systems, Inc. or Jsoftware, Inc. Neither this
+license nor this NOTICE grants any rights in those marks.
+
+This project distributes teaching material only. It does not redistribute
+KDB-X, kdb+, or J. Obtain those from their vendors under their own license
+terms; KDB-X Community Edition in particular is restricted to personal and
+internal-business use and restricts publication of benchmark or performance
+information (see docs/licensing-notes.md).

@@ -119,9 +119,23 @@ Full notes, with the caps confirmed against `.Q.lim` on a real install, are in
 **J** is GPLv3 and free to run, which is why it is the one green check in CI that depends on
 nobody's commercial terms.
 
-**This repo's own content:** the intent is Apache-2.0 for code and CC-BY-4.0 for prose and lessons.
-⚠️ The `LICENSE` files are not in place yet — treat the licensing of this repo as undecided until
-they are.
+### This repo's own content
+
+Copyright 2026 Nandan. Licensed by content type, because a curriculum is two different things:
+
+| What | License |
+|---|---|
+| **Code** — the Makefile, CI workflows, and every q/J code sample, **including the snippets embedded in lesson prose** | [Apache-2.0](LICENSE) |
+| **Prose** — lesson narrative, `docs/`, articles in `writings/` | [CC-BY-4.0](LICENSE-CC-BY-4.0.txt) |
+
+The boundary is deliberate: **lift any q or J snippet from a lesson into your own work under
+Apache-2.0**, with no attribution obligation attaching to your source file. The idioms are the
+point; they should travel freely. Attribution under CC-BY applies when you reuse the *writing* —
+the explanations, the arguments, a lesson as a whole.
+
+Apache-2.0 rather than MIT for the code, for two reasons specific to this repo: it carries an
+express patent grant, and its §6 explicitly withholds any trademark license — which matters when
+the material is saturated with third-party marks (see below). See [`NOTICE`](NOTICE).
 
 ## Disclaimer
 
