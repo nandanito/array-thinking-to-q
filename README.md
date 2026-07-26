@@ -7,8 +7,11 @@ unlearning the loop. This repo takes an imperative programmer through that shift
 compact laboratory** for the paradigm, then spends the overwhelming majority of its pages on **q**:
 real tables, qSQL, attributes, and an as-of join.
 
-Every code block in every lesson is executed by `make verify`. The outputs printed in the prose are
-captured from the real interpreters — never hand-typed, never guessed.
+Every q and J example in the lessons is executed by `make verify`, and the outputs printed in the
+prose are captured from the real interpreters — never hand-typed, never guessed. Exactly two blocks
+are deliberately not run, and both are marked where they appear: a Python snippet showing the
+imperative instinct being unlearned, and one q expression that *fails to parse* on purpose, which
+therefore cannot live in a verify-clean file and is quoted as a real REPL transcript instead.
 
 ---
 
@@ -61,10 +64,12 @@ story are in [`docs/toolchain.md`](docs/toolchain.md).
 
 This is the constraint the whole repo is built around:
 
-- No code block lands in a lesson unless `make verify` runs it.
+- A q or J example does not land in a lesson unless `make verify` runs it. The two exceptions above
+  are deliberate, marked, and are the only ones.
 - Printed outputs are captured from the real tools, then pasted into the prose. Hand-computed
-  "expected" output drifts from what q and J actually display.
-- A lesson whose q side does not run stays in `drafts/` and out of `lessons/`.
+  "expected" output drifts from what q and J actually display — and that includes *arrangement*:
+  two real outputs typeset side by side is still hand-typed.
+- A lesson whose q side does not run stays out of `lessons/` until it does.
 - Golden files exist for the showcase and the eval references, so silent rot in a toolchain
   upgrade fails a check instead of quietly changing the teaching.
 
@@ -108,8 +113,8 @@ Per the [KX Community Edition License Agreement](https://kx.com/legal/community-
 - Use is granted for **personal or internal-business purposes only**. It is not a grant to
   distribute, sell, or monetise the software, or to build a competing product.
 - **Publishing benchmark or performance figures requires KX's prior written consent** (Clause 9).
-  This project therefore makes **no performance claims about KDB-X anywhere** — the as-of join
-  material argues design and semantics, never speed.
+  This project therefore publishes **no benchmark or performance numbers, and no competitive
+  comparison** — the as-of join material argues design and semantics, never speed.
 - A license key is required, and license validation involves a periodic call home.
 
 Full notes, with the caps confirmed against `.Q.lim` on a real install, are in

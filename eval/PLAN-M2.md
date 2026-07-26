@@ -37,7 +37,7 @@ Controls:
 - **Run every session from a scratch directory outside this repo**, with no project `CLAUDE.md` and
   no `.claude/skills/`. Verify by asking the model what skills/instructions it has loaded before
   the first task.
-- Checked 2026-07-25: there is **no user-level `~/.claude/CLAUDE.md`** on this machine, so that
+- Checked 2026-07-26: there is **no user-level `~/.claude/CLAUDE.md`** on this machine, so that
   confound is currently absent. **Re-check at run time** — it may have been added since.
 - Task prompts are the verbatim **Prompt** blocks in `tasks/q/NN-name.md`. Paste nothing else: no
   lesson text, no reference solution, no golden output.
