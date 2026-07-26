@@ -82,8 +82,8 @@ Edition License Agreement v1.1, 27 Aug 2025). Two pre-read unknowns resolved —
 - **Phone-home: my pre-read "runs fully offline" guess was wrong.** Clause 4 reserves a periodic
   license-validation call — so SPEC's "fatal for offline verification" concern is VALID. CI-with-
   egress is fine; air-gapped verify is at-risk. (Usage *telemetry* is a separate opt-in — declined.)
-- Transferable: **do not let a secondary blog override a primary license.** The defconq "offline"
-  claim contradicted the actual Clause 4. When a license is gated, mark findings UNCONFIRMED and
+- Transferable: **do not let a secondary blog override a primary license.** A community blog's
+  "offline" claim contradicted the actual Clause 4. When a license is gated, mark findings UNCONFIRMED and
   do not soften a spec's risk flag on secondary authority — which is exactly what the earlier note
   did, and the license read corrected.
 
