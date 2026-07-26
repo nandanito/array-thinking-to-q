@@ -1,10 +1,38 @@
-# macOS
+# --- credentials: never commit, the repo is public --------------------------
+# The KDB-X license key (kc.lic / k4.lic) lives in ~/.kx and is delivered by an
+# authenticated installer. It has no business here, but a stray `cp` while
+# debugging is exactly how these get committed. Cheap insurance.
+*.lic
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+
+# --- macOS / editors ---------------------------------------------------------
 .DS_Store
-
-# eval / verify scratch — candidate outputs and run artifacts (goldens ARE tracked)
-*.actual
-eval/.work/
-
-# editor
+Thumbs.db
 *.swp
 *~
+.vscode/
+.idea/
+
+# --- Claude Code local state -------------------------------------------------
+# .claude/skills/ IS tracked on purpose; only local machine state is ignored.
+.claude/settings.local.json
+
+# --- eval / verify scratch ---------------------------------------------------
+# Goldens (*.expected) and reference solutions (*.ref.q) ARE tracked, and so are
+# the eval's saved model outputs under eval/runs/ — an article claiming a result
+# ships the raw material behind it (see eval/PLAN-M2.md §3). What is ignored is
+# the transient scoring scratch: eval/README.md's correctness snippet writes
+# cand.q / cand.out / cand.err into the working directory, 30 times over.
+*.actual
+cand.q
+cand.out
+cand.err
+eval/.work/
+
+# --- python helpers ----------------------------------------------------------
+__pycache__/
+*.pyc
