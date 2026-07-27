@@ -1,0 +1,1 @@
+What's the idiomatic q way to count occurrences of each symbol?

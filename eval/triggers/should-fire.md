@@ -23,11 +23,18 @@ skill. Per-session tool traces: [`../runs/traces.md`](../runs/traces.md).
 | 9 | Rewrite this q `while`-loop accumulator using over/scan. | y | Globbed twice, then fired. |
 | 10 | What's the idiomatic q way to count occurrences of each symbol? | y | Fired immediately. |
 
-**True positives:** **8/10** as measured.
+**True positives: 8/10. That is the activation recall for this run — the only one.**
 
-Read with the artifact in mind: prompts 3 and 7 are the two whose text refers to code that the
-table never supplies, and in both the model correctly declined to invent the input rather than
-doing q work. On the **8 prompts that actually presented a q task, activation was 8/8.** Both
-numbers belong in the writeup — 8/10 is what the pre-registered instrument measured, 8/8 is what
-it measured *about the plugin*. The fix for a future re-test is to attach real snippets to those
-two prompts; that is a change to the test set, so it cannot be applied retroactively to this run.
+Prompts 3 and 7 are **defective test items**: their text refers to code ("this q code", "this list
+comprehension") that the table never supplies, so in an empty directory the model searched, found
+nothing, and asked for the input. No q was attempted in either.
+
+That diagnosis explains the two misses; it does **not** license a second, kinder denominator.
+Re-scoring 8/8 over "the well-formed prompts" would be choosing the denominator after seeing which
+items missed — the same overfitting the protocol forbids when tuning trigger wording against a test
+set. The honest position is that this instrument measured **8/10**, and that two of its twenty
+items were malformed.
+
+Fixing the two prompts means attaching real snippets, which makes a **different test set**. Any
+number from that set has to come from a fresh run, and cannot be reported as this run's result.
+

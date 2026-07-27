@@ -1,0 +1,8 @@
+Given this trades table, count the number of trades for each `(sym, side)` pair (name the count
+column `n`), and show the result:
+
+```q
+t:([] sym:`AAPL`AAPL`MSFT`AAPL`MSFT; side:`buy`sell`buy`buy`sell)
+```
+
+Reply with exactly one q code block and nothing else: no prose before or after it, no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained q script that prints the required result to stdout using `show` when run as `q script.q -q`.

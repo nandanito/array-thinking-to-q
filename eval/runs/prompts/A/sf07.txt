@@ -1,0 +1,1 @@
+Convert this Python list comprehension into idiomatic q.

@@ -81,11 +81,15 @@ detect its absence from the output.
 The two should-fire misses are my instrument's fault, not the plugin's. Both prompts say "fix
 *this* q code" and "convert *this* list comprehension" — and my table supplies no code. In an empty
 directory the model searched for a file, found none, and asked me to paste the snippet. It never
-attempted q, so there was nothing for a skill to help with. On the eight prompts that actually
-presented a q task, activation was **8/8**.
+attempted q, so there was nothing for a skill to help with.
 
-Both numbers publish. 8/10 is what my pre-registered instrument measured; 8/8 is what it measured
-about the plugin. Quietly reporting only the flattering one is how eval numbers become marketing.
+I wrote "so really it's 8/8 on the well-formed prompts" in the first draft of this article, and an
+adversarial reviewer was right to call it. **Choosing your denominator after you have seen which
+items missed is the same overfitting my own protocol forbids** when tuning a skill's trigger
+against a test set — I would not have accepted it from the plugin's authors, so I do not get to do
+it in my own favour. Two of my twenty items were malformed. The recall this instrument measured is
+**8/10**. Repairing those prompts makes a *different* test set, and any number off it has to come
+from a fresh run.
 
 The single false positive was "Write a query to fetch users by email" — answered entirely in q,
 schema and all. Good q; an answer to a question nobody asked in q. Two caveats keep me from making
@@ -146,7 +150,10 @@ wrote `show sums 1 2 3 4 5`. Both wrote `select n:count i by sym,side from t`. B
 `do`-loop and wrote `sum x`.
 
 This is a **ceiling**, and it is the honest headline. The tasks cannot discriminate between the
-conditions because baseline `claude-opus-5` already solves them.
+conditions because baseline `claude-opus-5` already solves them. (Pedantically: my protocol defined
+the ceiling case as 15/15 in both arms, and I got 14/15 — the one miss being the same task in both
+arms, correct join, failed on an extra output line. Substance yes, letter no. Pre-registering your
+degenerate cases is worth nothing if you then gesture at them approximately.)
 
 ## The mistake I made, stated plainly
 

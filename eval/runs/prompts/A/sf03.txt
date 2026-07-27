@@ -1,0 +1,1 @@
+Fix this q code — it uses a `do`-loop where a vector op would do.

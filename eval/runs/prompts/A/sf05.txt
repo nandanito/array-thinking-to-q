@@ -1,0 +1,1 @@
+Write a qSQL query for total volume by symbol from a trades table.

@@ -1,0 +1,11 @@
+The following q computes per-row notional by iterating row indices. Rewrite it idiomatically
+using qSQL.
+```q
+t:([] price:190.0 410.0 191.0; qty:100 50 200);
+n:count t;
+res:();
+i:0; do[n; res,:t[i;`price]*t[i;`qty]; i+:1];
+update notional:res from t
+```
+
+Reply with exactly one q code block and nothing else: no prose before or after it, no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained q script that prints the required result to stdout using `show` when run as `q script.q -q`.

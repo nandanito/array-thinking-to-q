@@ -38,6 +38,16 @@ enumerate what it had loaded:
 - Re-checked at run time per PLAN-M2 §1: there is still **no user-level `~/.claude/CLAUDE.md`**,
   and `~/.claude/skills/` holds only Cloudflare-related skills. Neither arm saw q guidance from
   the environment.
+- **Auto-memory was empty.** Claude Code derives a per-cwd memory directory, which the neutral
+  directory had; it contained no `MEMORY.md` and no memories, so no session loaded any. This was
+  not on the pre-flight list — it surfaced only when redacting the logs for publication, and it
+  would have been a silent contamination vector had the neutral directory been reused from an
+  earlier q session.
+
+None of this rests on the prose above. Every session's `system/init` line is committed in
+[`runs/logs/`](runs/logs/) and records that session's `plugins` and `skills` directly: condition A
+logs show `"plugins": []`, condition B logs show `q-knowledge` `0.1.0`. Verifiable per session,
+without trusting this document.
 
 Had the eval been run from inside the working copy, condition A would have silently inherited
 `.claude/skills/idiomatic-q/SKILL.md` — anti-loop rules, prefer-qSQL, the `aj` sort gotchas —
@@ -71,12 +81,13 @@ Two harness decisions that shape the result and must be read with it:
 - Should-fire true positives: **8/10** ([triggers/should-fire.md](triggers/should-fire.md))
 - Should-not-fire true negatives: **9/10** ([triggers/should-not-fire.md](triggers/should-not-fire.md))
 
-**The plugin activates reliably.** Both should-fire misses (#3, #7) are instrument artifacts, not
-trigger failures: those two prompts say "fix this q code" / "convert this list comprehension" while
-the table supplies no code, so the model globbed an empty directory and asked for the input instead
-of doing q work. On the 8 prompts that actually presented a q task, activation was **8/8**. Both
-numbers publish; 8/10 is what the pre-registered instrument measured, 8/8 is what it measured about
-the plugin.
+**8/10 is the activation recall for this run, and the only number reported.** Both misses (#3, #7)
+come from **defective test items**: those prompts say "fix this q code" / "convert this list
+comprehension" while the table supplies no code, so the model searched an empty directory and asked
+for the input instead of attempting q. That diagnosis is worth recording, but it does not license
+re-scoring against a smaller denominator — picking the denominator after seeing which items missed
+is the overfitting this protocol forbids elsewhere. Repairing those two prompts produces a
+*different* test set, and any number from it has to come from a fresh run.
 
 The single false positive is "Write a query to fetch users by email" — answered entirely in q,
 schema and all. Note the traps built to bait a keyword match (`merge_asof`, "group" in JavaScript,
@@ -110,10 +121,15 @@ condition with the higher combined score; ties are non-discordant and excluded.
 PLAN-M2 §4 names three results the decision rule cannot interpret. This run hit two of them, and
 they must be reported as **instrument limitations, not findings**:
 
-- **Ceiling.** Correctness was 14/15 in *both* arms, and 13 of the 15 task pairs were scored
-  identically — 5 of them byte-for-byte identical q. These tasks cannot discriminate between the
-  conditions because baseline `claude-opus-5` already solves them. "No difference between
-  conditions" is **not** what this shows; what it shows is that the instrument has no headroom.
+- **Ceiling — in substance, though not to §4's letter.** §4 defines the ceiling case as correctness
+  **15/15 in both conditions**; this run scored **14/15 in both**, so the literal trigger was not
+  met. It should still be read as the ceiling case: the single miss is the *same task* in both
+  arms, both arms produced the exactly correct joined table, and both failed only by appending an
+  extra `show meta quote` line — a presentation artifact, not a q error. Net of that, 13 of 15 task
+  pairs scored identically and 5 were byte-for-byte identical q. These tasks cannot discriminate
+  between the conditions because baseline `claude-opus-5` already solves them. "No difference
+  between conditions" is **not** what this shows; what it shows is that the instrument has no
+  headroom.
 - **Too few discordant pairs.** One. The sign test has nothing to work with, and the eval is
   **underpowered on this task set** — which PLAN-M2 §4 anticipated is itself worth publishing.
 
@@ -160,9 +176,9 @@ here rather than left to be inferred from a column of zeros.
 - [ ] **Lift AND a gap KX's plugin does not fill** → author a skill scoped to that gap.
 
 **No measurable lift, and the honest qualifier is that this task set could not have measured a
-small one.** KX's `q-knowledge` plugin activates reliably (14/15 in Part B, 8/8 on well-formed
-Part A prompts) and produces good q. So does `claude-opus-5` without it, on these tasks, for a
-third of the output tokens.
+small one.** KX's `q-knowledge` plugin activates reliably (8/10 in Part A, 14/15 in Part B) and
+produces good q. So does `claude-opus-5` without it, on these tasks, for a third of the output
+tokens.
 
 **No skill is authored.** PROTOCOL.md permits authoring only if the eval exposes a gap KX's plugin
 does not fill. The `` `p#``/`` `g# `` finding is a real gap, but it is a **single observation from
@@ -199,7 +215,15 @@ harder task set; see COMPOUND.
 ## Evidence
 
 - [`results.csv`](results.csv) — 30 rows.
-- [`runs/`](runs/) — all 30 answers verbatim, per-task scoring rationale, tool traces.
-- [`harness/`](harness/) — the scripts, re-runnable; `correctness.sh` reproduces the correctness
-  column from the committed answers.
+- [`runs/`](runs/) — all 30 answers verbatim, the exact prompt bytes for all 50 sessions, the raw
+  stream-json logs, per-task scoring rationale, and the derived tool traces.
+- [`harness/`](harness/) — the scripts, re-runnable.
 - [`triggers/`](triggers/) — Part A tables.
+
+**Every number above is re-derived by `make verify-eval-run`,** which is part of `make verify`:
+`correctness.sh` recomputes the correctness column from the committed answers and **exits nonzero
+if `results.csv` disagrees**, and `mktraces.py --check` regenerates `runs/traces.md` from the
+committed logs and **exits nonzero on any drift**. Both were negative-tested — corrupt a row and
+the build fails. This repo's recurring defect is documents that were true when written and
+silently became false; published eval numbers are exactly that hazard, so they get a check rather
+than a promise.
