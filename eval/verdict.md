@@ -220,7 +220,9 @@ harder task set; see COMPOUND.
 - [`harness/`](harness/) — the scripts, re-runnable.
 - [`triggers/`](triggers/) — Part A tables.
 
-**Every number above is re-derived by `make verify-eval-run`,** which is part of `make verify`:
+**Every number above is re-derived by `make verify-eval-run`,** which is part of `make verify`
+(locally — like `verify-q` and `verify-eval`, it needs a licensed q, so blocking PR CI does not
+run it; `j-verify.yml` is the only blocking check and `q-verify.yml` is still build-order item 5):
 `correctness.sh` recomputes the correctness column from the committed answers and **exits nonzero
 if `results.csv` disagrees**, and `mktraces.py --check` regenerates `runs/traces.md` from the
 committed logs and **exits nonzero on any drift**. Both were negative-tested — corrupt a row and
