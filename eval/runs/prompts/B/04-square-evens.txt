@@ -1,0 +1,7 @@
+Translate this Python list comprehension to idiomatic q — the squares of the even numbers
+in `range(10)` — and print the result.
+```python
+[x * x for x in range(10) if x % 2 == 0]
+```
+
+Reply with exactly one q code block and nothing else: no prose before or after it, no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained q script that prints the required result to stdout using `show` when run as `q script.q -q`.

@@ -3,4 +3,38 @@ task,condition,correctness,idiom_no_loop,idiom_qsql,idiom_builtins,idiom_no_temp
 # correctness: 0/1 via `make verify-eval`-style golden diff (see README.md).
 # idiom_*: 0/1 per PROTOCOL.md binary checklist; idiom_total = their sum (0-5).
 # tokens: output tokens to first running solution. repairs: retries to first running solution.
-# Rows below are filled during the M2 run; header + comments only at harness-build time.
+# Run 2026-07-26/27. Single-shot design: the first answer IS the answer, so repairs is 0 by
+# construction for every row -- see verdict.md "What `repairs` measures here".
+# idiom_qsql is scored 1 where no table operation was expected (tasks 01-06, 11, 12, 14):
+# the checklist is a no-violation list, and a vacuous item cannot be violated.
+# Scoring rationale per task lives in runs/notes.md; raw answers in runs/NN-name.{A,B}.q.
+01-sum-squares,A,1,1,1,1,1,1,5,123,0
+01-sum-squares,B,1,1,1,1,1,1,5,548,0
+02-running-total,A,1,1,1,1,1,1,5,47,0
+02-running-total,B,1,1,1,1,1,1,5,315,0
+03-word-frequency,A,1,1,1,1,1,1,5,529,0
+03-word-frequency,B,1,1,1,1,1,1,5,702,0
+04-square-evens,A,1,1,1,1,1,1,5,317,0
+04-square-evens,B,1,1,1,1,1,1,5,693,0
+05-moving-average,A,1,1,1,1,1,1,5,164,0
+05-moving-average,B,1,1,1,1,1,1,5,323,0
+06-mean-no-avg,A,1,1,1,1,1,1,5,303,0
+06-mean-no-avg,B,1,1,1,1,1,1,5,320,0
+07-total-qty-by-sym,A,1,1,1,1,1,1,5,153,0
+07-total-qty-by-sym,B,1,1,1,1,1,1,5,619,0
+08-add-notional,A,1,1,1,1,0,1,4,111,0
+08-add-notional,B,1,1,1,1,1,1,5,436,0
+09-asof-join,A,1,1,1,1,1,1,5,610,0
+09-asof-join,B,1,1,1,1,1,1,5,615,0
+10-count-by-sym-side,A,1,1,1,1,1,1,5,178,0
+10-count-by-sym-side,B,1,1,1,1,1,1,5,679,0
+11-distinct-syms,A,1,1,1,1,1,1,5,69,0
+11-distinct-syms,B,1,1,1,1,1,1,5,279,0
+12-fix-doloop-sum,A,1,1,1,1,1,1,5,20,0
+12-fix-doloop-sum,B,1,1,1,1,1,1,5,225,0
+13-fix-rowwise-notional,A,1,1,1,1,1,1,5,46,0
+13-fix-rowwise-notional,B,1,1,1,1,1,1,5,328,0
+14-fix-while-cumsum,A,1,1,1,1,1,1,5,23,0
+14-fix-while-cumsum,B,1,1,1,1,1,1,5,407,0
+15-fix-aj-unsorted,A,0,1,1,1,1,0,4,978,0
+15-fix-aj-unsorted,B,0,1,1,1,1,0,4,3848,0

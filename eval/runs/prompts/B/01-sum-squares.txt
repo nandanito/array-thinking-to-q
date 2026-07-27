@@ -1,0 +1,9 @@
+Translate this Python to idiomatic q. Given `n = 10`, compute the sum of the squares of
+`0, 1, …, n-1`, then print the result.
+```python
+total = 0
+for i in range(n):
+    total += i * i
+```
+
+Reply with exactly one q code block and nothing else: no prose before or after it, no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained q script that prints the required result to stdout using `show` when run as `q script.q -q`.

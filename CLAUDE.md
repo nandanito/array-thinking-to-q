@@ -74,3 +74,7 @@ evidence, and marketplace metadata is part of M5, not an afterthought.
 Append lessons-learned to `docs/COMPOUND.md`: what the eval showed (positive OR negative),
 licensing findings, model failure modes discovered while writing the skill, and anything
 transferable to other projects (skill-authoring patterns especially).
+
+**Then re-read SPEC.md and this file against reality and fix what has gone stale.** The recurring
+defect in this repo is not wrong code — it is documents that were true when written and silently
+became false, with nothing failing. Lessons have `make verify`; governing docs have only this step.

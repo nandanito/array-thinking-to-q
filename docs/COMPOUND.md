@@ -336,3 +336,121 @@ Two things the mechanised pass found that reading had missed:
 - Spelling harmonised to British across lessons (`vectorise`, `parenthesised` in lesson 01, which
   was the odd one out against `memorise`/`centre` in 02 and 03). Left `SPEC.md`'s "NumPy
   vectorization" alone — it is a contract doc quoting a NumPy term of art, not lesson prose.
+
+## M2 — the eval ran, and returned a null result (2026-07-26/27)
+
+Subject: KX's `q-knowledge@kx-skills` pinned at `8b7040f`, vs. baseline, on `claude-opus-5`.
+Full writeup in [`eval/verdict.md`](../eval/verdict.md); raw material in `eval/runs/`.
+
+**Headline: no measurable lift — and the qualifier matters more than the headline.** 15 paired
+tasks produced **1 discordant pair**. The decision rule (paired sign test, ≥~80% of discordant
+pairs) needs ~5 to say anything, so *the test never engaged*. Correctness was 14/15 in both arms —
+the same task, failing the same way, on an extra output line rather than a q error — and 5 of the
+15 task pairs came back byte-for-byte identical q. That is PLAN-M2 §4's **too-few-discordant-pairs**
+case outright, plus its **ceiling** case in substance (§4 defines ceiling as a literal 15/15, which
+this did not reach — worth stating precisely, since the whole value of pre-registering degenerate
+cases is lost if you then wave at them approximately).
+
+### What transfers
+
+- **"No difference between conditions" and "the instrument has no headroom" are different claims,
+  and only the second one was earned.** The temptation is to publish the first — it is a cleaner
+  sentence and it is the one the reader expects. Writing tasks that are easy to *verify* selects
+  hard for tasks that are easy to *solve*; those are the same tasks. Any A/B on a frontier model
+  needs its baseline failure rate established BEFORE the comparison is designed. A pilot of the
+  baseline arm alone would have caught this in an hour and cost 15 sessions instead of 50.
+- **Decide activation mechanically or not at all.** "Fired" here means the session emitted a
+  `Skill` tool call naming the plugin — read off the stream-json log, not judged from prose. This
+  mattered immediately: one Part A prompt produced fluent, correct q idioms (`xs where p xs`,
+  `a f' b`) with **no skill loaded**, and one Part B task (12) matched its condition-A twin
+  without ever invoking the plugin. Eyeballing would have scored both as fires.
+- **The measurement environment must be built to be *worse* than the thing it measures.** The
+  single control that decided whether this run meant anything was cwd: run from inside the working
+  copy and condition A silently inherits `.claude/skills/idiomatic-q/SKILL.md` — approximately the
+  subject under test — with no trace in the results. A contaminated null looks exactly like a
+  clean null. Generalises past evals: for any A/B where the environment can leak the treatment,
+  the control is a property of the *harness*, not of the analysis, and it cannot be checked after
+  the fact.
+- **Verify the tool policy before trusting the arms are fair.** A smoke run showed condition B's
+  `Read` of its own bundled `references/*.md` being permission-denied — the plugin's SKILL.md
+  delegates Python→q translation to a sibling file, so the treatment arm was being handicapped
+  against its own design by the harness. Caught before the run, zero denials across the 50 recorded
+  sessions. **Smoke-test the treatment arm's happy path specifically**; a harness bug that weakens
+  the treatment reads as a null result.
+- **The formatting contract is part of the instrument, so publish it verbatim.** Un-constrained
+  answers arrive as prose plus several alternative snippets carrying `q)` prompts, and "which block
+  is the answer" becomes a scorer judgment 30 times over. One fixed contract, identical in both
+  arms, naming no idiom under test, moved extraction from judgment to `re.search`. All 30 answers
+  obeyed it — which is itself worth knowing about instruction-following at this model tier.
+- **Fix the taste-dependent scoring rules in writing BEFORE the pass, and anchor them to an
+  artifact.** "No unnecessary temporaries" is pure taste until it is anchored: here, *fails only if
+  it introduces a binding the verified reference solution does not need*. Note what that anchoring
+  exposed — the run's **entire** margin was one such judgment (task 08, `t:update…from t; show t`),
+  and a second defensible reading makes it a tie. Writing the rule down first is what turned a
+  result into a caveat instead of a headline.
+- **Cost separated the arms even when quality could not.** 2.8× total output tokens, 3.9× median
+  per task, for 13/15 tasks of identical or equivalently-scored code. When the primary metric hits
+  a ceiling, the secondary metrics are the finding — record them even when you expect the primary
+  to carry the article.
+
+### Model failure mode found (relevant to any future skill)
+
+On the `aj` fix task, **both** conditions applied `` `p# `` to an **in-memory** quote table.
+<https://code.kx.com/q/ref/aj/> gives memory → `` `g# ``, disk → `` `p# ``. Both returned correct
+rows, so nothing errored — the wrong-answer-that-runs-clean shape this curriculum's `aj` showcase
+exists to teach. **KX's own plugin, loaded and active, did not correct a deviation from KX's own
+published guidance.**
+
+Deliberately NOT acted on: PROTOCOL.md permits authoring a skill only if a gap survives, and one
+observation from one task in one run is a hypothesis, not a gap. Authoring against it would be
+fitting a skill to n=1. Logged here as the seed for a harder task set.
+
+### Governing-doc drift check (new standing step)
+
+Carried in from the last session's observation: the recurring failure here has never been wrong
+code — it is documents that were true when written and silently became false, with nothing failing.
+Lessons have `make verify`; governing docs had nothing. So the compound step now includes re-reading
+SPEC.md and CLAUDE.md against reality (CLAUDE.md updated to match). This pass found and fixed one:
+`eval/README.md` told the reader to run Part A "under each condition", which is undefined for
+condition A — it has no plugin to activate. It had read as current since the harness was built.
+
+### Independent review pass on the M2 writeup (Codex, adversarial)
+
+Five findings, all accepted. Three were substantive, and two of those are the interesting kind —
+the reviewer attacked the *epistemics of the writeup*, not the code.
+
+- **"Your evidence is not auditable from committed artifacts."** The first cut shipped a generated
+  `traces.md` summarising session logs that were never committed — so every activation and token
+  claim rested on my say-so, in a repo whose entire discipline is that outputs are captured, not
+  typed. Fixed by committing all 50 raw stream-json logs (1 MB, 265 K packed) plus the exact prompt
+  bytes, and making `traces.md` a *derived* file that `make verify` re-derives and diffs.
+  **Generalises: if a claim in your prose came from a run, the run's output belongs in the repo —
+  a summary you generated is not evidence, it is a second copy of the claim.**
+- **Redacting for publication found a contamination vector the pre-flight had missed.** Rewriting
+  absolute paths surfaced `memory_paths.auto` — Claude Code derives a per-cwd auto-memory directory,
+  including for the neutral eval directory. It was empty, so nothing leaked. But had that scratch
+  directory been reused from an earlier q session, stored memory would have entered *both* arms
+  invisibly, and no line in PLAN-M2 §1 would have caught it. **Preparing artifacts for a hostile
+  reader is itself a review technique** — it forces you to look at fields you never read.
+- **"You changed the denominator after seeing the misses."** Two of twenty trigger prompts referred
+  to code the table never supplied, so the model asked for input instead of writing q. I reported
+  8/10 *and* an "8/8 on well-formed prompts". The diagnosis is sound; minting the second number is
+  not. It is precisely the overfitting the protocol forbids when tuning a trigger against a test
+  set — and I would not have accepted it from the plugin's authors. Now 8/10 only, with the two
+  items recorded as defective and any repaired set requiring a fresh run.
+  **The bias to watch for is not inventing data; it is quietly picking the flattering denominator
+  for data you really did collect.**
+- **A verification script that only prints is not verification.** `correctness.sh` recomputed the
+  correctness column and printed it — while `results.csv` could have said anything. It now compares
+  against the committed CSV and exits nonzero on mismatch, and both new checks were **negative
+  tested** (corrupt a row, confirm the build fails) rather than assumed. Same lesson as the prose
+  checker in M1, one layer up: the check that never fails is indistinguishable from no check.
+- **Pre-registered thresholds must be applied to the letter or the deviation stated.** PLAN-M2 §4
+  defines the ceiling case as correctness 15/15 in both arms; this run got 14/15 and the writeup
+  called it "the ceiling case" flat out. Now stated as "in substance, not to §4's letter", with the
+  reason. Pre-registering degenerate cases buys nothing if you then gesture at them approximately.
+
+**Transferable meta-point:** the review found nothing wrong with the q, the harness logic, or the
+arithmetic. Every finding was about the *distance between what the artifacts prove and what the
+prose claimed*. For an evaluation, that distance IS the defect class — point the reviewer at it
+explicitly rather than at the code.

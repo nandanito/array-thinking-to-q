@@ -1,0 +1,1 @@
+Write a SQL query for total sales by region.

@@ -1,0 +1,1 @@
+Translate this pandas `groupby().sum()` into a kdb+ qSQL `select … by`.

@@ -1,0 +1,9 @@
+The following q builds cumulative sums with a while loop. Rewrite it idiomatically.
+```q
+x:5 3 8 1;
+out:(); run:0; i:0;
+while[i<count x; run+:x i; out,:run; i+:1];
+out
+```
+
+Reply with exactly one q code block and nothing else: no prose before or after it, no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained q script that prints the required result to stdout using `show` when run as `q script.q -q`.

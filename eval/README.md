@@ -11,10 +11,20 @@ Operational guide for running the eval. The *design* and decision rule live in `
 - `tasks/q/NN-name.ref.q` — the idiomatic reference solution (runs, prints its result).
 - `tasks/q/NN-name.expected` — golden output of the reference.
 - `results.csv` — one row per (task, condition). `verdict.md` — the go/no-go writeup.
+- `harness/` — the scripts that drove the M2 run: `session.sh` (one headless subject session,
+  from a neutral cwd outside this repo), `mkprompts.py` (task sheet → prompt file),
+  `extract.py` / `ok.py` (read a session log), `correctness.sh` (score every committed answer).
+- `runs/` — the M2 run's raw material: all 30 answers verbatim, scoring rationale, tool traces.
 
 ## Part A — trigger precision (do this FIRST)
-Run each prompt in a fresh context under each condition; record fire / no-fire in the tables.
+Run each prompt in a fresh context **under condition B only** — 20 prompts × 1 condition. Condition
+A has no plugin, so "fire / no-fire" is undefined for it; activation is a property of the subject
+under test, not a comparison (PROTOCOL.md, PLAN-M2.md §2). Record fire / no-fire in the tables.
 A skill that never fires is worth zero, so measure activation before quality.
+
+Decide firing **mechanically**: the session emitted a `Skill` tool call naming a `q-knowledge`
+skill. "It felt like it fired" is not data — an answer can be q-flavoured with no skill loaded.
+`harness/extract.py --field fired` reads this off a session log.
 
 ## Part B — output quality
 For each of the 15 tasks, under condition A (baseline) and B (plugin), using identical prompts,

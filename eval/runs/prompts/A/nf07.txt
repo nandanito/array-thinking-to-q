@@ -1,0 +1,1 @@
+Translate this Python loop to idiomatic Rust.

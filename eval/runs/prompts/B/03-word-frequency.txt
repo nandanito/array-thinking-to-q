@@ -1,0 +1,8 @@
+Translate this Python to idiomatic q: count how many times each word appears in the list
+`the cat sat on the mat the`, then print the per-word counts.
+```python
+from collections import Counter
+Counter(words)
+```
+
+Reply with exactly one q code block and nothing else: no prose before or after it, no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained q script that prints the required result to stdout using `show` when run as `q script.q -q`.

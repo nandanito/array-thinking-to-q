@@ -1,0 +1,1 @@
+Create a keyed table in q and look up a row by its key.

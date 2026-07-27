@@ -1,0 +1,11 @@
+The following as-of join returns silently wrong prevailing quotes because the quote table is
+not sorted by time within sym. Fix it so `aj` is correct, and set the appropriate in-memory
+attribute.
+```q
+quote:([] sym:`AAPL`AAPL`MSFT; time:09:30:05 09:30:00 09:30:00;
+          bid:99.4 99.0 200.0; ask:99.6 99.2 200.2);
+trade:([] sym:`AAPL`MSFT; time:09:30:03 09:30:02; price:99.1 200.1; size:100 50);
+aj[`sym`time; trade; quote]
+```
+
+Reply with exactly one q code block and nothing else: no prose before or after it, no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained q script that prints the required result to stdout using `show` when run as `q script.q -q`.

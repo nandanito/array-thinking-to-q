@@ -1,0 +1,1 @@
+Rewrite this q `while`-loop accumulator using over/scan.

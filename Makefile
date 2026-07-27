@@ -4,9 +4,9 @@ J       ?= jconsole
 Q       ?= q
 LESSONS := $(wildcard lessons/*)
 
-.PHONY: verify verify-j verify-q verify-showcase verify-eval
+.PHONY: verify verify-j verify-q verify-showcase verify-eval verify-eval-run
 
-verify: verify-j verify-q verify-showcase verify-eval
+verify: verify-j verify-q verify-showcase verify-eval verify-eval-run
 
 verify-j:
 	@echo "== J examples =="
@@ -38,3 +38,14 @@ verify-eval:
 		diff -u $$exp /tmp/eval-actual.txt || exit 1; \
 	done
 	@echo "eval refs: OK"
+
+# The M2 run's published numbers, re-derived from committed artifacts. Without
+# this, results.csv and runs/traces.md are just prose that happened to be true
+# on the day — the exact failure mode docs/COMPOUND.md keeps recording.
+verify-eval-run:
+	@echo "== eval run: results.csv correctness column vs. the committed answers =="
+	@Q=$(Q) eval/harness/correctness.sh > /tmp/eval-run.txt 2>&1 \
+		|| { cat /tmp/eval-run.txt; exit 1; }
+	@tail -1 /tmp/eval-run.txt
+	@echo "== eval run: runs/traces.md vs. the committed session logs =="
+	@python3 eval/harness/mktraces.py eval/runs/logs --check eval/runs/traces.md

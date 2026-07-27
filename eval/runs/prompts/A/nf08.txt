@@ -1,0 +1,1 @@
+Optimize this pandas `merge_asof` call.

@@ -1,5 +1,11 @@
 # M2 eval — execution plan
 
+> **EXECUTED 2026-07-26/27.** All pre-flight gates passed; both parts ran as planned. The result
+> and everything that was decided at run time live in [`verdict.md`](verdict.md) — read that for
+> what happened, this for what was intended. Two of §4's degenerate cases fired at once (ceiling,
+> and too few discordant pairs), which is what §4 existed to catch. The `eval/README.md` wording
+> flagged in §2 is fixed.
+
 Three documents, three jobs. [`PROTOCOL.md`](PROTOCOL.md) is the **design** and the decision rule.
 [`README.md`](README.md) is **how to score one task**. This file is the **order of operations**: the
 decisions that must be made before the first prompt, the controls that make the comparison mean
