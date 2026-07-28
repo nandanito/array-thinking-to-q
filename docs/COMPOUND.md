@@ -519,7 +519,7 @@ and never touched the comparison.
 
 ### Why this one is worth more than the finding it replaces
 
-- **The correction was already in this repository, in writing, four days before the eval was
+- **The correction was already in this repository, in writing, three days before the eval was
   scored.** `docs/licensing-notes.md` §C is a claim-by-claim audit of the repo's own draft skill
   against code.kx.com, and its **CORRECTED claim 5** says verbatim: *"`p#` also works in memory and
   can outperform `g#` when values are contiguous. It is not useless in memory."* The scoring pass

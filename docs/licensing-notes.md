@@ -147,8 +147,16 @@ https://code.kx.com/kdb-x/get_started/kdb-x-install.html
 
 **KDB-X CE vs. old kdb+ Personal Edition** — both still exist, different licenses. Personal Edition:
 non-commercial, local-only, phones home, carries the §1.3 benchmark ban (SPEC already rejects it,
-line 138). KDB-X CE (GA 2025-11-19): commercial permitted within limits, cloud-deployable, offline
-runtime, next-gen engine.
+line 138). KDB-X CE (GA 2025-11-19): cloud-deployable, next-gen engine.
+
+> **CORRECTED 2026-07-28.** This line previously ended "commercial permitted within limits,
+> cloud-deployable, **offline runtime**, next-gen engine" — pre-read speculation that survived the
+> license read and sat here contradicting the CONFIRMED section *above it in this same file*.
+> Both struck claims are false: Clause 2.1 + Attachment A restrict use to **personal or internal
+> business** (no commercial grant), and Clause 4 **reserves a periodic license-validation call**
+> (no guaranteed offline runtime). Leaving a stale summary next to the correct finding is how a
+> reader gets the wrong answer from a document that also contains the right one — the same defect
+> class as the `p#` retraction in docs/COMPOUND.md.
 
 ---
 
