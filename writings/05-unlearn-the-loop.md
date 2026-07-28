@@ -2,12 +2,21 @@
 
 *Article 5 of 6 — draft. Gated on M4 (the J laboratory).*
 
-> **Publication gate.** Every snippet below was executed against J 9.7.1 and KDB-X CE 5.0 and the
-> outputs are captured, not typed — but the q-side ones come from verified lesson files while the
-> J-side ones currently live only in a scratch directory, because Part I does not exist yet. Per
-> RELEASE-CHECKLIST.md, this cannot publish until those J snippets sit in lesson files that
-> `make verify` runs. Drafted ahead of its milestone deliberately: this is the article the spec
-> flagged as at-risk, and banking it early was the mitigation it never got.
+> **Publication gate — NOT publishable yet.** Every snippet below was executed against J 9.7.1 and
+> KDB-X CE 5.0 and every output is captured, not typed. But RELEASE-CHECKLIST.md requires each
+> snippet to come from a **running lesson file**, and by that test the provenance here is mixed:
+>
+> - **From verified lesson files:** the `sum`/`(+/)` pair, the `mean =: +/ % #` fork and its q
+>   parse failure (lesson 01), and the `3 mavg` window convention (lesson 03). The
+>   protected-evaluation transcript is stated in lesson 01's prose but not shown there as a block —
+>   CLAUDE.md caps verify-exempt blocks at two, and it was not worth spending the third on.
+> - **From the eval task set, not a lesson:** the opening `do[]` loop (`eval/tasks/q/12-fix-doloop-sum.md`).
+> - **From a scratch directory — no home in the repo yet:** every J rank example, the J explicit
+>   loop, the infix/prefix scan pair, and q's `each-prior` / `each-left` / `each-right`.
+>
+> All three groups have to land in lesson files that `make verify` runs before this publishes.
+> Drafted ahead of its milestone deliberately: this is the article the spec flagged as at-risk, and
+> banking it early is the mitigation it never got.
 
 ---
 
@@ -77,8 +86,9 @@ Three things become visible over there — and two of them will betray you on th
 
 ## 1. Iteration is a modifier, not a statement
 
-In q you learn a vocabulary: `sum`, `sums`, `max`, `group`, `mavg`. Good names, well chosen, and
-you can use them for a year without noticing they are instances of anything.
+In q you learn a vocabulary: `sum`, `sums`, `max`, `prd`, `mavg`. Good names, well chosen, and you
+can use them for a year without noticing that several of them are the *same construction* wearing
+different labels.
 
 They are. `sum` is `+` inserted between the items — q spells that with the `over` adverb, and
 lesson 01 shows the machine under the built-in:
@@ -203,25 +213,37 @@ sum (1 2 3; 4 5 6)        / 5 7 9
 sum each (1 2 3; 4 5 6)   / 6 15
 ```
 
-— but by a different route, and the route is the point. `each` is not a depth parameter you dial;
-it is one specific move, "one level down," and when you need a *different* iteration shape you
-reach for a different glyph entirely:
+— but by a different route, and the route is the point. **`each` is not a depth parameter you can
+dial.** It is one fixed move — "one level down" — and there is no `each 2`. Where J turns a knob, q
+gives you a word that only ever means 1.
+
+Be careful how far you push that, though, because q's other iterators are *not* rank in disguise:
 
 ```q
 (-':) 1 3 6 10 15   / 1 2 3 4 5     each-prior
-1 2 3 ,\: `a        / each-left
-`a ,/: 1 2 3        / each-right
 ```
 
-Four separate iterators — `'`, `':`, `\:`, `/:` — for cases J covers with one conjunction and a
-number. Learn them as four facts and you will use them correctly and never notice they are one
-concept wearing four hats.
+`each-prior` walks adjacent pairs. That is not a statement about depth at all, and no rank number
+expresses it — J puts adjacent pairs in a different family entirely, the **infix** one from §1:
 
-The practical payoff of noticing is immediate. Lesson 01 makes the point that `each` is about
-**depth, not looping**, and that the atomic operators (`+`, `*`, `>`) already reach the atoms by
-themselves so you never write `each` for those. That is a rule you can memorise. After rank it
-isn't a rule any more — it is the obvious consequence of the fact that `*` already applies at rank
-0, so asking for `each` is asking for something you already have.
+```j
+2 -~/\ 1 3 6 10 15
+```
+
+```
+2 3 4 5
+```
+
+Four results where q's `-':` gave five — because J's infix takes complete pairs only, while q's
+each-prior supplies a starting prior (here `0`, so the first output is `1-0`). That is the *same*
+complete-versus-partial split as the moving-window case, surfacing again in a second family. Worth
+noticing now; it is about to cost us.
+
+The practical payoff of rank is narrower than "it explains q's iterators", and real. Lesson 01
+makes the point that `each` is about **depth, not looping**, and that the atomic operators (`+`,
+`*`, `>`) already reach the atoms by themselves so you never write `each` for those. That is a rule
+you can memorise. After rank it stops being a rule and becomes a consequence: `*` already applies
+at rank 0, so asking for `each` is asking for something you have.
 
 ---
 
@@ -242,8 +264,22 @@ q)(+/ % #) til 5
 ```
 
 It does not return the wrong answer. **It does not parse.** The message is empty and the caret
-lands in the middle of the fork. This is a parse-time rejection, not a runtime error — there is
-nothing to evaluate, so protected evaluation cannot catch it either.
+lands in the middle of the fork.
+
+That is a parse-time rejection, not a runtime error, and the distinction has teeth: you cannot
+defend against it. Wrapping the fork in protected evaluation does not help, because the wrapper has
+to parse too —
+
+```q
+q).[{(+/ % #) til 5};();{(`caught;x)}]
+'
+  [0]  .[{(+/ % #) til 5};();{(`caught;x)}]
+             ^        / caret inside the lambda — the guard never got to run
+```
+
+(Pedantically: hand that *same text* to `value` as a runtime **string** and it becomes trappable,
+because then the parsing happens inside the protected call. That is a different program, and not
+one you would write by accident.)
 
 **q has no tacit forks or trains.** A parenthesised run of functions is not a new function; it is a
 syntax error. What q wants is for you to say the composition out loud:
@@ -309,20 +345,26 @@ What *did* break both conditions was the one task about attributes and sort disc
 `` `p# `` to an in-memory table where [KX's own documentation](https://code.kx.com/q/ref/aj/) calls
 for `` `g# ``. Correct rows, wrong attribute, no error.
 
-I find that split genuinely clarifying, and it retroactively justifies a decision I originally made
-for much weaker reasons. J started this project as a co-star and got cut to a short laboratory on a
-reviewer's advice; I went along with it without real evidence either way. This is the evidence.
-**The array-thinking half is the learnable half.** Reduce-don't-loop, scan,
-group, "iteration lives in the operator" — that material is well-represented, well-documented, and
-apparently well-absorbed. It is also precisely the half J teaches, which is an argument for the
-laboratory being *short*: one or two lessons, felt and left behind.
+I want to be careful about how much weight that split can carry, because my own verdict on that
+eval says it was **underpowered** — the fifteen tasks turned out to be easy enough that the
+baseline was already at the ceiling, so the study could not have detected a small effect at all.
+Three solved loop-fix tasks are three data points from a task set I built badly. They are not
+"models have absorbed array thinking".
 
-The half that broke is q-engine-specific — sortedness, attributes, what `aj` requires of the table
-you hand it — and **J has nothing to say about any of it.** There is no fork that teaches you
-`` `g# ``. That part only exists on the q side of the wall, it is where the real errors live, and
-it is where the bulk of the curriculum has to be.
+What they do support is narrower and still worth something: **on the loop-transliteration exercises
+I could think of, the failure mode this curriculum exists to prevent did not show up — and the
+thing that beat both arms was q-engine-specific.** Sortedness, attributes, what `aj` requires of
+the table you hand it. **J has nothing to say about any of that.** There is no fork that teaches
+you `` `g# ``.
 
-The laboratory earns its keep by being small.
+That is consistent with a short laboratory, which is what this curriculum already commits to — J
+was cut from co-star to one or two illustrative lessons on a reviewer's advice, and I went along
+with it at the time without evidence either way. I still do not have strong evidence. I have one
+underpowered study pointing the same direction as the architectural argument, which is worth
+exactly as much as that sounds.
+
+The errors that will actually cost you live on the q side of the wall. That is where the bulk of
+the curriculum has to be, and it is the better reason for keeping the laboratory small.
 
 ---
 
@@ -352,9 +394,9 @@ The concepts are the same wherever you meet them. Meet them somewhere.
   `msum` as separate vocabulary; J shows them as one phrase with an argument.
 - **Composition can be written down without mentioning data.** Feel the fork once. Then leave it —
   it does not parse in q.
-- **Depth is a parameter.** After rank, q's `each` / `each-prior` / `each-left` / `each-right` stop
-  being four facts and become one idea, and you stop reaching for `each` where the operator already
-  vectorises.
+- **Depth is a parameter** — in J. q's `each` is that idea frozen at one level, and q's other
+  iterators are *not* rank in disguise: `each-prior` walks adjacent pairs, which is the infix
+  family, not a depth. What rank buys you is knowing why you never write `each` for `*`.
 - **The thinking transfers; the plumbing does not.** The fork fails loudly. The window convention
   fails silently. Respect the second one more.
 

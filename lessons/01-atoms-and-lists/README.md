@@ -168,8 +168,13 @@ q)(+/ % #) til 5
 
 It does not merely give a wrong answer — **it does not parse.** The message is empty; the caret,
 landing in the middle of the fork, is the whole story. Crucially this is a *parse-time* rejection,
-not a runtime type error: protected evaluation cannot catch it, because there is nothing to
-evaluate. **q has no tacit trains or forks.** A parenthesised run of functions is not a new function
+not a runtime type error, so you cannot guard against it in your own source: wrapping the fork in
+protected evaluation (`.[{(+/ % #) til 5};();{…}]`) fails in exactly the same way, because the
+wrapper has to parse too and the guard never runs. (Strictly, the one thing that *can* trap it is
+handing the same text to `value` as a runtime **string**, where parsing happens inside the
+protected call — a different program from anything you would write by accident.)
+
+**q has no tacit trains or forks.** A parenthesised run of functions is not a new function
 in q; it is a syntax error.
 
 What q wants instead is that you say the composition out loud — name it, or use the built-in:
