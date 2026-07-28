@@ -128,9 +128,10 @@ concern was correct.)
   (Confidentiality): *"You will not disclose any benchmark, test or performance information or any
   report which contains a competitive analysis regarding the Software to any third party except as
   explicitly authorized in advance by us in writing."* → **This is the DeWitt-style clause, and it
-  is live in KDB-X CE, not just the old Personal Edition.** Direct hit on **Article 5**: it may NOT
-  publish KDB-X performance numbers/benchmarks without written KX authorization. The `aj` **showcase
-  is unaffected** — its golden file asserts *correctness/output*, not performance. Article 5 must
+  is live in KDB-X CE, not just the old Personal Edition.** Direct hit on **the as-of-join article**
+  (Article 4 since the 2026-07-28 renumber): it may NOT publish KDB-X performance
+  numbers/benchmarks without written KX authorization. The `aj` **showcase
+  is unaffected** — its golden file asserts *correctness/output*, not performance. That article must
   reframe to design/semantics/co-design (SPEC already leans this way) OR obtain written consent.
 - **Liability cap US$100** (Clause 7); **governing law New York** (Clause 15).
 - **Term: indefinite, terminable at-will by KX on email/website notice** (Clause 10) — NOT the fixed
@@ -197,7 +198,7 @@ failure is the correct *consequence*, which SKILL.md states correctly.
 ## Consolidated open questions
 
 RESOLVED 2026-07-24 by reading the license (see "License terms — CONFIRMED"):
-- ~~[EULA] benchmark-publication clause?~~ → **YES, Clause 9. Article 5 blocked from publishing
+- ~~[EULA] benchmark-publication clause?~~ → **YES, Clause 9. The as-of-join article is blocked from publishing
   performance numbers without written KX consent.**
 - ~~[EULA] unqualified commercial use?~~ → **NO. Personal / internal-business only (Clause 2.1 /
   Attachment A). Drop any commercial-friendliness claim.**
@@ -214,7 +215,7 @@ RESOLVED 2026-07-24:
   cores 0W**. The connections limit is **16** (the doc page was right; the secondary "runtime = 8"
   blog was wrong). Cores unlimited per-process; 24 is an aggregate license cap. Pinned in toolchain.md.
 - ~~[version] `kx-skills` SHA~~ → **`8b7040f769c6653db67b063aa34c944729e8857e`** (pinned in toolchain.md).
-- ~~[decision] Article 5~~ → **DECIDED (provisional): easier path — design/semantics framing, NO
+- ~~[decision] the as-of-join article~~ → **DECIDED (provisional): easier path — design/semantics framing, NO
   KDB-X performance numbers, so no KX authorization needed now. Revisit later if wanted.**
 
 No open licensing/tooling items remain for Task Zero. Remaining setup is operational (install J 9.7).

@@ -17,7 +17,9 @@ subject under test (KX's `q-knowledge` plugin).
 - If a learner-gap skill IS authored, tune ITS `description`/trigger wording — NOT by expanding
   the body — then **re-test on FRESH prompts**: iterating on the same 20 overfits the trigger to
   the test set (SPEC.md). The fresh-prompt numbers, not the tuning-set numbers, are what publish.
-- Publish these numbers in the skill README at M5; they are the marketplace quality evidence.
+- These numbers were to be the marketplace quality evidence in a skill README. **No skill was
+  authored** (see verdict.md), so they publish in `triggers/` and Article 3 instead, and M5 ships
+  the harness rather than a skill.
 
 ## Part B — Output quality (post-activation)
 

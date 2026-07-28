@@ -6,7 +6,8 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
 ## Objective hierarchy (settles conflicts — higher wins)
 
 1. Learning (author writes real q; learns skill evaluation) 2. Curriculum (verified lessons)
-3. Skill + marketplace 4. Blog. Marketplace discoverability NEVER reshapes pedagogy.
+3. Skill EVALUATION (discharged at M2 by publishing the eval; it authored no skill, so there is
+   no marketplace track) 4. Blog. Marketplace discoverability NEVER reshapes pedagogy.
 
 ## Non-negotiable rules
 
@@ -46,9 +47,15 @@ runs end-to-end, and the eval verify-harness exists.
    TEST on discordant pairs (the old 15% threshold is cut — unadjudicable at n=15). Do NOT claim
    blind scoring. Author a skill only if a gap appears, scoped to it, q-only.
 3. Part II (q) lessons, one at a time: q code → verify → narrative → J twin (short) → verify.
-4. Part I (J laboratory) compression pass + transition chapter.
+   Remaining: attributes & sort discipline (`s#`/`g#`/`p#`) — REQUIRED before the showcase — then
+   the `aj` showcase lesson. (This is SPEC's **M3**; SPEC's milestones were swapped 2026-07-28 to
+   match this order, which the Q-first rule requires.)
+4. Part I (J laboratory) compression pass + transition chapter. (SPEC's **M4**.)
 5. CI: `j-verify.yml` (blocking, on PR) and `q-verify.yml` (nightly + manual, trusted branches
-   only, license key from repo secret; failures notify, never block).
+   only, license key from repo secret; failures notify, never block). **`q-verify.yml` does not
+   exist yet** — so `verify-q`, `verify-eval` and `verify-eval-run` run on the author's machine
+   only, and nothing in CI protects the published eval numbers. It must run `make verify`, not
+   just `verify-q`, or the eval-run checks stay unenforced.
 6. README: thesis, why-J-not-BQN, prior art, disclaimers, quickstart.
 
 ## Environment notes
@@ -62,12 +69,15 @@ runs end-to-end, and the eval verify-harness exists.
 ## Blog series duty (per milestone)
 
 Each milestone M1–M5 produces a blog article draft in `writings/` (see SPEC.md). An article is
-publishable ONLY when its milestone's artifacts verify. Article #3 must report the real eval
-result, positive or negative. Article #4 is the at-risk one (least novelty for the author) —
-draft it during M1. Article #6 is PACKAGING of docs/COMPOUND.md, so append to COMPOUND.md at
-every milestone. Publishing/syndication steps live in RELEASE-CHECKLIST.md, not here and not in
-SPEC.md. The skill targets the Claude Skills marketplace: its README cites the eval verdict as
-evidence, and marketplace metadata is part of M5, not an afterthought.
+publishable ONLY when its milestone's artifacts verify. Article #3 reported the real eval result
+(it was negative — DONE, 2026-07-27). Article #5 "Unlearn the loop" is the low-novelty one whose
+"draft it early" mitigation was missed; it gets drafted out of milestone order to close that.
+Article #6 is PACKAGING of docs/COMPOUND.md, so append to COMPOUND.md at every milestone.
+Publishing/syndication steps live in RELEASE-CHECKLIST.md, not here and not in SPEC.md.
+
+**There is no skill and no marketplace submission.** The M2 eval authored none — objective 3's
+gate held — so M5 ships the curriculum plus `eval/harness/` packaged as a reusable
+plugin-A/B artifact. Do not reintroduce a skill deliverable without a NEW eval showing a gap.
 
 ## Compound step (mandatory at each milestone)
 

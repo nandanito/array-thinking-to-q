@@ -136,7 +136,7 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   (1) license read (KX CE License Agreement v1.1, 27 Aug 2025): **personal / internal-business use
       ONLY**, benchmark-restricted — the "more restrictive text" IS the license; no commercial claim;
   (2) benchmark clause **FOUND** (Clause 9: no publishing performance/benchmark info without prior
-      written KX consent) → Article 5 takes the no-numbers, design/semantics path;
+      written KX consent) → the as-of-join article takes the no-numbers, design/semantics path;
   (3) KX ships `KxSystems/kx-skills` (5 plugins, incl. `q-knowledge` + qlint) + 2 MCP servers; none
       coach a newcomer out of imperative habits, so the learner niche survives (see objective 3).
 - Native Windows is not supported (WSL only) — state this in the README.
@@ -175,21 +175,31 @@ already delivers it → publish the comparison, author nothing. Both are real fi
 - **M2 — Eval gate (wk 2–3):** trigger precision + output quality run; verdict written.
   → Article 3 "Does KX's official q plugin actually make Claude better at q?" (flagship —
   an independent evaluation of a vendor plugin; genuinely new data for the community).
-- **M3 — J laboratory (wk 3–4):** Part I + transition chapter verified.
-  → Article 4 "Unlearn the loop: what J shows that q hides". **AT-RISK ARTICLE** — least novelty
-  for the author (he already knows J), arrives right after the two exciting milestones. Draft it
-  during M1 while enthusiasm is high.
-- **M4 — The q core (wk 5–7):** Part II + `aj` showcase golden-filed; nightly q CI live.
-  → Article 5 "The as-of join: what changes when the engine is built around one primitive"
+- **M3 — The q core (wk 3–5):** Part II + `aj` showcase golden-filed; nightly q CI live.
+  → Article 4 "The as-of join: what changes when the engine is built around one primitive"
   (NOT "why quants pay" — the primitive has spread to pandas/Polars/DuckDB/QuestDB/ClickHouse;
   the story is co-design, not scarcity). Benchmark clause CHECKED (2026-07-24): license Clause 9
   bars publishing KDB-X performance/benchmark numbers without prior written KX consent →
   DECISION (provisional): design/semantics framing, NO benchmark numbers; revisit authorization
   later if wanted. See docs/licensing-notes.md.
-- **M5 — Ship (wk 8):** skill hardened from eval findings; marketplace submission; v1 tag.
+- **M4 — J laboratory (wk 6–7):** Part I + transition chapter verified.
+  → Article 5 "Unlearn the loop: what J shows that q hides". **WAS the at-risk article** — least
+  novelty for the author (he already knows J), and its mitigation ("draft it during M1 while
+  enthusiasm is high") was missed. Mitigated instead by drafting it at M2-close, before its
+  milestone exists; that is what makes it safe for the J laboratory to run *after* the q core.
+- **M5 — Ship (wk 8):** curriculum v1; the **eval harness packaged as a reusable artifact**
+  (`eval/harness/` published so anyone can A/B a Claude Code plugin: neutral-cwd contamination
+  control, mechanical activation detection, self-verifying scorer); v1 tag.
+  **No skill, and no marketplace submission** — M2 authored none, per objective 3's gate.
   → Article 6 "Teaching an AI a niche language: what compounds" — **packaging, not new writing.**
   COMPOUND.md is appended continuously at every milestone; article 6 publishes what it already
   contains. If that discipline holds, this article costs an hour.
+
+**M3/M4 were swapped on 2026-07-28** (they read J-laboratory-then-q-core). The old order predates
+J's demotion from co-star to illustrative laboratory, and it contradicts both CLAUDE.md's build
+order and the Q-first rule — a J prelude cannot be written before its q side runs. Articles moved
+with their milestones so the series still publishes 1→6 in order. COMPOUND.md entries dated before
+that reconciliation label the Part II lessons "M4"; they mean what is now M3.
 
 Article drafts live in `writings/`. Publishing/syndication is an operational checklist
 (`RELEASE-CHECKLIST.md`), not product scope.
