@@ -1,4 +1,4 @@
-# Toolchain — pinned versions (SKELETON)
+# Toolchain — pinned versions
 
 > Task Zero requires recording the EXACT downloaded build as the pinned known-good release.
 > Both J and q/KDB-X are now PINNED (2026-07-24). Do not fill in a version you have not actually run.

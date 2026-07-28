@@ -1,0 +1,119 @@
+# q-verify — the q half of `make verify`, on trusted branches only.
+#
+# WHY THIS IS NOT A PR CHECK. Running q needs a KDB-X CE license key, and GitHub
+# does not expose secrets to workflows triggered by a fork's pull_request. A PR
+# check that cannot get a key would fail for every outside contributor and block
+# nothing useful. So: schedule + manual + push-to-main. Failures notify (GitHub
+# emails the owner on a failed scheduled run); they never block a merge, because
+# by the time this runs the merge already happened. That asymmetry is deliberate
+# and is why `j-verify.yml` — which needs no key — remains the blocking check.
+#
+# IT RUNS `make verify`, NOT `make verify-q`. verify-eval and verify-eval-run are
+# what keep the PUBLISHED eval numbers honest (they recompute results.csv's
+# correctness column and re-derive runs/traces.md from the committed logs, and
+# fail on disagreement). Narrowing this to verify-q would leave those unenforced
+# anywhere but the author's laptop, which was the whole reason this file exists.
+#
+# IT DELIBERATELY DOES NOT CACHE OR UPLOAD THE q BINARY. KX CE License Clause 2.1
+# prohibits making the Software available to third parties; a cache or artifact on
+# a public repository is exactly that. Reinstall every run. See
+# docs/licensing-notes.md.
+#
+# SECRETS REQUIRED (repo Settings → Secrets and variables → Actions):
+#   KX_B64LIC        base64 `kc.lic` contents from the KX welcome email
+#   KX_INSTALL_TOKEN bearer token for the authenticated KDB-X install script
+# Both are masked by GitHub in logs. Do not echo them, and do not add `set -x`.
+#
+# OPTIONAL REPO VARIABLE:
+#   KX_INSTALL_URL   the authenticated install-script URL, if it differs from the
+#                    default below. Set it under Settings → Variables → Actions.
+#
+# WHAT IS AND IS NOT VERIFIED HERE — read before trusting this file:
+#   VERIFIED: `make verify` passes locally against KDB-X CE 5.0 / J 9.7.1; the J
+#     install steps are lifted from j-verify.yml, which runs green today; `.z.K`
+#     prints the bare version (`5f`) and no licensed serial/email/host.
+#   NOT VERIFIED: the KDB-X install has never been run on a CI runner from this
+#     workflow. The default URL below responds 401 without a token — so the host
+#     and path exist and demand auth, which is consistent with the documented
+#     flow, but that is the *only* thing confirmed about it. Whether the token is
+#     long-lived enough for a nightly job is unknown.
+#   If any of that is wrong, this job fails loudly with the reason. That is the
+#   intended behaviour. A silent skip would be the bug (docs/COMPOUND.md).
+
+name: q-verify
+
+on:
+  schedule:
+    - cron: "0 3 * * *"     # nightly, 03:00 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+# Never let two installs race on the same runner-side state.
+concurrency:
+  group: q-verify
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Fail LOUDLY when the credentials are absent. docs/COMPOUND.md records the
+      # j-verify stub that passed while verifying nothing: "a gate that cannot be
+      # enforced must FAIL, not pass." A `continue-on-error` or an `if: secrets…`
+      # skip here would recreate that exact defect.
+      - name: Assert credentials are present
+        env:
+          B64LIC: ${{ secrets.KX_B64LIC }}
+          TOKEN: ${{ secrets.KX_INSTALL_TOKEN }}
+        run: |
+          set -euo pipefail
+          missing=0
+          [ -n "${B64LIC:-}" ] || { echo "::error::secret KX_B64LIC is not set"; missing=1; }
+          [ -n "${TOKEN:-}"  ] || { echo "::error::secret KX_INSTALL_TOKEN is not set"; missing=1; }
+          if [ "$missing" -ne 0 ]; then
+            echo "q-verify cannot run without both secrets. See the header of this workflow."
+            exit 1
+          fi
+          echo "both secrets present"
+
+      - name: Install J 9.7 (headless, no Qt IDE, no addons)
+        run: |
+          set -euo pipefail
+          # Must be www.jsoftware.com — the bare host's TLS cert does not cover it.
+          # Download then run: `curl | sh` reports the SHELL's status, so a failed
+          # fetch would exit 0 having installed nothing (docs/COMPOUND.md).
+          curl -fsSL https://www.jsoftware.com/download/j9.7/jinstall.sh -o "$RUNNER_TEMP/jinstall.sh"
+          sh "$RUNNER_TEMP/jinstall.sh" --qt none --no-addons
+          test -x "$HOME/j9.7/bin/jconsole" || { echo "::error::jconsole not installed"; exit 1; }
+
+      - name: Install KDB-X Community Edition
+        env:
+          B64LIC: ${{ secrets.KX_B64LIC }}
+          TOKEN: ${{ secrets.KX_INSTALL_TOKEN }}
+          # Override in Settings → Variables → Actions if KX moves it.
+          INSTALL_URL: ${{ vars.KX_INSTALL_URL || 'https://portal.dl.kx.com/assets/raw/kdb-x/install_kdb.sh' }}
+        run: |
+          set -euo pipefail
+          # Same rule as above: fetch to a file and assert it, never pipe to sh.
+          curl -fsSL -H "Authorization: Bearer $TOKEN" "$INSTALL_URL" \
+            -o "$RUNNER_TEMP/install_kdb.sh"
+          test -s "$RUNNER_TEMP/install_kdb.sh" || { echo "::error::install script empty — token expired, or KX moved the URL (set repo variable KX_INSTALL_URL)"; exit 1; }
+          sh "$RUNNER_TEMP/install_kdb.sh" --b64lic "$B64LIC"
+          # Positive assertion that the thing actually installed, per COMPOUND.
+          QBIN="$(command -v q || echo "$HOME/.kx/bin/q")"
+          test -x "$QBIN" || { echo "::error::q not found after install"; exit 1; }
+          echo "QBIN=$QBIN" >> "$GITHUB_ENV"
+
+      - name: Show versions (no license serial, email or host — repo is public)
+        run: |
+          set -euo pipefail
+          echo "9!:14''" | "$HOME/j9.7/bin/jconsole"
+          # .z.K is the kdb+ version number; the startup BANNER carries the licensed
+          # serial/email/host, which must never reach a public log (docs/toolchain.md).
+          echo 'show .z.K; exit 0' | "$QBIN" -q
+
+      - name: make verify (q lessons + J twins + aj golden + eval refs + eval run)
+        run: make verify Q="$QBIN" J="$HOME/j9.7/bin/jconsole"

@@ -20,3 +20,19 @@
 - Cited idiom (checklist item 5): `\`sym\`time xasc quote` then `@[\`quote;\`sym;\`g#]` before
   `aj` — https://code.kx.com/q/ref/aj/ , https://code.kx.com/q/ref/set-attribute/
 - Verify: `make verify-eval`. (Missing the sort => wrong result with no error.)
+
+## Instrument note — this task is TOO NARROW (added 2026-07-28, deliberately not applied)
+
+The cited idiom names `` `g# `` as though it were the only correct attribute. It is not:
+<https://code.kx.com/q/ref/set-attribute/> says parted *"effects better speedups than grouped, both
+on disk and in memory"* when the data can be sorted so `p` can be set — which `` `sym`time xasc ``
+does. In the M2 run **both** conditions chose `` `p# `` and were marked down for it; that markdown
+was later retracted as an instrument defect, not a model error (eval/verdict.md, eval/runs/notes.md).
+
+**The Prompt and cited idiom above are intentionally left UNCHANGED.** `results.csv` was scored
+against this exact text, and editing it now would leave the published scores unexplainable by the
+committed instrument. Reproducibility beats tidiness.
+
+**Before this task is reused in any future run**, widen item 5 to accept either attribute on a
+sorted table — or state why `` `g# `` alone should count — and re-score from scratch. Do not mix
+results across the two versions.
