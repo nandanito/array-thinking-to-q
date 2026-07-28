@@ -29,9 +29,11 @@ unidiomatic, not absent.
   Prefer qSQL (`select … by … from t`) over row-wise thinking.
 - **`aj` (verify all of this at M1):** join columns are the columns COMMON to both tables — not
   necessarily the leading ones; all but the last match on equality, the last matches as-of (≤),
-  taking the prevailing value. Attributes differ by regime: `g#` on sym for IN-MEMORY tables with
-  time sorted within sym; `p#` is the ON-DISK prescription and does nothing useful in memory. Only
-  the attribute on the first join column is used.
+  taking the prevailing value. Attributes: `g#` on sym is the standard IN-MEMORY prescription (time
+  sorted within sym) and `p#` the on-disk one — but `p#` also works in memory and can OUTPERFORM
+  `g#` where values are contiguous (code.kx.com/q/ref/set-attribute/). It is NOT useless in memory;
+  an earlier draft of this line said so and was wrong. Only the attribute on the first join column
+  is used.
 - **THE GOTCHA THAT MATTERS MOST:** `aj` takes the last matching record in ROW ORDER. If the quote
   table is not sorted by time within sym, aj returns SILENTLY WRONG prevailing quotes — no error,
   no warning. Sort discipline is a correctness requirement, not an optimization.

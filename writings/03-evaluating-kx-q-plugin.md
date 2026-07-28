@@ -185,31 +185,41 @@ Roughly three times the output tokens, for code that scored identically on thirt
 tasks and was *literally the same code* on five of them. When your primary metric hits a ceiling,
 the secondary metrics are the finding.
 
-## The one genuinely interesting failure — and it belongs to both arms
+## The one genuinely interesting finding — which turned out to be mine, not theirs
 
 Task 15 hands the model an as-of join that returns silently wrong quotes because the quote table
 is not sorted by time within sym, and asks it to fix the join and *set the appropriate in-memory
 attribute*.
 
 Both conditions sorted correctly. Both produced the exactly correct joined table. And both applied
-`` `p# ``.
+`` `p# `` where my task sheet cites `` `g# ``.
 
-[KX's own documentation for `aj`](https://code.kx.com/q/ref/aj/) gives memory → `` `g# `` and
-disk → `` `p# ``, and notes that on disk the `g#` attribute does not help. Both arms reached for
-the *disk* attribute on an in-memory table. It runs. It returns the right rows. Nothing errors.
+**I first wrote this section up as a finding, and I had it wrong.** The draft said both arms had
+reached for "the disk attribute on an in-memory table", citing [the `aj`
+page](https://code.kx.com/q/ref/aj/), which frames the pair as memory → `` `g# ``, disk →
+`` `p# ``. Then the sibling page: [set-attribute](https://code.kx.com/q/ref/set-attribute/) says of
+parted, *"If the data can be sorted such that `p` can be set, it effects better speedups than
+grouped, both on disk and in memory."* Both candidates sorted the table first. That is precisely
+the precondition. `` `p# `` there is defensible, and possibly faster.
 
-**KX's own plugin, loaded and active, did not correct a deviation from KX's own published `aj`
-guidance.** The plugin-armed run spent 3,848 output tokens — loading the skill, searching, reading
-a bundled reference file — to arrive at the same wrong attribute as the 978-token baseline.
+The part that stings: **my own repository already contained that correction.** A licensing-and-docs
+audit I ran back at milestone one recorded, in writing, that `p#` "also works in memory and can
+outperform `g#` when values are contiguous. It is not useless in memory." I scored the eval months
+later, cited the `aj` page, and never opened either the sibling page or my own notes on exactly
+this claim.
 
-This is precisely the shape of defect my curriculum's `aj` showcase exists to teach: **the wrong
-answer that runs clean.** There is no exception, no red output, nothing to grep for. In production
-it is a subtly wrong number in a report.
+So the honest version of this section is much smaller than the one I wanted to write. There is no
+"KX's plugin failed to correct a deviation from KX's own guidance." There is: both arms diverged
+from *my* task sheet, in a direction the documentation supports, and **my task sheet is the thing
+that was too narrow.** It names one attribute as though it were the only right answer.
 
-And I am deliberately *not* building a skill around it. My protocol permits authoring one only if
-the eval exposes a gap the plugin does not fill. One observation, from one task, in one run, is a
-hypothesis — not a gap. Shipping a skill on that basis is fitting a skill to n=1. It goes in the
-notebook as the seed for a harder task set.
+I have left the score at zero, because the scoring rule was fixed before the pass and gets applied
+consistently or it is not a rule. But the interpretation is retracted, and since both arms diverged
+identically it never touched the comparison anyway.
+
+That is also the end of the one candidate "gap" this eval produced. My protocol permits authoring a
+skill only if the eval exposes a gap the plugin does not fill; what it actually exposed was a defect
+in my own instrument. No skill, then — and a sharper task set goes in the notebook.
 
 ## What I would tell you to steal
 
@@ -226,6 +236,10 @@ notebook as the seed for a harder task set.
   artifact.** "No unnecessary temporaries" is pure preference until you tie it to something — for
   me, the verified reference solution. Doing that first is what turned this run's entire margin
   into a documented caveat instead of a headline.
+- **Read the sibling page before you call something a deviation from the docs.** My one juicy
+  finding evaporated on the second page of the same reference — and my own repo had already written
+  the correction down. When a result flatters your thesis, that is the moment to go looking for the
+  page that kills it.
 - **Publish the null.** It cost the same fifty sessions a positive would have.
 
 ## Verdict

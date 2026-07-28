@@ -25,8 +25,8 @@ A learning-in-public project, built one verified lesson at a time. Honest state 
 | Showcase — as-of join | [Runs end-to-end](showcase/aj/), golden-filed |
 | Part I — J laboratory | Not yet written (1–2 illustrative, read-along lessons) |
 | Transition chapter | Not yet written |
-| Eval of KX's official q plugin | Harness + 15 tasks + 20 trigger prompts built; **the run itself is pending** ([plan](eval/PLAN-M2.md)) |
-| `idiomatic-q` skill | Conditional stub — authored **only** if the eval proves a gap |
+| Eval of KX's official q plugin | **Run and published** — 50 headless sessions, [null result](eval/verdict.md). No measurable lift, on a task set that could not have measured a small one. Raw material in [`eval/runs/`](eval/runs/) |
+| `idiomatic-q` skill | **Not authored, and not planned.** The eval exposed no gap, so the conditional never fired |
 | CI | `j-verify` blocking on every PR; q verification is author-side only (license-gated) |
 
 ## Start here

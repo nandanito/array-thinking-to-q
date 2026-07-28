@@ -98,12 +98,14 @@ bundle path exists.
 **Resource limits** (public usage-restrictions page corroborates SPEC's 16/4/8/24, with caveats):
 - RAM **16 GB** — confirmed (license text; `.Q.lim` mem = 16 GiB).
 - Secondary threads **4** — confirmed.
-- Connections — **8 at runtime** (`.Q.lim` conns=8) BUT the KX doc page says **16**. Treat 8 as
-  operative; the 16 is a possible doc inconsistency / sibling-edition figure. Confirm on install.
+- Connections — **16**, confirmed on the real install (`.Q.lim` conns=16), matching the KX doc
+  page. ~~Pre-read guess said 8 at runtime, "treat 8 as operative"~~ — SUPERSEDED 2026-07-24: the
+  secondary blog was wrong and the doc page was right.
 - **24 cores is an aggregate *license* cap across all instances, not a per-process runtime limit**
   (`.Q.lim` cores=0W). SPEC lists it among runtime limits — it's a legal ceiling. Minor flag.
-- Also: single instance only; multi-process OK if aggregate RAM <16 GB; a **12-month** key period
-  is reported (renewal mechanics unconfirmed).
+- Also: single instance only; multi-process OK if aggregate RAM <16 GB. ~~A 12-month key period is
+  reported~~ — SUPERSEDED 2026-07-24: the issued CE key's install banner reads **NONEXPIRE**. The
+  *agreement* is separately terminable at will by KX (Clause 10); that is not a key expiry.
 - Public restrictions page: https://code.kx.com/insights/1.18/licensing/usage-restrictions.html
 - Runtime `.Q.lim` figures (secondary): https://dataintellect.com/blog/running-torq-with-kdb-x-community-edition/
 
@@ -147,8 +149,16 @@ https://code.kx.com/kdb-x/get_started/kdb-x-install.html
 
 **KDB-X CE vs. old kdb+ Personal Edition** — both still exist, different licenses. Personal Edition:
 non-commercial, local-only, phones home, carries the §1.3 benchmark ban (SPEC already rejects it,
-line 138). KDB-X CE (GA 2025-11-19): commercial permitted within limits, cloud-deployable, offline
-runtime, next-gen engine.
+line 138). KDB-X CE (GA 2025-11-19): cloud-deployable, next-gen engine.
+
+> **CORRECTED 2026-07-28.** This line previously ended "commercial permitted within limits,
+> cloud-deployable, **offline runtime**, next-gen engine" — pre-read speculation that survived the
+> license read and sat here contradicting the CONFIRMED section *above it in this same file*.
+> Both struck claims are false: Clause 2.1 + Attachment A restrict use to **personal or internal
+> business** (no commercial grant), and Clause 4 **reserves a periodic license-validation call**
+> (no guaranteed offline runtime). Leaving a stale summary next to the correct finding is how a
+> reader gets the wrong answer from a document that also contains the right one — the same defect
+> class as the `p#` retraction in docs/COMPOUND.md.
 
 ---
 

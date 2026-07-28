@@ -30,7 +30,7 @@ is not penalised under item 5 (see task 09).
 | 06 | mean-no-avg | 6 | 6 | Both `{(sum x) % count x}` — neither reached for a J-style `(+/ % #)` train, the trap this task was built for. B wraps it in an empty-list guard (`$[count x; …; 0n]`); the checklist has no item for defensiveness, and the cited idiom is present either way. Tie. |
 | 07 | total-qty-by-sym | 6 | 6 | Byte-identical qSQL `select sum qty by sym from t`. |
 | 08 | add-notional | **5** | **6** | **The only discordant pair in the run.** B: `show update notional:price*qty from t`. A: `t:update … from t` then `show t` — one binding more than the reference, used exactly once, inlinable with no change in behaviour → item 4 = 0. See the caveat below. |
-| 09 | asof-join | 6 | 6 | Both produce the correct join. The prompt states the quote table is *already* sorted, so the cited idiom is the `aj` call itself, and both match it. A additionally sorted and applied `` `p# `` — unrequested, and the wrong attribute for memory (see 15), but outside this task's cited idiom, so not scored under item 5. |
+| 09 | asof-join | 6 | 6 | Both produce the correct join. The prompt states the quote table is *already* sorted, so the cited idiom is the `aj` call itself, and both match it. A additionally sorted and applied `` `p# `` — unrequested, but defensible (see 15), and outside this task's cited idiom either way, so not scored under item 5. |
 | 10 | count-by-sym-side | 6 | 6 | Byte-identical `select n:count i by sym,side from t`. |
 | 11 | distinct-syms | 6 | 6 | Both `show distinct s`. |
 | 12 | fix-doloop-sum | 6 | 6 | Both collapse the `do[]` to `sum`. A inlines the literal, B keeps `x:`; both ≤ the reference's binding count. **B is the one condition-B run that never invoked the plugin** and still produced the same answer. |
@@ -40,22 +40,34 @@ is not penalised under item 5 (see task 09).
 
 Combined per-task score = correctness (0/1) + `idiom_total` (0–5), per `verdict.md`.
 
-## Task 15 — the shared failure, and why it is the most interesting row
+## Task 15 — where both arms diverge from the sheet, and a correction
 
 Both conditions sorted correctly (`` `sym`time xasc quote ``) and both produced the **exactly
-correct joined table**. Both then failed on two counts, in the same way:
+correct joined table**. Both then scored 0 twice, in the same way:
 
-1. **`` `p# `` where the prompt asked for "the appropriate in-memory attribute".**
-   <https://code.kx.com/q/ref/aj/> gives memory → `` `g# `` and disk → `` `p# ``, and adds that on
-   disk the `g#` attribute does not help. Both conditions applied the *disk* attribute to an
-   in-memory table. It runs, it returns the right rows, and it is the wrong half of the published
-   guidance. Item 5 = 0 for both.
+1. **`` `p# `` where the sheet cites `` `g# `` for "the appropriate in-memory attribute".**
+   <https://code.kx.com/q/ref/aj/> frames the pair as memory → `` `g# ``, disk → `` `p# ``. Item 5
+   is scored against the task's cited idiom, so both score 0 — symmetrically, so it cannot affect
+   the comparison.
+
+   **Correction (2026-07-28).** This was originally written up as both arms applying "the disk
+   attribute to an in-memory table" and getting "the wrong half of the published guidance". That is
+   not right. <https://code.kx.com/q/ref/set-attribute/> says *"If the data can be sorted such that
+   `p` can be set, it effects better speedups than grouped, both on disk and in memory"* — and both
+   candidates sorted first, which is exactly that precondition. `` `p# `` here is defensible and
+   possibly faster. The repo's own `docs/licensing-notes.md` §C had already recorded this as
+   CORRECTED claim 5 on 2026-07-24; the scoring pass cited the `aj` page alone and missed both the
+   sibling page and its own audit. The score is unchanged (the rule was fixed before scoring and is
+   applied consistently); the interpretation is.
 2. **Both appended `show meta quote`** — an extra output block, presumably to evidence the
    attribute — which makes stdout differ from the golden. Correctness = 0 for both, but the *join
    itself* diffs clean; this is a presentation artifact, not a q error.
 
 The condition-B run reached for this after loading the skill, globbing, and reading a bundled
-reference — 3,848 output tokens against baseline's 978, for the same wrong attribute.
+reference — 3,848 output tokens against baseline's 978, for the same attribute choice.
+
+**Instrument note for any future task set:** task 15 cites one attribute as though it were the only
+correct answer. It should either widen to accept `` `p# `` on a sorted table, or say why not.
 
 ## The caveat on task 08, stated plainly
 
