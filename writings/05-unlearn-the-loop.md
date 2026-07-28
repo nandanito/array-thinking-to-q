@@ -341,9 +341,12 @@ Both conditions solved all three, immediately, correctly. `do[]` → `sum`. `whi
 Row-walk → one vectorised `update`. The loop-transliteration failure mode this whole curriculum is
 built to prevent did not appear at all.
 
-What *did* break both conditions was the one task about attributes and sort discipline — applying
-`` `p# `` to an in-memory table where [KX's own documentation](https://code.kx.com/q/ref/aj/) calls
-for `` `g# ``. Correct rows, wrong attribute, no error.
+What *did* separate both conditions from my reference answer was the one task about attributes and
+sort discipline: both applied `` `p# `` where the task sheet called for `` `g# ``. (I originally
+wrote that up as both of them getting the attribute *wrong*. They didn't — the
+[set-attribute page](https://code.kx.com/q/ref/set-attribute/) says parted "effects better speedups
+than grouped, both on disk and in memory" when the data is sorted so it can be set, and both had
+sorted first. The narrow instrument was mine.)
 
 I want to be careful about how much weight that split can carry, because my own verdict on that
 eval says it was **underpowered** — the fifteen tasks turned out to be easy enough that the
@@ -351,11 +354,14 @@ baseline was already at the ceiling, so the study could not have detected a smal
 Three solved loop-fix tasks are three data points from a task set I built badly. They are not
 "models have absorbed array thinking".
 
-What they do support is narrower and still worth something: **on the loop-transliteration exercises
-I could think of, the failure mode this curriculum exists to prevent did not show up — and the
-thing that beat both arms was q-engine-specific.** Sortedness, attributes, what `aj` requires of
-the table you hand it. **J has nothing to say about any of that.** There is no fork that teaches
-you `` `g# ``.
+What they do support is narrower and still worth something. **On the loop-transliteration exercises
+I could think of, the failure mode this curriculum exists to prevent did not show up.** And the one
+task where the answers diverged from my reference at all was not about loops or reductions or any
+other array idea — it was about sortedness, attributes, and what `aj` requires of the table you hand
+it. It was even a case where I, not the models, had the documentation wrong.
+
+**J has nothing to say about any of that.** There is no fork that teaches you `` `g# ``, and no
+rank that tells you when `` `p# `` is the better call.
 
 That is consistent with a short laboratory, which is what this curriculum already commits to — J
 was cut from co-star to one or two illustrative lessons on a reviewer's advice, and I went along

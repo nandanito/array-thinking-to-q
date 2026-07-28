@@ -498,3 +498,46 @@ Also recorded, since it was found by CI rather than by reading: **`q-verify.yml`
 exist**, so `verify-q`, `verify-eval` and the new `verify-eval-run` run on one laptop only. The
 checks protecting the published eval numbers are not enforced anywhere a reviewer can see them.
 Noted in CLAUDE.md build order §5 with the requirement that it run `make verify`, not `verify-q`.
+
+## M2 correction — the `p#` finding was wrong, and the repo already said so (2026-07-28)
+
+The M2 entry above reports, as its headline model-failure finding, that both eval conditions applied
+`` `p# `` to an in-memory table where "KX's own documentation" prescribes `` `g# ``, and that KX's
+plugin failed to correct a deviation from KX's own guidance. **Retracted.** Corrected in
+`eval/verdict.md`, `eval/runs/notes.md`, and articles 3 and 5; the entry above is left standing
+because this file is a log, and this section is the correction.
+
+<https://code.kx.com/q/ref/set-attribute/>: *"If the data can be sorted such that `p` can be set, it
+effects better speedups than grouped, both on disk and in memory."* Both candidates ran
+`` `sym`time xasc quote `` before setting the attribute, which is exactly that precondition. `` `p# ``
+was defensible, possibly faster. The models were not wrong; **my task sheet was too narrow**, naming
+one attribute as though it were the only correct answer.
+
+Scores unchanged: item 5 is scored against the task's own cited idiom, that rule was fixed before
+the pass, and it applies symmetrically to both arms — so the retraction touches the interpretation
+and never touched the comparison.
+
+### Why this one is worth more than the finding it replaces
+
+- **The correction was already in this repository, in writing, four days before the eval was
+  scored.** `docs/licensing-notes.md` §C is a claim-by-claim audit of the repo's own draft skill
+  against code.kx.com, and its **CORRECTED claim 5** says verbatim: *"`p#` also works in memory and
+  can outperform `g#` when values are contiguous. It is not useless in memory."* The scoring pass
+  cited the `aj` page, drew the opposite conclusion, and never opened either the sibling
+  `set-attribute` page or the repo's own audit of precisely that claim. **Prior work does not
+  protect you if nothing routes you back to it.** A verified finding filed in a doc nobody re-reads
+  is indistinguishable from a finding never made.
+- **The failure mode is motivated reasoning, not carelessness.** This was the one *interesting*
+  result in an otherwise null eval — the single paragraph that made a negative writeup feel like it
+  had teeth. That is exactly the claim that should have been attacked hardest, and instead it got
+  the least scrutiny of anything in the verdict. **When a result flatters the thesis, treat it as
+  the highest-priority thing to try to kill.** Two adversarial review passes over the M2 work did
+  not catch it either; both reviewed what the artifacts proved versus what the prose claimed, and
+  this was a claim about the *outside world* that no artifact in the repo could contradict.
+- **"Cite a published source" is weaker than it sounds when a topic spans pages.** PROTOCOL.md's
+  defence against evaluator drift is that every checklist item be justifiable against a published
+  source. It was — the `aj` page really does say memory→`g#`, disk→`p#`. One page, cited accurately,
+  still produced a wrong conclusion because the qualifying sentence lives on a sibling page.
+  Sharpen the rule: **cite the source, then look for the page that contradicts it.**
+- Instrument note carried forward: any future task set must either widen task 15 to accept `` `p# ``
+  on a sorted table, or state why not.

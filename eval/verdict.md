@@ -150,17 +150,33 @@ The tasks could not discriminate on quality. They discriminated cleanly on token
 
 For 13 of 15 tasks that bought identical or equivalently-scored code. The extreme is task 15, where
 condition B spent 3,848 tokens — loading the skill, globbing, reading a bundled reference — to
-arrive at the *same wrong attribute* as baseline's 978.
+reach the *same* attribute choice as baseline's 978.
 
-### The shared failure worth more than the comparison
+### The shared divergence on task 15 — and a correction to how this was first written
 
-On task 15 both conditions applied `` `p# `` to an **in-memory** quote table.
-<https://code.kx.com/q/ref/aj/> gives memory → `` `g# ``, disk → `` `p# ``. Both arms picked the
-disk attribute for a memory table; both returned correct rows anyway, so nothing errored.
+On task 15 both conditions applied `` `p# `` to an **in-memory** quote table, where the task sheet
+cites `` `g# `` and <https://code.kx.com/q/ref/aj/> frames the pair as memory → `` `g# ``, disk →
+`` `p# ``. Item 5 is scored against the task's own cited idiom, so both score 0 on it — symmetric,
+and therefore irrelevant to the comparison.
 
-**KX's own plugin, loaded and active, did not correct a deviation from KX's own published `aj`
-guidance.** That is a specific, reproducible gap — and it is exactly the class of defect this
-curriculum's `aj` showcase exists to teach, where the wrong answer runs clean.
+**This was first written up as both arms picking "the wrong attribute", and that was wrong.**
+<https://code.kx.com/q/ref/set-attribute/> says of parted: *"If the data can be sorted such that
+`p` can be set, it effects better speedups than grouped, both on disk and in memory."* Both
+candidates ran `` `sym`time xasc quote `` first, which makes sym contiguous — precisely the
+condition under which that sentence applies. `` `p# `` in memory is a **defensible choice, possibly
+a faster one**, not a defect.
+
+Worse, this repo already knew that. `docs/licensing-notes.md` §C recorded it as **CORRECTED claim
+5** on 2026-07-24, months before the eval was scored: *"`p#` also works in memory and can outperform
+`g#` when values are contiguous. It is not useless in memory."* The scoring pass cited the `aj`
+page and never opened the sibling `set-attribute` page or the repo's own audit of exactly this
+claim.
+
+**So there is no "KX's plugin failed to correct a deviation" finding.** What actually happened is
+narrower: both arms diverged from the task's cited idiom, in a direction the documentation supports.
+The honest residue is a note about the *instrument* — task 15 cites one attribute as though it were
+the only correct one, which a future task set should either widen or justify. The score stands at 0
+because the rule was fixed before scoring and is applied consistently; the interpretation does not.
 
 ### What `repairs` measures here
 
@@ -181,9 +197,10 @@ produces good q. So does `claude-opus-5` without it, on these tasks, for a third
 tokens.
 
 **No skill is authored.** PROTOCOL.md permits authoring only if the eval exposes a gap KX's plugin
-does not fill. The `` `p#``/`` `g# `` finding is a real gap, but it is a **single observation from
-one task in one run** — evidence to design a sharper test around, not a mandate to ship a skill.
-Authoring one on this basis would be fitting a skill to n=1.
+does not fill. This eval exposed none. The `` `p#``/`` `g# `` result was written up as a candidate
+gap and has since been **retracted** (see above): `` `p# `` on a sorted in-memory table is
+documented as legitimate and possibly faster, so what that task actually surfaced was a defect in
+the instrument, not in either condition. Nothing else came close.
 
 **M5 was reshaped around this** (2026-07-28): it had read "skill hardened from eval findings;
 marketplace submission", which this verdict left without a subject. M5 now ships curriculum v1 plus
