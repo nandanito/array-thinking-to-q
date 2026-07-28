@@ -5,6 +5,11 @@ not new writing. Keeping this current is what makes the final article cost an ho
 
 Per entry: what worked / what broke / what transfers to other projects.
 
+> **Milestone renumbering, 2026-07-28.** SPEC's M3 and M4 were swapped (q core now M3, J laboratory
+> now M4). This file is an append-only log, so **earlier entries keep their original labels**:
+> anything below titled "M4 — Part II …" is work on what is now **M3**. Entries are not rewritten
+> to match — a log that gets edited to agree with the present is not evidence of anything.
+
 ## M0 — Planning (2026-07)
 - Three adversarial review rounds before any code. Biggest catch: an eval that measured
   output quality but never measured whether the skill ACTIVATES. Transferable to all future
@@ -454,3 +459,42 @@ the reviewer attacked the *epistemics of the writeup*, not the code.
 arithmetic. Every finding was about the *distance between what the artifacts prove and what the
 prose claimed*. For an evaluation, that distance IS the defect class — point the reviewer at it
 explicitly rather than at the code.
+
+## M2-close — governing-doc reconciliation (2026-07-28)
+
+First run of the "re-read SPEC.md and CLAUDE.md against reality" step that the M2 entry added to
+the compound duty. It found three defects, and the most instructive thing about them is that **all
+three were created or exposed by shipping M2 itself** — the milestone that adds a doc-drift check
+is the milestone whose own output invalidates the docs.
+
+- **M5 lost its subject the moment the verdict landed.** SPEC read "skill hardened from eval
+  findings; marketplace submission; v1 tag" and CLAUDE.md said "marketplace metadata is part of M5,
+  not an afterthought" — while the verdict authored no skill. RELEASE-CHECKLIST.md carried a
+  four-item "M5 only (marketplace submission)" block for an artifact that will never exist.
+  **Nothing failed, and the M2 compound step missed it**: I checked SPEC's eval-gate section (which
+  was accurate, because it describes the *design*) and never opened the milestone list, which is
+  where the *consequences* live. Generalises: when a result invalidates a plan, the stale text is
+  rarely in the section describing the thing you just did — it is downstream, in whatever was
+  supposed to consume the result.
+  M5 is now curriculum v1 + `eval/harness/` packaged as a reusable plugin-A/B artifact. That choice
+  also serves objective 1's actual words — "skill authoring AND EVALUATION as a *transferable
+  discipline*" — better than a marketplace listing would have.
+- **SPEC and CLAUDE.md disagreed about what to build next, and had for weeks.** SPEC: M3 = J
+  laboratory, M4 = q core. CLAUDE.md build order: Part II lessons, then the Part I compression
+  pass. Three Part II lessons had shipped against the CLAUDE.md order while SPEC said otherwise,
+  and no check could have caught it because both files were internally consistent. Diagnosis that
+  settled it: SPEC's ordering **predates J's demotion** from co-star to illustrative laboratory,
+  and it contradicts the Q-first non-negotiable (a J prelude cannot be extended before its q side
+  runs). Swapped SPEC to match; articles moved with their milestones so the series still publishes
+  in order. **Two docs can each be self-consistent and still contradict each other — "does it
+  verify" and "do the contracts agree" are different questions, and only the first is mechanised.**
+- **Constraint docs should not cite article NUMBERS.** `docs/licensing-notes.md` pinned the Clause 9
+  benchmark prohibition to "Article 5" in four places; renumbering silently pointed a real legal
+  constraint at the wrong article. Now cited by subject ("the as-of-join article"). Transferable:
+  **reference stable identifiers, not positional ones, in any doc whose job is to constrain future
+  work** — position is exactly what gets reorganised.
+
+Also recorded, since it was found by CI rather than by reading: **`q-verify.yml` still does not
+exist**, so `verify-q`, `verify-eval` and the new `verify-eval-run` run on one laptop only. The
+checks protecting the published eval numbers are not enforced anywhere a reviewer can see them.
+Noted in CLAUDE.md build order §5 with the requirement that it run `make verify`, not `verify-q`.

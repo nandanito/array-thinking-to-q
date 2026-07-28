@@ -15,8 +15,15 @@
 - [ ] Update README status
 - [ ] COMPOUND.md entry: what worked, what broke, what transfers
 
-## M5 only (marketplace submission)
-- [ ] Trigger-precision numbers published in the skill README as its quality evidence
-- [ ] Skill description/triggers tuned from eval part A, not guessed
-- [ ] Marketplace metadata: name, description, when-to-use, example invocations
-- [ ] Skill works standalone (installed without the repo) — verify on a clean machine
+## M5 only (v1 ship)
+
+The marketplace-submission checklist that used to live here is **cut**: the M2 eval authored no
+skill, so there is nothing to submit (eval/verdict.md). What ships instead:
+
+- [ ] Curriculum complete and `make verify` green end-to-end
+- [ ] `eval/harness/` packaged as a standalone reusable artifact — README covering the neutral-cwd
+      contamination control, mechanical activation detection, and the self-verifying scorer
+- [ ] Harness works **outside this repo** — verify on a clean checkout against some other plugin,
+      since "run it from a neutral directory" is the one claim that cannot be tested from in here
+- [ ] Eval numbers still re-derive: `make verify-eval-run` green
+- [ ] v1 tag; README status updated

@@ -183,8 +183,12 @@ tokens.
 **No skill is authored.** PROTOCOL.md permits authoring only if the eval exposes a gap KX's plugin
 does not fill. The `` `p#``/`` `g# `` finding is a real gap, but it is a **single observation from
 one task in one run** — evidence to design a sharper test around, not a mandate to ship a skill.
-Authoring one on this basis would be fitting a skill to n=1. The M5 decision stands open pending a
-harder task set; see COMPOUND.
+Authoring one on this basis would be fitting a skill to n=1.
+
+**M5 was reshaped around this** (2026-07-28): it had read "skill hardened from eval findings;
+marketplace submission", which this verdict left without a subject. M5 now ships curriculum v1 plus
+`harness/` packaged as a reusable plugin-A/B artifact. Reopening the skill question requires a NEW
+eval on a task set where baseline is *known* to fail — not a re-reading of this one.
 
 ## Threats to validity — carried into Article 3, not buried
 
