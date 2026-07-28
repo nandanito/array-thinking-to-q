@@ -185,7 +185,7 @@ Roughly three times the output tokens, for code that scored identically on thirt
 tasks and was *literally the same code* on five of them. When your primary metric hits a ceiling,
 the secondary metrics are the finding.
 
-## The one genuinely interesting failure — and it belongs to both arms
+## The one genuinely interesting finding — which turned out to be mine, not theirs
 
 Task 15 hands the model an as-of join that returns silently wrong quotes because the quote table
 is not sorted by time within sym, and asks it to fix the join and *set the appropriate in-memory

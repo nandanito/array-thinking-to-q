@@ -98,12 +98,14 @@ bundle path exists.
 **Resource limits** (public usage-restrictions page corroborates SPEC's 16/4/8/24, with caveats):
 - RAM **16 GB** — confirmed (license text; `.Q.lim` mem = 16 GiB).
 - Secondary threads **4** — confirmed.
-- Connections — **8 at runtime** (`.Q.lim` conns=8) BUT the KX doc page says **16**. Treat 8 as
-  operative; the 16 is a possible doc inconsistency / sibling-edition figure. Confirm on install.
+- Connections — **16**, confirmed on the real install (`.Q.lim` conns=16), matching the KX doc
+  page. ~~Pre-read guess said 8 at runtime, "treat 8 as operative"~~ — SUPERSEDED 2026-07-24: the
+  secondary blog was wrong and the doc page was right.
 - **24 cores is an aggregate *license* cap across all instances, not a per-process runtime limit**
   (`.Q.lim` cores=0W). SPEC lists it among runtime limits — it's a legal ceiling. Minor flag.
-- Also: single instance only; multi-process OK if aggregate RAM <16 GB; a **12-month** key period
-  is reported (renewal mechanics unconfirmed).
+- Also: single instance only; multi-process OK if aggregate RAM <16 GB. ~~A 12-month key period is
+  reported~~ — SUPERSEDED 2026-07-24: the issued CE key's install banner reads **NONEXPIRE**. The
+  *agreement* is separately terminable at will by KX (Clause 10); that is not a key expiry.
 - Public restrictions page: https://code.kx.com/insights/1.18/licensing/usage-restrictions.html
 - Runtime `.Q.lim` figures (secondary): https://dataintellect.com/blog/running-torq-with-kdb-x-community-edition/
 

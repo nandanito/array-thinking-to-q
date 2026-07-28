@@ -400,6 +400,11 @@ cases is lost if you then wave at them approximately).
 
 ### Model failure mode found (relevant to any future skill)
 
+> **[RETRACTED 2026-07-28 — see "M2 correction" below.]** This finding is wrong. `` `p# `` on a
+> sorted in-memory table is documented as legitimate and can outperform `` `g# ``; the defect was in
+> the task sheet, not in either condition. The paragraph is left standing because this file is a
+> log, but do not carry it forward.
+
 On the `aj` fix task, **both** conditions applied `` `p# `` to an **in-memory** quote table.
 <https://code.kx.com/q/ref/aj/> gives memory → `` `g# ``, disk → `` `p# ``. Both returned correct
 rows, so nothing errored — the wrong-answer-that-runs-clean shape this curriculum's `aj` showcase

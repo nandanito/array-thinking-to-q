@@ -90,11 +90,14 @@ serious defect in this project so far has been a claim, not a line of code.
 
 Four, in order of discovery:
 
-- A **CI workflow file that read as live but was a stub.** Nothing failed. Nothing was going to.
-- The **README claiming every code block executes** while that stub existed — a true sentence about
-  an untrue state.
+- A **CI check that went green having verified nothing.** Its install step was a commented TODO
+  gated on "when the first J file lands"; the files landed, the gate was never updated, and the
+  tick stayed green. A TODO in CI is a time bomb with no alarm.
 - **Two rules in my own contributor instructions** that were accurate when written and had since
-  become false. Both read as current.
+  become false — one pointing at a directory convention that never existed, one holding a decision
+  "pending research" that had concluded weeks earlier. Both read as current.
+- A **README status table** advertising work as pending that had already shipped. I fixed that one
+  this week, while writing this article.
 - And then the one that actually stung, two days ago.
 
 I published [an evaluation](03-evaluating-kx-q-plugin.md) that came back null, and the one genuinely
@@ -113,9 +116,11 @@ Second, **prior work does not protect you if nothing routes you back to it.** A 
 filed in a document nobody re-reads is indistinguishable from a finding never made.
 
 So the repo now has a mandatory per-milestone step to re-read its own governing documents against
-reality, and the published evaluation numbers have a `make` target that recomputes them from
-committed artifacts and **fails if the published table disagrees**. Prose gets a check, not a
-promise. Both of those exist because of specific defects, not because they sounded rigorous.
+reality, and part of the published evaluation has a `make` target that recomputes it from committed
+artifacts and **fails if the committed table disagrees** — specifically the pass/fail column and the
+per-session activation traces, which are the numbers a reader is most likely to take on trust. The
+judgement-based scores it cannot recompute, so those stay defended by writing the scoring rules down
+before scoring. Both exist because of specific defects, not because they sounded rigorous.
 
 ## What learning in public actually means
 

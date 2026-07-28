@@ -47,9 +47,13 @@ features". Revenue-generating bundling needs a separate OEM license (2.2).
 So the governing rule I adopted, and put in the repo's contributor instructions as a
 non-negotiable, is blunt: **no commercial-friendliness claims about KDB-X CE, ever.**
 
-Worth being precise about what this does *not* mean. It doesn't threaten the project. I am a
-personal user distributing *lessons* — prose and my own q snippets — not the software. The
-constraint is on what I may **say**, and it binds the README and every article including this one.
+I am not going to tell you what that means for your project, or claim it settles mine — that is
+exactly the kind of conclusion the disclaimer at the top disclaims. What I did was narrower: I read
+the grant, saw it does not extend to distributing the software or building something competing with
+it, and shaped the project so those questions do not arise — this repo ships lessons and my own q
+snippets, never KX's software. Clause 9 then constrains what I may publish, which binds the README
+and every article including this one. Read the grant yourself before assuming your case looks like
+mine.
 
 The general form is worth stealing: **your spec's assumptions about a license are a claim like any
 other, and they degrade silently.** Mine sat there looking authoritative for weeks. Nothing was
@@ -110,8 +114,9 @@ not a statement about J's merits — it is a structural fact about which check c
 pull request from a stranger.
 
 And the corresponding constraint on q: a fork cannot run the q suite, because a fork does not have
-my key and I am not going to hand one out. Every q lesson is verified locally by me before it
-merges. If that sounds unsatisfying — it is. It is what the terms permit.
+a key and mine is issued to me. Every q lesson is verified locally by me before it merges. If that
+sounds unsatisfying — it is. It is the arrangement I was willing to defend, given a key I may not
+hand out and a repo anyone can fork.
 
 Other operational residue, in case it saves you the reading:
 

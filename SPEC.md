@@ -75,6 +75,9 @@ playgrounds/tracers, covering k/APL/BQN beyond honest pointers.
      are designed around it."
 2. **AI-authoring skill** (`.claude/skills/idiomatic-q/`): thin, high-density idiom/gotcha
    doc so models emit idiomatic J/q instead of loop transliterations. **Gated by eval (below).**
+   → **NOT BUILT, and out of scope as of 2026-07-27.** The M2 eval exposed no gap, so the gate
+   never opened (eval/verdict.md). The directory holds an unbuilt stub only. Reinstating this
+   requires a NEW eval on a task set where baseline is known to fail.
 3. **Verification:** every example runs locally via `make verify`. J CI blocking. q CI nightly +
    opportunistic (trusted branches only), pinned known-good versions. Golden files: showcase only.
 
@@ -140,8 +143,10 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   (3) KX ships `KxSystems/kx-skills` (5 plugins, incl. `q-knowledge` + qlint) + 2 MCP servers; none
       coach a newcomer out of imperative habits, so the learner niche survives (see objective 3).
 - Native Windows is not supported (WSL only) — state this in the README.
-- License key is delivered via an authenticated install script and checked at startup: fine on
-  CI runners with egress, fatal for any future offline verification.
+- License key is delivered via an authenticated install script; Clause 4 **reserves** a periodic
+  license-validation call (not, as this line first said, a check "at startup"). Fine on CI runners
+  with egress; treat offline/air-gapped verification as **at-risk** rather than proven fatal.
+  Corrected 2026-07-28 against docs/licensing-notes.md.
 - Older kdb+ Personal Edition explicitly rejected (non-commercial, local-only; kills CI).
 
 ## Repo conventions
