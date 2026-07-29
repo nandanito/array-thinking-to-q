@@ -644,8 +644,11 @@ Three things learned building it:
 
 - **It passed on the first run, which is not evidence.** Same shape as the 401. So the check was
   checked: a one-digit corruption fires 2 `NOT IN CAPTURE`, swapping two genuine blocks fires
-  `OUT OF ORDER`, and it extracts **47** blocks rather than trivially passing on zero. A verifier
-  that has never been observed to fail has not been observed at all.
+  `OUT OF ORDER`, and it extracts **49** blocks (1 / 8 / 22 / 18 across lessons 01–04) rather than
+  trivially passing on zero. A verifier that has never been observed to fail has not been observed
+  at all. — *That 49 was 47 when this entry was first written, and went stale within the hour when
+  the review fix added two blocks. Counts in prose are the thing this file keeps warning about;
+  re-measure them at the moment of the commit that publishes them.*
 - **Exit code is not sufficient.** The first version failed only on a nonzero return code and
   discarded stderr — so a lesson could report an error on stderr, exit 0, and still be reported OK.
   `verify-eval` already guards this exact case in the Makefile ("error masked by exit 0"); the new
