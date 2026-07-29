@@ -54,9 +54,13 @@ verify-eval-run:
 # the outputs pasted into each lesson's narrative, which is exactly where the
 # "captured from the real tools, never hand-typed" claim lives — and where a
 # violation already shipped once (lesson 02's invented `q)` prompts).
-# NOTE the known gap: this checks unlabelled output BLOCKS. Outputs written as
-# trailing `/ value` comments inside ```q blocks are still unverified, and
-# lesson 01 is written almost entirely in that style.
+# Two checks, because lessons state outputs in two different ways. Unlabelled
+# fenced BLOCKS must appear in a fresh capture, in execution order. Trailing
+# `/ 2f` comments inside ```q blocks are re-EVALUATED against the lesson's own
+# q source and must equal what they claim — membership in the capture is not
+# enough, since a wrong claim can collide with a real value elsewhere in the
+# same lesson. Lesson 01 is written almost entirely in the comment style, so
+# without the second check it would be nearly uncovered.
 verify-prose:
 	@echo "== lesson READMEs: pasted outputs vs. a fresh capture =="
 	@Q=$(Q) J=$(J) python3 tools/check-lesson-outputs.py

@@ -23,7 +23,7 @@ jobs:
   verify-j:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install J 9.7 (headless, no Qt IDE, no addons)
         run: |
           set -euo pipefail

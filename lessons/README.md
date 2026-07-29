@@ -42,9 +42,12 @@ make verify   Q=$HOME/.kx/bin/q J=$HOME/j9.7/bin/jconsole   # everything, incl. 
 ```
 
 Running the sources is only half of the contract. `make verify-prose` (included in `make verify`)
-re-runs every lesson's sources and checks that each output block pasted into the narrative really
-is a contiguous run of that fresh capture, in execution order — so "captured from the real tools"
-is enforced rather than asserted.
+enforces "captured from the real tools" rather than asserting it, in the two ways a lesson can
+state an output:
+
+- **Output blocks** must appear as a contiguous run of a fresh capture, *in execution order*.
+- **Trailing `/ 2f` annotations** inside `q` blocks are re-evaluated against the lesson's own q
+  source and must equal what they claim.
 
 Or run a single file directly:
 
