@@ -54,9 +54,9 @@ runs end-to-end, and the eval verify-harness exists.
 5. CI: `j-verify.yml` (blocking, on PR) and `q-verify.yml` (nightly + manual, trusted branches
    only, license key from repo secret; failures notify, never block). **`q-verify.yml` now exists
    and runs `make verify`** — so the eval-run checks are enforced, not just local. It is NOT a PR
-   check by design: secrets are unavailable to fork PRs. **Needs two repo secrets (`KX_B64LIC`,
-   `KX_INSTALL_TOKEN`) and has not yet been observed green** — until it has, treat the author's
-   machine as the real gate.
+   check by design: secrets are unavailable to fork PRs. Needs **one** repo secret, `KX_B64LIC` —
+   the installer and its payloads download unauthenticated (measured), so no bearer token is
+   required despite the Developer Center's copy-paste command containing one.
 6. README: thesis, why-J-not-BQN, prior art, disclaimers, quickstart.
 
 ## Environment notes

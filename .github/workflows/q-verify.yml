@@ -19,26 +19,38 @@
 # a public repository is exactly that. Reinstall every run. See
 # docs/licensing-notes.md.
 #
-# SECRETS REQUIRED (repo Settings → Secrets and variables → Actions):
-#   KX_B64LIC        base64 `kc.lic` contents from the KX welcome email
-#   KX_INSTALL_TOKEN bearer token for the authenticated KDB-X install script
-# Both are masked by GitHub in logs. Do not echo them, and do not add `set -x`.
+# ONE SECRET REQUIRED (repo Settings → Secrets and variables → Actions):
+#   KX_B64LIC   base64 `kc.lic` contents from the KX welcome email.
+# GitHub masks it in logs. Do not echo it, and do not add `set -x`.
+#
+# NO BEARER TOKEN IS NEEDED, despite the Developer Center handing you a command
+# that contains one. That command is generated per-user with `--oauth2-bearer
+# <token>` pre-populated, so it LOOKS like the download is gated. Measured
+# 2026-07-29: the installer and every payload it fetches return 200 with no
+# credential at all —
+#   …/install_kdb/~latest~/install_kdb.sh   200, byte-identical to a known-good local copy
+#   …/kdb-x/~latest~/{l64,m64,l64arm}.zip   200
+# and the installer's own `download_file()` uses a bare `curl --fail -Lo` with no
+# auth header, which is the same conclusion from the other direction. An earlier
+# revision of this file demanded a KX_INSTALL_TOKEN secret; that requirement was
+# inferred, never measured, and was wrong. (The 401 that seemed to confirm it came
+# from a mistyped URL missing the `/install_kdb/~latest~/` segment.)
+#
+# Nothing here circumvents a licence check: `kc.lic` is still required for q to
+# RUN, and that key is still the secret. Only the download endpoint is open.
 #
 # OPTIONAL REPO VARIABLE:
-#   KX_INSTALL_URL   the authenticated install-script URL, if it differs from the
-#                    default below. Set it under Settings → Variables → Actions.
+#   KX_INSTALL_URL   override if KX moves the installer.
 #
-# WHAT IS AND IS NOT VERIFIED HERE — read before trusting this file:
-#   VERIFIED: `make verify` passes locally against KDB-X CE 5.0 / J 9.7.1; the J
-#     install steps are lifted from j-verify.yml, which runs green today; `.z.K`
-#     prints the bare version (`5f`) and no licensed serial/email/host.
-#   NOT VERIFIED: the KDB-X install has never been run on a CI runner from this
-#     workflow. The default URL below responds 401 without a token — so the host
-#     and path exist and demand auth, which is consistent with the documented
-#     flow, but that is the *only* thing confirmed about it. Whether the token is
-#     long-lived enough for a nightly job is unknown.
-#   If any of that is wrong, this job fails loudly with the reason. That is the
-#   intended behaviour. A silent skip would be the bug (docs/COMPOUND.md).
+# WHAT IS AND IS NOT VERIFIED — read before trusting this file:
+#   VERIFIED: `make verify` passes locally on KDB-X CE 5.0 / J 9.7.1; the J steps
+#     come from j-verify.yml, green today; `.z.K` prints the bare version (`5f`)
+#     and no licensed serial/email/host; the installer URL and payload URLs above
+#     were fetched and checked; `-y` requires `--b64lic` and defaults INSTALL_DIR
+#     to `$HOME/.kx`.
+#   NOT VERIFIED: a full install has never completed on a CI runner. If it fails,
+#     it fails loudly with the reason — intended. A silent skip would be the bug
+#     (docs/COMPOUND.md).
 
 name: q-verify
 
@@ -64,20 +76,17 @@ jobs:
       # j-verify stub that passed while verifying nothing: "a gate that cannot be
       # enforced must FAIL, not pass." A `continue-on-error` or an `if: secrets…`
       # skip here would recreate that exact defect.
-      - name: Assert credentials are present
+      - name: Assert the license secret is present
         env:
           B64LIC: ${{ secrets.KX_B64LIC }}
-          TOKEN: ${{ secrets.KX_INSTALL_TOKEN }}
         run: |
           set -euo pipefail
-          missing=0
-          [ -n "${B64LIC:-}" ] || { echo "::error::secret KX_B64LIC is not set"; missing=1; }
-          [ -n "${TOKEN:-}"  ] || { echo "::error::secret KX_INSTALL_TOKEN is not set"; missing=1; }
-          if [ "$missing" -ne 0 ]; then
-            echo "q-verify cannot run without both secrets. See the header of this workflow."
+          if [ -z "${B64LIC:-}" ]; then
+            echo "::error::secret KX_B64LIC is not set"
+            echo "q-verify cannot run without it. See the header of this workflow."
             exit 1
           fi
-          echo "both secrets present"
+          echo "KX_B64LIC present"
 
       - name: Install J 9.7 (headless, no Qt IDE, no addons)
         run: |
@@ -92,20 +101,38 @@ jobs:
       - name: Install KDB-X Community Edition
         env:
           B64LIC: ${{ secrets.KX_B64LIC }}
-          TOKEN: ${{ secrets.KX_INSTALL_TOKEN }}
-          # Override in Settings → Variables → Actions if KX moves it.
-          INSTALL_URL: ${{ vars.KX_INSTALL_URL || 'https://portal.dl.kx.com/assets/raw/kdb-x/install_kdb.sh' }}
+          INSTALL_URL: ${{ vars.KX_INSTALL_URL || 'https://portal.dl.kx.com/assets/raw/kdb-x/install_kdb/~latest~/install_kdb.sh' }}
         run: |
           set -euo pipefail
-          # Same rule as above: fetch to a file and assert it, never pipe to sh.
-          curl -fsSL -H "Authorization: Bearer $TOKEN" "$INSTALL_URL" \
-            -o "$RUNNER_TEMP/install_kdb.sh"
-          test -s "$RUNNER_TEMP/install_kdb.sh" || { echo "::error::install script empty — token expired, or KX moved the URL (set repo variable KX_INSTALL_URL)"; exit 1; }
-          sh "$RUNNER_TEMP/install_kdb.sh" --b64lic "$B64LIC"
-          # Positive assertion that the thing actually installed, per COMPOUND.
-          QBIN="$(command -v q || echo "$HOME/.kx/bin/q")"
-          test -x "$QBIN" || { echo "::error::q not found after install"; exit 1; }
+          # Fetch to a file and assert it. `curl | sh` reports the SHELL's status,
+          # so a failed fetch would "succeed" having installed nothing (COMPOUND).
+          curl -fsSL "$INSTALL_URL" -o "$RUNNER_TEMP/install_kdb.sh"
+          test -s "$RUNNER_TEMP/install_kdb.sh" \
+            || { echo "::error::installer empty or unreachable — set repo variable KX_INSTALL_URL if KX moved it"; exit 1; }
+          # -y implies non-interactive and REQUIRES --b64lic; INSTALL_DIR defaults to $HOME/.kx.
+          bash "$RUNNER_TEMP/install_kdb.sh" -y --b64lic "$B64LIC"
+          QBIN="$HOME/.kx/bin/q"
+          test -x "$QBIN" || { echo "::error::q not found at $QBIN after install"; exit 1; }
           echo "QBIN=$QBIN" >> "$GITHUB_ENV"
+
+      - name: Force telemetry off, and prove it
+        run: |
+          set -euo pipefail
+          # The installer's setup_telemetry() inspects the LICENSE (.z.l[4] for "tld")
+          # and can set KX_UPLOAD_TELEMETRY=YES *before* the non-interactive branch
+          # that would otherwise default it to NO. docs/licensing-notes.md records the
+          # decision to decline telemetry, so make that deterministic rather than
+          # dependent on what a licence flag happens to say on a given runner.
+          cfg="$HOME/.kx/config"
+          touch "$cfg"
+          if grep -q '^KX_UPLOAD_TELEMETRY=' "$cfg"; then
+            sed -i 's|^KX_UPLOAD_TELEMETRY=.*|KX_UPLOAD_TELEMETRY=NO|' "$cfg"
+          else
+            echo 'KX_UPLOAD_TELEMETRY=NO' >> "$cfg"
+          fi
+          grep -q '^KX_UPLOAD_TELEMETRY=NO$' "$cfg" \
+            || { echo "::error::failed to disable telemetry"; exit 1; }
+          echo "telemetry disabled: $(grep '^KX_UPLOAD_TELEMETRY=' "$cfg")"
 
       - name: Show versions (no license serial, email or host — repo is public)
         run: |

@@ -27,7 +27,7 @@ A learning-in-public project, built one verified lesson at a time. Honest state 
 | Transition chapter | Not yet written |
 | Eval of KX's official q plugin | **Run and published** — 50 headless sessions, [null result](eval/verdict.md). No measurable lift, on a task set that could not have measured a small one. Raw material in [`eval/runs/`](eval/runs/) |
 | `idiomatic-q` skill | **Not authored, and not planned.** The eval exposed no gap, so the conditional never fired |
-| CI | `j-verify` blocking on every PR. `q-verify` added (nightly + manual, `main` only — secrets are unavailable to fork PRs, so it cannot be a PR check); **awaiting its first green run**, so the author's machine is still the real q gate |
+| CI | `j-verify` blocking on every PR. `q-verify` nightly + manual on `main` only — secrets are unavailable to fork PRs, so it cannot be a PR check. Needs one secret (`KX_B64LIC`) |
 
 ## Start here
 
