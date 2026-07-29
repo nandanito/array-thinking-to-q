@@ -24,7 +24,7 @@ and an as-of join, in the language people are actually paid to write.
 | 01 | [Atoms, lists, and the death of the loop](01-atoms-and-lists/) | the list is the unit of work; `each`/`over`/`scan` replace the loop | ✅ done |
 | 02 | [dict → table](02-dict-to-table/) | a table is a flip of a column dictionary; a keyed table *is* a dictionary | ✅ done |
 | 03 | [qSQL](03-qsql/) | `select … by … from` is a surface over column-lists; `by` cuts, it does not aggregate | ✅ done |
-| 04 | attributes & sort discipline | `` s# ``/`` g# ``/`` p# `` — required **before** the showcase | planned |
+| 04 | [attributes & sort discipline](04-attributes/) | an attribute is a perishable *claim*, not an index; `aj`'s correctness is the sort, not the `` g# `` | ✅ done |
 | — | [showcase: as-of join](../showcase/aj/) | trades matched to prevailing quotes, end-to-end | ✅ gate green |
 
 Atoms and lists are deliberately **half** of lesson 01, not the payload: the payload is
@@ -40,6 +40,11 @@ make verify-q Q=$HOME/.kx/bin/q            # run every lesson's q
 make verify-j J=$HOME/j9.7/bin/jconsole    # run every lesson's J twin
 make verify   Q=$HOME/.kx/bin/q J=$HOME/j9.7/bin/jconsole   # everything, incl. showcase + eval
 ```
+
+Running the sources is only half of the contract. `make verify-prose` (included in `make verify`)
+re-runs every lesson's sources and checks that each output block pasted into the narrative really
+is a contiguous run of that fresh capture, in execution order — so "captured from the real tools"
+is enforced rather than asserted.
 
 Or run a single file directly:
 

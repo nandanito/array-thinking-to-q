@@ -598,3 +598,76 @@ you there.**
   produced a red `main` with `::error::secret KX_B64LIC is not set` — which is how the missing
   secret got noticed at all. The alternative (`if: secrets…` skip) would have shown green while
   verifying nothing, which is precisely the `j-verify` stub defect recorded above.
+
+## M3 — lesson 04 (attributes); and a true claim with a demonstration that didn't prove it (2026-07-29)
+
+Lesson 04 (attributes & sort discipline) lands, closing the last Part II prerequisite before the
+`aj` showcase lesson. `make verify` gains a sixth leg, `verify-prose`.
+
+### The finding the lesson is built on
+
+`aj`'s correctness comes from **row order**, not from the attribute. Four joins over one dataset:
+unsorted is wrong (98.5) with *and* without `` `g# ``; sorted is right (99.1) with *and* without it.
+The attribute is the speed decision; the sort is the correctness decision, and q reports nothing
+when you get the second one wrong. Two things sharpen it: `xasc` attributes only the **first** sort
+column, because "ascending within groups of another column" is precisely the property q has no
+attribute for — and it is the only property `aj` needs. And the failure is **partial**: symbols with
+one quote in the window are right regardless, so a mis-sorted quote table yields output that looks
+mostly fine. That is why the bug ships.
+
+### The mistake worth recording: the claim was true, the demonstration was not
+
+The 2×2's "sorted, no attribute" cell joined against a table built with `` `sym`time xasc ``, which
+stamps `` `s# `` on the sort column — as the same lesson demonstrates two sections earlier. So the
+cell labelled "no attribute at all" had one, and the comparison did not isolate the variable it
+claimed to isolate. The conclusion was still correct (a stripped-and-sorted table joins correctly;
+that had been checked while drafting) — but the evidence printed under it did not establish it.
+
+This is a distinct failure from the `p#` retraction and the forged 401, and worth naming separately:
+not a wrong claim, and not manufactured confirmation, but **a right claim resting on a demonstration
+that doesn't support it**. It is harder to catch precisely because verification passes — every
+output was real, captured, and correctly transcribed; `make verify` was green; the prose checker was
+green. Nothing mechanical could see it, because the defect was in what the arrangement *implied*,
+not in any output. Transferable rule: **when a demonstration exists to isolate a variable, verify
+that it actually isolates it** — a controlled comparison is a claim about the setup, and setups are
+where the assumption hides. Found by Codex review, not by any gate in this repo.
+
+### `verify-prose`: the lesson-03 thread, finished
+
+Lesson 03's entry recorded the gap — `make verify` proves lesson *files* run and says nothing about
+whether the outputs pasted into the narrative came from them — and pre-registered promoting the
+check to a `make` target at the fourth lesson. Done: `tools/check-lesson-outputs.py` re-runs each
+lesson's sources and requires every unlabelled block to appear as a contiguous run of the fresh
+capture, **in execution order** (which also catches genuine outputs shown out of the order they ran).
+
+Three things learned building it:
+
+- **It passed on the first run, which is not evidence.** Same shape as the 401. So the check was
+  checked: a one-digit corruption fires 2 `NOT IN CAPTURE`, swapping two genuine blocks fires
+  `OUT OF ORDER`, and it extracts **49** blocks (1 / 8 / 22 / 18 across lessons 01–04) rather than
+  trivially passing on zero. A verifier that has never been observed to fail has not been observed
+  at all. — *That 49 was 47 when this entry was first written, and went stale within the hour when
+  the review fix added two blocks. Counts in prose are the thing this file keeps warning about;
+  re-measure them at the moment of the commit that publishes them.*
+- **Exit code is not sufficient.** The first version failed only on a nonzero return code and
+  discarded stderr — so a lesson could report an error on stderr, exit 0, and still be reported OK.
+  `verify-eval` already guards this exact case in the Makefile ("error masked by exit 0"); the new
+  gate did not, until adversarial review pointed at it. **When a repo has already written down a
+  failure mode, new code is the first place to check for it, not the last.**
+- **Known gap, stated rather than scoped around.** This checks output *blocks*. Outputs written as
+  trailing `/ 2f` comments inside ` ```q ` blocks remain unverified, and lesson 01 is written almost
+  entirely that way — it has exactly **one** output block. Recorded in the Makefile so the gate's
+  coverage is not mistaken for its scope.
+
+The two blocks CLAUDE.md exempts needed no special case: both are language-tagged, and the tag is
+already the marker.
+
+### `p#` — the retraction held under pressure
+
+The `aj` page prescribes `` `g# `` in memory and `` `p# `` on disk; the set-attribute page says
+parted *"effects better speedups than grouped, both on disk and in memory"* when the data can be
+sorted so `p` can be set. The lesson ships `` `g# `` as the default and says plainly that naming
+either as *the* answer on one page's strength is what produced the retracted finding. All quoted
+vendor text was grepped from the raw pages rather than taken from a fetch summary — one "quote" the
+summarizer produced ("on disk, the `g#` attribute does not help") turned out to be verbatim, but
+only checking established that.

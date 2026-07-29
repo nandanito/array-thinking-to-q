@@ -47,9 +47,10 @@ runs end-to-end, and the eval verify-harness exists.
    TEST on discordant pairs (the old 15% threshold is cut — unadjudicable at n=15). Do NOT claim
    blind scoring. Author a skill only if a gap appears, scoped to it, q-only.
 3. Part II (q) lessons, one at a time: q code → verify → narrative → J twin (short) → verify.
-   Remaining: attributes & sort discipline (`s#`/`g#`/`p#`) — REQUIRED before the showcase — then
-   the `aj` showcase lesson. (This is SPEC's **M3**; SPEC's milestones were swapped 2026-07-28 to
-   match this order, which the Q-first rule requires.)
+   Attributes & sort discipline (`s#`/`g#`/`p#`) is **DONE** (lesson 04, 2026-07-29). Remaining:
+   the `aj` showcase lesson — `showcase/aj/` already runs and is golden-filed, so what is left is
+   the lesson prose around it. (This is SPEC's **M3**; SPEC's milestones were swapped 2026-07-28
+   to match this order, which the Q-first rule requires.)
 4. Part I (J laboratory) compression pass + transition chapter. (SPEC's **M4**.)
 5. CI: `j-verify.yml` (blocking, on PR) and `q-verify.yml` (nightly + manual, trusted branches
    only, license key from repo secret; failures notify, never block). **`q-verify.yml` now exists
