@@ -546,3 +546,55 @@ and never touched the comparison.
   Sharpen the rule: **cite the source, then look for the page that contradicts it.**
 - Instrument note carried forward: any future task set must either widen task 15 to accept `` `p# ``
   on a sorted table, or state why not.
+
+## M3 — q CI live; and a guess that forged its own evidence (2026-07-29)
+
+`q-verify.yml` is green on its first real run. `make verify` — J twins, q lessons, the `aj` golden,
+the eval reference solutions, **and** the two eval-run checks — now executes on a GitHub runner
+rather than only on the author's laptop. The numbers published in Article 3 are, for the first
+time, enforced somewhere a reader can inspect.
+
+### The expensive mistake: I confirmed my own guess with an artifact my guess created
+
+The first revision demanded a second secret, `KX_INSTALL_TOKEN`. That requirement was **inferred**
+from a phrase in `docs/licensing-notes.md` — "authenticated curl script with an OAuth bearer token"
+— and never measured. To sanity-check it I curled the install URL, got **401**, and treated that as
+confirmation.
+
+The 401 came from **my own mistyped URL**, missing the `/install_kdb/~latest~/` segment. The real
+endpoint returns 200 with no credential at all, as does every payload the installer fetches, and
+the installer's own `download_file()` uses a bare `curl --fail -Lo` with no auth header. Three
+independent signals, all available before I wrote a line of YAML, all pointing the other way.
+
+**A guess that produces a plausible error code is the most expensive kind**, because the error
+looks like evidence. The 401 did not test my hypothesis — it tested my typing, and I read the
+result as though it had tested the hypothesis. Transferable rule: **when a check appears to confirm
+what you already believed, verify the check itself before the conclusion.** Cheap here (one wrong
+secret, one wasted round trip); the same shape retracted a published finding two days earlier,
+where a correctly-cited page produced a wrong conclusion because I never looked for the page that
+would contradict it. Twice in one week, same failure, different costume: **seeking confirmation
+where the confirmation is easy to manufacture.**
+
+### Reading the installer was worth more than the token fix
+
+`setup_telemetry()` runs q against the licence and tests `.z.l[4]` for `"tld"`. If it matches,
+`KX_UPLOAD_TELEMETRY=YES` is set **before** control reaches the non-interactive branch that would
+otherwise default it to `NO`. The author declined telemetry locally, and `docs/licensing-notes.md`
+records that as a decision — but on CI it would have been decided by whatever a licence flag
+happens to say on a given day.
+
+Now forced to `NO` after install and asserted, so a recorded decision stays a decision.
+**Generalises: a policy you chose interactively is not in force anywhere you automated; a
+non-interactive path is a different code path, and vendor installers often decide defaults for
+you there.**
+
+### Two smaller things worth keeping
+
+- **Verify the log, not the tick.** The run was checked for leakage before being called clean:
+  zero author identifiers, no kdb+ startup banner (which carries serial/email/host), `.z.K`
+  printing `5f` alone. On a public repo, "the job passed" and "the job was safe" are different
+  questions.
+- **The loud-failure design paid off immediately.** Merging the first revision without secrets
+  produced a red `main` with `::error::secret KX_B64LIC is not set` — which is how the missing
+  secret got noticed at all. The alternative (`if: secrets…` skip) would have shown green while
+  verifying nothing, which is precisely the `j-verify` stub defect recorded above.
