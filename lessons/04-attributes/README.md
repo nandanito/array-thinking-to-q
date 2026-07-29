@@ -235,7 +235,16 @@ MSFT 10:00:02 200.1
 ```
 
 AAPL trades at `10:00:03`. The prevailing quote is the `10:00:02` one, so the correct bid is
-**99.1**. Now four joins against the same data in four different states:
+**99.1**. Now four joins against the same data in four different states — and to make those four
+states actually differ in one variable at a time, check that the starting table is bare:
+
+```q
+attr quote`sym
+```
+
+```
+`
+```
 
 ```q
 aj[`sym`time; trade; quote]                      / unsorted, no attribute
@@ -269,10 +278,22 @@ Still 98.5. The attribute did not rescue anything, and section 1 already told yo
 attributes do not change answers. Setting `` `g# `` on an unsorted quote table buys you a faster
 route to the same wrong number.
 
-The converse is just as instructive. Sort the table and set **no** attribute at all:
+The converse is just as instructive: sort the table and set **no** attribute at all. That takes one
+extra step, and the reason it does is section 4 coming back to collect. `sorted` was built with
+`` `sym`time xasc ``, and `xasc` already stamped `` `s `` onto `sym` — so joining against `sorted`
+would *not* be an attribute-free trial. Strip it first, with `` `# ``:
 
 ```q
-aj[`sym`time; trade; sorted]                     / sorted, no attribute
+bare:update `#sym from sorted
+attr bare`sym
+```
+
+```
+`
+```
+
+```q
+aj[`sym`time; trade; bare]                       / sorted, genuinely no attribute
 ```
 
 ```
@@ -282,7 +303,7 @@ AAPL 10:00:03 99.25 99.1
 MSFT 10:00:02 200.1 200
 ```
 
-**99.1** — correct, with nothing indexed. And with both:
+**99.1** — correct, with nothing indexed at all. And with both:
 
 ```q
 aj[`sym`time; trade; update `g#sym from sorted]  / sorted AND attributed

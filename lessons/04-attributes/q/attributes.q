@@ -45,9 +45,13 @@ show attr sorted`time;                / `  — the second does not, and cannot: 
 trade:([] sym:`AAPL`MSFT; time:10:00:03 10:00:02; price:99.25 200.1);
 show trade;
 / AAPL's true prevailing bid at 10:00:03 is 99.1 (the 10:00:02 quote).
+show attr quote`sym;                                 / ` — the unsorted table is genuinely bare
 show aj[`sym`time; trade; quote];                    / 98.5 — WRONG, and silent
 show aj[`sym`time; trade; update `g#sym from quote]; / 98.5 — the attribute does NOT rescue it
-show aj[`sym`time; trade; sorted];                   / 99.1 — right, with NO attribute set
+/ xasc already left `s# on sym, so strip it with `# to isolate sort from attribute:
+bare:update `#sym from sorted;
+show attr bare`sym;                                  / ` — now genuinely unattributed
+show aj[`sym`time; trade; bare];                     / 99.1 — right, with NO attribute at all
 show aj[`sym`time; trade; update `g#sym from sorted];  / 99.1 — right, and now indexed too
 / order within the group is the whole contract — reverse it and aj breaks again:
 show aj[`sym`time; trade; `sym xasc `time xdesc quote];   / 98.5 — WRONG
