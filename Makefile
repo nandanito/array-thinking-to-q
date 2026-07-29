@@ -4,9 +4,9 @@ J       ?= jconsole
 Q       ?= q
 LESSONS := $(wildcard lessons/*)
 
-.PHONY: verify verify-j verify-q verify-showcase verify-eval verify-eval-run
+.PHONY: verify verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose
 
-verify: verify-j verify-q verify-showcase verify-eval verify-eval-run
+verify: verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose
 
 verify-j:
 	@echo "== J examples =="
@@ -49,3 +49,14 @@ verify-eval-run:
 	@tail -1 /tmp/eval-run.txt
 	@echo "== eval run: runs/traces.md vs. the committed session logs =="
 	@python3 eval/harness/mktraces.py eval/runs/logs --check eval/runs/traces.md
+
+# The other verify- targets prove the lesson SOURCES run. None of them look at
+# the outputs pasted into each lesson's narrative, which is exactly where the
+# "captured from the real tools, never hand-typed" claim lives — and where a
+# violation already shipped once (lesson 02's invented `q)` prompts).
+# NOTE the known gap: this checks unlabelled output BLOCKS. Outputs written as
+# trailing `/ value` comments inside ```q blocks are still unverified, and
+# lesson 01 is written almost entirely in that style.
+verify-prose:
+	@echo "== lesson READMEs: pasted outputs vs. a fresh capture =="
+	@Q=$(Q) J=$(J) python3 tools/check-lesson-outputs.py
