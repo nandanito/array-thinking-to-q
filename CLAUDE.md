@@ -56,7 +56,8 @@ runs end-to-end, and the eval verify-harness exists.
    and runs `make verify`** — so the eval-run checks are enforced, not just local. It is NOT a PR
    check by design: secrets are unavailable to fork PRs. Needs **one** repo secret, `KX_B64LIC` —
    the installer and its payloads download unauthenticated (measured), so no bearer token is
-   required despite the Developer Center's copy-paste command containing one.
+   required despite the Developer Center's copy-paste command containing one. **GREEN since
+   2026-07-29**, so the eval-run checks are now enforced off the author's machine.
 6. README: thesis, why-J-not-BQN, prior art, disclaimers, quickstart.
 
 ## Environment notes
