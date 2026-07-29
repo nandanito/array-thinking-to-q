@@ -35,7 +35,13 @@ FENCE = re.compile(r"^```(.*)$")
 
 
 def capture(path: Path) -> list[str]:
-    """Run one source file the way `make verify` runs it; return stdout lines."""
+    """Run one source file the way `make verify` runs it; return stdout lines.
+
+    Exit code is not sufficient on its own: q can report an error on stderr and
+    still exit 0, which would leave a lesson that visibly failed producing
+    stdout that still matches its pasted blocks. `verify-eval` already guards
+    this exact case ("error masked by exit 0"), so this gate does too.
+    """
     if path.suffix == ".q":
         cmd, stdin = [Q, str(path), "-q"], subprocess.DEVNULL
         proc = subprocess.run(cmd, stdin=stdin, capture_output=True, text=True)
@@ -46,6 +52,11 @@ def capture(path: Path) -> list[str]:
         raise ValueError(f"unknown source type: {path}")
     if proc.returncode != 0:
         sys.exit(f"FATAL: {path} exited {proc.returncode}\n{proc.stderr}")
+    if proc.stderr.strip():
+        sys.exit(
+            f"FATAL: {path} exited 0 but wrote to stderr (error masked by exit 0):\n"
+            f"{proc.stderr}"
+        )
     return [ln.rstrip() for ln in proc.stdout.splitlines()]
 
 
