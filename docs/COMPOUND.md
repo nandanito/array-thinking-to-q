@@ -671,3 +671,39 @@ either as *the* answer on one page's strength is what produced the retracted fin
 vendor text was grepped from the raw pages rather than taken from a fetch summary — one "quote" the
 summarizer produced ("on disk, the `g#` attribute does not help") turned out to be verbatim, but
 only checking established that.
+
+### Closing the inline-claim gap — and why "it appears in the output" is not verification
+
+The `verify-prose` entry above recorded a known gap: the gate checked output *blocks*, while
+lesson 01 states nearly all of its outputs as trailing `/ 2f` comments and so was almost
+uncovered (1 block against 18 such claims). Closed on 2026-07-29 — **49 blocks and 37 inline
+claims** now checked across lessons 01–04.
+
+Two things worth keeping from building it.
+
+**The obvious design was the wrong one.** The natural approach is to execute the README's own q
+lines, since they are complete expressions. Prototyping killed it: lessons legitimately contain
+```q blocks that *error by design* (lesson 01's fork parse failure, lesson 04's `s-fail`/`u-fail`
+demos), so running the README aborts. And lesson 01 deliberately re-shows an earlier result out of
+execution order — `10` again, when `(+/)` is introduced as the mechanism under `sum` — so
+order-checking inline claims would flag good writing. **A verifier's design constraints come from
+the prose it verifies, not from the data model that looks tidiest.**
+
+**The first working version passed its own negative control by accident.** Membership testing —
+"the claimed value appears somewhere in the capture" — caught 2 of 3 deliberate corruptions. The
+one it missed: flipping lesson 02's `type d` annotation from `99h` to `98h`, which passes because
+`98h` is a *real value elsewhere in that same lesson*. A wrong claim that collides with a genuine
+value is exactly the wrong claim a reader would believe. Fixed by re-**evaluating** each claimed
+expression, appended to the lesson's own verify-clean q source so the narrative's state (`d`, `t`,
+`kt`, `r`, `w`) already exists; the deliberate error demos are never appended because their
+comments are prose, not values.
+
+Generalises past this repo: **a containment check is not an equality check.** "The expected value
+appears in the output" is the weaker assertion, it is the one that is easier to write, and it
+fails precisely on the inputs where the two differ — which is to say, on the interesting ones.
+Three corruptions is also the smallest control set that could have exposed this; one would have
+passed and been called proof.
+
+Also bumped `actions/checkout` v4 → v7 in both workflows (v4 runs on deprecated Node 20). Checked
+first that v7's fork-PR hardening applies to `pull_request_target`/`workflow_run`, which neither
+workflow uses — `j-verify` is `pull_request`, `q-verify` is schedule/dispatch/push-to-main.
