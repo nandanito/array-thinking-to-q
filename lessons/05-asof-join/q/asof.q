@@ -19,9 +19,10 @@ show trade;
 
 / --- 1. the join you already know, asked the loop way --------------------
 / "for each trade, the quote with the greatest time at or before it" — a
-/ correlated subquery. Correct on unsorted data, and re-filters every quote
-/ for every trade.
-prevailing:{[s;t] exec first bid where time=max time from quote where sym=s, time<=t};
+/ correlated subquery. Correct on unsorted data (ties at the same time fall
+/ back to row order: `last`, as aj does), and re-filters every quote for
+/ every trade.
+prevailing:{[s;t] exec last bid where time=max time from quote where sym=s, time<=t};
 show prevailing'[trade`sym; trade`time];
 
 / --- 2. question one, "which rows are this sym?", has a per-TABLE answer --

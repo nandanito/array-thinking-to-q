@@ -753,3 +753,14 @@ claimed for q's `bin`, and the "right" index claimed for the unsorted search (bo
 and two genuine J blocks swapped (`OUT OF ORDER`). All fired. The golden guard was proved
 separately on a scratch copy with the final join mis-sorted: exit 1, message on stderr. Counts after
 this lesson: **63 blocks, 44 inline claims** across lessons 01–05 — re-measure at commit time.
+
+### What review caught that the gate could not
+
+The native Codex pass found the loop baseline wrote `first bid`, while `bin`/`aj` take the *last*
+of quotes tied at one timestamp — so "order-proof" was false on a valid input the lesson's data
+happened not to contain (Codex: bids `99.1 99.2` at one time → `99.1` vs `99.2`). `make verify`
+was green throughout: it proves the outputs shown are real, not that the claim generalises past
+them. Fixed with `last bid` and a stated exception (ties can only be broken by row order, which
+sharpens the lesson's point). Transferable: **a verified fixture is not a verified claim** — when
+prose says "always", test an input the fixture was not built to contain. It also flagged that
+calling Part II "complete" read as closing M3 without article #4; M3 is now stated as open.

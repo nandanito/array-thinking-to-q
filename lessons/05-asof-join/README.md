@@ -80,7 +80,7 @@ The imperative instinct writes the definition down directly. In SQL it is a corr
 in q it is a function applied to each trade:
 
 ```q
-prevailing:{[s;t] exec first bid where time=max time from quote where sym=s, time<=t}
+prevailing:{[s;t] exec last bid where time=max time from quote where sym=s, time<=t}
 prevailing'[trade`sym; trade`time]
 ```
 
@@ -92,7 +92,10 @@ Those are the right answers, and the function deserves credit for something: it 
 what order the quotes are in. "The one whose time is the greatest among those at or before `t`"
 is a statement about *values*, and it stays true however the rows are shuffled. Lesson 04 spent a
 whole section on an `aj` that returned 98.5 instead of 99.1 because the rows were in the wrong
-order; this version cannot make that mistake.
+order; this version cannot make that mistake. (With one exception, and it is instructive: if two
+quotes for a symbol share the same timestamp, "the greatest time" names both, and *something* has
+to break the tie. Values cannot; only row order can. That is why the function says `last bid` and
+not `first bid` — to break ties the way `aj` does, as the rest of this lesson will show.)
 
 What it gets wrong is the shape of the work. For every trade it filters the **entire** quote
 table by symbol, filters the survivors by time, then scans what is left for a maximum. Five
@@ -261,8 +264,8 @@ describing `bin`. On a table sorted the way section 4 sorted it, the last row in
 latest in time; on any other table, as lesson 04 showed, it is not, and `aj` returns what `bin`
 returns.
 
-Look back at section 1 with this in hand. The loop said "greatest time", which is order-proof and
-costs a scan per trade. `aj` says "last in row order", which is a search per trade and costs you a
+Look back at section 1 with this in hand. The loop said "greatest time", which is order-proof
+(short of exact ties, which it breaks by row order too) and costs a scan per trade. `aj` says "last in row order", which is a search per trade and costs you a
 promise. The difference between those two phrases *is* the co-design: q chose the definition that
 the storage can answer directly, and handed you the sort as the price of admission.
 
@@ -439,7 +442,8 @@ you ever wrote `aj`.
   symbol's rows), the last is matched as-of (search them by time). `aj[`sym`time; …]` spells
   exactly that.
 - **The loop's definition is order-proof; `aj`'s is not.** "Greatest time at or before" survives
-  any row order and costs a scan per trade. "Last in row order" is a search per trade and is
+  any row order (bar exact timestamp ties, which only row order can break) and costs a scan per
+  trade. "Last in row order" is a search per trade and is
   correct only on a sorted table. q chose the second on purpose.
 - **Derive the preamble, don't copy it.** `` `sym`time xasc `` — `time` for correctness (it makes
   `bin` right), `sym` first for contiguous blocks. `` `g# `` on `sym` — speed only, recording the

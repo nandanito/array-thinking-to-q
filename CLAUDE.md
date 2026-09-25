@@ -49,9 +49,10 @@ runs end-to-end, and the eval verify-harness exists.
 3. Part II (q) lessons, one at a time: q code → verify → narrative → J twin (short) → verify.
    Attributes & sort discipline (`s#`/`g#`/`p#`) is **DONE** (lesson 04, 2026-07-29). The `aj`
    showcase lesson is **DONE** (lesson 05, 2026-09-25) — it derives the showcase preamble and
-   checks its final join against `showcase/aj/expected.txt`. Part II is complete. (This is SPEC's
-   **M3**; SPEC's milestones were swapped 2026-07-28 to match this order, which the Q-first rule
-   requires.)
+   checks its final join against `showcase/aj/expected.txt`. Part II's lessons are complete, but
+   **M3 stays open** until its article #4 draft lands in `writings/` (Blog series duty, below).
+   (This is SPEC's **M3**; SPEC's milestones were swapped 2026-07-28 to match this order, which the
+   Q-first rule requires.)
 4. Part I (J laboratory) compression pass + transition chapter. (SPEC's **M4**.)
 5. CI: `j-verify.yml` (blocking, on PR) and `q-verify.yml` (nightly + manual, trusted branches
    only, license key from repo secret; failures notify, never block). **`q-verify.yml` now exists
