@@ -707,3 +707,60 @@ passed and been called proof.
 Also bumped `actions/checkout` v4 → v7 in both workflows (v4 runs on deprecated Node 20). Checked
 first that v7's fork-PR hardening applies to `pull_request_target`/`workflow_run`, which neither
 workflow uses — `j-verify` is `pull_request`, `q-verify` is schedule/dispatch/push-to-main.
+
+## M3 — lesson 05 (the as-of join); Part II complete (2026-09-25)
+
+Lesson 05 lands the `aj` showcase lesson, the last Part II item. `showcase/aj/` was already
+golden-filed; the work was the prose, and whether lesson 04 really made the preamble derivable.
+
+### The finding the lesson is built on
+
+`aj` decomposes into two things the course had already taught: **`group`** (lesson 03) answers
+"which rows are this sym", once per table, and **`bin`** answers "last time at or before t". The
+lesson rebuilds `aj` by hand from those two and checks `hand ~ aj[…]` on both the showcase trades
+and an edge table (pre-first-quote, exact tie, unknown sym). That turns the preamble from a recipe
+into a derivation: `time` in `` `sym`time xasc `` is what makes `bin` right (correctness), `sym`
+first makes each symbol one block (what `` `g# ``/`` `p# `` exploit), and the attribute records
+only the group half. It also explains the reference's odd phrase "the last (in row order) matching
+record": the manual is describing `bin`, and the loop's order-proof "greatest time" was traded for
+a search that costs you the sort. That trade *is* the co-design framing SPEC asked for, and it came
+out of the code rather than being asserted over it.
+
+### Boundary semantics are where the co-design is visible
+
+The strongest contrast was not speed (off the table under Clause 9) but edges. q's `bin` is
+at-or-before and returns `-1` off the front; indexing with `-1` yields null — so `aj`'s null rows
+and tie behaviour need no code. J's nearest primitive, `I.`, is "first at or after": the obvious
+step-back is wrong on ties, and `_1` is a *legal* J index, so a trade before the first quote gets
+the day's last quote. Both J defaults are right for a general-purpose language and wrong for this
+join. Transferable: **when arguing that a tool is designed around a task, look at the edge cases
+its primitives settle for free** — that is observable, verifiable, and needs no benchmark.
+
+### Reuse without duplication: the lesson checks the showcase's golden file
+
+The lesson's q file cannot `\l` the showcase (it ends in `exit 0`, which would also stop
+`verify-prose` evaluating appended inline claims — any lesson source that exits early silently
+disables that half of the gate). Instead it rebuilds the same tables and exits 1 if its final join
+does not render line-for-line as `showcase/aj/expected.txt`. So the lesson and the showcase can no
+longer drift apart without `make verify` noticing. Cost: the lesson must run from the repo root
+(`.z.f`-relative paths break under `verify-prose`, which re-runs the source from a temp dir).
+
+### Proving coverage, per the standing habit
+
+Green on first run, so four corruptions were planted in the lesson: a one-digit output-block edit
+(`NOT IN CAPTURE`), two wrong inline claims that a reader could plausibly believe — J's tie answer
+claimed for q's `bin`, and the "right" index claimed for the unsorted search (both `WRONG CLAIM`) —
+and two genuine J blocks swapped (`OUT OF ORDER`). All fired. The golden guard was proved
+separately on a scratch copy with the final join mis-sorted: exit 1, message on stderr. Counts after
+this lesson: **63 blocks, 44 inline claims** across lessons 01–05 — re-measure at commit time.
+
+### What review caught that the gate could not
+
+The native Codex pass found the loop baseline wrote `first bid`, while `bin`/`aj` take the *last*
+of quotes tied at one timestamp — so "order-proof" was false on a valid input the lesson's data
+happened not to contain (Codex: bids `99.1 99.2` at one time → `99.1` vs `99.2`). `make verify`
+was green throughout: it proves the outputs shown are real, not that the claim generalises past
+them. Fixed with `last bid` and a stated exception (ties can only be broken by row order, which
+sharpens the lesson's point). Transferable: **a verified fixture is not a verified claim** — when
+prose says "always", test an input the fixture was not built to contain. It also flagged that
+calling Part II "complete" read as closing M3 without article #4; M3 is now stated as open.

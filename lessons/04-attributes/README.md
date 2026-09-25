@@ -470,9 +470,9 @@ are documentation that q occasionally validates.
 - **The wrong-sort bug is partial and silent** — only rows with several quotes in the window go
   wrong, so the output looks mostly fine and passes review.
 
-**Next:** the showcase — [as-of join, end to end](../../showcase/aj/), where a real trade table
-meets a real quote table and every line of the sort-then-attribute preamble is now something you
-can read rather than copy.
+**Next:** [lesson 05 — the as-of join](../05-asof-join/), where a real trade table meets a real
+quote table, `aj` comes apart into `group` and `bin`, and every line of the showcase's
+sort-then-attribute preamble is derived rather than copied.
 
 ---
 
