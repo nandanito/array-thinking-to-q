@@ -13,20 +13,64 @@ This is the first one, so it owes you three things: what the project is, what ru
 and why those rules turned out to matter more than I expected, and what "learning in public"
 actually costs once you commit to it.
 
+## Array languages in one minute
+
+If you have never met an array language, here is the whole idea in three code blocks.
+
+In most languages you ask for work one element at a time. You write the loop, name the index, step
+through, and collect the results. The reflex, in Python
+(with `a` holding the numbers 0 to 4):
+
+```python
+out = []
+for i in range(5):
+    out.append(2 * a[i])      # the index i is scaffolding, not the point
+```
+
+In an array language the operation applies to the whole list at once. Here is **q** — the language
+of kdb+, a column-oriented time-series database best known in finance — where `til 5` is the list
+`0 1 2 3 4`:
+
+```q
+2 * til 5                  / 0 2 4 6 8
+(til 5) + 10 20 30 40 50   / 10 21 32 43 54
+(til 5) > 2                / 00011b
+```
+
+No index, no loop, no accumulator. The `*` maps itself onto every element and hands back a list of
+the same shape; `+` pairs two lists element by element; `>` answers a question about every element
+at once (`00011b` is a list of five booleans). Collapsing a list works the same way — you say *what*
+to reduce, not *how* to walk it:
+
+```q
+sum til 5          / 10
+```
+
+![Two panels computing the same result. Left, a Python loop doubles 0 1 2 3 4 in five numbered steps, one element at a time. Right, the q expression 2 * til 5 applies one operation to the whole list at once and produces 0 2 4 6 8.](figures/01/figure-1-where-the-iteration-lives.svg)
+
+*Figure 1. Where the iteration lives. The loop is still there — it just isn't yours to write.*
+
+The iteration didn't disappear; it moved into the operator. Every idea in this curriculum is that
+move, applied to something bigger: a table, a query, a join.
+
 ## The thesis
 
 Most "learn an array language" material teaches syntax. Syntax is not the hard part. The hard part
 is **unlearning the loop** — and the reason that is hard is that nothing forces it.
 
 You can write q for months with `do[]`, `while[]`, an index variable and an accumulator. It works.
-The answers are correct. There is no error, no warning, no performance cliff at the sizes you test
-on. A language comfortable enough to let you stay imperative will not teach you to stop being
+The answers are correct. There is no error and no warning;
+nothing in the language pushes back. A language comfortable enough to let you stay imperative will not teach you to stop being
 imperative.
 
 So: **J as a short laboratory, then q as the destination.** J is where the shift is unavoidable —
 its ordinary notation gives you nowhere comfortable to put a loop. q is where you ship. J is one or
 two read-along lessons; you need no J toolchain to read the repo. Everything after the transition
 chapter is q: real tables, qSQL, attributes, an as-of join.
+
+![A left-to-right route in three stages: imperative habits (loops, indices, accumulators), then a short J laboratory of one or two read-along lessons, then five verified q lessons ending in the as-of join. A bar under all three reads: make verify, every example runs; J on every pull request, q nightly in CI.](figures/01/figure-2-the-route.svg)
+
+*Figure 2. The route. J is the laboratory; q is where you ship. Everything on it runs.*
 
 I should be honest that J is the laboratory partly for an unglamorous reason: **it is the array
 language I already think in**, so that half costs hours instead of weeks. If you have no
@@ -47,8 +91,8 @@ lower-numbered one wins**:
 That looked like planning ceremony when I wrote it. Then it did real work, twice.
 
 **Once, when the ground moved.** Objective 3 originally read "author a q skill for Claude Code."
-Partway through setup I discovered KX already ships official Claude Code plugins for q, PyKX, KDB-X
-and KDB.AI, with their own marketplace and a linter integration. Authoring a competing general-purpose
+Partway through setup I discovered KX already ships a family of official Claude Code plugins, covering q,
+PyKX, KDB-X and KDB.AI among others, with their own marketplace and a linter integration. Authoring a competing general-purpose
 q skill would be redundant.
 
 Without a hierarchy that is a small identity crisis. With one it is a lookup: the *learning*
@@ -59,8 +103,9 @@ sulking.
 
 **Once, when it would have been convenient to forget it.** Objective 4 says the blog is exhaust,
 never the driver. That is easy to agree with and hard to honour, because "what would make a better
-article" is a genuinely seductive input. It has already forced a null result into print (article 3)
-and thrown away the framing I wanted for another (see [article 2](02-kdb-x-licensing-maze.md)).
+article" is a genuinely seductive input. It has already forced a null result into the open (the evaluation is
+[published in the repo](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md); article 3 writes it up) and thrown away the framing I
+wanted for another (article 2).
 Both were correct calls and neither was comfortable.
 
 ## The constraint the whole repo is built around
@@ -86,7 +131,8 @@ authority of a code block.
 Here is the thing I did not expect, and it is the main reason this article exists.
 
 `make verify` proves my *code* runs. It says nothing about whether my *claims* are true. And every
-serious defect in this project so far has been a claim, not a line of code.
+serious defect in this project so far has got past a green build — almost always because what was
+wrong was a claim, not a failing line of code.
 
 Four, in order of discovery:
 
@@ -97,10 +143,11 @@ Four, in order of discovery:
   become false — one pointing at a directory convention that never existed, one holding a decision
   "pending research" that had concluded weeks earlier. Both read as current.
 - A **README status table** advertising work as pending that had already shipped. I fixed that one
-  this week, while writing this article.
-- And then the one that actually stung, two days ago.
+  in late July, while drafting this article — and when I re-read it two months later, it had gone
+  stale again in exactly the same way.
+- And then the one that actually stung, also in late July.
 
-I published [an evaluation](03-evaluating-kx-q-plugin.md) that came back null, and the one genuinely
+I published [an evaluation](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md) that came back null, and the one genuinely
 interesting paragraph in it reported that both test conditions had used the "wrong" attribute on a
 kdb+ as-of join, against KX's own documentation. It was the single result with any teeth in an
 otherwise flat writeup.
@@ -115,19 +162,31 @@ hardest** — it is precisely the one that gets the least scrutiny, because you 
 Second, **prior work does not protect you if nothing routes you back to it.** A verified finding
 filed in a document nobody re-reads is indistinguishable from a finding never made.
 
+![Two columns. Code is covered by make verify: examples re-run, outputs diffed, nightly CI; it fails loudly. Claims have nothing that runs them; every serious defect so far was one of these, and they fail silently. Below: re-read governing documents every milestone, and recompute the evaluation's key numbers from committed artifacts.](figures/01/figure-3-what-verification-covers.svg)
+
+*Figure 3. Code fails loudly. Claims fail silently.*
+
+It has happened again since. In September an independent review of lesson 05 found a sentence
+calling a loop "order-proof" that was true on every input the lesson used and false on one it
+didn't — two quotes at the same timestamp. `make verify` was green throughout: it proves the outputs
+on the page are real, not that a sentence with "always" in it generalises. That one has its own
+story in article 4.
+
 So the repo now has a mandatory per-milestone step to re-read its own governing documents against
 reality, and part of the published evaluation has a `make` target that recomputes it from committed
 artifacts and **fails if the committed table disagrees** — specifically the pass/fail column and the
 per-session activation traces, which are the numbers a reader is most likely to take on trust. The
 judgement-based scores it cannot recompute, so those stay defended by writing the scoring rules down
-before scoring. Both exist because of specific defects, not because they sounded rigorous.
+before scoring. Both exist because of specific defects, not because they sounded rigorous. And
+since late July a nightly CI job runs all of `make verify` against a licensed q, so none of this
+depends on my machine or my memory.
 
 ## What learning in public actually means
 
 It is not "post progress." Progress posts are easy and roughly worthless.
 
 It means the null result gets published with the same effort as a positive one would have. It means
-when the interesting paragraph turns out to be wrong, you go back and retract it in the article
+when the interesting paragraph turns out to be wrong, you go back and retract it in the evaluation
 that already shipped — which I have now done, and which is a strange feeling I recommend. It means
 the repository carries the raw material behind every number: all fifty session logs from that
 evaluation, the exact prompts, the scoring rationale, the losing answers.
@@ -142,19 +201,19 @@ evaluation harness I trust — mostly because it has already caught me.
 ## The six articles
 
 1. **This one** — the project, the rules, and what they cost.
-2. **[Running q in a public repo: the KDB-X licensing maze](02-kdb-x-licensing-maze.md)** — reading
+2. **Running q in a public repo: the KDB-X licensing maze** — reading
    the actual license before writing any CI, and the three findings that changed the build.
-3. **[Does KX's official q plugin actually make Claude better at q?](03-evaluating-kx-q-plugin.md)**
+3. **Does KX's official q plugin actually make Claude better at q?**
    — a controlled evaluation, a null result, and why the null is about my benchmark rather than
    their plugin.
 4. **The as-of join** — what changes when the language and the storage engine are designed around
    one primitive. No benchmark numbers, for reasons article 2 explains.
-5. **[Unlearn the loop: what J shows that q hides](05-unlearn-the-loop.md)** — the laboratory, and
+5. **Unlearn the loop: what J shows that q hides** — the laboratory, and
    the two places it lies to you on the way home.
 6. **What compounds** — packaging the lessons-learned file that gets appended at every milestone.
 
-Articles 4 and 5 are drafted or pending against milestones that have not shipped yet. Each publishes
-only when the artifacts it describes actually verify — which is the same rule as the code, applied
+Articles 2–5 are drafted; 6 is packaging. Each publishes only when the artifacts it describes
+actually verify — which is the same rule as the code, applied
 to the writing.
 
 ---
