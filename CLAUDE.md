@@ -68,6 +68,7 @@ runs end-to-end, and the eval verify-harness exists.
 - Plain Makefile drives everything: `make verify-j`, `make verify-q`, `make verify`.
 - Pin and document exact J and KDB-X versions in `docs/toolchain.md`.
 - q golden files live next to the showcase only: `showcase/aj/expected.txt`.
+- Every new or edited figure must follow `writings/figures/STYLE.md` (nandan.me's visual identity).
 - Session state or scratch must never leak into the repo at all — use a temp dir OUTSIDE it, so a
   stray `git add` cannot pick it up. Nothing in the working tree is a scratchpad.
 

@@ -1,33 +1,33 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">What did separate the conditions: output tokens</title>
   <desc id="desc">A horizontal bar chart of total output tokens across the 15 tasks. Without the plugin: 3,671 tokens. With the plugin: 10,337 tokens, 2.8 times as many. Two further figures sit beside the bars: the median per-task ratio is 3.9 times, and the widest single task went from 23 tokens to 407, 17.7 times. The footer notes that the extra tokens bought identically scored code on 14 of 15 tasks and literally the same code on 5. These are the language model's output tokens, not a measurement of q or KDB-X.</desc>
 
   <rect width="900" height="400" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">WHAT DID SEPARATE THE CONDITIONS</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">Same scores. About three times the output tokens.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">WHAT DID SEPARATE THE CONDITIONS</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">Same scores. About three times the output tokens.</text>
 
-  <text x="40" y="118" font-size="11" letter-spacing="2" fill="#6b7280">TOTAL OUTPUT TOKENS, 15 TASKS</text>
+  <text x="40" y="118" font-size="11" letter-spacing="2" fill="#777777">TOTAL OUTPUT TOKENS, 15 TASKS</text>
 
   <!-- scale: 10,337 -> 560px ; 3,671 -> 199px -->
-  <text x="40" y="160" font-size="14" fill="#475569">Without plugin</text>
-  <rect x="160" y="142" width="199" height="28" fill="#94a3b8"/>
-  <text x="369" y="161" font-size="15" font-family="'SF Mono', Menlo, Consolas, monospace" fill="#1f2937">3,671</text>
+  <text x="40" y="160" font-size="14" fill="#555555">Without plugin</text>
+  <rect rx="2" x="160" y="142" width="199" height="28" fill="#8a8c9e"/>
+  <text x="369" y="161" font-size="15" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" fill="#000000">3,671</text>
 
-  <text x="40" y="212" font-size="14" fill="#1f2937">With plugin</text>
-  <rect x="160" y="194" width="560" height="28" fill="#1f2937"/>
-  <text x="730" y="213" font-size="15" font-family="'SF Mono', Menlo, Consolas, monospace" fill="#1f2937">10,337</text>
-  <text x="810" y="213" font-size="15" font-weight="600" fill="#1f2937">2.8×</text>
+  <text x="40" y="212" font-size="14" fill="#000000">With plugin</text>
+  <rect rx="2" x="160" y="194" width="560" height="28" fill="#34374C"/>
+  <text x="730" y="213" font-size="15" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" fill="#000000">10,337</text>
+  <text x="810" y="213" font-size="15" font-weight="600" fill="#000000">2.8×</text>
 
-  <line x1="40" y1="254" x2="860" y2="254" stroke="#e5e7eb"/>
+  <line x1="40" y1="254" x2="860" y2="254" stroke="#e5e5e5"/>
 
-  <text x="40" y="288" font-size="11" letter-spacing="2" fill="#6b7280">MEDIAN PER-TASK RATIO</text>
-  <text x="40" y="326" font-size="30" font-family="'SF Mono', Menlo, Consolas, monospace" fill="#1f2937">3.9×</text>
+  <text x="40" y="288" font-size="11" letter-spacing="2" fill="#777777">MEDIAN PER-TASK RATIO</text>
+  <text x="40" y="326" font-size="30" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" fill="#000000">3.9×</text>
 
-  <text x="330" y="288" font-size="11" letter-spacing="2" fill="#6b7280">WIDEST SINGLE TASK</text>
-  <text x="330" y="326" font-size="30" font-family="'SF Mono', Menlo, Consolas, monospace" fill="#1f2937">23 → 407</text>
-  <text x="530" y="324" font-size="15" fill="#475569">17.7×</text>
+  <text x="330" y="288" font-size="11" letter-spacing="2" fill="#777777">WIDEST SINGLE TASK</text>
+  <text x="330" y="326" font-size="30" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" fill="#000000">23 → 407</text>
+  <text x="530" y="324" font-size="15" fill="#555555">17.7×</text>
 
-  <text x="450" y="372" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">Identically scored code on 14 of 15 tasks; literally the same code on 5. Language-model tokens, not a measurement of q.</text>
+  <text x="450" y="372" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">Identically scored code on 14 of 15 tasks; literally the same code on 5. Language-model tokens, not a measurement of q.</text>
 </svg>

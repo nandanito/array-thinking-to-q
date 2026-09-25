@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">What verification covers, and what it does not</title>
   <desc id="desc">Two columns. The left column, code, is covered by make verify: every example is re-run, printed outputs are re-captured and diffed against the page, and the whole suite runs nightly in CI. Its status line reads: fails loudly. The right column, claims, has nothing that runs them, and lists the four serious defects the project has had so far: a CI check that went green having verified nothing; contributor rules that had quietly gone stale; a README status table advertising shipped work as pending; and a published evaluation finding that had to be retracted, although the repository had recorded the correction three days earlier. Its status line reads: fails silently. The heading says every serious defect so far got past a green build. Beneath both, two fixes are listed: re-read the governing documents at every milestone, and recompute the evaluation's key numbers from committed artifacts so the build fails if they drift.</desc>
 
   <rect width="900" height="500" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">THE HALF THAT VERIFICATION DOESN'T COVER</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">Every serious defect so far got past a green build.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">THE HALF THAT VERIFICATION DOESN'T COVER</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">Every serious defect so far got past a green build.</text>
 
   <!-- code -->
-  <rect x="40" y="100" width="390" height="276" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="40" y="100" width="3" height="276" fill="#94a3b8"/>
-  <text x="66" y="128" font-size="11" letter-spacing="2" fill="#6b7280">CODE</text>
-  <text x="66" y="158" font-size="18" font-weight="600" fill="#1f2937">Covered by <tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-weight="400">make verify</tspan></text>
-  <line x1="66" y1="176" x2="406" y2="176" stroke="#e5e7eb"/>
-  <g font-size="14" fill="#475569">
+  <rect rx="2" x="40" y="100" width="390" height="276" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="100" width="3" height="276" fill="#8a8c9e"/>
+  <text x="66" y="128" font-size="11" letter-spacing="2" fill="#777777">CODE</text>
+  <text x="66" y="158" font-size="18" font-weight="600" fill="#000000">Covered by <tspan font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-weight="400">make verify</tspan></text>
+  <line x1="66" y1="176" x2="406" y2="176" stroke="#e5e5e5"/>
+  <g font-size="14" fill="#555555">
     <text x="66" y="206">Every example is re-run</text>
     <text x="66" y="236">Printed outputs re-captured and</text>
     <text x="66" y="256">diffed against the page</text>
     <text x="66" y="286">The whole suite runs nightly in CI</text>
   </g>
-  <text x="66" y="350" font-size="11" letter-spacing="2" fill="#6b7280">WHEN IT BREAKS</text>
-  <text x="200" y="351" font-size="15" fill="#1f2937">Fails loudly</text>
+  <text x="66" y="350" font-size="11" letter-spacing="2" fill="#777777">WHEN IT BREAKS</text>
+  <text x="200" y="351" font-size="15" fill="#000000">Fails loudly</text>
 
   <!-- claims -->
-  <rect x="470" y="100" width="390" height="276" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="470" y="100" width="3" height="276" fill="#1f2937"/>
-  <text x="496" y="128" font-size="11" letter-spacing="2" fill="#6b7280">CLAIMS</text>
-  <text x="496" y="158" font-size="18" font-weight="600" fill="#1f2937">Nothing runs these</text>
-  <line x1="496" y1="176" x2="836" y2="176" stroke="#e5e7eb"/>
-  <g font-size="14" fill="#475569">
+  <rect rx="2" x="470" y="100" width="390" height="276" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="470" y="100" width="3" height="276" fill="#34374C"/>
+  <text x="496" y="128" font-size="11" letter-spacing="2" fill="#777777">CLAIMS</text>
+  <text x="496" y="158" font-size="18" font-weight="600" fill="#000000">Nothing runs these</text>
+  <line x1="496" y1="176" x2="836" y2="176" stroke="#e5e5e5"/>
+  <g font-size="14" fill="#555555">
     <text x="496" y="206">1  A CI check green, having verified nothing</text>
     <text x="496" y="236">2  Contributor rules quietly gone stale</text>
     <text x="496" y="266">3  A status table calling shipped work pending</text>
     <text x="496" y="296">4  A published finding, retracted — the fix</text>
     <text x="514" y="316">was already in the repo, unread</text>
   </g>
-  <text x="496" y="350" font-size="11" letter-spacing="2" fill="#6b7280">WHEN IT BREAKS</text>
-  <text x="630" y="351" font-size="15" fill="#1f2937">Fails silently</text>
+  <text x="496" y="350" font-size="11" letter-spacing="2" fill="#777777">WHEN IT BREAKS</text>
+  <text x="630" y="351" font-size="15" fill="#000000">Fails silently</text>
 
   <!-- fixes -->
-  <text x="40" y="414" font-size="11" letter-spacing="2" fill="#6b7280">WHAT CHANGED</text>
-  <g font-size="14" fill="#1f2937">
+  <text x="40" y="414" font-size="11" letter-spacing="2" fill="#777777">WHAT CHANGED</text>
+  <g font-size="14" fill="#000000">
     <text x="40" y="442">→  Re-read the governing documents against reality at every milestone</text>
     <text x="40" y="468">→  Recompute the evaluation's key numbers from committed artifacts, so the build fails if they drift</text>
   </g>

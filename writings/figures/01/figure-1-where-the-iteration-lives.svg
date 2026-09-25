@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">Where the iteration lives: a loop versus an array operation</title>
   <desc id="desc">Two side-by-side panels computing the same result, doubling the list 0 1 2 3 4 to get 0 2 4 6 8. The left panel, labelled imperative, shows a Python list a of 0 to 4 and a for-loop over an index i; five separate numbered arrows carry each input element to its output one at a time, and the caption says you write the index, the step and the accumulator. The right panel, labelled array, shows the q expression 2 times til 5; a single bar labelled "2 *" spans all five inputs at once and one arrow produces all five outputs, and the caption says one operation on the whole list, with no index and no loop. A footer notes that multiplication in q is atomic: it maps itself down to every element and rebuilds the shape.</desc>
 
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a8c9e"/>
     </marker>
     <marker id="ahd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34374C"/>
     </marker>
   </defs>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">WHERE THE ITERATION LIVES</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">Same answer. The loop moved into the operator.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">WHERE THE ITERATION LIVES</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">Same answer. The loop moved into the operator.</text>
 
   <!-- LEFT PANEL: imperative -->
-  <rect x="40" y="100" width="390" height="310" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="40" y="100" width="3" height="310" fill="#94a3b8"/>
-  <text x="66" y="128" font-size="11" letter-spacing="2" fill="#6b7280">IMPERATIVE · PYTHON</text>
+  <rect rx="2" x="40" y="100" width="390" height="310" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="100" width="3" height="310" fill="#8a8c9e"/>
+  <text x="66" y="128" font-size="11" letter-spacing="2" fill="#777777">IMPERATIVE · PYTHON</text>
 
-  <rect x="66" y="142" width="340" height="80" fill="#f8fafc" stroke="#e5e7eb"/>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="#1f2937">
+  <rect rx="2" x="66" y="142" width="340" height="80" fill="#fafafa" stroke="#e5e5e5"/>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="13" fill="#000000">
     <text x="80" y="160">a = [0, 1, 2, 3, 4]</text>
     <text x="80" y="176">out = []</text>
     <text x="80" y="192">for i in range(5):</text>
@@ -31,65 +31,65 @@
   </g>
 
   <!-- inputs -->
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#1f2937" text-anchor="middle">
-    <rect x="79" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="107" y="262">0</text>
-    <rect x="143" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="171" y="262">1</text>
-    <rect x="207" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="235" y="262">2</text>
-    <rect x="271" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="299" y="262">3</text>
-    <rect x="335" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="363" y="262">4</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" fill="#34374C" text-anchor="middle">
+    <rect rx="2" x="79" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="107" y="262">0</text>
+    <rect rx="2" x="143" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="171" y="262">1</text>
+    <rect rx="2" x="207" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="235" y="262">2</text>
+    <rect rx="2" x="271" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="299" y="262">3</text>
+    <rect rx="2" x="335" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="363" y="262">4</text>
   </g>
   <!-- five separate steps -->
-  <g stroke="#94a3b8" stroke-width="1.4" marker-end="url(#ah)">
+  <g stroke="#8a8c9e" stroke-width="1.4" marker-end="url(#ah)">
     <line x1="107" y1="278" x2="107" y2="326"/>
     <line x1="171" y1="278" x2="171" y2="326"/>
     <line x1="235" y1="278" x2="235" y2="326"/>
     <line x1="299" y1="278" x2="299" y2="326"/>
     <line x1="363" y1="278" x2="363" y2="326"/>
   </g>
-  <g font-size="10" fill="#475569" text-anchor="middle">
-    <circle cx="121" cy="302" r="8" fill="#ffffff" stroke="#94a3b8"/><text x="121" y="306">1</text>
-    <circle cx="185" cy="302" r="8" fill="#ffffff" stroke="#94a3b8"/><text x="185" y="306">2</text>
-    <circle cx="249" cy="302" r="8" fill="#ffffff" stroke="#94a3b8"/><text x="249" y="306">3</text>
-    <circle cx="313" cy="302" r="8" fill="#ffffff" stroke="#94a3b8"/><text x="313" y="306">4</text>
-    <circle cx="377" cy="302" r="8" fill="#ffffff" stroke="#94a3b8"/><text x="377" y="306">5</text>
+  <g font-size="10" fill="#8a8c9e" text-anchor="middle">
+    <circle cx="121" cy="302" r="8" fill="#ffffff" stroke="#8a8c9e"/><text x="121" y="306">1</text>
+    <circle cx="185" cy="302" r="8" fill="#ffffff" stroke="#8a8c9e"/><text x="185" y="306">2</text>
+    <circle cx="249" cy="302" r="8" fill="#ffffff" stroke="#8a8c9e"/><text x="249" y="306">3</text>
+    <circle cx="313" cy="302" r="8" fill="#ffffff" stroke="#8a8c9e"/><text x="313" y="306">4</text>
+    <circle cx="377" cy="302" r="8" fill="#ffffff" stroke="#8a8c9e"/><text x="377" y="306">5</text>
   </g>
   <!-- outputs -->
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#1f2937" text-anchor="middle">
-    <rect x="79" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="107" y="352">0</text>
-    <rect x="143" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="171" y="352">2</text>
-    <rect x="207" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="235" y="352">4</text>
-    <rect x="271" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="299" y="352">6</text>
-    <rect x="335" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="363" y="352">8</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" fill="#34374C" text-anchor="middle">
+    <rect rx="2" x="79" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="107" y="352">0</text>
+    <rect rx="2" x="143" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="171" y="352">2</text>
+    <rect rx="2" x="207" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="235" y="352">4</text>
+    <rect rx="2" x="271" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="299" y="352">6</text>
+    <rect rx="2" x="335" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="363" y="352">8</text>
   </g>
-  <text x="235" y="394" text-anchor="middle" font-size="13" font-style="italic" fill="#475569">You write the index, the step, the accumulator.</text>
+  <text x="235" y="394" text-anchor="middle" font-size="13" font-style="italic" fill="#555555">You write the index, the step, the accumulator.</text>
 
   <!-- RIGHT PANEL: array -->
-  <rect x="470" y="100" width="390" height="310" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="470" y="100" width="3" height="310" fill="#1f2937"/>
-  <text x="496" y="128" font-size="11" letter-spacing="2" fill="#6b7280">ARRAY · q</text>
+  <rect rx="2" x="470" y="100" width="390" height="310" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="470" y="100" width="3" height="310" fill="#34374C"/>
+  <text x="496" y="128" font-size="11" letter-spacing="2" fill="#777777">ARRAY · q</text>
 
-  <rect x="496" y="142" width="340" height="80" fill="#f8fafc" stroke="#e5e7eb"/>
-  <text x="510" y="188" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#1f2937">2 * til 5</text>
+  <rect rx="2" x="496" y="142" width="340" height="80" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="510" y="188" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="17" fill="#000000">2 * til 5</text>
 
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#1f2937" text-anchor="middle">
-    <rect x="509" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="537" y="262">0</text>
-    <rect x="573" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="601" y="262">1</text>
-    <rect x="637" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="665" y="262">2</text>
-    <rect x="701" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="729" y="262">3</text>
-    <rect x="765" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="793" y="262">4</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" fill="#34374C" text-anchor="middle">
+    <rect rx="2" x="509" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="537" y="262">0</text>
+    <rect rx="2" x="573" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="601" y="262">1</text>
+    <rect rx="2" x="637" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="665" y="262">2</text>
+    <rect rx="2" x="701" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="729" y="262">3</text>
+    <rect rx="2" x="765" y="240" width="56" height="34" fill="#ffffff" stroke="#c8c8c8"/><text x="793" y="262">4</text>
   </g>
   <!-- one operation over the whole list -->
-  <rect x="509" y="284" width="312" height="26" fill="#1f2937"/>
-  <text x="665" y="302" text-anchor="middle" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="14" fill="#ffffff">2 *</text>
-  <g stroke="#1f2937" stroke-width="1.6" marker-end="url(#ahd)"><line x1="537" y1="310" x2="537" y2="326"/><line x1="601" y1="310" x2="601" y2="326"/><line x1="665" y1="310" x2="665" y2="326"/><line x1="729" y1="310" x2="729" y2="326"/><line x1="793" y1="310" x2="793" y2="326"/></g>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#1f2937" text-anchor="middle">
-    <rect x="509" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="537" y="352">0</text>
-    <rect x="573" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="601" y="352">2</text>
-    <rect x="637" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="665" y="352">4</text>
-    <rect x="701" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="729" y="352">6</text>
-    <rect x="765" y="330" width="56" height="34" fill="#f8fafc" stroke="#cbd5e1"/><text x="793" y="352">8</text>
+  <rect rx="2" x="509" y="284" width="312" height="26" fill="#34374C"/>
+  <text x="665" y="302" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="14" fill="#ffffff">2 *</text>
+  <g stroke="#34374C" stroke-width="1.6" marker-end="url(#ahd)"><line x1="537" y1="310" x2="537" y2="326"/><line x1="601" y1="310" x2="601" y2="326"/><line x1="665" y1="310" x2="665" y2="326"/><line x1="729" y1="310" x2="729" y2="326"/><line x1="793" y1="310" x2="793" y2="326"/></g>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" fill="#34374C" text-anchor="middle">
+    <rect rx="2" x="509" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="537" y="352">0</text>
+    <rect rx="2" x="573" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="601" y="352">2</text>
+    <rect rx="2" x="637" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="665" y="352">4</text>
+    <rect rx="2" x="701" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="729" y="352">6</text>
+    <rect rx="2" x="765" y="330" width="56" height="34" fill="#fafafa" stroke="#c8c8c8"/><text x="793" y="352">8</text>
   </g>
-  <text x="665" y="394" text-anchor="middle" font-size="13" font-style="italic" fill="#475569">One operation on the whole list. No index, no loop.</text>
+  <text x="665" y="394" text-anchor="middle" font-size="13" font-style="italic" fill="#555555">One operation on the whole list. No index, no loop.</text>
 
-  <text x="450" y="446" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">In q, * is atomic: it maps itself down to every element and rebuilds the shape. The loop is still there; it is just not yours to write.</text>
+  <text x="450" y="446" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">In q, * is atomic: it maps itself down to every element and rebuilds the shape. The loop is still there; it is just not yours to write.</text>
 </svg>

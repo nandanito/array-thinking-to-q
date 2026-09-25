@@ -1,94 +1,94 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">The as-of join: each trade takes the last quote at or before it</title>
   <desc id="desc">A time axis for one symbol, AAPL, running from 09:59:59 to 10:00:06. Above the axis are three quotes: 10:00:00 with bid 99, 10:00:02 with bid 99.1, and 10:00:05 with bid 99.4. Below the axis are five trades, each with an arrow up and back to the quote it is matched to. The trade at 10:00:01 takes the 10:00:00 quote, bid 99. The trade at 10:00:03 takes the 10:00:02 quote, bid 99.1. The trade at 10:00:06 takes the 10:00:05 quote, bid 99.4. Two edge cases are drawn dashed: a trade at exactly 10:00:02 takes the quote stamped at that same second, bid 99.1, because the match is at or before; and a trade at 09:59:59, before any quote, has nothing to take, so the join returns null for it and still keeps the row. The footer says: same symbol, at or before, most recent.</desc>
 
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34374C"/>
     </marker>
     <marker id="ahm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a8c9e"/>
     </marker>
   </defs>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">THE AS-OF JOIN</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">For each trade, the quote that was in force when it happened.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">THE AS-OF JOIN</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">For each trade, the quote that was in force when it happened.</text>
 
   <!-- row labels -->
-  <text x="40" y="150" font-size="11" letter-spacing="2" fill="#6b7280">QUOTES</text>
-  <text x="40" y="166" font-size="11" letter-spacing="2" fill="#6b7280">AAPL</text>
-  <text x="40" y="336" font-size="11" letter-spacing="2" fill="#6b7280">TRADES</text>
-  <text x="40" y="352" font-size="11" letter-spacing="2" fill="#6b7280">AAPL</text>
+  <text x="40" y="150" font-size="11" letter-spacing="2" fill="#777777">QUOTES</text>
+  <text x="40" y="166" font-size="11" letter-spacing="2" fill="#777777">AAPL</text>
+  <text x="40" y="336" font-size="11" letter-spacing="2" fill="#777777">TRADES</text>
+  <text x="40" y="352" font-size="11" letter-spacing="2" fill="#777777">AAPL</text>
 
   <!-- axis: 09:59:59 at x=150, 90px per second -->
-  <line x1="140" y1="245" x2="800" y2="245" stroke="#cbd5e1" stroke-width="1"/>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="11" fill="#6b7280" text-anchor="middle">
-    <line x1="150" y1="241" x2="150" y2="249" stroke="#cbd5e1"/>
-    <line x1="240" y1="241" x2="240" y2="249" stroke="#cbd5e1"/>
-    <line x1="330" y1="241" x2="330" y2="249" stroke="#cbd5e1"/>
-    <line x1="420" y1="241" x2="420" y2="249" stroke="#cbd5e1"/>
-    <line x1="510" y1="241" x2="510" y2="249" stroke="#cbd5e1"/>
-    <line x1="600" y1="241" x2="600" y2="249" stroke="#cbd5e1"/>
-    <line x1="690" y1="241" x2="690" y2="249" stroke="#cbd5e1"/>
-    <line x1="780" y1="241" x2="780" y2="249" stroke="#cbd5e1"/>
+  <line x1="140" y1="245" x2="800" y2="245" stroke="#c8c8c8" stroke-width="1"/>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="11" fill="#8a8c9e" text-anchor="middle">
+    <line x1="150" y1="241" x2="150" y2="249" stroke="#c8c8c8"/>
+    <line x1="240" y1="241" x2="240" y2="249" stroke="#c8c8c8"/>
+    <line x1="330" y1="241" x2="330" y2="249" stroke="#c8c8c8"/>
+    <line x1="420" y1="241" x2="420" y2="249" stroke="#c8c8c8"/>
+    <line x1="510" y1="241" x2="510" y2="249" stroke="#c8c8c8"/>
+    <line x1="600" y1="241" x2="600" y2="249" stroke="#c8c8c8"/>
+    <line x1="690" y1="241" x2="690" y2="249" stroke="#c8c8c8"/>
+    <line x1="780" y1="241" x2="780" y2="249" stroke="#c8c8c8"/>
   </g>
-  <text x="815" y="249" font-size="11" fill="#94a3b8">t</text>
+  <text x="815" y="249" font-size="11" fill="#777777">t</text>
 
   <!-- quotes -->
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" text-anchor="middle">
-    <rect x="195" y="130" width="90" height="46" fill="#ffffff" stroke="#1f2937"/>
-    <text x="240" y="150" font-size="12" fill="#6b7280">10:00:00</text>
-    <text x="240" y="168" font-size="14" fill="#1f2937">bid 99</text>
-    <line x1="240" y1="176" x2="240" y2="241" stroke="#1f2937" stroke-width="1"/>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" text-anchor="middle">
+    <rect rx="2" x="195" y="130" width="90" height="46" fill="#ffffff" stroke="#34374C"/>
+    <text x="240" y="150" font-size="12" fill="#777777">10:00:00</text>
+    <text x="240" y="168" font-size="14" fill="#000000">bid 99</text>
+    <line x1="240" y1="176" x2="240" y2="241" stroke="#34374C" stroke-width="1"/>
 
-    <rect x="375" y="130" width="90" height="46" fill="#ffffff" stroke="#1f2937"/>
-    <text x="420" y="150" font-size="12" fill="#6b7280">10:00:02</text>
-    <text x="420" y="168" font-size="14" fill="#1f2937">bid 99.1</text>
-    <line x1="420" y1="176" x2="420" y2="241" stroke="#1f2937" stroke-width="1"/>
+    <rect rx="2" x="375" y="130" width="90" height="46" fill="#ffffff" stroke="#34374C"/>
+    <text x="420" y="150" font-size="12" fill="#777777">10:00:02</text>
+    <text x="420" y="168" font-size="14" fill="#000000">bid 99.1</text>
+    <line x1="420" y1="176" x2="420" y2="241" stroke="#34374C" stroke-width="1"/>
 
-    <rect x="645" y="130" width="90" height="46" fill="#ffffff" stroke="#1f2937"/>
-    <text x="690" y="150" font-size="12" fill="#6b7280">10:00:05</text>
-    <text x="690" y="168" font-size="14" fill="#1f2937">bid 99.4</text>
-    <line x1="690" y1="176" x2="690" y2="241" stroke="#1f2937" stroke-width="1"/>
+    <rect rx="2" x="645" y="130" width="90" height="46" fill="#ffffff" stroke="#34374C"/>
+    <text x="690" y="150" font-size="12" fill="#777777">10:00:05</text>
+    <text x="690" y="168" font-size="14" fill="#000000">bid 99.4</text>
+    <line x1="690" y1="176" x2="690" y2="241" stroke="#34374C" stroke-width="1"/>
   </g>
 
   <!-- showcase trades: solid -->
-  <g stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#ah)">
+  <g stroke="#34374C" stroke-width="1.5" fill="none" marker-end="url(#ah)">
     <path d="M 330 312 L 330 290 Q 330 280 320 278 L 252 252"/>
     <path d="M 510 312 L 510 290 Q 510 280 500 278 L 432 252"/>
     <path d="M 780 312 L 780 290 Q 780 280 770 278 L 702 252"/>
   </g>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" text-anchor="middle">
-    <circle cx="330" cy="320" r="6" fill="#1f2937"/>
-    <text x="330" y="346" font-size="12" fill="#1f2937">10:00:01</text>
-    <text x="330" y="364" font-size="13" fill="#1f2937">→ 99</text>
-    <circle cx="510" cy="320" r="6" fill="#1f2937"/>
-    <text x="510" y="346" font-size="12" fill="#1f2937">10:00:03</text>
-    <text x="510" y="364" font-size="13" fill="#1f2937">→ 99.1</text>
-    <circle cx="780" cy="320" r="6" fill="#1f2937"/>
-    <text x="780" y="346" font-size="12" fill="#1f2937">10:00:06</text>
-    <text x="780" y="364" font-size="13" fill="#1f2937">→ 99.4</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" text-anchor="middle">
+    <circle cx="330" cy="320" r="6" fill="#34374C"/>
+    <text x="330" y="346" font-size="12" fill="#000000">10:00:01</text>
+    <text x="330" y="364" font-size="13" fill="#000000">→ 99</text>
+    <circle cx="510" cy="320" r="6" fill="#34374C"/>
+    <text x="510" y="346" font-size="12" fill="#000000">10:00:03</text>
+    <text x="510" y="364" font-size="13" fill="#000000">→ 99.1</text>
+    <circle cx="780" cy="320" r="6" fill="#34374C"/>
+    <text x="780" y="346" font-size="12" fill="#000000">10:00:06</text>
+    <text x="780" y="364" font-size="13" fill="#000000">→ 99.4</text>
   </g>
 
   <!-- edge trades: dashed -->
-  <line x1="420" y1="312" x2="420" y2="254" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ahm)"/>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" text-anchor="middle">
-    <circle cx="420" cy="320" r="6" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
-    <text x="420" y="346" font-size="12" fill="#475569">10:00:02</text>
-    <text x="420" y="364" font-size="13" fill="#475569">→ 99.1</text>
-    <circle cx="150" cy="320" r="6" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
-    <text x="150" y="346" font-size="12" fill="#475569">09:59:59</text>
-    <text x="150" y="364" font-size="13" fill="#475569">→ null</text>
+  <line x1="420" y1="312" x2="420" y2="254" stroke="#8a8c9e" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ahm)"/>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" text-anchor="middle">
+    <circle cx="420" cy="320" r="6" fill="#ffffff" stroke="#8a8c9e" stroke-width="1.5"/>
+    <text x="420" y="346" font-size="12" fill="#555555">10:00:02</text>
+    <text x="420" y="364" font-size="13" fill="#555555">→ 99.1</text>
+    <circle cx="150" cy="320" r="6" fill="#ffffff" stroke="#8a8c9e" stroke-width="1.5"/>
+    <text x="150" y="346" font-size="12" fill="#555555">09:59:59</text>
+    <text x="150" y="364" font-size="13" fill="#555555">→ null</text>
   </g>
-  <g font-size="12" font-style="italic" fill="#475569" text-anchor="middle">
+  <g font-size="12" font-style="italic" fill="#555555" text-anchor="middle">
     <text x="420" y="388">exact tie: at or before,</text>
     <text x="420" y="404">so it takes that quote</text>
     <text x="150" y="388">before any quote:</text>
     <text x="150" y="404">null, row kept</text>
   </g>
 
-  <text x="450" y="446" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">Same symbol. At or before. Most recent. Solid: the showcase trades. Dashed: the edge cases.</text>
+  <text x="450" y="446" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">Same symbol. At or before. Most recent. Solid: the showcase trades. Dashed: the edge cases.</text>
 </svg>
