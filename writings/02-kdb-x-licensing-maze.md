@@ -135,8 +135,8 @@ Other operational residue, in case it saves you the reading:
 
 - **Windows is WSL-only.** Not supported natively.
 - The key I received is marked non-expiring; the agreement is nonetheless **terminable at will** by
-  KX on notice (Clause 10). Liability is capped at US$100 (Clause 7); governing law is New York
-  (Clause 15).
+  KX on notice (Clause 10). KX's liability is capped at US$100 (Clause 7, with carve-outs for death or
+  personal injury caused by negligence, and for fraud); governing law is New York (Clause 15).
 - Resource caps live in the *runtime*, not the license text: `.Q.lim` reports 16 GB memory, 4
   secondary threads, 16 connections. The 24-core figure quoted around the web is an aggregate
   **license** ceiling, not a per-process limit.
