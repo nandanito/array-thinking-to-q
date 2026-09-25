@@ -3,6 +3,7 @@ LinkedIn post for article 1 (RELEASE-CHECKLIST: "2–3 paragraph professional fr
 DRAFT — do not post until article 1 is published at its canonical URL.
 Canonical section is nandan.me/writing/ (singular). The slug below is a placeholder:
 replace it with the real published URL before posting.
+Image: attach writings/figures/01/linkedin-card.png (figure 1 at 1200x627).
 -->
 
 I've started a small learning-in-public project: a short curriculum that takes an imperative

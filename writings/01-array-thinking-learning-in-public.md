@@ -13,6 +13,45 @@ This is the first one, so it owes you three things: what the project is, what ru
 and why those rules turned out to matter more than I expected, and what "learning in public"
 actually costs once you commit to it.
 
+## Array languages in one minute
+
+If you have never met an array language, here is the whole idea in three code blocks.
+
+In most languages you ask for work one element at a time. You write the loop, name the index, step
+through, and collect the results. The reflex, in Python:
+
+```python
+out = []
+for i in range(5):
+    out.append(2 * a[i])      # the index i is scaffolding, not the point
+```
+
+In an array language the operation applies to the whole list at once. Here is **q** — the language
+of kdb+, a column-oriented time-series database best known in finance — where `til 5` is the list
+`0 1 2 3 4`:
+
+```q
+2 * til 5                  / 0 2 4 6 8
+(til 5) + 10 20 30 40 50   / 10 21 32 43 54
+(til 5) > 2                / 00011b
+```
+
+No index, no loop, no accumulator. The `*` maps itself onto every element and hands back a list of
+the same shape; `+` pairs two lists element by element; `>` answers a question about every element
+at once (`00011b` is a list of five booleans). Collapsing a list works the same way — you say *what*
+to reduce, not *how* to walk it:
+
+```q
+sum til 5          / 10
+```
+
+![Two panels computing the same result. Left, a Python loop doubles 0 1 2 3 4 in five numbered steps, one element at a time. Right, the q expression 2 * til 5 applies one operation to the whole list at once and produces 0 2 4 6 8.](figures/01/figure-1-where-the-iteration-lives.svg)
+
+*Figure 1. Where the iteration lives. The loop is still there — it just isn't yours to write.*
+
+The iteration didn't disappear; it moved into the operator. Every idea in this curriculum is that
+move, applied to something bigger: a table, a query, a join.
+
 ## The thesis
 
 Most "learn an array language" material teaches syntax. Syntax is not the hard part. The hard part
@@ -27,6 +66,10 @@ So: **J as a short laboratory, then q as the destination.** J is where the shift
 its ordinary notation gives you nowhere comfortable to put a loop. q is where you ship. J is one or
 two read-along lessons; you need no J toolchain to read the repo. Everything after the transition
 chapter is q: real tables, qSQL, attributes, an as-of join.
+
+![A left-to-right route in three stages: imperative habits (loops, indices, accumulators), then a short J laboratory of one or two read-along lessons, then five verified q lessons ending in the as-of join. A bar under all three reads: make verify, every example runs; J on every pull request, q nightly in CI.](figures/01/figure-2-the-route.svg)
+
+*Figure 2. The route. J is the laboratory; q is where you ship. Everything on it runs.*
 
 I should be honest that J is the laboratory partly for an unglamorous reason: **it is the array
 language I already think in**, so that half costs hours instead of weeks. If you have no
@@ -116,6 +159,10 @@ Two things I took from that. First, **the claim that flatters your thesis is the
 hardest** — it is precisely the one that gets the least scrutiny, because you want it to be true.
 Second, **prior work does not protect you if nothing routes you back to it.** A verified finding
 filed in a document nobody re-reads is indistinguishable from a finding never made.
+
+![Two columns. Code is covered by make verify: examples re-run, outputs diffed, nightly CI; it fails loudly. Claims have nothing that runs them, and account for all four serious defects so far; they fail silently. Below: re-read governing documents every milestone, and recompute published numbers from committed artifacts.](figures/01/figure-3-what-verification-covers.svg)
+
+*Figure 3. Code fails loudly. Claims fail silently.*
 
 So the repo now has a mandatory per-milestone step to re-read its own governing documents against
 reality, and part of the published evaluation has a `make` target that recomputes it from committed
