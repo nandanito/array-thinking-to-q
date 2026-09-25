@@ -1,50 +1,50 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">The contamination control: why every session ran from an empty directory</title>
   <desc id="desc">Two panels. Left, run from inside the repository: the repo contains its own q idiom skill, idiomatic-q, a CLAUDE.md with q guidance, and verified q lessons. Both conditions inherit them, so condition A, meant to be the baseline, is also treated. The results look completely normal. Right, what the eval actually did: all 50 sessions ran headless from an empty scratch directory outside the repository, with no CLAUDE.md and no .claude directory. The committed session logs confirm it: every condition A session loaded 16 skills, none q-related, and no project instructions; every condition B session loaded the same 16 plus exactly two, q-knowledge:q and q-knowledge:qlint-snippet. The footer says: a contaminated null and a clean null are the same numbers, so the control has to live in the harness.</desc>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">THE CONTROL THAT DECIDED WHETHER ANY OF THIS MEANT ANYTHING</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">A contaminated null and a clean null are the same numbers.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">THE CONTROL THAT DECIDED WHETHER ANY OF THIS MEANT ANYTHING</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">A contaminated null and a clean null are the same numbers.</text>
 
   <!-- left: contaminated -->
-  <rect x="40" y="100" width="390" height="300" fill="#ffffff" stroke="#e5e7eb" stroke-dasharray="5 4"/>
-  <text x="62" y="128" font-size="11" letter-spacing="2" fill="#6b7280">RUN FROM INSIDE THE REPO</text>
-  <rect x="62" y="142" width="346" height="86" fill="#f8fafc" stroke="#e5e7eb"/>
-  <text x="78" y="164" font-size="11" letter-spacing="1.5" fill="#6b7280">LEAKS INTO EVERY SESSION</text>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="#1f2937">
+  <rect rx="2" x="40" y="100" width="390" height="300" fill="#ffffff" stroke="#e5e5e5" stroke-dasharray="5 4"/>
+  <text x="62" y="128" font-size="11" letter-spacing="2" fill="#777777">RUN FROM INSIDE THE REPO</text>
+  <rect rx="2" x="62" y="142" width="346" height="86" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="78" y="164" font-size="11" letter-spacing="1.5" fill="#777777">LEAKS INTO EVERY SESSION</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="13" fill="#000000">
     <text x="78" y="186">.claude/skills/idiomatic-q/</text>
     <text x="78" y="204">CLAUDE.md  (q guidance)</text>
     <text x="78" y="222">lessons/   (verified idiomatic q)</text>
   </g>
-  <g font-size="15" fill="#1f2937">
-    <text x="62" y="264">A  baseline  <tspan fill="#94a3b8">+ leaked q skill</tspan></text>
-    <text x="62" y="292">B  plugin    <tspan fill="#94a3b8">+ leaked q skill</tspan></text>
+  <g font-size="15" fill="#000000">
+    <text x="62" y="264">A  baseline  <tspan fill="#777777">+ leaked q skill</tspan></text>
+    <text x="62" y="292">B  plugin    <tspan fill="#777777">+ leaked q skill</tspan></text>
   </g>
-  <text x="62" y="334" font-size="15" fill="#1f2937">Both arms are treated.</text>
-  <text x="62" y="358" font-size="13" font-style="italic" fill="#475569">The comparison measures nothing,</text>
-  <text x="62" y="376" font-size="13" font-style="italic" fill="#475569">and the results look completely normal.</text>
+  <text x="62" y="334" font-size="15" fill="#000000">Both arms are treated.</text>
+  <text x="62" y="358" font-size="13" font-style="italic" fill="#555555">The comparison measures nothing,</text>
+  <text x="62" y="376" font-size="13" font-style="italic" fill="#555555">and the results look completely normal.</text>
 
   <!-- right: clean -->
-  <rect x="470" y="100" width="390" height="300" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="470" y="100" width="3" height="300" fill="#1f2937"/>
-  <text x="492" y="128" font-size="11" letter-spacing="2" fill="#6b7280">WHAT THE EVAL DID · ALL 50 SESSIONS</text>
-  <rect x="492" y="142" width="346" height="86" fill="#f8fafc" stroke="#e5e7eb"/>
-  <text x="508" y="164" font-size="11" letter-spacing="1.5" fill="#6b7280">EMPTY SCRATCH DIRECTORY, HEADLESS</text>
-  <g font-size="13" fill="#1f2937">
+  <rect rx="2" x="470" y="100" width="390" height="300" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="470" y="100" width="3" height="300" fill="#34374C"/>
+  <text x="492" y="128" font-size="11" letter-spacing="2" fill="#777777">WHAT THE EVAL DID · ALL 50 SESSIONS</text>
+  <rect rx="2" x="492" y="142" width="346" height="86" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="508" y="164" font-size="11" letter-spacing="1.5" fill="#777777">EMPTY SCRATCH DIRECTORY, HEADLESS</text>
+  <g font-size="13" fill="#000000">
     <text x="508" y="188">outside the repository</text>
     <text x="508" y="210">no CLAUDE.md, no .claude/</text>
   </g>
-  <text x="492" y="258" font-size="11" letter-spacing="1.5" fill="#6b7280">FROM THE COMMITTED SESSION LOGS</text>
-  <g font-size="15" fill="#1f2937">
+  <text x="492" y="258" font-size="11" letter-spacing="1.5" fill="#777777">FROM THE COMMITTED SESSION LOGS</text>
+  <g font-size="15" fill="#000000">
     <text x="492" y="286">A  16 skills, none q-related</text>
     <text x="492" y="314">B  the same 16, plus exactly:</text>
   </g>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="#1f2937">
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="13" fill="#000000">
     <text x="518" y="338">q-knowledge:q</text>
     <text x="518" y="358">q-knowledge:qlint-snippet</text>
   </g>
 
-  <text x="450" y="440" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">You cannot add this control afterwards, and you cannot detect its absence from the output. It lives in the harness.</text>
+  <text x="450" y="440" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">You cannot add this control afterwards, and you cannot detect its absence from the output. It lives in the harness.</text>
 </svg>

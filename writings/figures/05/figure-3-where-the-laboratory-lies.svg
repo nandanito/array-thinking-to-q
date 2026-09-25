@@ -1,62 +1,62 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">Where the laboratory lies: one habit fails loudly, one fails silently</title>
   <desc id="desc">Two panels about J habits that break in q. Left, the fork fails loudly: in J, plus-slash percent hash is a noun-free definition of the mean; typed into q, it does not parse, the error message is empty and the caret lands mid-fork, so you cannot ship it. q wants the composition written out, as avg or a lambda. Right, the windows fail silently: the 3-period moving average of 1 to 6 gives four results in J, 2 3 4 5, complete windows only, and six results in q, 1 1.5 2 3 4 5, ramping up through partial windows. Drawn aligned by position, the J values sit two slots to the left of the matching q values: anything aligned against that column is shifted by the window width minus one, with no error. The footer says: the thinking transfers; the plumbing does not. Respect the silent one more.</desc>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">WHERE THE LABORATORY LIES TO YOU</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">The thinking transfers. The plumbing does not.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">WHERE THE LABORATORY LIES TO YOU</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">The thinking transfers. The plumbing does not.</text>
 
   <!-- loud -->
-  <rect x="40" y="100" width="340" height="290" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="40" y="100" width="3" height="290" fill="#94a3b8"/>
-  <text x="62" y="128" font-size="11" letter-spacing="2" fill="#6b7280">THE FORK · FAILS LOUDLY</text>
-  <text x="62" y="162" font-size="13" fill="#475569">J: the mean, with no data mentioned</text>
-  <text x="62" y="188" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#1f2937">mean =: +/ % #</text>
-  <text x="62" y="226" font-size="13" fill="#475569">q: the same text</text>
-  <rect x="62" y="238" width="296" height="54" fill="#f8fafc" stroke="#e5e7eb"/>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="14" fill="#1f2937" xml:space="preserve">
+  <rect rx="2" x="40" y="100" width="340" height="290" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="100" width="3" height="290" fill="#8a8c9e"/>
+  <text x="62" y="128" font-size="11" letter-spacing="2" fill="#777777">THE FORK · FAILS LOUDLY</text>
+  <text x="62" y="162" font-size="13" fill="#555555">J: the mean, with no data mentioned</text>
+  <text x="62" y="188" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="17" fill="#000000">mean =: +/ % #</text>
+  <text x="62" y="226" font-size="13" fill="#555555">q: the same text</text>
+  <rect rx="2" x="62" y="238" width="296" height="54" fill="#fafafa" stroke="#e5e5e5"/>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="14" fill="#000000" xml:space="preserve">
     <text x="74" y="260">(+/ % #) til 5</text>
-    <text x="74" y="280">'   <tspan fill="#94a3b8">— does not parse</tspan></text>
+    <text x="74" y="280">'   <tspan fill="#777777">— does not parse</tspan></text>
   </g>
-  <text x="62" y="326" font-size="15" fill="#1f2937">You cannot ship it.</text>
-  <text x="62" y="350" font-size="13" font-style="italic" fill="#475569">Say the composition out loud: avg,</text>
-  <text x="62" y="368" font-size="13" font-style="italic" fill="#475569">or {(sum x) % count x}.</text>
+  <text x="62" y="326" font-size="15" fill="#000000">You cannot ship it.</text>
+  <text x="62" y="350" font-size="13" font-style="italic" fill="#555555">Say the composition out loud: avg,</text>
+  <text x="62" y="368" font-size="13" font-style="italic" fill="#555555">or {(sum x) % count x}.</text>
 
   <!-- silent -->
-  <rect x="410" y="100" width="450" height="290" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="410" y="100" width="3" height="290" fill="#1f2937"/>
-  <text x="432" y="128" font-size="11" letter-spacing="2" fill="#6b7280">THE WINDOWS · FAIL SILENTLY</text>
-  <text x="432" y="162" font-size="13" fill="#475569">"3-period moving average" of 1 2 3 4 5 6</text>
+  <rect rx="2" x="410" y="100" width="450" height="290" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="410" y="100" width="3" height="290" fill="#34374C"/>
+  <text x="432" y="128" font-size="11" letter-spacing="2" fill="#777777">THE WINDOWS · FAIL SILENTLY</text>
+  <text x="432" y="162" font-size="13" fill="#555555">"3-period moving average" of 1 2 3 4 5 6</text>
 
   <!-- aligned slots: 6 positions starting x=520, 52 apart -->
-  <text x="432" y="206" font-size="13" fill="#475569">J</text>
-  <text x="432" y="252" font-size="13" fill="#475569">q</text>
-  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" text-anchor="middle">
-    <rect x="496" y="186" width="48" height="30" fill="#ffffff" stroke="#1f2937"/><text x="520" y="206" fill="#1f2937">2</text>
-    <rect x="548" y="186" width="48" height="30" fill="#ffffff" stroke="#1f2937"/><text x="572" y="206" fill="#1f2937">3</text>
-    <rect x="600" y="186" width="48" height="30" fill="#ffffff" stroke="#1f2937"/><text x="624" y="206" fill="#1f2937">4</text>
-    <rect x="652" y="186" width="48" height="30" fill="#ffffff" stroke="#1f2937"/><text x="676" y="206" fill="#1f2937">5</text>
-    <rect x="704" y="186" width="48" height="30" fill="#ffffff" stroke="#e5e7eb" stroke-dasharray="3 3"/>
-    <rect x="756" y="186" width="48" height="30" fill="#ffffff" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+  <text x="432" y="206" font-size="13" fill="#555555">J</text>
+  <text x="432" y="252" font-size="13" fill="#555555">q</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" text-anchor="middle">
+    <rect rx="2" x="496" y="186" width="48" height="30" fill="#ffffff" stroke="#34374C"/><text x="520" y="206" fill="#000000">2</text>
+    <rect rx="2" x="548" y="186" width="48" height="30" fill="#ffffff" stroke="#34374C"/><text x="572" y="206" fill="#000000">3</text>
+    <rect rx="2" x="600" y="186" width="48" height="30" fill="#ffffff" stroke="#34374C"/><text x="624" y="206" fill="#000000">4</text>
+    <rect rx="2" x="652" y="186" width="48" height="30" fill="#ffffff" stroke="#34374C"/><text x="676" y="206" fill="#000000">5</text>
+    <rect rx="2" x="704" y="186" width="48" height="30" fill="#ffffff" stroke="#e5e5e5" stroke-dasharray="3 3"/>
+    <rect rx="2" x="756" y="186" width="48" height="30" fill="#ffffff" stroke="#e5e5e5" stroke-dasharray="3 3"/>
 
-    <rect x="496" y="232" width="48" height="30" fill="#f8fafc" stroke="#94a3b8"/><text x="520" y="252" fill="#475569">1</text>
-    <rect x="548" y="232" width="48" height="30" fill="#f8fafc" stroke="#94a3b8"/><text x="572" y="252" fill="#475569">1.5</text>
-    <rect x="600" y="232" width="48" height="30" fill="#f8fafc" stroke="#94a3b8"/><text x="624" y="252" fill="#475569">2</text>
-    <rect x="652" y="232" width="48" height="30" fill="#f8fafc" stroke="#94a3b8"/><text x="676" y="252" fill="#475569">3</text>
-    <rect x="704" y="232" width="48" height="30" fill="#f8fafc" stroke="#94a3b8"/><text x="728" y="252" fill="#475569">4</text>
-    <rect x="756" y="232" width="48" height="30" fill="#f8fafc" stroke="#94a3b8"/><text x="780" y="252" fill="#475569">5</text>
+    <rect rx="2" x="496" y="232" width="48" height="30" fill="#fafafa" stroke="#8a8c9e"/><text x="520" y="252" fill="#555555">1</text>
+    <rect rx="2" x="548" y="232" width="48" height="30" fill="#fafafa" stroke="#8a8c9e"/><text x="572" y="252" fill="#555555">1.5</text>
+    <rect rx="2" x="600" y="232" width="48" height="30" fill="#fafafa" stroke="#8a8c9e"/><text x="624" y="252" fill="#555555">2</text>
+    <rect rx="2" x="652" y="232" width="48" height="30" fill="#fafafa" stroke="#8a8c9e"/><text x="676" y="252" fill="#555555">3</text>
+    <rect rx="2" x="704" y="232" width="48" height="30" fill="#fafafa" stroke="#8a8c9e"/><text x="728" y="252" fill="#555555">4</text>
+    <rect rx="2" x="756" y="232" width="48" height="30" fill="#fafafa" stroke="#8a8c9e"/><text x="780" y="252" fill="#555555">5</text>
   </g>
-  <text x="812" y="206" font-size="12" fill="#475569">4 results</text>
-  <text x="812" y="252" font-size="12" fill="#475569">6 results</text>
+  <text x="812" y="206" font-size="12" fill="#555555">4 results</text>
+  <text x="812" y="252" font-size="12" fill="#555555">6 results</text>
   <!-- shift arrow: J's 2 belongs under q's third slot -->
-  <defs><marker id="ah5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/></marker></defs>
-  <line x1="530" y1="217" x2="612" y2="233" stroke="#1f2937" stroke-width="1.4" marker-end="url(#ah5)"/>
-  <text x="496" y="290" font-size="12" fill="#1f2937">Same value, two slots apart: shifted by width − 1.</text>
+  <defs><marker id="ah5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#34374C"/></marker></defs>
+  <line x1="530" y1="217" x2="612" y2="233" stroke="#34374C" stroke-width="1.4" marker-end="url(#ah5)"/>
+  <text x="496" y="290" font-size="12" fill="#000000">Same value, two slots apart: shifted by width − 1.</text>
 
-  <text x="432" y="354" font-size="15" fill="#1f2937">Both right. Both silent. It ships.</text>
-  <text x="432" y="376" font-size="13" font-style="italic" fill="#475569">Align anything against it and every row is off by two.</text>
+  <text x="432" y="354" font-size="15" fill="#000000">Both right. Both silent. It ships.</text>
+  <text x="432" y="376" font-size="13" font-style="italic" fill="#555555">Align anything against it and every row is off by two.</text>
 
-  <text x="450" y="432" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">The fork fails at parse time and cannot reach production. The window convention can. Respect the silent one more.</text>
+  <text x="450" y="432" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">The fork fails at parse time and cannot reach production. The window convention can. Respect the silent one more.</text>
 </svg>

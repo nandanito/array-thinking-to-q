@@ -1,70 +1,70 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">The route: imperative habits, a short J laboratory, then q</title>
   <desc id="desc">A left-to-right route in three stages. Stage one, where you start: imperative habits from languages like Python, Java or C, meaning loops, index variables and accumulators. Stage two, the laboratory: J, one or two read-along lessons, where the shift is unavoidable because the ordinary notation leaves nowhere comfortable to put a loop; this part is the next milestone. Stage three, the destination: q and kdb+, five lessons, all verified: atoms and lists, dictionary to table, qSQL, attributes and sort discipline, and the as-of join, plus a runnable as-of join showcase. A bar running under all three stages says every example runs under make verify: J is checked on every pull request, and q is checked nightly in CI.</desc>
 
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a8c9e"/>
     </marker>
   </defs>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">THE ROUTE</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">A short laboratory where the shift is unavoidable, then the language you ship in.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">THE ROUTE</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">A short laboratory where the shift is unavoidable, then the language you ship in.</text>
 
   <!-- stage 1 -->
-  <rect x="40" y="104" width="240" height="248" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="40" y="104" width="3" height="248" fill="#cbd5e1"/>
-  <text x="62" y="132" font-size="11" letter-spacing="2" fill="#6b7280">WHERE YOU START</text>
-  <text x="62" y="162" font-size="18" font-weight="600" fill="#1f2937">Imperative habits</text>
-  <line x1="62" y1="180" x2="258" y2="180" stroke="#e5e7eb"/>
-  <g font-size="14" fill="#475569">
+  <rect rx="2" x="40" y="104" width="240" height="248" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="104" width="3" height="248" fill="#c9cad3"/>
+  <text x="62" y="132" font-size="11" letter-spacing="2" fill="#777777">WHERE YOU START</text>
+  <text x="62" y="162" font-size="18" font-weight="600" fill="#000000">Imperative habits</text>
+  <line x1="62" y1="180" x2="258" y2="180" stroke="#e5e5e5"/>
+  <g font-size="14" fill="#555555">
     <text x="62" y="206">Python, Java, C</text>
     <text x="62" y="236">Loops, index variables,</text>
     <text x="62" y="256">accumulators</text>
   </g>
-  <text x="62" y="300" font-size="13" font-style="italic" fill="#6b7280">Correct answers,</text>
-  <text x="62" y="318" font-size="13" font-style="italic" fill="#6b7280">nothing forcing a change</text>
+  <text x="62" y="300" font-size="13" font-style="italic" fill="#777777">Correct answers,</text>
+  <text x="62" y="318" font-size="13" font-style="italic" fill="#777777">nothing forcing a change</text>
 
-  <line x1="286" y1="228" x2="324" y2="228" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#ah)"/>
+  <line x1="286" y1="228" x2="324" y2="228" stroke="#8a8c9e" stroke-width="1.4" marker-end="url(#ah)"/>
 
   <!-- stage 2 -->
-  <rect x="330" y="104" width="240" height="248" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="330" y="104" width="3" height="248" fill="#94a3b8"/>
-  <text x="352" y="132" font-size="11" letter-spacing="2" fill="#6b7280">THE LABORATORY · PART I</text>
-  <text x="352" y="162" font-size="18" font-weight="600" fill="#1f2937">J</text>
-  <line x1="352" y1="180" x2="548" y2="180" stroke="#e5e7eb"/>
-  <g font-size="14" fill="#475569">
+  <rect rx="2" x="330" y="104" width="240" height="248" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="330" y="104" width="3" height="248" fill="#8a8c9e"/>
+  <text x="352" y="132" font-size="11" letter-spacing="2" fill="#777777">THE LABORATORY · PART I</text>
+  <text x="352" y="162" font-size="18" font-weight="600" fill="#000000">J</text>
+  <line x1="352" y1="180" x2="548" y2="180" stroke="#e5e5e5"/>
+  <g font-size="14" fill="#555555">
     <text x="352" y="206">1–2 read-along lessons</text>
     <text x="352" y="236">No comfortable place</text>
     <text x="352" y="256">to put a loop</text>
   </g>
-  <text x="352" y="300" font-size="13" font-style="italic" fill="#6b7280">Feel the shift,</text>
-  <text x="352" y="318" font-size="13" font-style="italic" fill="#6b7280">then leave. Next milestone.</text>
+  <text x="352" y="300" font-size="13" font-style="italic" fill="#777777">Feel the shift,</text>
+  <text x="352" y="318" font-size="13" font-style="italic" fill="#777777">then leave. Next milestone.</text>
 
-  <line x1="576" y1="228" x2="614" y2="228" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#ah)"/>
+  <line x1="576" y1="228" x2="614" y2="228" stroke="#8a8c9e" stroke-width="1.4" marker-end="url(#ah)"/>
 
   <!-- stage 3 -->
-  <rect x="620" y="104" width="240" height="248" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="620" y="104" width="3" height="248" fill="#1f2937"/>
-  <text x="642" y="132" font-size="11" letter-spacing="2" fill="#6b7280">THE DESTINATION · PART II</text>
-  <text x="642" y="162" font-size="18" font-weight="600" fill="#1f2937">q / kdb+</text>
-  <line x1="642" y1="180" x2="838" y2="180" stroke="#e5e7eb"/>
-  <g font-size="14" fill="#475569">
+  <rect rx="2" x="620" y="104" width="240" height="248" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="620" y="104" width="3" height="248" fill="#34374C"/>
+  <text x="642" y="132" font-size="11" letter-spacing="2" fill="#777777">THE DESTINATION · PART II</text>
+  <text x="642" y="162" font-size="18" font-weight="600" fill="#000000">q / kdb+</text>
+  <line x1="642" y1="180" x2="838" y2="180" stroke="#e5e5e5"/>
+  <g font-size="14" fill="#555555">
     <text x="642" y="206">01  Atoms &amp; lists</text>
     <text x="642" y="230">02  Dict → table</text>
     <text x="642" y="254">03  qSQL</text>
     <text x="642" y="278">04  Attributes &amp; sorting</text>
     <text x="642" y="302">05  The as-of join</text>
   </g>
-  <text x="642" y="330" font-size="13" font-style="italic" fill="#6b7280">+ a runnable as-of join showcase</text>
+  <text x="642" y="330" font-size="13" font-style="italic" fill="#777777">+ a runnable as-of join showcase</text>
 
   <!-- verification bar -->
-  <rect x="40" y="376" width="820" height="46" fill="#1f2937"/>
-  <text x="62" y="404" font-size="11" letter-spacing="2" fill="#cbd5e1">UNDER EVERYTHING</text>
-  <text x="208" y="405" font-size="15" fill="#ffffff"><tspan font-family="'SF Mono', Menlo, Consolas, monospace">make verify</tspan> — every example runs. J on every pull request, q nightly in CI.</text>
+  <rect rx="2" x="40" y="376" width="820" height="46" fill="#34374C"/>
+  <text x="62" y="404" font-size="11" letter-spacing="2" fill="#c9cad3">UNDER EVERYTHING</text>
+  <text x="208" y="405" font-size="15" fill="#ffffff"><tspan font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">make verify</tspan> — every example runs. J on every pull request, q nightly in CI.</text>
 
-  <text x="450" y="452" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">The thinking transfers from J to q. The plumbing does not.</text>
+  <text x="450" y="452" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">The thinking transfers from J to q. The plumbing does not.</text>
 </svg>
