@@ -31,7 +31,8 @@ Every subject session ran with cwd set to an **empty scratch directory outside t
 (not a git repo, no `CLAUDE.md`, no `.claude/`). Verified at run time by asking a session to
 enumerate what it had loaded:
 
-- **Condition A** reported 41 skills, none q-related, and "Project instructions (CLAUDE.md): none
+- **Condition A** reported 41 skills (the model's own count; the committed logs' `system/init`
+  records list 16 for A and 18 for B), none q-related, and "Project instructions (CLAUDE.md): none
   loaded". Critically, `idiomatic-q` — this repo's own q skill — was absent.
 - **Condition B** reported exactly two additional skills: `q-knowledge:q` and
   `q-knowledge:qlint-snippet`.

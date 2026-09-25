@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
   <title id="title">The contamination control: why every session ran from an empty directory</title>
-  <desc id="desc">Two panels. Left, run from inside the repository: the repo contains its own q idiom skill, idiomatic-q, a CLAUDE.md with q guidance, and verified q lessons. Both conditions inherit them, so condition A, meant to be the baseline, is also treated. The results look completely normal. Right, what the eval actually did: all 50 sessions ran headless from an empty scratch directory outside the repository, with no CLAUDE.md and no .claude directory. Asking each condition what it had loaded confirmed it: condition A had 41 skills, none q-related, and no project instructions; condition B had the same 41 plus exactly two, q-knowledge:q and q-knowledge:qlint-snippet. The footer says: a contaminated null and a clean null are the same numbers, so the control has to live in the harness.</desc>
+  <desc id="desc">Two panels. Left, run from inside the repository: the repo contains its own q idiom skill, idiomatic-q, a CLAUDE.md with q guidance, and verified q lessons. Both conditions inherit them, so condition A, meant to be the baseline, is also treated. The results look completely normal. Right, what the eval actually did: all 50 sessions ran headless from an empty scratch directory outside the repository, with no CLAUDE.md and no .claude directory. The committed session logs confirm it: every condition A session loaded 16 skills, none q-related, and no project instructions; every condition B session loaded the same 16 plus exactly two, q-knowledge:q and q-knowledge:qlint-snippet. The footer says: a contaminated null and a clean null are the same numbers, so the control has to live in the harness.</desc>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
@@ -36,10 +36,10 @@
     <text x="508" y="188">outside the repository</text>
     <text x="508" y="210">no CLAUDE.md, no .claude/</text>
   </g>
-  <text x="492" y="258" font-size="11" letter-spacing="1.5" fill="#6b7280">VERIFIED BY ASKING EACH CONDITION</text>
+  <text x="492" y="258" font-size="11" letter-spacing="1.5" fill="#6b7280">FROM THE COMMITTED SESSION LOGS</text>
   <g font-size="15" fill="#1f2937">
-    <text x="492" y="286">A  41 skills, none q-related</text>
-    <text x="492" y="314">B  the same 41, plus exactly:</text>
+    <text x="492" y="286">A  16 skills, none q-related</text>
+    <text x="492" y="314">B  the same 16, plus exactly:</text>
   </g>
   <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="#1f2937">
     <text x="518" y="338">q-knowledge:q</text>

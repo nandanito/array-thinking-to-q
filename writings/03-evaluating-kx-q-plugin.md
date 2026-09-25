@@ -52,10 +52,13 @@ fix a deliberately unidiomatic solution — each run under both conditions. Corr
 golden-file diff. Idiomaticity as a **five-item binary checklist**, never a 1–5 "feel" score,
 because a feel score drifts upward as my own q taste improves while the benchmark stays fixed.
 Every checklist item has to be justifiable against a published source — Q for Mortals or
-code.kx.com — rather than against my preferences.
+code.kx.com — rather than against my preferences. (One item did not live up to that, and it is the
+one that decided the only discordant pair; more below.)
 
 **Decision rule, fixed in advance:** a paired sign test on discordant pairs. Count only the tasks
-where the two conditions differ; the effect is real only if one side takes ≥~80% of them.
+where the two conditions differ; the effect is real only if one side takes ≥~80% of them. (Strictly, that is a heuristic in the
+spirit of a sign test rather than an exact one: a two-sided exact sign test cannot reach 5%
+significance with fewer than six discordant pairs, because even 5–0 gives p = 0.0625.)
 
 I want to flag one thing I am *not* claiming. **There is no blind scoring here, and blinding is
 impossible in principle.** Idiomatic q identifies its own condition — you cannot un-see which
@@ -74,16 +77,18 @@ the comparison measures nothing, and — this is the part that should scare you 
 completely normal.** A contaminated null and a clean null are the same numbers.
 
 So every one of the 50 sessions ran from an empty scratch directory outside the repository, with
-no `CLAUDE.md` and no `.claude/`, driven headless. I verified it rather than assuming it, by asking
-a session in each condition to enumerate what it had loaded. Condition A: 41 skills, none q-related,
-no project instructions, and specifically no `idiomatic-q`. Condition B: the same, plus exactly
-`q-knowledge:q` and `q-knowledge:qlint-snippet`.
+no `CLAUDE.md` and no `.claude/`, driven headless. I verified it rather than assuming it. The committed
+session logs record what each session loaded: every condition-A session had the same 16 skills,
+none q-related, no project instructions, and specifically no `idiomatic-q`. Every condition-B
+session had the same 16 plus exactly `q-knowledge:q` and `q-knowledge:qlint-snippet`. (When I
+asked a session to list its own skills it said 41 — a model's account of its context is not a
+log, which is this article's point in miniature.)
 
 The general form: **when the environment can leak the treatment into the control, that control is a
 property of your harness, not of your analysis.** You cannot add it afterwards, and you cannot
 detect its absence from the output.
 
-![Two panels. Run from inside the repo: its own q skill, CLAUDE.md and lessons leak into both conditions, so both arms are treated and the results look normal. What the eval did: all 50 sessions ran headless from an empty scratch directory with no CLAUDE.md or .claude; asked what it had loaded, condition A listed 41 skills, none q-related, and condition B the same 41 plus exactly q-knowledge:q and q-knowledge:qlint-snippet.](figures/03/figure-1-contamination-control.svg)
+![Two panels. Run from inside the repo: its own q skill, CLAUDE.md and lessons leak into both conditions, so both arms are treated and the results look normal. What the eval did: all 50 sessions ran headless from an empty scratch directory with no CLAUDE.md or .claude; the session logs show condition A loaded 16 skills, none q-related, and condition B the same 16 plus exactly q-knowledge:q and q-knowledge:qlint-snippet.](figures/03/figure-1-contamination-control.svg)
 
 *Figure 1. The contamination control lives in the harness, not in the analysis.*
 
@@ -136,7 +141,8 @@ Here is what came back.
 | **Discordant pairs** | **1** | |
 | Wins | 0 | 1 |
 
-The sign test needs roughly five discordant pairs before it can adjudicate anything. I got one.
+An exact two-sided sign test needs at least six discordant pairs, all going one way, before it can
+reach 5% significance. I got one.
 **The test never engaged.**
 
 ![Fifteen tiles, one per paired task. Five (02, 07, 10, 13, 14) are byte-for-byte identical q in both conditions; eight differ in code but score the same; task 15 is a shared miss, failed identically by both; task 08 is the only discordant pair, decided by one checklist item. Correct 14/15 in both conditions; idiomatic 73/75 without the plugin, 74/75 with it; one discordant pair where the sign test needs about five.](figures/03/figure-2-the-ceiling.svg)
@@ -236,7 +242,9 @@ from *my* task sheet, in a direction the documentation supports, and **my task s
 that was too narrow.** It names one attribute as though it were the only right answer.
 
 I have left the score at zero, because the scoring rule was fixed before the pass and gets applied
-consistently or it is not a rule. But the interpretation is retracted, and since both arms diverged
+consistently or it is not a rule. As a sensitivity check: scored as the documentation supports,
+idiomaticity would be 74/75 without the plugin and 75/75 with it — still one discordant pair, still
+no verdict. But the interpretation is retracted, and since both arms diverged
 identically it never touched the comparison anyway.
 
 That is also the end of the one candidate "gap" this eval produced. My protocol permits authoring a
