@@ -147,7 +147,7 @@ straining. A margin that flips on one person's reading of one line is not a marg
 
 Meanwhile **five of the fifteen task pairs came back byte-for-byte identical**. Both conditions
 wrote `show sums 1 2 3 4 5`. Both wrote `select n:count i by sym,side from t`. Both threw away the
-`do`-loop and wrote `sum x`.
+`while`-loop and wrote `sums x`.
 
 This is a **ceiling**, and it is the honest headline. The tasks cannot discriminate between the
 conditions because baseline `claude-opus-5` already solves them. (Pedantically: my protocol defined
@@ -204,7 +204,7 @@ the precondition. `` `p# `` there is defensible, and possibly faster.
 
 The part that stings: **my own repository already contained that correction.** A licensing-and-docs
 audit I ran back at milestone one recorded, in writing, that `p#` "also works in memory and can
-outperform `g#` when values are contiguous. It is not useless in memory." I scored the eval months
+outperform `g#` when values are contiguous. It is not useless in memory." I scored the eval only days
 later, cited the `aj` page, and never opened either the sibling page or my own notes on exactly
 this claim.
 
