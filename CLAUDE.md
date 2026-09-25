@@ -80,6 +80,9 @@ publishable ONLY when its milestone's artifacts verify. Article #3 reported the 
 "draft it early" mitigation was missed; it gets drafted out of milestone order to close that.
 Article #6 is PACKAGING of docs/COMPOUND.md, so append to COMPOUND.md at every milestone.
 Publishing/syndication steps live in RELEASE-CHECKLIST.md, not here and not in SPEC.md.
+**Never use "learning in public"** in any title, heading, social post or hashtag for this series:
+the framing is a practitioner publishing verified work, misses included. Published articles take
+their title and slug from nandan.me, and the site URL is canonical — sync `writings/` to it.
 
 **There is no skill and no marketplace submission.** The M2 eval authored none — objective 3's
 gate held — so M5 ships the curriculum plus `eval/harness/` packaged as a reusable

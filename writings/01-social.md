@@ -1,9 +1,10 @@
 <!--
 Social posts for article 1 (RELEASE-CHECKLIST: "X + Bluesky: short thread — hook + one snippet +
 canonical link"; "Mastodon: single-post summary + link"; Nostr added, same shape as Mastodon).
-DRAFT — do not post until article 1 is published at its canonical URL.
-The slug in the links is a placeholder: replace it with the real published URL before posting.
-Snippet provenance: `2 * til 5  / 0 2 4 6 8` is lesson 01's line 53, verified by `make verify`.
+Article 1 is live; ready to post.
+Canonical URL: https://nandan.me/writing/array-thinking-all-the-way-to-q/ (published 2026-09-25).
+Snippet provenance: `2 * til 5` and its output `0 2 4 6 8` are lesson 01's line 53, verified by
+`make verify` (the lesson's alignment spaces are dropped; they read as noise in a social font).
 Tagging: KX is @kxsystems on X. KX has no Bluesky, Mastodon or Nostr account (checked
 2026-09-25), so those posts name KX in plain text.
 Image: attach writings/figures/01/linkedin-card.png to the first post on each network, with the
@@ -25,13 +26,14 @@ Array languages ask one thing of an experienced programmer: stop writing the loo
 
 I've been working through that shift and turning it into a short, fully executable curriculum: a brief laboratory in J, then q/kdb+ as the destination.
 
-Article 1 of 6 ↓
+Article 1 of 6 ↓ #kdb #ArrayProgramming
 
 **2/5**
 
 In Python you write the loop, the index and the accumulator. In q:
 
-2 * til 5                  / 0 2 4 6 8
+2 * til 5
+→ 0 2 4 6 8
 
 No index, no loop. The iteration lives in the operator, not in your code.
 
@@ -45,13 +47,11 @@ The useful finding: every serious defect so far passed a green build. A CI check
 
 **5/5**
 
-The article: https://nandan.me/writing/array-thinking-learning-in-public/
+The article: https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
 The repo: https://github.com/nandanito/array-thinking-to-q
 
 q runs on @kxsystems' KDB-X Community Edition. Not affiliated.
-
-#kdb #qlang
 
 # Bluesky (thread)
 
@@ -61,11 +61,14 @@ Array languages ask one thing of an experienced programmer: stop writing the loo
 
 I've been working through that shift and turning it into a short, fully executable curriculum: a brief laboratory in J, then q/kdb+ as the destination. Article 1 of 6 ↓
 
+#kdb #ArrayProgramming
+
 **2/4**
 
 In Python you write the loop, the index and the accumulator. In q:
 
-2 * til 5                  / 0 2 4 6 8
+2 * til 5
+→ 0 2 4 6 8
 
 No index, no loop. The iteration lives in the operator, not in your code.
 
@@ -77,7 +80,7 @@ The useful finding: every serious defect so far passed a green build. Verificati
 
 **4/4**
 
-The article: https://nandan.me/writing/array-thinking-learning-in-public/
+The article: https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
 The repo: https://github.com/nandanito/array-thinking-to-q
 
@@ -89,9 +92,9 @@ Array languages ask one thing of an experienced programmer: stop writing the loo
 
 Every example runs under make verify. The more useful finding: every serious defect so far passed a green build, because what was wrong was a claim, not code.
 
-Article 1 of 6: https://nandan.me/writing/array-thinking-learning-in-public/
+Article 1 of 6: https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
-#ArrayProgramming #kdb #qlang #APL
+#ArrayProgramming #kdb #APL #FunctionalProgramming
 
 # Nostr (single note)
 
@@ -101,7 +104,7 @@ I've been working through that shift and turning it into a short, fully executab
 
 The more useful finding: every serious defect so far passed a green build, because what was wrong was a claim, not code. Verification covers code; claims need their own discipline.
 
-Article 1 of 6: https://nandan.me/writing/array-thinking-learning-in-public/
+Article 1 of 6: https://nandan.me/writing/array-thinking-all-the-way-to-q/
 Repo: https://github.com/nandanito/array-thinking-to-q
 
-#ArrayProgramming #kdb #qlang
+#ArrayProgramming #kdb #programming

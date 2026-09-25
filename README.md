@@ -17,7 +17,7 @@ therefore cannot live in a verify-clean file and is quoted as a real REPL transc
 
 ## Status
 
-A learning-in-public project, built one verified lesson at a time. Honest state of play:
+A curriculum published as it is built: one verified lesson at a time, misses included. Current state:
 
 | Area | State |
 |---|---|
@@ -152,4 +152,4 @@ statement about either product's performance.
 ---
 
 <sub>**Keywords:** array programming · kdb+ · q language · qSQL · J language · APL family · vector
-programming · as-of join · array thinking · learning in public · verified curriculum</sub>
+programming · as-of join · array thinking · executable curriculum · verified curriculum</sub>

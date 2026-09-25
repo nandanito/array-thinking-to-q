@@ -1,8 +1,7 @@
 <!--
 LinkedIn post for article 1 (RELEASE-CHECKLIST: "2–3 paragraph professional framing").
-DRAFT — do not post until article 1 is published at its canonical URL.
-Canonical section is nandan.me/writing/ (singular). The slug below is a placeholder:
-replace it with the real published URL before posting.
+Article 1 is live; ready to post.
+Canonical URL: https://nandan.me/writing/array-thinking-all-the-way-to-q/ (published 2026-09-25).
 Image: attach writings/figures/01/linkedin-card.png (figure 1 at 1200x627).
 Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems.
 -->
@@ -27,6 +26,8 @@ fails if they drift.
 The first of six articles sets out the approach, the rules it runs under, and why claims deserve
 the same discipline as code. Each article is published only once the work it describes verifies.
 
-https://nandan.me/writing/array-thinking-learning-in-public/
+https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
-Not affiliated with KX or Jsoftware; "q", "kdb+", "KDB-X" and "J" are used nominatively.
+Independent work; not affiliated with KX.
+
+#ArrayProgramming #kdb #SoftwareEngineering #TimeSeries
