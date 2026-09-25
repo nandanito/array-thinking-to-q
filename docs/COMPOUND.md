@@ -800,6 +800,12 @@ dropped last line, a one-line cut of a three-line block, an edited expression): 
 It needs no q, so `j-verify` runs it on every PR — and since 2026-09-26 a ruleset makes `verify-j`
 a required check on `main`, which it had been documented as for two months without being true.
 Article 5 opts out with a visible skip marker (gated on M4); the check prints the skip every run.
+The native Codex pass on the gate found three false negatives: the fence's language was not part of
+the identity (a q block relabelled as J passed), and indented / blockquoted / `~~~` / four-backtick
+fences were silently not seen. Both fixed and negative-tested. The third is inherited, not new: a
+lesson README's *tagged* source blocks are only partly verified (check-lesson-outputs checks output
+blocks and inline `/ value` claims, not that each ```q block is in the lesson's .q file), so
+"identical to a lesson block" is only as strong as that. Open item, not fixed here.
 
 Also decided: no "learning in public" framing anywhere in the series (CLAUDE.md), figures follow
 nandan.me's tokens (writings/figures/STYLE.md), and qualitative speed wording is out of the articles
