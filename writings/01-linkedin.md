@@ -4,30 +4,29 @@ DRAFT — do not post until article 1 is published at its canonical URL.
 Canonical section is nandan.me/writing/ (singular). The slug below is a placeholder:
 replace it with the real published URL before posting.
 Image: attach writings/figures/01/linkedin-card.png (figure 1 at 1200x627).
+Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems.
 -->
 
-I've started a small learning-in-public project: a short curriculum that takes an imperative
-programmer through the array-programming paradigm shift and lands them in q/kdb+, with a brief
-stop in J on the way. The premise is that syntax isn't the hard part of array languages; unlearning
-the loop is, and a language that lets you stay imperative won't make you stop. So J serves as a
-short laboratory where the shift is unavoidable, and q is the destination. The repo has one rule
-it won't bend on: every code example runs under `make verify`, and printed outputs are captured
-from the real interpreters rather than typed by hand.
+Array languages ask one thing of an experienced programmer: stop writing the loop. Not the syntax,
+which is learnable in an afternoon, but the reflex of stepping through data one element at a time
+with an index and an accumulator. I have been working through that shift deliberately, and turning
+it into a short curriculum: a brief laboratory in J, where the notation leaves no comfortable place
+for a loop, and then q/kdb+ from @KX as the destination, where the same ideas carry real tables,
+queries and an as-of join.
 
-What surprised me is that code verification catches the smaller share of the problem. Every
-serious defect so far got past a green build, because what was wrong was a claim, not a failing
-line of code: a CI check that went green
-without checking anything, contributor instructions that had quietly gone stale, and one
-published evaluation finding I had to retract, even though my own notes had recorded the
-correction days before. The fixes were procedural: re-read the governing documents at every
-milestone, and make the evaluation's key numbers recompute from committed artifacts so the
-build fails if they drift.
+The project runs on one constraint: every example executes. Printed outputs are captured from the
+real interpreters and re-checked by `make verify`, and the q suite runs nightly in CI against a
+licensed KDB-X Community Edition build. The more useful finding came from what that constraint does
+not cover. Every serious defect so far passed a green build, because what was wrong was a claim
+rather than a line of code: a CI check that verified nothing, contributor instructions that had
+drifted out of date, and one evaluation finding I retracted even though the correction was already
+in the repository. The remedies were procedural: re-read the governing documents at every
+milestone, and have the evaluation's key numbers recompute from committed artifacts so the build
+fails if they drift.
 
-The first article covers the project, the rules it runs under, and what learning in public
-costs once you commit to publishing null results and retractions with the same care as
-successes. It's the first of six, and each one publishes only once the work it describes
-passes verification.
+The first of six articles sets out the approach, the rules it runs under, and why claims deserve
+the same discipline as code. Each article is published only once the work it describes verifies.
 
 https://nandan.me/writing/array-thinking-learning-in-public/
 
-Not affiliated with KX Systems or Jsoftware; "q", "kdb+", "KDB-X" and "J" are used nominatively.
+Not affiliated with KX or Jsoftware; "q", "kdb+", "KDB-X" and "J" are used nominatively.
