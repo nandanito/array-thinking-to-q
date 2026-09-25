@@ -59,7 +59,7 @@ show (edge,'`bid`ask#sorted eidx) ~ aj[`sym`time; edge; sorted];
 
 / --- 7. the showcase preamble, now every line has a reason ---------------
 quote:`sym`time xasc quote;           / correctness: blocks by sym, time ascending in each
-@[`quote;`sym;`g#];                   / speed: record the group half, set LAST
+@[`quote;`sym;`g#];                   / optional: record the group half, set LAST
 res:aj[`sym`time; trade; quote];
 show res;
 / This must be byte-for-byte the showcase's golden file. Fail loudly if not.

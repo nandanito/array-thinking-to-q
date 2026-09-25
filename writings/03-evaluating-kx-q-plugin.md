@@ -225,14 +225,14 @@ Both conditions sorted correctly. Both produced the exactly correct joined table
 **I first wrote this section up as a finding, and I had it wrong.** The draft said both arms had
 reached for "the disk attribute on an in-memory table", citing [the `aj`
 page](https://code.kx.com/q/ref/aj/), which frames the pair as memory → `` `g# ``, disk →
-`` `p# ``. Then the sibling page: [set-attribute](https://code.kx.com/q/ref/set-attribute/) says of
-parted, *"If the data can be sorted such that `p` can be set, it effects better speedups than
-grouped, both on disk and in memory."* Both candidates sorted the table first. That is precisely
-the precondition. `` `p# `` there is defensible, and possibly faster.
+`` `p# ``. Then the sibling page: [set-attribute](https://code.kx.com/q/ref/set-attribute/) says
+parted applies in memory as well as on disk, whenever the data can be sorted so that it can be set.
+Both candidates sorted the table first. That is precisely the precondition. `` `p# `` there is
+defensible.
 
 The part that stings: **my own repository already contained that correction.** A licensing-and-docs
-audit I ran back at milestone one recorded, in writing, that `p#` "also works in memory and can
-outperform `g#` when values are contiguous. It is not useless in memory." I scored the eval only days
+audit I ran back at milestone one recorded, in writing, that `p#` "also works in memory …
+It is not useless in memory." I scored the eval only days
 later, cited the `aj` page, and never opened either the sibling page or my own notes on exactly
 this claim.
 
