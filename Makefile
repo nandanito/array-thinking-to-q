@@ -4,9 +4,9 @@ J       ?= jconsole
 Q       ?= q
 LESSONS := $(wildcard lessons/*)
 
-.PHONY: verify verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose
+.PHONY: verify verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose verify-writings
 
-verify: verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose
+verify: verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose verify-writings
 
 verify-j:
 	@echo "== J examples =="
@@ -64,3 +64,9 @@ verify-eval-run:
 verify-prose:
 	@echo "== lesson READMEs: pasted outputs vs. a fresh capture =="
 	@Q=$(Q) J=$(J) python3 tools/check-lesson-outputs.py
+
+# Blog articles: every fenced block must be copied from a running lesson or eval file
+# (RELEASE-CHECKLIST). Pure text -- no q or J -- so j-verify runs it on every PR too.
+verify-writings:
+	@echo "== writings: article snippets vs. running lesson/eval code =="
+	@python3 tools/check-article-snippets.py

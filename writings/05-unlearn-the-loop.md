@@ -2,11 +2,14 @@
 
 *Article 5 of 6 — draft. Gated on M4 (the J laboratory).*
 
+<!-- snippet-check: skip — gated on M4: 25 of 26 blocks are not yet identical to a block in a running lesson file; the M4 J-laboratory lessons must supply them -->
+
 > **Publication gate — NOT publishable yet.** Every snippet below was executed against J 9.7.1 and
 > KDB-X CE 5.0 and every output is captured, not typed. But RELEASE-CHECKLIST.md requires each
 > snippet to come from a **running lesson file**, and by that test the provenance here is mixed:
 >
-> - **From verified lesson files:** the `sum`/`(+/)` pair, the `mean =: +/ % #` fork and its q
+> - **Adapted from verified lesson files** (same lines and outputs, but not yet block-identical,
+>   which is what `make verify-writings` requires): the `sum`/`(+/)` pair, the `mean =: +/ % #` fork and its q
 >   parse failure (lesson 01), and the `3 mavg` window convention (lesson 03). The
 >   protected-evaluation transcript is stated in lesson 01's prose but not shown there as a block —
 >   CLAUDE.md caps verify-exempt blocks at two, and it was not worth spending the third on.

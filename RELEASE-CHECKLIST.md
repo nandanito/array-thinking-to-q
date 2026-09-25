@@ -3,6 +3,8 @@
 ## Per article
 - [ ] Milestone artifacts verify (`make verify` green for everything the article references)
 - [ ] Draft in `writings/` reviewed; every code snippet copied from a RUNNING lesson file
+      (enforced: `make verify-writings`, also run by `j-verify` on every PR; an article may opt out
+      only with a visible `<!-- snippet-check: skip — reason -->`, which blocks publication)
 - [ ] Publish canonical on nandan.me/writing/
 - [ ] X + Bluesky: short thread — hook + one snippet + canonical link
 - [ ] Mastodon: single-post summary + link

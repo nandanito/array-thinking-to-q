@@ -779,3 +779,35 @@ re-reading, not by any gate. The block is now extracted from the lesson file byt
 Milestone re-read (per the compound step): CLAUDE.md build-order item 3 updated to M3 DONE. SPEC's
 M3 line ("Part II + `aj` showcase golden-filed; nightly q CI live") now matches reality on all three
 counts.
+
+## Publication pass — article 1 live; a gate for article snippets (2026-09-25/26)
+
+Article 1 published on nandan.me. Before it went out, adversarial Codex passes over each article's
+*whole body* (not just the day's diff) found real errors in text that had merged months earlier
+without review: a skill count that was the model's self-report rather than the session log (41 vs
+the logged 16/18), a "sign test" that was a heuristic (an exact two-sided test needs six one-way
+discordant pairs for p < 0.05), a "13 of 15" that `results.csv` says is 14, and code blocks that
+were only the first lines of the lesson block they claimed to quote. Transferable: **review the
+artifact that ships, not the diff that changed it** — a diff review cannot see what was never
+reviewed.
+
+Three of those findings were one defect class — a snippet that was not identical to running code —
+caught by hand. So `make verify-writings` (tools/check-article-snippets.py) now requires every fenced
+block in an article to be identical to a block in a lesson README, or a contiguous run of an eval
+answer file. Whole-block identity is the point: the first hand check compared *lines* and passed a
+block that was a prefix of the lesson's. Negative-tested with the three real defect shapes (a
+dropped last line, a one-line cut of a three-line block, an edited expression): all caught, exit 1.
+It needs no q, so `j-verify` runs it on every PR — and since 2026-09-26 a ruleset makes `verify-j`
+a required check on `main`, which it had been documented as for two months without being true.
+Article 5 opts out with a visible skip marker (gated on M4); the check prints the skip every run.
+The native Codex pass on the gate found three false negatives: the fence's language was not part of
+the identity (a q block relabelled as J passed), and indented / blockquoted / `~~~` / four-backtick
+fences were silently not seen. Both fixed and negative-tested. The third is inherited, not new: a
+lesson README's *tagged* source blocks are only partly verified (check-lesson-outputs checks output
+blocks and inline `/ value` claims, not that each ```q block is in the lesson's .q file), so
+"identical to a lesson block" is only as strong as that. Open item, not fixed here.
+
+Also decided: no "learning in public" framing anywhere in the series (CLAUDE.md), figures follow
+nandan.me's tokens (writings/figures/STYLE.md), and qualitative speed wording is out of the articles
+as Clause 9 caution. Open, in memory: KDB-X CE commercial use (the Usage Restrictions say "personal
+and commercial projects"), which holds article 2.
