@@ -4,27 +4,22 @@ Article 1 is live; ready to post.
 Canonical URL: https://nandan.me/writing/array-thinking-all-the-way-to-q/ (published 2026-09-25).
 Image: attach writings/figures/01/linkedin-card.png (figure 1 at 1200x627).
 Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems.
+Snippet provenance: `2 * til 5` → 0 2 4 6 8 is lesson 01's line 53, verified by `make verify`.
 -->
 
 Array languages ask one thing of an experienced programmer: stop writing the loop. Not the syntax,
-which is learnable in an afternoon, but the reflex of stepping through data one element at a time
-with an index and an accumulator. I have been working through that shift deliberately, and turning
-it into a short curriculum: a brief laboratory in J, where the notation leaves no comfortable place
-for a loop, and then q/kdb+ from @KX as the destination, where the same ideas carry real tables,
-queries and an as-of join.
+which you can pick up in an afternoon, but the reflex of stepping through data one element at a
+time with an index and an accumulator.
 
-The project runs on one constraint: every example executes. Printed outputs are captured from the
-real interpreters and re-checked by `make verify`, and the q suite runs nightly in CI against a
-licensed KDB-X Community Edition build. The more useful finding came from what that constraint does
-not cover. Every serious defect so far passed a green build, because what was wrong was a claim
-rather than a line of code: a CI check that verified nothing, contributor instructions that had
-drifted out of date, and one evaluation finding I retracted even though the correction was already
-in the repository. The remedies were procedural: re-read the governing documents at every
-milestone, and have the evaluation's key numbers recompute from committed artifacts so the build
-fails if they drift.
+The whole idea fits in one line of q. Where Python needs a loop, an index and a list to append to,
+q writes `2 * til 5` and gets 0 2 4 6 8. The iteration has not disappeared; it has moved into the
+operator. Once that clicks, the same move carries from a list to a table, a query and a time-series
+join, and the code starts describing the data instead of the steps.
 
-The first of six articles sets out the approach, the rules it runs under, and why claims deserve
-the same discipline as code. Each article is published only once the work it describes verifies.
+I have been working through that shift deliberately and turning it into a short curriculum: a
+brief laboratory in J, where the notation leaves no comfortable place for a loop, then q/kdb+ from
+@KX as the destination. Every example in it runs against the real interpreters, and the misses are
+published alongside the results. The first of six articles sets out the approach.
 
 https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
