@@ -1,10 +1,8 @@
 <!--
 LinkedIn post for article 1 (RELEASE-CHECKLIST: "2–3 paragraph professional framing").
 DRAFT — do not post until article 1 is published at its canonical URL.
-URL CHECK NEEDED: the link below follows writings/README.md ("nandan.me/writings"), but as of
-2026-09-25 nandan.me/writings returns 404; the live site's section is nandan.me/writing/
-(singular, with per-post slugs such as /writing/starting-qmi-lab/). The slug here is a
-placeholder. Replace with the real published URL before posting.
+Canonical section is nandan.me/writing/ (singular). The slug below is a placeholder:
+replace it with the real published URL before posting.
 -->
 
 I've started a small learning-in-public project: a short curriculum that takes an imperative
@@ -28,6 +26,6 @@ costs once you commit to publishing null results and retractions with the same c
 successes. It's the first of six, and each one publishes only once the work it describes
 passes verification.
 
-https://nandan.me/writings/array-thinking-learning-in-public
+https://nandan.me/writing/array-thinking-learning-in-public/
 
 Not affiliated with KX Systems or Jsoftware; "q", "kdb+", "KDB-X" and "J" are used nominatively.
