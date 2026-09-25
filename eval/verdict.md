@@ -167,7 +167,7 @@ condition under which that sentence applies. `` `p# `` in memory is a **defensib
 a faster one**, not a defect.
 
 Worse, this repo already knew that. `docs/licensing-notes.md` §C recorded it as **CORRECTED claim
-5** on 2026-07-24, months before the eval was scored: *"`p#` also works in memory and can outperform
+5** on 2026-07-24, three days before the eval was scored: *"`p#` also works in memory and can outperform
 `g#` when values are contiguous. It is not useless in memory."* The scoring pass cited the `aj`
 page and never opened the sibling `set-attribute` page or the repo's own audit of exactly this
 claim.
@@ -242,8 +242,8 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 - [`triggers/`](triggers/) — Part A tables.
 
 **Every number above is re-derived by `make verify-eval-run`,** which is part of `make verify`
-(locally — like `verify-q` and `verify-eval`, it needs a licensed q, so blocking PR CI does not
-run it; `j-verify.yml` is the only blocking check and `q-verify.yml` is still build-order item 5):
+(it needs a licensed q, so blocking PR CI does not run it — `j-verify.yml` is the only PR check;
+since 2026-07-29 `q-verify.yml` runs the whole of `make verify` nightly on `main`):
 `correctness.sh` recomputes the correctness column from the committed answers and **exits nonzero
 if `results.csv` disagrees**, and `mktraces.py --check` regenerates `runs/traces.md` from the
 committed logs and **exits nonzero on any drift**. Both were negative-tested — corrupt a row and
