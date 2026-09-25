@@ -3,7 +3,7 @@
 ## Per article
 - [ ] Milestone artifacts verify (`make verify` green for everything the article references)
 - [ ] Draft in `writings/` reviewed; every code snippet copied from a RUNNING lesson file
-- [ ] Publish canonical on nandan.me/writings
+- [ ] Publish canonical on nandan.me/writing/
 - [ ] X + Bluesky: short thread — hook + one snippet + canonical link
 - [ ] Mastodon: single-post summary + link
 - [ ] LinkedIn: 2–3 paragraph professional framing (strongest for articles 3, 5, 6)
