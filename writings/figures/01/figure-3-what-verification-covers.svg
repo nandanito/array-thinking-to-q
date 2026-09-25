@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
   <title id="title">What verification covers, and what it does not</title>
-  <desc id="desc">Two columns. The left column, code, is covered by make verify: every example is re-run, printed outputs are re-captured and diffed against the page, and the whole suite runs nightly in CI. Its status line reads: fails loudly. The right column, claims, has nothing that runs them, and lists the four serious defects the project has had so far: a CI check that went green having verified nothing; contributor rules that had quietly gone stale; a README status table advertising shipped work as pending; and a published evaluation finding that had to be retracted, although the repository had recorded the correction three days earlier. Its status line reads: fails silently. Beneath both, two fixes are listed: re-read the governing documents at every milestone, and recompute published numbers from committed artifacts so the build fails if they drift.</desc>
+  <desc id="desc">Two columns. The left column, code, is covered by make verify: every example is re-run, printed outputs are re-captured and diffed against the page, and the whole suite runs nightly in CI. Its status line reads: fails loudly. The right column, claims, has nothing that runs them, and lists the four serious defects the project has had so far: a CI check that went green having verified nothing; contributor rules that had quietly gone stale; a README status table advertising shipped work as pending; and a published evaluation finding that had to be retracted, although the repository had recorded the correction three days earlier. Its status line reads: fails silently. The heading says every serious defect so far got past a green build. Beneath both, two fixes are listed: re-read the governing documents at every milestone, and recompute the evaluation's key numbers from committed artifacts so the build fails if they drift.</desc>
 
   <rect width="900" height="500" fill="#ffffff"/>
 
   <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">THE HALF THAT VERIFICATION DOESN'T COVER</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">Every serious defect so far was a claim, not a line of code.</text>
+  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">Every serious defect so far got past a green build.</text>
 
   <!-- code -->
   <rect x="40" y="100" width="390" height="276" fill="#ffffff" stroke="#e5e7eb"/>
@@ -43,6 +43,6 @@
   <text x="40" y="414" font-size="11" letter-spacing="2" fill="#6b7280">WHAT CHANGED</text>
   <g font-size="14" fill="#1f2937">
     <text x="40" y="442">→  Re-read the governing documents against reality at every milestone</text>
-    <text x="40" y="468">→  Recompute published numbers from committed artifacts, so the build fails if they drift</text>
+    <text x="40" y="468">→  Recompute the evaluation's key numbers from committed artifacts, so the build fails if they drift</text>
   </g>
 </svg>

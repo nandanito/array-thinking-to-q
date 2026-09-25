@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
   <title id="title">Where the iteration lives: a loop versus an array operation</title>
-  <desc id="desc">Two side-by-side panels computing the same result, doubling the list 0 1 2 3 4 to get 0 2 4 6 8. The left panel, labelled imperative, shows a Python for-loop over an index i; five separate numbered arrows carry each input element to its output one at a time, and the caption says you write the index, the step and the accumulator. The right panel, labelled array, shows the q expression 2 times til 5; a single bar labelled "2 *" spans all five inputs at once and one arrow produces all five outputs, and the caption says one operation on the whole list, with no index and no loop. A footer notes that multiplication in q is atomic: it maps itself down to every element and rebuilds the shape.</desc>
+  <desc id="desc">Two side-by-side panels computing the same result, doubling the list 0 1 2 3 4 to get 0 2 4 6 8. The left panel, labelled imperative, shows a Python list a of 0 to 4 and a for-loop over an index i; five separate numbered arrows carry each input element to its output one at a time, and the caption says you write the index, the step and the accumulator. The right panel, labelled array, shows the q expression 2 times til 5; a single bar labelled "2 *" spans all five inputs at once and one arrow produces all five outputs, and the caption says one operation on the whole list, with no index and no loop. A footer notes that multiplication in q is atomic: it maps itself down to every element and rebuilds the shape.</desc>
 
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -22,11 +22,12 @@
   <rect x="40" y="100" width="3" height="310" fill="#94a3b8"/>
   <text x="66" y="128" font-size="11" letter-spacing="2" fill="#6b7280">IMPERATIVE · PYTHON</text>
 
-  <rect x="66" y="142" width="340" height="70" fill="#f8fafc" stroke="#e5e7eb"/>
+  <rect x="66" y="142" width="340" height="80" fill="#f8fafc" stroke="#e5e7eb"/>
   <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="#1f2937">
-    <text x="80" y="164">out = []</text>
-    <text x="80" y="182">for i in range(5):</text>
-    <text x="112" y="200">out.append(2 * a[i])</text>
+    <text x="80" y="160">a = [0, 1, 2, 3, 4]</text>
+    <text x="80" y="176">out = []</text>
+    <text x="80" y="192">for i in range(5):</text>
+    <text x="112" y="208">out.append(2 * a[i])</text>
   </g>
 
   <!-- inputs -->
@@ -67,8 +68,8 @@
   <rect x="470" y="100" width="3" height="310" fill="#1f2937"/>
   <text x="496" y="128" font-size="11" letter-spacing="2" fill="#6b7280">ARRAY · q</text>
 
-  <rect x="496" y="142" width="340" height="70" fill="#f8fafc" stroke="#e5e7eb"/>
-  <text x="510" y="182" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#1f2937">2 * til 5</text>
+  <rect x="496" y="142" width="340" height="80" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="510" y="188" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#1f2937">2 * til 5</text>
 
   <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#1f2937" text-anchor="middle">
     <rect x="509" y="240" width="56" height="34" fill="#ffffff" stroke="#cbd5e1"/><text x="537" y="262">0</text>

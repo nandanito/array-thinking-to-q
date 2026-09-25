@@ -15,12 +15,13 @@ it won't bend on: every code example runs under `make verify`, and printed outpu
 from the real interpreters rather than typed by hand.
 
 What surprised me is that code verification catches the smaller share of the problem. Every
-serious defect so far has been a claim rather than a line of code: a CI check that went green
+serious defect so far got past a green build, because what was wrong was a claim, not a failing
+line of code: a CI check that went green
 without checking anything, contributor instructions that had quietly gone stale, and one
 published evaluation finding I had to retract, even though my own notes had recorded the
 correction days before. The fixes were procedural: re-read the governing documents at every
-milestone, and make published numbers recompute from committed artifacts so the build fails
-if they drift.
+milestone, and make the evaluation's key numbers recompute from committed artifacts so the
+build fails if they drift.
 
 The first article covers the project, the rules it runs under, and what learning in public
 costs once you commit to publishing null results and retractions with the same care as

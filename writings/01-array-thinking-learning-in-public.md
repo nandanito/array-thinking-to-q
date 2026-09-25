@@ -18,7 +18,8 @@ actually costs once you commit to it.
 If you have never met an array language, here is the whole idea in three code blocks.
 
 In most languages you ask for work one element at a time. You write the loop, name the index, step
-through, and collect the results. The reflex, in Python:
+through, and collect the results. The reflex, in Python
+(with `a` holding the numbers 0 to 4):
 
 ```python
 out = []
@@ -58,8 +59,8 @@ Most "learn an array language" material teaches syntax. Syntax is not the hard p
 is **unlearning the loop** — and the reason that is hard is that nothing forces it.
 
 You can write q for months with `do[]`, `while[]`, an index variable and an accumulator. It works.
-The answers are correct. There is no error, no warning, no performance cliff at the sizes you test
-on. A language comfortable enough to let you stay imperative will not teach you to stop being
+The answers are correct. There is no error and no warning;
+nothing in the language pushes back. A language comfortable enough to let you stay imperative will not teach you to stop being
 imperative.
 
 So: **J as a short laboratory, then q as the destination.** J is where the shift is unavoidable —
@@ -130,7 +131,8 @@ authority of a code block.
 Here is the thing I did not expect, and it is the main reason this article exists.
 
 `make verify` proves my *code* runs. It says nothing about whether my *claims* are true. And every
-serious defect in this project so far has been a claim, not a line of code.
+serious defect in this project so far has got past a green build — almost always because what was
+wrong was a claim, not a failing line of code.
 
 Four, in order of discovery:
 
@@ -160,9 +162,15 @@ hardest** — it is precisely the one that gets the least scrutiny, because you 
 Second, **prior work does not protect you if nothing routes you back to it.** A verified finding
 filed in a document nobody re-reads is indistinguishable from a finding never made.
 
-![Two columns. Code is covered by make verify: examples re-run, outputs diffed, nightly CI; it fails loudly. Claims have nothing that runs them, and account for all four serious defects so far; they fail silently. Below: re-read governing documents every milestone, and recompute published numbers from committed artifacts.](figures/01/figure-3-what-verification-covers.svg)
+![Two columns. Code is covered by make verify: examples re-run, outputs diffed, nightly CI; it fails loudly. Claims have nothing that runs them; every serious defect so far was one of these, and they fail silently. Below: re-read governing documents every milestone, and recompute the evaluation's key numbers from committed artifacts.](figures/01/figure-3-what-verification-covers.svg)
 
 *Figure 3. Code fails loudly. Claims fail silently.*
+
+It has happened again since. In September an independent review of lesson 05 found a sentence
+calling a loop "order-proof" that was true on every input the lesson used and false on one it
+didn't — two quotes at the same timestamp. `make verify` was green throughout: it proves the outputs
+on the page are real, not that a sentence with "always" in it generalises. That one has its own
+story in article 4.
 
 So the repo now has a mandatory per-milestone step to re-read its own governing documents against
 reality, and part of the published evaluation has a `make` target that recomputes it from committed
