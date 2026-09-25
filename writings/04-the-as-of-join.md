@@ -4,10 +4,12 @@
 
 > **Provenance.** Every q and J snippet below is copied from
 > [lesson 05](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/05-asof-join/), whose outputs `make verify` re-captures from KDB-X CE 5.0
-> and J 9.7.1 and diffs against the page. No output here was typed by hand. This article makes no
-> performance claims of any kind, deliberately: the KDB-X Community Edition license restricts
-> publishing benchmark, test or performance information without KX's written consent, and staying
-> well clear of it is my choice of caution, not a reading of where that line falls ([licensing notes](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md)).
+> and J 9.7.1 and diffs against the page. No output here was typed by hand. There are no timings or
+> speed claims here, deliberately: the KDB-X Community Edition license restricts publishing
+> benchmark, test or performance information without KX's written consent, and staying well clear
+> of it is my choice of caution, not a reading of where that line falls. Where the article says one
+> shape looks at less of the data than another, that is a statement about what the code does,
+> which you can check by reading it — not a measurement ([licensing notes](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md)).
 > Everything below is about *what* the join does and *why it is shaped that way*, which it turns
 > out is the more interesting half anyway.
 
