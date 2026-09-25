@@ -1,54 +1,54 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">Three licence findings, three design changes</title>
   <desc id="desc">Three rows, each pairing a clause of the KX Community Edition License Agreement with the design decision it forced. Row one: Clause 2.1 and Attachment A limit permitted use to personal or internal business use; so the repo makes no commercial-friendliness claims about KDB-X CE, ever, and ships lessons and its own snippets, never KX's software. Row two: Clause 9 forbids disclosing any benchmark, test or performance information, or competitive analysis, without prior written consent; so the planned speed article became a co-design article with no numbers, and the as-of join showcase asserts correctness only. Row three: Clause 4 reserves periodic communication with a KX licence server; so offline or air-gapped verification is treated as at risk, and CI runs only on runners with network egress. The footer says: read the actual agreement before designing anything; your spec's summary of a licence is a claim like any other.</desc>
 
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a8c9e"/>
     </marker>
   </defs>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
-  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">READ THE LICENCE FIRST</text>
-  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">Three clauses. Three changes to the design.</text>
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">READ THE LICENCE FIRST</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">Three clauses. Three changes to the design.</text>
 
-  <text x="40" y="112" font-size="11" letter-spacing="2" fill="#6b7280">WHAT THE AGREEMENT SAYS</text>
-  <text x="500" y="112" font-size="11" letter-spacing="2" fill="#6b7280">WHAT IT DID TO THE BUILD</text>
+  <text x="40" y="112" font-size="11" letter-spacing="2" fill="#777777">WHAT THE AGREEMENT SAYS</text>
+  <text x="500" y="112" font-size="11" letter-spacing="2" fill="#777777">WHAT IT DID TO THE BUILD</text>
 
   <!-- row 1 -->
-  <rect x="40" y="124" width="400" height="84" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="40" y="124" width="3" height="84" fill="#1f2937"/>
-  <text x="58" y="148" font-size="11" letter-spacing="2" fill="#6b7280">CLAUSE 2.1 · ATTACHMENT A</text>
-  <text x="58" y="172" font-size="15" fill="#1f2937">Permitted use: personal or internal</text>
-  <text x="58" y="192" font-size="15" fill="#1f2937">business use only</text>
-  <line x1="448" y1="166" x2="492" y2="166" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#ah)"/>
-  <rect x="500" y="124" width="360" height="84" fill="#f8fafc" stroke="#e5e7eb"/>
-  <text x="518" y="160" font-size="15" fill="#1f2937">No commercial-friendliness claims, ever.</text>
-  <text x="518" y="184" font-size="13" font-style="italic" fill="#475569">Ship lessons and own snippets, never KX's software.</text>
+  <rect rx="2" x="40" y="124" width="400" height="84" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="124" width="3" height="84" fill="#34374C"/>
+  <text x="58" y="148" font-size="11" letter-spacing="2" fill="#777777">CLAUSE 2.1 · ATTACHMENT A</text>
+  <text x="58" y="172" font-size="15" fill="#000000">Permitted use: personal or internal</text>
+  <text x="58" y="192" font-size="15" fill="#000000">business use only</text>
+  <line x1="448" y1="166" x2="492" y2="166" stroke="#8a8c9e" stroke-width="1.4" marker-end="url(#ah)"/>
+  <rect rx="2" x="500" y="124" width="360" height="84" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="518" y="160" font-size="15" fill="#000000">No commercial-friendliness claims, ever.</text>
+  <text x="518" y="184" font-size="13" font-style="italic" fill="#555555">Ship lessons and own snippets, never KX's software.</text>
 
   <!-- row 2 -->
-  <rect x="40" y="220" width="400" height="84" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="40" y="220" width="3" height="84" fill="#1f2937"/>
-  <text x="58" y="244" font-size="11" letter-spacing="2" fill="#6b7280">CLAUSE 9 · CONFIDENTIALITY</text>
-  <text x="58" y="268" font-size="15" fill="#1f2937">No benchmark, test or performance</text>
-  <text x="58" y="288" font-size="15" fill="#1f2937">information without written consent</text>
-  <line x1="448" y1="262" x2="492" y2="262" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#ah)"/>
-  <rect x="500" y="220" width="360" height="84" fill="#f8fafc" stroke="#e5e7eb"/>
-  <text x="518" y="256" font-size="15" fill="#1f2937">The speed article became a design article.</text>
-  <text x="518" y="280" font-size="13" font-style="italic" fill="#475569">No numbers. The showcase asserts correctness only.</text>
+  <rect rx="2" x="40" y="220" width="400" height="84" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="220" width="3" height="84" fill="#34374C"/>
+  <text x="58" y="244" font-size="11" letter-spacing="2" fill="#777777">CLAUSE 9 · CONFIDENTIALITY</text>
+  <text x="58" y="268" font-size="15" fill="#000000">No benchmark, test or performance</text>
+  <text x="58" y="288" font-size="15" fill="#000000">information without written consent</text>
+  <line x1="448" y1="262" x2="492" y2="262" stroke="#8a8c9e" stroke-width="1.4" marker-end="url(#ah)"/>
+  <rect rx="2" x="500" y="220" width="360" height="84" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="518" y="256" font-size="15" fill="#000000">The speed article became a design article.</text>
+  <text x="518" y="280" font-size="13" font-style="italic" fill="#555555">No numbers. The showcase asserts correctness only.</text>
 
   <!-- row 3 -->
-  <rect x="40" y="316" width="400" height="84" fill="#ffffff" stroke="#e5e7eb"/>
-  <rect x="40" y="316" width="3" height="84" fill="#1f2937"/>
-  <text x="58" y="340" font-size="11" letter-spacing="2" fill="#6b7280">CLAUSE 4 · LICENCE VALIDATION</text>
-  <text x="58" y="364" font-size="15" fill="#1f2937">May periodically contact a KX</text>
-  <text x="58" y="384" font-size="15" fill="#1f2937">licence server. No opt-out.</text>
-  <line x1="448" y1="358" x2="492" y2="358" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#ah)"/>
-  <rect x="500" y="316" width="360" height="84" fill="#f8fafc" stroke="#e5e7eb"/>
-  <text x="518" y="352" font-size="15" fill="#1f2937">Air-gapped verification treated as at risk.</text>
-  <text x="518" y="376" font-size="13" font-style="italic" fill="#475569">CI runs only on runners with network egress.</text>
+  <rect rx="2" x="40" y="316" width="400" height="84" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="316" width="3" height="84" fill="#34374C"/>
+  <text x="58" y="340" font-size="11" letter-spacing="2" fill="#777777">CLAUSE 4 · LICENCE VALIDATION</text>
+  <text x="58" y="364" font-size="15" fill="#000000">May periodically contact a KX</text>
+  <text x="58" y="384" font-size="15" fill="#000000">licence server. No opt-out.</text>
+  <line x1="448" y1="358" x2="492" y2="358" stroke="#8a8c9e" stroke-width="1.4" marker-end="url(#ah)"/>
+  <rect rx="2" x="500" y="316" width="360" height="84" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="518" y="352" font-size="15" fill="#000000">Air-gapped verification treated as at risk.</text>
+  <text x="518" y="376" font-size="13" font-style="italic" fill="#555555">CI runs only on runners with network egress.</text>
 
-  <text x="450" y="440" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">KX Community Edition License Agreement v1.1, 27 Aug 2025. Paraphrased; read the clause numbers, not this figure. Not legal advice.</text>
+  <text x="450" y="440" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">KX Community Edition License Agreement v1.1, 27 Aug 2025. Paraphrased; read the clause numbers, not this figure. Not legal advice.</text>
 </svg>
