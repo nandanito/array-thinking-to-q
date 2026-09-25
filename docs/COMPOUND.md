@@ -764,3 +764,18 @@ them. Fixed with `last bid` and a stated exception (ties can only be broken by r
 sharpens the lesson's point). Transferable: **a verified fixture is not a verified claim** — when
 prose says "always", test an input the fixture was not built to contain. It also flagged that
 calling Part II "complete" read as closing M3 without article #4; M3 is now stated as open.
+
+## M3 close — article 4 drafted; snippet provenance checked mechanically (2026-09-25)
+
+Article 4 ("The as-of join") closes M3. Every one of its 20 code/output blocks was checked
+line-by-line against `lessons/05-asof-join/README.md` — which `make verify-prose` re-captures — so
+RELEASE-CHECKLIST's "every snippet copied from a RUNNING lesson file" holds by construction, not by
+recollection. The check was negative-tested (one output digit changed → flagged). Contrast article 5,
+drafted before its milestone: a third of its snippets still have no lesson file. Transferable:
+**write the article after the lesson, and copy from it; never the other way round.** The first draft
+did cut that corner once — an output block written from memory, wrong — and it was caught only on
+re-reading, not by any gate. The block is now extracted from the lesson file byte-for-byte.
+
+Milestone re-read (per the compound step): CLAUDE.md build-order item 3 updated to M3 DONE. SPEC's
+M3 line ("Part II + `aj` showcase golden-filed; nightly q CI live") now matches reality on all three
+counts.
