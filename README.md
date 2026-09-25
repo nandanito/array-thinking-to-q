@@ -21,8 +21,8 @@ A learning-in-public project, built one verified lesson at a time. Honest state 
 
 | Area | State |
 |---|---|
-| Part II — q lessons | **3 of ~4 written**: [atoms & lists](lessons/01-atoms-and-lists/), [dict → table](lessons/02-dict-to-table/), [qSQL](lessons/03-qsql/). Attributes & sort discipline next. |
-| Showcase — as-of join | [Runs end-to-end](showcase/aj/), golden-filed |
+| Part II — q lessons | **Complete — 5 lessons**: [atoms & lists](lessons/01-atoms-and-lists/), [dict → table](lessons/02-dict-to-table/), [qSQL](lessons/03-qsql/), [attributes & sort discipline](lessons/04-attributes/), [the as-of join](lessons/05-asof-join/). Every output is re-captured and diffed by `make verify` |
+| Showcase — as-of join | [Runs end-to-end](showcase/aj/), golden-filed; lesson 05 derives it and checks it reproduces the golden file |
 | Part I — J laboratory | Not yet written (1–2 illustrative, read-along lessons) |
 | Transition chapter | Not yet written |
 | Eval of KX's official q plugin | **Run and published** — 50 headless sessions, [null result](eval/verdict.md). No measurable lift, on a task set that could not have measured a small one. Raw material in [`eval/runs/`](eval/runs/) |
