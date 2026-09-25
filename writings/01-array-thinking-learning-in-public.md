@@ -40,10 +40,12 @@ of kdb+, a column-oriented time-series database best known in finance — where 
 No index, no loop, no accumulator. The `*` maps itself onto every element and hands back a list of
 the same shape; `+` pairs two lists element by element; `>` answers a question about every element
 at once (`00011b` is a list of five booleans). Collapsing a list works the same way — you say *what*
-to reduce, not *how* to walk it:
+to reduce, not *how* to walk it (`2f` is the float 2.0):
 
 ```q
 sum til 5          / 10
+avg til 5          / 2f
+max til 5          / 4
 ```
 
 ![Two panels computing the same result. Left, a Python loop doubles 0 1 2 3 4 in five numbered steps, one element at a time. Right, the q expression 2 * til 5 applies one operation to the whole list at once and produces 0 2 4 6 8.](figures/01/figure-1-where-the-iteration-lives.svg)
