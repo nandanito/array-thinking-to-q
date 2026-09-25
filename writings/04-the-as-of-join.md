@@ -58,7 +58,9 @@ prevailing'[trade`sym; trade`time]
 
 Right answers. And the function deserves credit for something real: it does not care what order the
 quote rows are in. "The quote with the greatest time at or before `t`" is a statement about
-*values*. Shuffle the table and it stays true.
+*values*. Shuffle the table and it stays true — with one exception, which turns out to matter: if
+two quotes share a timestamp, "the greatest time" names both, and only row order can break the tie.
+That is why it says `last bid`; we will come back to it.
 
 What it gets wrong is the shape of the work. Every trade filters the whole quote table by symbol,
 filters again by time, then scans the survivors for a maximum. And inside that, it asks two
@@ -275,6 +277,7 @@ comment:
 ```q
 quote:`sym`time xasc quote       / correctness: blocks by sym, time ascending in each
 @[`quote;`sym;`g#]               / speed: record the group half, set LAST
+res:aj[`sym`time; trade; quote]
 ```
 
 After the above, both lines can be read rather than recited:
