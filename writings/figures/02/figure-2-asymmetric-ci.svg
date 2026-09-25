@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title id="title">The asymmetric CI: J on every pull request, q only on trusted branches</title>
+  <desc id="desc">Two lanes. The top lane is J: licence GPLv3, no key needed. Any pull request, including one from a stranger's fork, triggers the j-verify check, which blocks the merge if it fails. The bottom lane is q on KDB-X Community Edition: proprietary, key required. The key lives in a repository secret, which GitHub does not expose to pull requests from forks, so a fork cannot run the q suite. Instead the q-verify workflow runs make verify nightly, on every push to main, and on demand; a failure notifies the maintainer but never blocks. A note between the lanes says J is the only green check that depends on nobody's commercial terms.</desc>
+
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34374C"/>
+    </marker>
+    <marker id="ahm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a8c9e"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="470" fill="#ffffff"/>
+
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">WHAT CAN RUN ON A STRANGER'S PULL REQUEST</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">One check needs nobody's permission. The other needs a key.</text>
+
+  <!-- J lane -->
+  <text x="40" y="118" font-size="11" letter-spacing="2" fill="#777777">J · GPLv3 · NO KEY</text>
+  <rect rx="2" x="40" y="130" width="190" height="64" fill="#ffffff" stroke="#e5e5e5"/>
+  <text x="135" y="158" text-anchor="middle" font-size="15" fill="#000000">Any pull request</text>
+  <text x="135" y="178" text-anchor="middle" font-size="12" font-style="italic" fill="#555555">including from a fork</text>
+  <line x1="238" y1="162" x2="322" y2="162" stroke="#34374C" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect rx="2" x="330" y="130" width="230" height="64" fill="#34374C"/>
+  <text x="445" y="158" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" fill="#ffffff">j-verify</text>
+  <text x="445" y="178" text-anchor="middle" font-size="12" fill="#c9cad3">runs the J examples</text>
+  <line x1="568" y1="162" x2="652" y2="162" stroke="#34374C" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect rx="2" x="660" y="130" width="200" height="64" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="760" y="158" text-anchor="middle" font-size="15" fill="#000000">Blocks the merge</text>
+  <text x="760" y="178" text-anchor="middle" font-size="12" font-style="italic" fill="#555555">if it fails</text>
+
+  <!-- middle note -->
+  <line x1="40" y1="232" x2="860" y2="232" stroke="#e5e5e5"/>
+  <text x="450" y="238" text-anchor="middle" font-size="13" font-style="italic" fill="#777777" style="paint-order:stroke" stroke="#ffffff" stroke-width="8">J is the only green check that depends on nobody's commercial terms.</text>
+
+  <!-- q lane -->
+  <text x="40" y="282" font-size="11" letter-spacing="2" fill="#777777">q · KDB-X CE · KEY REQUIRED</text>
+  <rect rx="2" x="40" y="294" width="190" height="64" fill="#ffffff" stroke="#e5e5e5" stroke-dasharray="4 3"/>
+  <text x="135" y="322" text-anchor="middle" font-size="15" fill="#777777">Pull request from a fork</text>
+  <text x="135" y="342" text-anchor="middle" font-size="12" font-style="italic" fill="#777777">no access to the secret</text>
+  <line x1="238" y1="326" x2="292" y2="326" stroke="#8a8c9e" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="304" y="332" font-size="18" fill="#777777">✕</text>
+
+  <rect rx="2" x="40" y="376" width="190" height="64" fill="#ffffff" stroke="#e5e5e5"/>
+  <text x="135" y="398" text-anchor="middle" font-size="14" fill="#000000">Nightly · push to main</text>
+  <text x="135" y="418" text-anchor="middle" font-size="14" fill="#000000">· on demand</text>
+  <line x1="238" y1="408" x2="322" y2="408" stroke="#34374C" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect rx="2" x="330" y="340" width="230" height="100" fill="#34374C"/>
+  <text x="445" y="372" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" fill="#ffffff">q-verify</text>
+  <text x="445" y="394" text-anchor="middle" font-size="12" fill="#c9cad3">runs all of make verify</text>
+  <text x="445" y="422" text-anchor="middle" font-size="12" fill="#c9cad3">licence key from a repo secret</text>
+  <line x1="568" y1="390" x2="652" y2="390" stroke="#34374C" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect rx="2" x="660" y="358" width="200" height="64" fill="#fafafa" stroke="#e5e5e5"/>
+  <text x="760" y="386" text-anchor="middle" font-size="15" fill="#000000">Notifies, never blocks</text>
+  <text x="760" y="406" text-anchor="middle" font-size="12" font-style="italic" fill="#555555">trusted branches only</text>
+</svg>

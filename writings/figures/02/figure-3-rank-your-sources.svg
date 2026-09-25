@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title id="title">Rank your sources before you read</title>
+  <desc id="desc">A ranked list of four sources, strongest first: one, the licence text, which binds you; two, the vendor's documentation; three, the running binary, used as the tiebreak; four, everyone else, including this blog. On the right, two cases where a lower-ranked source lost. Case one, toward optimism: a community blog said the community edition runs fully offline; Clause 4 of the licence reserves a periodic licence check; the licence wins, because the blog described observed behaviour and the licence describes reserved rights. Case two, toward pessimism: a secondary source said 8 concurrent connections and KX's documentation said 16; running .Q.lim on the installed binary reported 16; the documentation was right. The footer says: wrong in both directions, so not even a consistent bias; decide the ranking before you read.</desc>
+
+  <rect width="900" height="470" fill="#ffffff"/>
+
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">RANK YOUR SOURCES BEFORE YOU READ</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">Twice a secondary source beat the primary one in my notes. Twice it was wrong.</text>
+
+  <!-- ranking -->
+  <g>
+    <rect rx="2" x="40" y="110" width="360" height="62" fill="#34374C"/>
+    <text x="60" y="137" font-size="11" letter-spacing="2" fill="#c9cad3">1</text>
+    <text x="84" y="138" font-size="16" fill="#ffffff">The licence text</text>
+    <text x="84" y="158" font-size="12" font-style="italic" fill="#c9cad3">the thing that binds you</text>
+
+    <rect rx="2" x="40" y="180" width="360" height="62" fill="#8a8c9e"/>
+    <text x="60" y="207" font-size="11" letter-spacing="2" fill="#ffffff">2</text>
+    <text x="84" y="208" font-size="16" fill="#ffffff">The vendor's documentation</text>
+
+    <rect rx="2" x="40" y="250" width="360" height="62" fill="#c9cad3"/>
+    <text x="60" y="277" font-size="11" letter-spacing="2" fill="#000000">3</text>
+    <text x="84" y="278" font-size="16" fill="#000000">The running binary</text>
+    <text x="84" y="298" font-size="12" font-style="italic" fill="#000000">as tiebreak</text>
+
+    <rect rx="2" x="40" y="320" width="360" height="62" fill="#fafafa" stroke="#e5e5e5"/>
+    <text x="60" y="347" font-size="11" letter-spacing="2" fill="#777777">4</text>
+    <text x="84" y="348" font-size="16" fill="#555555">Everyone else</text>
+    <text x="84" y="368" font-size="12" font-style="italic" fill="#777777">including this blog</text>
+  </g>
+
+  <!-- case 1 -->
+  <rect rx="2" x="440" y="110" width="420" height="132" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="440" y="110" width="3" height="132" fill="#34374C"/>
+  <text x="460" y="134" font-size="11" letter-spacing="2" fill="#777777">WRONG TOWARD OPTIMISM</text>
+  <text x="460" y="160" font-size="14" fill="#555555">Blog: "runs fully offline"</text>
+  <text x="460" y="184" font-size="14" fill="#000000">Licence, clause 4: a periodic licence check</text>
+  <text x="460" y="202" font-size="14" fill="#000000">is reserved. Licence wins.</text>
+  <text x="460" y="226" font-size="12" font-style="italic" fill="#777777">Observed behaviour is not a reserved right.</text>
+
+  <!-- case 2 -->
+  <rect rx="2" x="440" y="250" width="420" height="132" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="440" y="250" width="3" height="132" fill="#34374C"/>
+  <text x="460" y="274" font-size="11" letter-spacing="2" fill="#777777">WRONG TOWARD PESSIMISM</text>
+  <text x="460" y="300" font-size="14" fill="#555555">Secondary source: 8 connections. Docs: 16.</text>
+  <text x="460" y="324" font-size="14" fill="#000000">Tiebreak: <tspan font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">.Q.lim</tspan> on the installed</text>
+  <text x="460" y="342" font-size="14" fill="#000000">binary reports 16. The docs were right.</text>
+  <text x="460" y="366" font-size="12" font-style="italic" fill="#777777">The conservative number was not the safe one.</text>
+
+  <text x="450" y="432" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">Wrong in both directions, so not even a consistent bias. Decide the ranking before you read, not after.</text>
+</svg>
