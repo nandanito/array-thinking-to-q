@@ -36,3 +36,5 @@ jobs:
         run: echo "9!:14''" | $HOME/j9.7/bin/jconsole
       - name: Verify J examples
         run: make verify-j J=$HOME/j9.7/bin/jconsole
+      - name: Verify article snippets (pure text, no q or J needed)
+        run: make verify-writings
