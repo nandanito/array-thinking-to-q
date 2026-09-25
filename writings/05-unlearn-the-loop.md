@@ -44,8 +44,8 @@ perfectly ordinary notion of a counter you increment yourself. Every reflex you 
 Python or Java or C has somewhere to land, and the answers come out right.
 
 So you can write q for months — shipping, passing tests, reviewing other people's code — and never
-once make the shift the language was built around. Nothing fails. There is no error, no warning, no
-performance cliff at the sizes you are testing on. The loop is *right there*, and it works.
+once make the shift the language was built around. Nothing fails. There is no error and no warning;
+nothing in the language pushes back. The loop is *right there*, and it works.
 
 I want to be precise about the contrast, because the easy version of this argument is wrong. **It
 is not that J forbids loops.** It doesn't:
@@ -74,6 +74,10 @@ Everything about it says *you have wandered off*.
 The q version says nothing of the kind. `do[count x; r+:x i; i+:1]` is one line of ordinary q,
 indistinguishable in texture from the q around it. It doesn't look like a detour. It looks like
 Tuesday.
+
+![Two panels, both summing 1 2 3 4 5 with an explicit loop and printing 15. J: a five-line explicit definition with its own assignment form and a lone closing parenthesis; the idiom is +/. q: one ordinary line, do[count x; r+:x i; i+:1]; the idiom is sum.](figures/05/figure-1-the-same-loop.svg)
+
+*Figure 1. The same loop. J makes it feel like a detour; q makes it feel like home.*
 
 **That is the whole case for the laboratory.** Not that J is stricter, but that J makes the
 imperative path *feel* like what it is, and q makes it feel like home. A language that lets you
@@ -140,6 +144,10 @@ q's names are genuinely better for getting work done. `3 mavg px` says what it m
 who has never heard of an adverb. But you can hold that vocabulary completely and still not know
 that iteration in this language is a *thing you modify a verb with*, because q never made you say
 so out loud.
+
+![In J, +/\ over 1 to 6 gives the running total 1 3 6 10 15 21, and the same phrase with a left argument of 3 gives the moving sum 6 9 12 15. In q the same two results come from two names: sums gives 1 3 6 10 15 21, and 3 msum gives 1 3 6 9 12 15.](figures/05/figure-2-iteration-is-a-modifier.svg)
+
+*Figure 2. Iteration is a modifier. In J a window is a scan with a width; in q it is another word.*
 
 ## 2. Composition is something you can write down
 
@@ -326,11 +334,15 @@ answer. That is the exact failure shape this curriculum's `aj` showcase exists t
 **The thinking transfers. The plumbing does not.** That is the rule, and both examples above are
 just the rule with the volume turned up and down.
 
+![Two J habits that break in q. The fork +/ % # does not parse in q: it fails loudly and cannot ship. The 3-period moving average of 1 to 6 gives four results in J (2 3 4 5) and six in q (1 1.5 2 3 4 5); aligned by position, the same values sit two slots apart, and nothing complains.](figures/05/figure-3-where-the-laboratory-lies.svg)
+
+*Figure 3. Where the laboratory lies. The fork fails loudly; the windows fail silently.*
+
 ---
 
 ## Does the shift actually take? Some evidence I did not expect
 
-I ran a controlled evaluation a couple of days ago for a different purpose — [testing whether KX's
+I ran a controlled evaluation in late July for a different purpose — [testing whether KX's
 official q plugin improves a frontier model's q](03-evaluating-kx-q-plugin.md) — and three of its
 fifteen tasks are exactly this article's thesis stated as an exercise: *here is q that was
 transliterated from an imperative loop; make it idiomatic.* A `do`-loop accumulating a sum. A
@@ -356,9 +368,11 @@ Three solved loop-fix tasks are three data points from a task set I built badly.
 
 What they do support is narrower and still worth something. **On the loop-transliteration exercises
 I could think of, the failure mode this curriculum exists to prevent did not show up.** And the one
-task where the answers diverged from my reference at all was not about loops or reductions or any
-other array idea — it was about sortedness, attributes, and what `aj` requires of the table you hand
-it. It was even a case where I, not the models, had the documentation wrong.
+task where both arms departed from my reference in the same way was not about loops or reductions or
+any other array idea — it was about sortedness, attributes, and what `aj` requires of the table you
+hand it. (The other deviations were smaller: one extra variable binding that cost the baseline a
+style point on a judgement call, and a second as-of-join task where the baseline also chose `` `p# ``
+without being asked about attributes at all.) It was even a case where I, not the models, had the documentation wrong.
 
 **J has nothing to say about any of that.** There is no fork that teaches you `` `g# ``, and no
 rank that tells you when `` `p# `` is the better call.

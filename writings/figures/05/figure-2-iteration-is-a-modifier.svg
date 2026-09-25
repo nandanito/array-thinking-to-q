@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title id="title">Iteration is a modifier: a window is a scan with a width</title>
+  <desc id="desc">Two rows over the list 1 2 3 4 5 6. In J, one phrase does both jobs: plus-slash-backslash gives the running total 1 3 6 10 15 21, and the same three characters with a left argument of 3 give the 3-wide moving sum 6 9 12 15. The only change is the left argument, highlighted. In q, the same two results come from two different names: sums gives 1 3 6 10 15 21, and 3 msum gives 1 3 6 9 12 15, which also ramps up through the partial windows at the start. The caption says q's names are better for getting work done, but nothing in them says they are one idea with a parameter.</desc>
+
+  <rect width="900" height="430" fill="#ffffff"/>
+
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">ITERATION IS A MODIFIER</text>
+  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">In J, a window is a scan with a width. In q, it is a different word.</text>
+
+  <!-- J -->
+  <text x="40" y="118" font-size="11" letter-spacing="2" fill="#6b7280">J · ONE PHRASE</text>
+  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#1f2937" xml:space="preserve">
+    <text x="40" y="156">  +/\ 1 2 3 4 5 6</text>
+    <rect x="37" y="174" width="16" height="24" fill="#1f2937"/>
+    <text x="40" y="191"><tspan fill="#ffffff">3</tspan> +/\ 1 2 3 4 5 6</text>
+  </g>
+  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#475569">
+    <text x="300" y="156">→  1 3 6 10 15 21</text>
+    <text x="300" y="191">→  6 9 12 15</text>
+  </g>
+  <text x="560" y="156" font-size="13" font-style="italic" fill="#475569">running total</text>
+  <text x="560" y="191" font-size="13" font-style="italic" fill="#475569">3-wide moving sum (complete windows only)</text>
+
+  <line x1="40" y1="228" x2="860" y2="228" stroke="#e5e7eb"/>
+
+  <!-- q -->
+  <text x="40" y="266" font-size="11" letter-spacing="2" fill="#6b7280">q · TWO NAMES</text>
+  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#1f2937" xml:space="preserve">
+    <text x="40" y="304">  sums 1 2 3 4 5 6</text>
+    <text x="40" y="339">3 msum 1 2 3 4 5 6</text>
+  </g>
+  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="17" fill="#475569">
+    <text x="300" y="304">→  1 3 6 10 15 21</text>
+    <text x="300" y="339">→  1 3 6 9 12 15</text>
+  </g>
+  <text x="560" y="304" font-size="13" font-style="italic" fill="#475569">running total</text>
+  <text x="560" y="339" font-size="13" font-style="italic" fill="#475569">3-wide moving sum (ramps up, six outputs)</text>
+
+  <text x="450" y="394" text-anchor="middle" font-size="13" font-style="italic" fill="#6b7280">q's names are better for getting work done. Nothing in them says they are one idea with a parameter.</text>
+</svg>
