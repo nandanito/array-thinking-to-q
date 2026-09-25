@@ -20,36 +20,34 @@ list and produces 0 2 4 6 8.
 
 # X (thread, tag @kxsystems)
 
-**1/5**
+**1/4**
 
 Array languages ask one thing of an experienced programmer: stop writing the loop.
 
-I've been working through that shift and turning it into a short, fully executable curriculum: a brief laboratory in J, then q/kdb+ as the destination.
+Not the syntax, but the reflex of stepping through data one element at a time with an index and an accumulator.
 
 Article 1 of 6 ↓ #kdb #ArrayProgramming
 
-**2/5**
+**2/4**
 
 In Python you write the loop, the index and the accumulator. In q:
 
 2 * til 5
 → 0 2 4 6 8
 
-No index, no loop. The iteration lives in the operator, not in your code.
+The iteration has not disappeared. It has moved into the operator.
 
-**3/5**
+**3/4**
 
-One constraint runs the project: every example executes. Outputs are captured from the real interpreters and re-checked by make verify; the q suite runs nightly in CI.
+Once that clicks, the same move carries from a list to a table, a query and a time-series join.
 
-**4/5**
+The code starts describing the data instead of the steps.
 
-The useful finding: every serious defect so far passed a green build. A CI check that verified nothing, stale instructions, an evaluation claim I retracted. Verification covers code. Claims need their own discipline.
+**4/4**
 
-**5/5**
+A short curriculum: a brief laboratory in J, then q/kdb+ as the destination. Every example runs against the real interpreters.
 
-The article: https://nandan.me/writing/array-thinking-all-the-way-to-q/
-
-The repo: https://github.com/nandanito/array-thinking-to-q
+https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
 q runs on @kxsystems' KDB-X Community Edition. Not affiliated.
 
@@ -59,7 +57,9 @@ q runs on @kxsystems' KDB-X Community Edition. Not affiliated.
 
 Array languages ask one thing of an experienced programmer: stop writing the loop.
 
-I've been working through that shift and turning it into a short, fully executable curriculum: a brief laboratory in J, then q/kdb+ as the destination. Article 1 of 6 ↓
+Not the syntax, but the reflex of stepping through data one element at a time with an index and an accumulator.
+
+Article 1 of 6 ↓
 
 #kdb #ArrayProgramming
 
@@ -70,27 +70,29 @@ In Python you write the loop, the index and the accumulator. In q:
 2 * til 5
 → 0 2 4 6 8
 
-No index, no loop. The iteration lives in the operator, not in your code.
+The iteration has not disappeared. It has moved into the operator.
 
 **3/4**
 
-Every example in the project executes and is re-checked by make verify; q runs nightly in CI.
+Once that clicks, the same move carries from a list to a table, a query and a time-series join.
 
-The useful finding: every serious defect so far passed a green build. Verification covers code. Claims need their own discipline.
+The code starts describing the data instead of the steps.
 
 **4/4**
 
-The article: https://nandan.me/writing/array-thinking-all-the-way-to-q/
+A short curriculum: a brief laboratory in J, then q/kdb+ as the destination. Every example runs against the real interpreters.
 
-The repo: https://github.com/nandanito/array-thinking-to-q
+https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
 q runs on KX's KDB-X Community Edition. Not affiliated.
 
 # Mastodon (single post)
 
-Array languages ask one thing of an experienced programmer: stop writing the loop. I've been working through that shift and turning it into a short, fully executable curriculum: a brief laboratory in J, then q/kdb+ (KX) as the destination.
+Array languages ask one thing of an experienced programmer: stop writing the loop.
 
-Every example runs under make verify. The more useful finding: every serious defect so far passed a green build, because what was wrong was a claim, not code.
+In q, 2 * til 5 gives 0 2 4 6 8. No index, no accumulator: the iteration has moved into the operator. The same move carries from a list to a table, a query and a time-series join.
+
+A short curriculum: a brief laboratory in J, then q/kdb+ (KX) as the destination. Every example runs against the real interpreters.
 
 Article 1 of 6: https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
@@ -98,11 +100,11 @@ Article 1 of 6: https://nandan.me/writing/array-thinking-all-the-way-to-q/
 
 # Nostr (single note)
 
-Array languages ask one thing of an experienced programmer: stop writing the loop.
+Array languages ask one thing of an experienced programmer: stop writing the loop. Not the syntax, but the reflex of stepping through data one element at a time with an index and an accumulator.
 
-I've been working through that shift and turning it into a short, fully executable curriculum: a brief laboratory in J, then q/kdb+ from KX as the destination. Every example runs under make verify, and the q suite runs nightly in CI.
+In q, 2 * til 5 gives 0 2 4 6 8. No index, no accumulator: the iteration has moved into the operator. Once that clicks, the same move carries from a list to a table, a query and a time-series join, and the code starts describing the data instead of the steps.
 
-The more useful finding: every serious defect so far passed a green build, because what was wrong was a claim, not code. Verification covers code; claims need their own discipline.
+A short curriculum: a brief laboratory in J, then q/kdb+ from KX as the destination. Every example runs against the real interpreters.
 
 Article 1 of 6: https://nandan.me/writing/array-thinking-all-the-way-to-q/
 Repo: https://github.com/nandanito/array-thinking-to-q
