@@ -25,7 +25,8 @@ and an as-of join, in the language people are actually paid to write.
 | 02 | [dict → table](02-dict-to-table/) | a table is a flip of a column dictionary; a keyed table *is* a dictionary | ✅ done |
 | 03 | [qSQL](03-qsql/) | `select … by … from` is a surface over column-lists; `by` cuts, it does not aggregate | ✅ done |
 | 04 | [attributes & sort discipline](04-attributes/) | an attribute is a perishable *claim*, not an index; `aj`'s correctness is the sort, not the `` g# `` | ✅ done |
-| — | [showcase: as-of join](../showcase/aj/) | trades matched to prevailing quotes, end-to-end | ✅ gate green |
+| 05 | [the as-of join](05-asof-join/) | `aj` is `group` + `bin` over a sorted table; the showcase preamble, derived | ✅ done |
+| — | [showcase: as-of join](../showcase/aj/) | trades matched to prevailing quotes, end-to-end (lesson 05 checks it reproduces the golden file) | ✅ gate green |
 
 Atoms and lists are deliberately **half** of lesson 01, not the payload: the payload is
 unlearning the loop. The conceptual centre of Part II is lesson 02 (dict → table).
