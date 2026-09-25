@@ -47,8 +47,8 @@ lower-numbered one wins**:
 That looked like planning ceremony when I wrote it. Then it did real work, twice.
 
 **Once, when the ground moved.** Objective 3 originally read "author a q skill for Claude Code."
-Partway through setup I discovered KX already ships official Claude Code plugins for q, PyKX, KDB-X
-and KDB.AI, with their own marketplace and a linter integration. Authoring a competing general-purpose
+Partway through setup I discovered KX already ships a family of official Claude Code plugins, covering q,
+PyKX, KDB-X and KDB.AI among others, with their own marketplace and a linter integration. Authoring a competing general-purpose
 q skill would be redundant.
 
 Without a hierarchy that is a small identity crisis. With one it is a lookup: the *learning*
@@ -59,8 +59,9 @@ sulking.
 
 **Once, when it would have been convenient to forget it.** Objective 4 says the blog is exhaust,
 never the driver. That is easy to agree with and hard to honour, because "what would make a better
-article" is a genuinely seductive input. It has already forced a null result into print (article 3)
-and thrown away the framing I wanted for another (see [article 2](02-kdb-x-licensing-maze.md)).
+article" is a genuinely seductive input. It has already forced a null result into the open (the evaluation is
+[published in the repo](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md); article 3 writes it up) and thrown away the framing I
+wanted for another (article 2).
 Both were correct calls and neither was comfortable.
 
 ## The constraint the whole repo is built around
@@ -97,10 +98,11 @@ Four, in order of discovery:
   become false — one pointing at a directory convention that never existed, one holding a decision
   "pending research" that had concluded weeks earlier. Both read as current.
 - A **README status table** advertising work as pending that had already shipped. I fixed that one
-  this week, while writing this article.
-- And then the one that actually stung, two days ago.
+  in late July, while drafting this article — and when I re-read it two months later, it had gone
+  stale again in exactly the same way.
+- And then the one that actually stung, also in late July.
 
-I published [an evaluation](03-evaluating-kx-q-plugin.md) that came back null, and the one genuinely
+I published [an evaluation](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md) that came back null, and the one genuinely
 interesting paragraph in it reported that both test conditions had used the "wrong" attribute on a
 kdb+ as-of join, against KX's own documentation. It was the single result with any teeth in an
 otherwise flat writeup.
@@ -120,14 +122,16 @@ reality, and part of the published evaluation has a `make` target that recompute
 artifacts and **fails if the committed table disagrees** — specifically the pass/fail column and the
 per-session activation traces, which are the numbers a reader is most likely to take on trust. The
 judgement-based scores it cannot recompute, so those stay defended by writing the scoring rules down
-before scoring. Both exist because of specific defects, not because they sounded rigorous.
+before scoring. Both exist because of specific defects, not because they sounded rigorous. And
+since late July a nightly CI job runs all of `make verify` against a licensed q, so none of this
+depends on my machine or my memory.
 
 ## What learning in public actually means
 
 It is not "post progress." Progress posts are easy and roughly worthless.
 
 It means the null result gets published with the same effort as a positive one would have. It means
-when the interesting paragraph turns out to be wrong, you go back and retract it in the article
+when the interesting paragraph turns out to be wrong, you go back and retract it in the evaluation
 that already shipped — which I have now done, and which is a strange feeling I recommend. It means
 the repository carries the raw material behind every number: all fifty session logs from that
 evaluation, the exact prompts, the scoring rationale, the losing answers.
@@ -142,19 +146,19 @@ evaluation harness I trust — mostly because it has already caught me.
 ## The six articles
 
 1. **This one** — the project, the rules, and what they cost.
-2. **[Running q in a public repo: the KDB-X licensing maze](02-kdb-x-licensing-maze.md)** — reading
+2. **Running q in a public repo: the KDB-X licensing maze** — reading
    the actual license before writing any CI, and the three findings that changed the build.
-3. **[Does KX's official q plugin actually make Claude better at q?](03-evaluating-kx-q-plugin.md)**
+3. **Does KX's official q plugin actually make Claude better at q?**
    — a controlled evaluation, a null result, and why the null is about my benchmark rather than
    their plugin.
 4. **The as-of join** — what changes when the language and the storage engine are designed around
    one primitive. No benchmark numbers, for reasons article 2 explains.
-5. **[Unlearn the loop: what J shows that q hides](05-unlearn-the-loop.md)** — the laboratory, and
+5. **Unlearn the loop: what J shows that q hides** — the laboratory, and
    the two places it lies to you on the way home.
 6. **What compounds** — packaging the lessons-learned file that gets appended at every milestone.
 
-Articles 4 and 5 are drafted or pending against milestones that have not shipped yet. Each publishes
-only when the artifacts it describes actually verify — which is the same rule as the code, applied
+Articles 2–5 are drafted; 6 is packaging. Each publishes only when the artifacts it describes
+actually verify — which is the same rule as the code, applied
 to the writing.
 
 ---
