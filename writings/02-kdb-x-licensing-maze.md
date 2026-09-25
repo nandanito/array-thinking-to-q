@@ -1,7 +1,7 @@
 # Running q in a public repo: the KDB-X licensing maze
 
 *Article 2 of 6 — draft. Reports the M1 licensing read. Full notes:
-[`docs/licensing-notes.md`](../docs/licensing-notes.md).*
+[`docs/licensing-notes.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md).*
 
 > **Not legal advice.** I am a programmer who read a license carefully and wrote down what it says,
 > with clause numbers so you can check me. If money or a company depends on the answer, ask a
@@ -11,11 +11,17 @@
 ---
 
 I wanted to build a public teaching repository where every q example actually runs, with CI to
-prove it. That is a modest goal. It took a full day of reading before I could write the first line
-of the Makefile, and the reading changed the design in four separate places.
+prove it. The q in question runs on **KDB-X Community Edition** — the free tier of KX's q/kdb+
+runtime, which needs a licence key. That is a modest goal. It took a full day of reading before I could write the first line
+of the Makefile, and the reading changed the design in three separate places.
 
 This is what I found, why the order I found it in mattered, and the two moments where a source I
 trusted turned out to be wrong.
+
+![Three rows pairing licence clauses with design changes. Clause 2.1 and Attachment A, personal or internal business use only: no commercial-friendliness claims, ever. Clause 9, no benchmark, test or performance information without written consent: the speed article became a design article with no numbers. Clause 4, periodic licence validation with no opt-out: air-gapped verification treated as at risk, CI only on runners with network egress.](figures/02/figure-1-three-findings.svg)
+
+*Figure 1. Three clauses, three changes to the design. Paraphrased: the clause numbers are the
+authority, not the figure.*
 
 ## The rule that saved the project: read the license first
 
@@ -106,7 +112,7 @@ The design that fell out is asymmetric, and the asymmetry is the point:
 | | J | q / KDB-X CE |
 |---|---|---|
 | License | GPLv3 | proprietary, key required |
-| CI | **blocking on every PR** | author-side, nightly/manual, trusted branches only |
+| CI | **blocking on every PR** | nightly, on every push to `main`, and on demand; trusted branches only |
 | Key handling | none needed | repo secret; failures notify, never block |
 
 **J is the only green check in this repository that depends on nobody's commercial terms.** That is
@@ -114,9 +120,16 @@ not a statement about J's merits — it is a structural fact about which check c
 pull request from a stranger.
 
 And the corresponding constraint on q: a fork cannot run the q suite, because a fork does not have
-a key and mine is issued to me. Every q lesson is verified locally by me before it merges. If that
-sounds unsatisfying — it is. It is the arrangement I was willing to defend, given a key I may not
-hand out and a repo anyone can fork.
+a key and mine is issued to me. So q is checked only where the key can live. I verify every q lesson
+locally before it merges, and since late July a `q-verify` job runs the whole suite on the main
+branch — nightly, on every merge, and on demand — with the key held as a repository secret, which
+GitHub does not expose to pull requests from forks. A failure there notifies me; it cannot block a
+stranger's pull request, because it never runs on one. It is the arrangement I was willing to
+defend, given a key I may not hand out and a repo anyone can fork.
+
+![Two lanes. J, GPLv3, no key: any pull request, including from a fork, runs j-verify, which blocks the merge if it fails. q on KDB-X CE, key required: a pull request from a fork has no access to the secret and cannot run it; instead q-verify runs all of make verify nightly, on every push to main and on demand, with the licence key from a repository secret, and notifies but never blocks.](figures/02/figure-2-asymmetric-ci.svg)
+
+*Figure 2. What can run on a stranger's pull request. J needs nobody's permission; q needs a key.*
 
 Other operational residue, in case it saves you the reading:
 
@@ -148,6 +161,10 @@ once toward optimism, once toward pessimism, so it wasn't even a consistent bias
 sources before you read, not after.** License text, then vendor documentation, then the running
 binary as tiebreak, then everyone else. And "everyone else" includes the blog you are reading now,
 which is why every clause above carries a number.
+
+![A ranked list: 1 the licence text, 2 the vendor's documentation, 3 the running binary as tiebreak, 4 everyone else including this blog. Two cases: a blog said the edition runs fully offline, but clause 4 reserves a licence check, so the licence wins; a secondary source said 8 connections and the docs said 16, and .Q.lim on the installed binary reported 16.](figures/02/figure-3-rank-your-sources.svg)
+
+*Figure 3. Rank your sources before you read. I got it wrong in both directions.*
 
 ## What I would tell you before you start
 
