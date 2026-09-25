@@ -3,14 +3,18 @@
 *Article 4 of 6 — draft. Gated on M3 (the q core).*
 
 > **Provenance.** Every q and J snippet below is copied from
-> [lesson 05](../lessons/05-asof-join/), whose outputs `make verify` re-captures from KDB-X CE 5.0
+> [lesson 05](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/05-asof-join/), whose outputs `make verify` re-captures from KDB-X CE 5.0
 > and J 9.7.1 and diffs against the page. No output here was typed by hand. There are no timings
 > anywhere in this article, deliberately: the KDB-X Community Edition license bars publishing
-> performance figures without KX's written consent ([licensing notes](../docs/licensing-notes.md)).
+> performance figures without KX's written consent ([licensing notes](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md)).
 > Everything below is about *what* the join does and *why it is shaped that way*, which it turns
 > out is the more interesting half anyway.
 
 ---
+
+*New to q? It is the language of kdb+, a column-oriented time-series database best known in
+finance. Article 1 of this series has a one-minute primer on array languages; nothing here needs
+more than that.*
 
 There is a sentence people like to write about q, and it goes something like: *kdb+ has the as-of
 join, and that is why trading firms pay for it.*
@@ -26,6 +30,11 @@ time-series programmer eventually asks:
 
 Not a quote at exactly that time — there usually isn't one — but the most recent quote for the same
 symbol at or before it.
+
+![A time axis for one symbol, AAPL. Three quotes above it at 10:00:00 (bid 99), 10:00:02 (bid 99.1) and 10:00:05 (bid 99.4). Five trades below it, each with an arrow back to the quote it matches: 10:00:01 takes 99, 10:00:03 takes 99.1, 10:00:06 takes 99.4; a trade at exactly 10:00:02 takes that quote, 99.1; a trade at 09:59:59, before any quote, gets null and keeps its row.](figures/04/figure-1-trades-meet-quotes.svg)
+
+*Figure 1. The as-of join: same symbol, at or before, most recent. The dashed trades are the edge
+cases this article comes back to.*
 
 So if the join isn't the story, what is? After building the lesson around it, my answer is: the
 story is what the join looks like **when the language, the table layout and the storage were all
@@ -169,6 +178,11 @@ That is the as-of join, built by hand from two primitives, and it matches q's `a
 `aj`'s own column argument, `` `sym`time ``, turns out to be this decomposition written as a spec:
 every column but the last is matched by **equality** (the group half), and the last is matched
 **as-of** (the bin half).
+
+![One trade, AAPL at 10:00:03, matched in two steps against the quote table sorted by sym then time. Step 1, group: looking up AAPL returns rows 0 1 2, the AAPL block. Step 2, bin: within that block the times are 10:00:00, 10:00:02, 10:00:05, and bin of 10:00:03 returns position 1, row 1, bid 99.1. Below: sym first makes each symbol one contiguous block; time second makes each block ascending so bin is right. aj[`sym`time; trade; quote] is equality on every column but the last, as-of on the last.](figures/04/figure-2-group-plus-bin.svg)
+
+*Figure 2. `aj` is `group` plus `bin`. The sort serves both halves; only one half can be recorded
+by an attribute.*
 
 It also explains a phrase in the reference manual that reads oddly the first time: `aj` returns
 *"the last (in row order) matching record"*. Row order, not greatest time. The manual is describing

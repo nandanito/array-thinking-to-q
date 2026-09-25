@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title id="title">aj is group plus bin over a sorted table</title>
+  <desc id="desc">One trade, AAPL at 10:00:03, is matched in two steps against a quote table sorted by sym then time. The sorted table has five rows: row 0 AAPL 10:00:00 bid 99; row 1 AAPL 10:00:02 bid 99.1; row 2 AAPL 10:00:05 bid 99.4; row 3 MSFT 10:00:01 bid 200; row 4 MSFT 10:00:04 bid 200.3. Brackets mark the AAPL rows 0 to 2 as one block and the MSFT rows 3 and 4 as another. Step one, group, is equality on sym: looking up AAPL returns rows 0 1 2, the whole block, without scanning. Step two, bin, is the as-of search on time: within that block the times are 10:00:00, 10:00:02 and 10:00:05, and bin of 10:00:03 returns position 1, the last time at or before the trade, which is row 1, bid 99.1. At the bottom: the sort sym then time is what makes both steps work, because sym first makes each symbol one contiguous block for the group step to return, and time second makes each block ascending so bin returns the right row. In q the whole thing is written aj with the columns sym and time: equality on every column but the last, as-of on the last.</desc>
+
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="500" fill="#ffffff"/>
+
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#6b7280">aj = group + bin</text>
+  <text x="450" y="72" text-anchor="middle" font-size="20" fill="#1f2937">Two primitives, over a table sorted for them.</text>
+
+  <!-- the trade -->
+  <text x="40" y="118" font-size="11" letter-spacing="2" fill="#6b7280">ONE TRADE</text>
+  <rect x="40" y="128" width="170" height="40" fill="#1f2937"/>
+  <text x="125" y="153" text-anchor="middle" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#ffffff">AAPL  10:00:03</text>
+
+  <!-- sorted quote table -->
+  <text x="330" y="118" font-size="11" letter-spacing="2" fill="#6b7280">QUOTES, `sym`time xasc</text>
+  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="14" xml:space="preserve">
+    <text x="330" y="150" fill="#94a3b8">row  sym   time      bid</text>
+    <line x1="330" y1="160" x2="560" y2="160" stroke="#e5e7eb"/>
+    <rect x="322" y="166" width="246" height="26" fill="#f8fafc"/>
+    <rect x="322" y="192" width="246" height="26" fill="#1f2937"/>
+    <rect x="322" y="218" width="246" height="26" fill="#f8fafc"/>
+    <text x="330" y="184" fill="#1f2937"> 0   AAPL  10:00:00  99</text>
+    <text x="330" y="210" fill="#ffffff"> 1   AAPL  10:00:02  99.1</text>
+    <text x="330" y="236" fill="#1f2937"> 2   AAPL  10:00:05  99.4</text>
+    <text x="330" y="262" fill="#94a3b8"> 3   MSFT  10:00:01  200</text>
+    <text x="330" y="288" fill="#94a3b8"> 4   MSFT  10:00:04  200.3</text>
+  </g>
+  <!-- block brackets -->
+  <path d="M 578 168 L 586 168 L 586 242 L 578 242" fill="none" stroke="#1f2937" stroke-width="1.4"/>
+  <text x="594" y="180" font-size="12" fill="#1f2937">AAPL block</text>
+  <path d="M 578 250 L 586 250 L 586 294 L 578 294" fill="none" stroke="#94a3b8" stroke-width="1.4"/>
+  <text x="594" y="278" font-size="12" fill="#94a3b8">MSFT block</text>
+
+  <!-- step 1 -->
+  <rect x="40" y="200" width="250" height="84" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="40" y="200" width="3" height="84" fill="#1f2937"/>
+  <text x="58" y="222" font-size="11" letter-spacing="2" fill="#6b7280">STEP 1 · group · EQUALITY</text>
+  <text x="58" y="248" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="14" fill="#1f2937">g`AAPL  →  0 1 2</text>
+  <text x="58" y="270" font-size="12" font-style="italic" fill="#475569">Which rows are this sym? A lookup.</text>
+  <path d="M 290 242 L 314 214" stroke="#1f2937" stroke-width="1.4" fill="none" marker-end="url(#ah)"/>
+
+  <!-- step 2 -->
+  <rect x="660" y="160" width="200" height="130" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="660" y="160" width="3" height="130" fill="#1f2937"/>
+  <text x="678" y="182" font-size="11" letter-spacing="2" fill="#6b7280">STEP 2 · bin · AS-OF</text>
+  <g font-family="'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="#1f2937">
+    <text x="678" y="208">00:00 00:02 00:05</text>
+    <text x="678" y="230">bin 00:03  →  1</text>
+  </g>
+  <text x="678" y="254" font-size="12" font-style="italic" fill="#475569">Last time at or before.</text>
+  <text x="678" y="274" font-size="12" font-style="italic" fill="#475569">Position 1 → row 1 → 99.1</text>
+  <path d="M 660 222 L 572 205" stroke="#1f2937" stroke-width="1.4" fill="none" marker-end="url(#ah)"/>
+
+  <!-- bottom: why the sort -->
+  <line x1="40" y1="326" x2="860" y2="326" stroke="#e5e7eb"/>
+  <text x="40" y="354" font-size="11" letter-spacing="2" fill="#6b7280">WHY THE SORT</text>
+  <g font-size="14" fill="#1f2937">
+    <text x="40" y="382"><tspan font-family="'SF Mono', Menlo, Consolas, monospace">sym</tspan> first  →  each symbol is one contiguous block for step 1 to return. (Speed; <tspan font-family="'SF Mono', Menlo, Consolas, monospace">`g#</tspan> records this half.)</text>
+    <text x="40" y="408"><tspan font-family="'SF Mono', Menlo, Consolas, monospace">time</tspan> second  →  each block is ascending, so step 2 returns the right row. (Correctness; nothing records this half.)</text>
+  </g>
+  <rect x="40" y="428" width="820" height="44" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="60" y="455" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#1f2937">aj[`sym`time; trade; quote]</text>
+  <text x="330" y="455" font-size="14" font-style="italic" fill="#475569">equality on every column but the last; as-of on the last.</text>
+</svg>
