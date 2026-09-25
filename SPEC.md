@@ -2,7 +2,7 @@
 
 > Status: reviewed seed (Claude self-review + 2 ChatGPT cross-reviews incorporated; Fable 5 pass pending) 2026-07-22
 > Owner: Nandan (personal). Home: `nandanito/array-thinking-to-q`.
-> (Deliberately NOT under qmilab — this is a personal learning-in-public project.)
+> (Deliberately NOT under qmilab — this is a personal project: verified work published as it is built.)
 > Renamed from `from-j-to-q` after the reframe made J ~25% of content: the old name gave equal
 > billing to a means and a destination. (`q-by-way-of-j` was an intermediate candidate, rejected
 > as needing too much parsing.) Final name states the paradigm and the destination; J is the how,
@@ -175,7 +175,7 @@ already delivers it → publish the comparison, author nothing. Both are real fi
 - **M1 — Foundation (wk 1):** TASK ZERO's three reads; toolchain pinned; `aj` end-to-end;
   **the eval verify-harness built** (it is a week-2 dependency and is itself content work:
   ~30 task prompts + 20 trigger prompts); repo public.
-  → Article 1 "Array thinking, all the way to q: learning in public";
+  → Article 1 "Array thinking, all the way to q";
   → Article 2 "Running q in a public repo: the KDB-X licensing maze" (stagger 3–5 days).
 - **M2 — Eval gate (wk 2–3):** trigger precision + output quality run; verdict written.
   → Article 3 "Does KX's official q plugin actually make Claude better at q?" (flagship —

@@ -1,6 +1,7 @@
-# Array thinking, all the way to q: learning in public
+# Array thinking, all the way to q
 
-*Article 1 of 6 — draft. The series opener. Repo:
+*Article 1 of 6 — published 2026-09-25 on nandan.me, which is the canonical version:
+<https://nandan.me/writing/array-thinking-all-the-way-to-q/>. The series opener. Repo:
 [array-thinking-to-q](https://github.com/nandanito/array-thinking-to-q).*
 
 ---
@@ -10,7 +11,7 @@ paradigm shift and lands them in **q/kdb+**, with a brief stop in **J** on the w
 example in it runs. I am publishing six articles as I go.
 
 This is the first one, so it owes you three things: what the project is, what rules it runs under
-and why those rules turned out to matter more than I expected, and what "learning in public"
+and why those rules turned out to matter more than I expected, and what publishing the misses
 actually costs once you commit to it.
 
 ## Array languages in one minute
@@ -183,7 +184,7 @@ before scoring. Both exist because of specific defects, not because they sounded
 since late July a nightly CI job runs all of `make verify` against a licensed q, so none of this
 depends on my machine or my memory.
 
-## What learning in public actually means
+## What publishing the misses actually costs
 
 It is not "post progress." Progress posts are easy and roughly worthless.
 
