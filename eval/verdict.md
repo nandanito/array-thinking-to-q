@@ -125,8 +125,8 @@ they must be reported as **instrument limitations, not findings**:
   **15/15 in both conditions**; this run scored **14/15 in both**, so the literal trigger was not
   met. It should still be read as the ceiling case: the single miss is the *same task* in both
   arms, both arms produced the exactly correct joined table, and both failed only by appending an
-  extra `show meta quote` line — a presentation artifact, not a q error. Net of that, 13 of 15 task
-  pairs scored identically and 5 were byte-for-byte identical q. These tasks cannot discriminate
+  extra `show meta quote` line — a presentation artifact, not a q error. 14 of 15 task pairs
+  scored identically (task 08 is the one discordant pair) and 5 were byte-for-byte identical q. These tasks cannot discriminate
   between the conditions because baseline `claude-opus-5` already solves them. "No difference
   between conditions" is **not** what this shows; what it shows is that the instrument has no
   headroom.
@@ -148,7 +148,7 @@ The tasks could not discriminate on quality. They discriminated cleanly on token
 | Median per-task ratio | — | — | **3.9×** |
 | Widest | 23 (task 14) | 407 | 17.7× |
 
-For 13 of 15 tasks that bought identical or equivalently-scored code. The extreme is task 15, where
+For 14 of 15 tasks that bought identically scored code. The extreme is task 15, where
 condition B spent 3,848 tokens — loading the skill, globbing, reading a bundled reference — to
 reach the *same* attribute choice as baseline's 978.
 

@@ -1,6 +1,6 @@
 # I ran a controlled eval on KX's official q plugin. The result was nothing.
 
-*Article 3 of 6 — draft. Reports the M2 eval result. Evidence: [`eval/verdict.md`](../eval/verdict.md).*
+*Article 3 of 6 — draft. Reports the M2 eval result. Evidence: [`eval/verdict.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md).*
 
 ---
 
@@ -15,8 +15,9 @@ sentences is most of what this article is about.
 ## Why this experiment exists at all
 
 I am writing a curriculum that teaches array thinking through q. The original plan included
-authoring a q skill for Claude Code. Then I found that KX already ships official plugins for
-q, PyKX, KDB-X and KDB.AI, with their own marketplace and a qlint integration.
+authoring a q skill for Claude Code. Then I found that KX already ships a family of official
+plugins, covering q, PyKX, KDB-X and KDB.AI among others, with their own marketplace and a qlint
+integration.
 
 Writing a competing general-purpose q skill would be redundant. But the *learning* objective was
 never "author a skill" — it was "author and evaluate a skill". Evaluation survives the redundancy
@@ -28,8 +29,16 @@ in the protocol before any data existed, and it is doing real work now.
 
 ## The design, in brief
 
-**Subject:** `q-knowledge@kx-skills`, pinned at commit `8b7040f`. There is no version tag upstream,
-so the SHA is the pin.
+**Subject:** `q-knowledge@kx-skills`, pinned at commit `8b7040f` (plugin v0.1.0). There is no version
+tag upstream, so the SHA is the pin.
+
+> **Dated note, 2026-09-25.** KX has kept shipping since this run. On 14 Aug it bundled a
+> documentation-search MCP server into every plugin in the family and bumped `q-knowledge` to 0.1.1;
+> it has also added new plugins and Codex support. The q skill's own content is **byte-identical** to
+> the pinned commit — I checked the tree hashes. So every number below still describes exactly what I
+> tested, but the plugin you install today also searches KX's documentation, and this eval did not
+> test that. My harness allowed only `Skill`, `Read` and `Glob`; a re-run would first have to decide
+> whether to let the docs server in.
 
 **Conditions:** A = baseline, no plugin. B = that plugin loaded. Identical prompts, identical
 model (`claude-opus-5`), identical settings.
@@ -73,6 +82,10 @@ no project instructions, and specifically no `idiomatic-q`. Condition B: the sam
 The general form: **when the environment can leak the treatment into the control, that control is a
 property of your harness, not of your analysis.** You cannot add it afterwards, and you cannot
 detect its absence from the output.
+
+![Two panels. Run from inside the repo: its own q skill, CLAUDE.md and lessons leak into both conditions, so both arms are treated and the results look normal. What the eval did: all 50 sessions ran headless from an empty scratch directory with no CLAUDE.md or .claude; asked what it had loaded, condition A listed 41 skills, none q-related, and condition B the same 41 plus exactly q-knowledge:q and q-knowledge:qlint-snippet.](figures/03/figure-1-contamination-control.svg)
+
+*Figure 1. The contamination control lives in the harness, not in the analysis.*
 
 ## Part A: it fires
 
@@ -125,6 +138,10 @@ Here is what came back.
 
 The sign test needs roughly five discordant pairs before it can adjudicate anything. I got one.
 **The test never engaged.**
+
+![Fifteen tiles, one per paired task. Five (02, 07, 10, 13, 14) are byte-for-byte identical q in both conditions; eight differ in code but score the same; task 15 is a shared miss, failed identically by both; task 08 is the only discordant pair, decided by one checklist item. Correct 14/15 in both conditions; idiomatic 73/75 without the plugin, 74/75 with it; one discordant pair where the sign test needs about five.](figures/03/figure-2-the-ceiling.svg)
+
+*Figure 2. The ceiling. Fifteen pairs, one disagreement, and that one is a judgement call.*
 
 And that one pair is thin. It turns entirely on whether writing
 
@@ -181,9 +198,14 @@ The tasks could not discriminate on quality. They discriminated cleanly on cost.
 | Median per-task ratio | | | **3.9×** |
 | Widest single task | 23 | 407 | **17.7×** |
 
-Roughly three times the output tokens, for code that scored identically on thirteen of fifteen
+Roughly three times the output tokens, for code that scored identically on fourteen of fifteen
 tasks and was *literally the same code* on five of them. When your primary metric hits a ceiling,
 the secondary metrics are the finding.
+
+![Bar chart of total output tokens over 15 tasks: 3,671 without the plugin, 10,337 with it, 2.8 times. Median per-task ratio 3.9 times; widest single task 23 to 407 tokens, 17.7 times. These are the language model's tokens, not a measurement of q.](figures/03/figure-3-the-cost.svg)
+
+*Figure 3. Same scores, about three times the tokens. (Model output tokens — nothing here measures
+q or KDB-X.)*
 
 ## The one genuinely interesting finding — which turned out to be mine, not theirs
 
@@ -244,8 +266,8 @@ in my own instrument. No skill, then — and a sharper task set goes in the note
 
 ## Verdict
 
-No lift, on a task set that could not have shown a small one. KX's `q-knowledge` plugin activates
-reliably and writes good q. So does the model without it, on tasks this easy, for a third of the
+No lift, on a task set that could not have shown a small one. KX's `q-knowledge` plugin, as pinned
+at `8b7040f`, activates reliably and writes good q. So does the model without it, on tasks this easy, for a third of the
 tokens. No skill authored. The curriculum ships on its own merits.
 
 The eval was underpowered, and that is the finding I actually have. It is worth publishing because
@@ -255,9 +277,9 @@ a null result is telling you about your benchmark, not about the thing you were 
 
 ---
 
-*Everything behind this: [`eval/verdict.md`](../eval/verdict.md) for the full writeup and the
-threats-to-validity list, [`eval/runs/`](../eval/runs/) for all 30 answers verbatim and the
-per-task scoring rationale, [`eval/harness/`](../eval/harness/) for the scripts. The correctness
+*Everything behind this: [`eval/verdict.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md) for the full writeup and the
+threats-to-validity list, [`eval/runs/`](https://github.com/nandanito/array-thinking-to-q/tree/main/eval/runs/) for all 30 answers verbatim and the
+per-task scoring rationale, [`eval/harness/`](https://github.com/nandanito/array-thinking-to-q/tree/main/eval/harness/) for the scripts. The correctness
 column recomputes from the committed answers with one command.*
 
 *Not affiliated with or endorsed by KX Systems. "q", "kdb+" and "KDB-X" are used nominatively.*
