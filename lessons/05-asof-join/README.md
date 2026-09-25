@@ -322,7 +322,7 @@ someone wrote — they are what indexing does off the front of a list.
 
 ```q
 quote:`sym`time xasc quote       / correctness: blocks by sym, time ascending in each
-@[`quote;`sym;`g#]               / speed: record the group half, set LAST
+@[`quote;`sym;`g#]               / optional: record the group half, set LAST
 res:aj[`sym`time; trade; quote]
 ```
 

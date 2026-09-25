@@ -4,9 +4,12 @@
 
 > **Provenance.** Every q and J snippet below is copied from
 > [lesson 05](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/05-asof-join/), whose outputs `make verify` re-captures from KDB-X CE 5.0
-> and J 9.7.1 and diffs against the page. No output here was typed by hand. There are no timings
-> anywhere in this article, deliberately: the KDB-X Community Edition license bars publishing
-> performance figures without KX's written consent ([licensing notes](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md)).
+> and J 9.7.1 and diffs against the page. No output here was typed by hand. There are no timings or
+> speed claims here, deliberately: the KDB-X Community Edition license restricts publishing
+> benchmark, test or performance information without KX's written consent, and staying well clear
+> of it is my choice of caution, not a reading of where that line falls. Where the article says one
+> shape looks at less of the data than another, that is a statement about what the code does,
+> which you can check by reading it — not a measurement ([licensing notes](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md)).
 > Everything below is about *what* the join does and *why it is shaped that way*, which it turns
 > out is the more interesting half anyway.
 
@@ -127,9 +130,8 @@ check:
 
 Position 1 of `2 0 5` holds `0`. The right answer was the `2`. No error, no warning.
 
-That silence is the design, not an oversight. A check would be a full pass over the data, and a
-full pass is exactly what the sorted layout exists to avoid. So q makes the trade explicitly:
-**the search is yours if the sort is yours.**
+That silence is the design, not an oversight: `bin` is defined for sorted input and takes the sort
+on trust. So q makes the trade explicitly: **the search is yours if the sort is yours.**
 
 ## Sort once, and both questions become lookups
 
@@ -191,8 +193,9 @@ It also explains a phrase in the reference manual that reads oddly the first tim
 `bin`. On a table sorted the way we just sorted it, the last row in order *is* the latest in time;
 on any other table it isn't, and `aj` returns what `bin` returns.
 
-That is the co-design in one sentence. The loop said "greatest time" — order-proof, and a scan per
-trade. `aj` says "last in row order" — a search per trade, and it costs you a promise. **q chose the
+That is the co-design in one sentence. The loop said "greatest time" — order-proof, because it looks
+at every candidate. `aj` says "last in row order" — which means "latest" only if you keep a promise
+about the sort. **q chose the
 definition its storage can answer directly, and handed you the sort as the price of admission.**
 
 ## The edges, for free
@@ -276,7 +279,7 @@ comment:
 
 ```q
 quote:`sym`time xasc quote       / correctness: blocks by sym, time ascending in each
-@[`quote;`sym;`g#]               / speed: record the group half, set LAST
+@[`quote;`sym;`g#]               / optional: record the group half, set LAST
 res:aj[`sym`time; trade; quote]
 ```
 
@@ -285,8 +288,8 @@ After the above, both lines can be read rather than recited:
 - **`` `sym`time xasc ``** is the correctness step. `time` ascending within each `sym` is what makes
   "last in row order" mean "latest" — what makes `bin` right. `sym` first makes each symbol one
   block.
-- **`` `g# `` on `sym`** is the speed step. It records the group half of the join so the engine can
-  find each block by lookup. It records nothing about the `bin` half. (On a table sorted this way,
+- **`` `g# `` on `sym`** is the optional step. It records the group half of the join, so each
+  block can be found by lookup. It records nothing about the `bin` half. (On a table sorted this way,
   `` `p# `` is a legitimate alternative; `` `g# `` is the default the showcase ships, not the only
   right answer.)
 

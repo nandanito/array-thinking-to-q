@@ -356,9 +356,8 @@ built to prevent did not appear at all.
 What *did* separate both conditions from my reference answer was the one task about attributes and
 sort discipline: both applied `` `p# `` where the task sheet called for `` `g# ``. (I originally
 wrote that up as both of them getting the attribute *wrong*. They didn't — the
-[set-attribute page](https://code.kx.com/q/ref/set-attribute/) says parted "effects better speedups
-than grouped, both on disk and in memory" when the data is sorted so it can be set, and both had
-sorted first. The narrow instrument was mine.)
+[set-attribute page](https://code.kx.com/q/ref/set-attribute/) says parted applies in memory as well as
+on disk when the data is sorted so it can be set, and both had sorted first. The narrow instrument was mine.)
 
 I want to be careful about how much weight that split can carry, because my own verdict on that
 eval says it was **underpowered** — the fifteen tasks turned out to be easy enough that the
