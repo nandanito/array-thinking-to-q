@@ -142,7 +142,7 @@ concern was correct.)
   report which contains a competitive analysis regarding the Software to any third party except as
   explicitly authorized in advance by us in writing."* → **This is the DeWitt-style clause, and it
   is live in KDB-X CE, not just the old Personal Edition.** Direct hit on **the as-of-join article**
-  (Article 4 since the 2026-07-28 renumber): it may NOT publish KDB-X performance
+  (Article 4 after the 2026-07-28 renumber, Article 3 after the 2026-09-27 one): it may NOT publish KDB-X performance
   numbers/benchmarks without written KX authorization. The `aj` **showcase
   asserts *correctness/output*, not performance** — ~~is unaffected~~ (CORRECTED 2026-09-27: Clause 9
   also names "test" information and has no correctness carve-out; no timing is a risk-reduction

@@ -1,6 +1,6 @@
 # Array thinking, all the way to q
 
-*Article 1 of 6 — published 2026-09-25 on nandan.me, which is the canonical version:
+*Article 1 of 5 — published 2026-09-25 on nandan.me, which is the canonical version:
 <https://nandan.me/writing/array-thinking-all-the-way-to-q/>. The series opener. Repo:
 [array-thinking-to-q](https://github.com/nandanito/array-thinking-to-q).*
 
@@ -8,7 +8,7 @@
 
 I am writing a short curriculum that takes an imperative programmer through the array-programming
 paradigm shift and lands them in **q/kdb+**, with a brief stop in **J** on the way. Every code
-example in it runs. I am publishing six articles as I go.
+example in it runs. I am publishing five articles as I go.
 
 This is the first one, so it owes you three things: what the project is, what rules it runs under
 and why those rules turned out to matter more than I expected, and what publishing the misses
@@ -89,7 +89,7 @@ lower-numbered one wins**:
 2. **Curriculum.** Verified lessons: imperative programmer → array-native.
 3. **Skill evaluation.** An independent, published evaluation — authoring something only if that
    evaluation proves a gap.
-4. **Blog.** Six articles as a forcing function. Exhaust of the work, never its driver.
+4. **Blog.** Five articles as a forcing function. Exhaust of the work, never its driver.
 
 That looked like planning ceremony when I wrote it. Then it did real work, twice.
 
@@ -107,8 +107,8 @@ sulking.
 **Once, when it would have been convenient to forget it.** Objective 4 says the blog is exhaust,
 never the driver. That is easy to agree with and hard to honour, because "what would make a better
 article" is a genuinely seductive input. It has already forced a null result into the open (the evaluation is
-[published in the repo](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md); article 3 writes it up) and thrown away the framing I
-wanted for another (article 2).
+[published in the repo](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md); article 2 writes it up) and thrown away the framing I
+wanted for another (article 3).
 Both were correct calls and neither was comfortable.
 
 ## The constraint the whole repo is built around
@@ -173,7 +173,7 @@ It has happened again since. In September an independent review of lesson 05 fou
 calling a loop "order-proof" that was true on every input the lesson used and false on one it
 didn't — two quotes at the same timestamp. `make verify` was green throughout: it proves the outputs
 on the page are real, not that a sentence with "always" in it generalises. That one has its own
-story in article 4.
+story in article 3.
 
 So the repo now has a mandatory per-milestone step to re-read its own governing documents against
 reality, and part of the published evaluation has a `make` target that recomputes it from committed
@@ -201,21 +201,19 @@ rather than the wrong answer itself.
 The upside is straightforward: I am a better q programmer than when I started, and I now have an
 evaluation harness I trust — mostly because it has already caught me.
 
-## The six articles
+## The five articles
 
 1. **This one** — the project, the rules, and what they cost.
-2. **Running q in a public repo: the KDB-X licensing maze** — reading
-   the actual license before writing any CI, and the three findings that changed the build.
-3. **Does KX's official q plugin actually make Claude better at q?**
+2. **I ran a controlled eval on KX's official q plugin. My tasks had no headroom.**
    — a controlled evaluation, a null result, and why the null is about my benchmark rather than
    their plugin.
-4. **The as-of join** — what changes when the language and the storage engine are designed around
-   one primitive. No benchmark numbers, for reasons article 2 explains.
-5. **Unlearn the loop: what J shows that q hides** — the laboratory, and
+3. **The as-of join** — what changes when the language and the storage engine are designed around
+   one primitive. No benchmark numbers; the article explains why.
+4. **Unlearn the loop: what J shows that q hides** — the laboratory, and
    the two places it lies to you on the way home.
-6. **What compounds** — packaging the lessons-learned file that gets appended at every milestone.
+5. **What compounds** — packaging the lessons-learned file that gets appended at every milestone.
 
-Articles 2–5 are drafted; 6 is packaging. Each publishes only when the artifacts it describes
+Articles 2–4 are drafted; 5 is packaging. Each publishes only when the artifacts it describes
 actually verify — which is the same rule as the code, applied
 to the writing.
 

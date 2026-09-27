@@ -1,9 +1,9 @@
 <!--
-LinkedIn post for article 3 (RELEASE-CHECKLIST: "2–3 paragraph professional framing").
+LinkedIn post for article 2, the eval (RELEASE-CHECKLIST: "2–3 paragraph professional framing").
 DRAFT: the canonical URL is not known until nandan.me publishes; <URL> is a placeholder.
-Image: attach writings/figures/03/linkedin-card.png.
+Image: attach writings/figures/02/linkedin-card.png.
 Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems.
-Every number is from article 3 / eval/verdict.md: 14/15 correctness in both arms, 73/75 vs 74/75
+Every number is from the article / eval/verdict.md: 14/15 correctness in both arms, 73/75 vs 74/75
 idiomaticity, one discordant pair against the six a two-sided exact sign test needs, five
 byte-identical pairs, plugin loaded in 14 of 15 Part B runs.
 Deliberately left out: the 2.8x output-token ratio. It is in the article with its context; stripped

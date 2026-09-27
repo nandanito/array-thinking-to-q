@@ -8,9 +8,9 @@
 - [ ] Publish canonical on nandan.me/writing/
 - [ ] X + Bluesky: short thread — hook + one snippet + canonical link
 - [ ] Mastodon: single-post summary + link
-- [ ] LinkedIn: 2–3 paragraph professional framing (strongest for articles 3, 5, 6)
+- [ ] LinkedIn: 2–3 paragraph professional framing (strongest for the eval, "Unlearn the loop" and "What compounds")
 - [ ] Nostr: note + canonical link (dogfood path: post via Nostr.day / Telenotes when ready)
-- [ ] Append what happened to docs/COMPOUND.md (feeds article 6 for free)
+- [ ] Append what happened to docs/COMPOUND.md (feeds the final article, "What compounds", for free)
 
 ## Per milestone
 - [ ] Tag the repo

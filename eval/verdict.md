@@ -188,7 +188,7 @@ here rather than left to be inferred from a column of zeros.
 
 ## Verdict — pick one exit
 
-- [x] **No lift** → publish the negative result (Article 3); ship curriculum-only, author no skill.
+- [x] **No lift** → publish the negative result (the eval article, writings/02-evaluating-kx-q-plugin.md); ship curriculum-only, author no skill.
 - [ ] **Lift, but KX's plugin already delivers it** → publish the comparison; author nothing.
 - [ ] **Lift AND a gap KX's plugin does not fill** → author a skill scoped to that gap.
 
@@ -208,7 +208,7 @@ marketplace submission", which this verdict left without a subject. M5 now ships
 `harness/` packaged as a reusable plugin-A/B artifact. Reopening the skill question requires a NEW
 eval on a task set where baseline is *known* to fail — not a re-reading of this one.
 
-## Threats to validity — carried into Article 3, not buried
+## Threats to validity — carried into the eval article, not buried
 
 - **No blinding, impossible in principle.** Idiomatic output identifies its own condition. Never
   claimed otherwise; the cited-source checklist is the defense.

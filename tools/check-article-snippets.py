@@ -12,7 +12,7 @@ Rule: every fenced block (```q, ```j, ```python, or a bare ``` output block)
 in writings/NN-*.md must be
   - IDENTICAL to a fenced block in some lessons/*/README.md, or
   - a contiguous run of whole lines of a committed eval answer
-    (eval/runs/*.q), which article 3 quotes.
+    (eval/runs/*.q), which the eval article quotes.
 Whole-block identity is deliberate: a prefix of a lesson block is a different
 snippet, and a line-by-line match would miss it (it did, once). Identity
 includes the fence's language tag, so relabelling a q block as J fails too;

@@ -38,7 +38,7 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
 
 Three reads in one sitting, into `docs/licensing-notes.md` (quote sparingly, summarize):
 (1) the ACTUAL license text bundled with the downloaded build; (2) any BENCHMARK-PUBLICATION
-clause (article 5 touches performance); (3) KX's official Claude Code plugins for q/PyKX/KDB-X/
+clause (the as-of join article touches performance); (3) KX's official Claude Code plugins for q/PyKX/KDB-X/
 KDB.AI and the KDB-X MCP server — what they cover and what they don't. Record the exact version
 as the pinned known-good release. Note WSL-only on Windows. Then the week-1 gate: `showcase/aj/`
 runs end-to-end, and the eval verify-harness exists.
@@ -55,7 +55,7 @@ runs end-to-end, and the eval verify-harness exists.
    Attributes & sort discipline (`s#`/`g#`/`p#`) is **DONE** (lesson 04, 2026-07-29). The `aj`
    showcase lesson is **DONE** (lesson 05, 2026-09-25) — it derives the showcase preamble and
    checks its final join against `showcase/aj/expected.txt`. Part II's lessons are complete and
-   article #4 is drafted (`writings/04-the-as-of-join.md`), so **M3 is DONE** (2026-09-25).
+   the as-of join article is drafted (`writings/03-the-as-of-join.md`), so **M3 is DONE** (2026-09-25).
    (This is SPEC's **M3**; SPEC's milestones were swapped 2026-07-28 to match this order, which the
    Q-first rule requires.)
 4. Part I (J laboratory) compression pass + transition chapter. (SPEC's **M4**.)
@@ -80,10 +80,13 @@ runs end-to-end, and the eval verify-harness exists.
 ## Blog series duty (per milestone)
 
 Each milestone M1–M5 produces a blog article draft in `writings/` (see SPEC.md). An article is
-publishable ONLY when its milestone's artifacts verify. Article #3 reported the real eval result
-(it was negative — DONE, 2026-07-27). Article #5 "Unlearn the loop" is the low-novelty one whose
+publishable ONLY when its milestone's artifacts verify. The series is FIVE articles: the standalone
+licensing article was cut 2026-09-27 (off-thesis; findings live in docs/licensing-notes.md), and the
+rest renumbered — so refer to articles by NAME in docs, not number (a renumber has misdirected a
+number-based reference before). The eval article reported the real result (it was negative — DONE,
+2026-07-27). "Unlearn the loop" is the low-novelty one whose
 "draft it early" mitigation was missed; it gets drafted out of milestone order to close that.
-Article #6 is PACKAGING of docs/COMPOUND.md, so append to COMPOUND.md at every milestone.
+The final article, "What compounds", is PACKAGING of docs/COMPOUND.md, so append to COMPOUND.md at every milestone.
 Publishing/syndication steps live in RELEASE-CHECKLIST.md, not here and not in SPEC.md.
 **Never use "learning in public"** in any title, heading, social post or hashtag for this series:
 the framing is a practitioner publishing verified work, misses included. Published articles take

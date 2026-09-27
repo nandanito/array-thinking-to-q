@@ -1,6 +1,6 @@
 # I ran a controlled eval on KX's official q plugin. My tasks had no headroom.
 
-*Article 3 of 6 — draft. Reports the M2 eval result. Evidence: [`eval/verdict.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md).*
+*Article 2 of 5 — draft. Reports the M2 eval result. Evidence: [`eval/verdict.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md).*
 
 ---
 
@@ -19,6 +19,12 @@ authoring a q skill for Claude Code. Then I found that KX already ships a family
 plugins, covering q, PyKX, KDB-X and KDB.AI among others, with their own marketplace and a qlint
 integration.
 
+If you do not use Claude Code: a *plugin* there is mostly a bundle of *skills*, and a skill is a
+folder of written guidance that the model loads into its context when a request looks relevant. It
+does not change the model; it changes what the model has read just before it answers. KX's q plugin
+is guidance of exactly the kind this curriculum cares about: write q the way q wants to be written,
+reach for whole-list operations instead of loops, avoid the known traps.
+
 Writing a competing general-purpose q skill would be redundant. But the *learning* objective was
 never "author a skill" — it was "author and evaluate a skill". Evaluation survives the redundancy
 intact. So the deliverable changed from a skill to an independent evaluation of the one that
@@ -26,6 +32,56 @@ already exists, with authoring gated behind the eval finding a gap.
 
 Which means this article was always going to publish whatever came back. That commitment was made
 in the protocol before any data existed, and it is doing real work now.
+
+## Reading the answers: three q idioms in two minutes
+
+*New to q? It is the language of kdb+, a column-oriented time-series database best known in
+finance. [Article 1](https://nandan.me/writing/array-thinking-all-the-way-to-q/) has a one-minute
+primer on array languages. This section is the minimum you need to read the answers below.*
+
+The eval scored answers on *idiomaticity* as well as correctness: not just "does it print the right
+thing" but "is this how q is meant to be written". What that means is easiest to see in the answers
+themselves. All three below are real answers from the eval, and `make verify` runs them.
+
+One task handed the model a `while` loop that built running totals the way most of us learned to:
+an index, an accumulator, an output list, and three updates on every pass. Both conditions threw all
+of it away and wrote this:
+
+```q
+x:5 3 8 1;
+show sums x;
+```
+
+`sums` is a running total over the whole list, and it prints `5 8 16 17`. The loop spelled out
+*how* to walk the list; `sums` names *what* you want from it. The index and the accumulator were
+never part of the problem, only of one way of solving it. That move, from steps to a description
+of the result, is the reflex the whole curriculum is about.
+
+Counting words, from the baseline's answer:
+
+```q
+words:`$(" " vs "the cat sat on the mat the");
+show count each group words;
+```
+
+q reads right to left. `" " vs` splits the string on spaces, `` `$ `` turns the pieces into
+*symbols* (q's interned strings), `group` maps each distinct word to the positions where it occurs,
+and `count each` counts each of those position lists: `the` 3, the others 1. There is no dictionary
+to fill in and no counter to increment; the grouping *is* the count.
+
+And the database side. q has a SQL-like layer, qSQL, that runs over in-memory tables:
+
+```q
+t:([] sym:`AAPL`AAPL`MSFT`AAPL`MSFT; side:`buy`sell`buy`buy`sell)
+show select n:count i by sym,side from t
+```
+
+`i` is the row number, so `count i` counts the rows in each `sym`/`side` group. It returns a small
+keyed table: AAPL buy 2, the other three pairs 1. The imperative instinct here is a loop over rows
+that bumps a counter per key. Both conditions wrote this line character for character.
+
+Keep those three in mind. They are what "idiomatic" looked like in this eval, and they are why the
+result came out the way it did.
 
 ## The design, in brief
 
@@ -94,7 +150,7 @@ The general form: **when the environment can leak the treatment into the control
 property of your harness, not of your analysis.** You cannot add it afterwards, and you cannot
 detect its absence from the output.
 
-![Two panels. Run from inside the repo: its own q skill, CLAUDE.md and lessons leak into both conditions, so both arms are treated and the results look normal. What the eval did: all 50 sessions ran headless from an empty scratch directory with no CLAUDE.md or .claude; the session logs show condition A loaded 16 skills, none q-related, and condition B the same 16 plus exactly q-knowledge:q and q-knowledge:qlint-snippet.](figures/03/figure-1-contamination-control.svg)
+![Two panels. Run from inside the repo: its own q skill, CLAUDE.md and lessons leak into both conditions, so both arms are treated and the results look normal. What the eval did: all 50 sessions ran headless from an empty scratch directory with no CLAUDE.md or .claude; the session logs show condition A loaded 16 skills, none q-related, and condition B the same 16 plus exactly q-knowledge:q and q-knowledge:qlint-snippet.](figures/02/figure-1-contamination-control.svg)
 
 *Figure 1. The contamination control lives in the harness, not in the analysis.*
 
@@ -151,7 +207,7 @@ An exact two-sided sign test needs at least six discordant pairs, all going one 
 reach 5% significance. I got one.
 **The test never engaged.**
 
-![Fifteen tiles, one per paired task. Five (02, 07, 10, 13, 14) are byte-for-byte identical q in both conditions; eight differ in code but score the same; task 15 is a shared miss, failed identically by both; task 08 is the only discordant pair, decided by one checklist item. Correct 14/15 in both conditions; idiomatic 73/75 without the plugin, 74/75 with it; one discordant pair where an exact two-sided sign test needs at least six, all one way, to reach 5% significance.](figures/03/figure-2-the-ceiling.svg)
+![Fifteen tiles, one per paired task. Five (02, 07, 10, 13, 14) are byte-for-byte identical q in both conditions; eight differ in code but score the same; task 15 is a shared miss, failed identically by both; task 08 is the only discordant pair, decided by one checklist item. Correct 14/15 in both conditions; idiomatic 73/75 without the plugin, 74/75 with it; one discordant pair where an exact two-sided sign test needs at least six, all one way, to reach 5% significance.](figures/02/figure-2-the-ceiling.svg)
 
 *Figure 2. The ceiling. Fifteen pairs, one disagreement, and that one is a judgement call.*
 
@@ -216,16 +272,20 @@ Roughly three times the output tokens, for code that scored identically on fourt
 tasks and was *literally the same code* on five of them. When your primary metric hits a ceiling,
 the secondary metrics are the finding.
 
-![Bar chart of total output tokens over 15 tasks: 3,671 without the plugin, 10,337 with it, 2.8 times. Median per-task ratio 3.9 times; widest single task 23 to 407 tokens, 17.7 times. These are the language model's tokens, not a measurement of q.](figures/03/figure-3-the-cost.svg)
+![Bar chart of total output tokens over 15 tasks: 3,671 without the plugin, 10,337 with it, 2.8 times. Median per-task ratio 3.9 times; widest single task 23 to 407 tokens, 17.7 times. These are the language model's tokens, not a measurement of q.](figures/02/figure-3-the-cost.svg)
 
 *Figure 3. Same scores, about three times the tokens. (Model output tokens — nothing here measures
 q or KDB-X.)*
 
 ## The one genuinely interesting finding — which turned out to be mine, not theirs
 
-Task 15 hands the model an as-of join that returns silently wrong quotes because the quote table
-is not sorted by time within sym, and asks it to fix the join and *set the appropriate in-memory
-attribute*.
+Task 15 hands the model an *as-of join*: for each trade, find the most recent quote at or before
+the trade's time. q's `aj` does this in one call, but it assumes the quote table is sorted by time
+within each symbol, and when it is not, `aj` returns wrong quotes without complaint. The task gives
+the model exactly that broken join and asks it to fix it and *set the appropriate in-memory
+attribute*. An attribute is a flag you put on a column to promise q something about how its values
+are laid out: `` `g# `` (grouped) says "index me by value", `` `p# `` (parted) says "equal values sit
+together in contiguous runs". (The as-of join gets its own article, the next in this series.)
 
 Both conditions sorted correctly. Both produced the exactly correct joined table. And both applied
 `` `p# `` where my task sheet cites `` `g# ``.
