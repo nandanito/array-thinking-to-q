@@ -82,7 +82,7 @@ You cannot simply assert something false:
 `s#3 1 2       / not ascending
 `u#1 1 2       / not unique
 `p#1 2 1       / equal values not adjacent
-`g#1 2 1
+attr `g#1 2 1  / no check to fail: g# builds an index
 ```
 
 ```

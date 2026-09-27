@@ -22,10 +22,11 @@ Only the plain form is supported: a ``` or ```lang fence at column 0. Any
 other fence-like line (indented, inside a blockquote, ~~~, or four backticks)
 FAILS rather than being skipped, so a snippet cannot slip past unchecked.
 
-Known limitation (Codex, 2026-09-26): a lesson README's *tagged* source blocks
-are themselves only partly verified — check-lesson-outputs.py checks output
-blocks and inline `/ value` claims, not that each ```q block appears in the
-lesson's .q file. This check trusts README membership, so it inherits that gap.
+This check trusts README membership. That is sound because
+check-lesson-outputs.py (make verify-prose) requires every ```q / ```j line in
+a lesson README to be a line of that lesson's own source files, as well as
+checking output blocks and inline `/ value` claims. (Until 2026-09-27 it did
+not, and this paragraph recorded the gap; Codex found it on 2026-09-26.)
 
 An article may opt out with a visible marker, on its own line:
     <!-- snippet-check: skip — <reason> -->
