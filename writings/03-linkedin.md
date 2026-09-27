@@ -19,8 +19,8 @@ with and without the plugin, correctness checked by exact output diff, idiomatic
 five-item binary checklist, and a sign test fixed before any data existed. The plugin did its job:
 it activated reliably and wrote good q. So did the model without it. Both conditions were correct
 on 14 of 15 tasks, five pairs came back as byte-for-byte identical code, and there was one
-discordant pair where the test needs at least six. My tasks were easy to verify, which made them
-easy to solve, and they left no room for any plugin to show a difference.
+discordant pair where the test needs at least six. I kept verification simple by choosing simple
+tasks, and they left no room for any plugin to show a difference.
 
 So the finding is not that the plugin does not help. It is that my instrument could not have
 detected a small effect and detected no large one. The article covers the control that made the

@@ -214,8 +214,8 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
   claimed otherwise; the cited-source checklist is the defense.
 - **n=15 detects only large effects.** Deliberate, and this run did not even reach the point where
   that matters — 1 discordant pair means the test never engaged.
-- **Ceiling effect is the headline limitation.** The tasks were written to be *verifiable*, which
-  made them easy. A frontier model in 2026 solves "sum of squares" and "select sum qty by sym"
+- **Ceiling effect is the headline limitation.** The tasks were chosen to keep verification
+  simple, and the ones chosen were easy. A frontier model in 2026 solves "sum of squares" and "select sum qty by sym"
   without help from anyone. Any future re-run needs tasks where baseline is *known* to fail.
 - **A Claude-family model scored partly on Claude-authored material.** The cite-a-published-source
   requirement on every checklist item is what defuses this; the one item that actually decided
@@ -229,6 +229,13 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 - **The harness strips ambient context**, so both arms are further from practice than a real
   session. This makes the Part A traps harder than reality and removes the repository signal a
   working session would carry.
+- **Tool lists were not identical in three pairs** (found 2026-09-27 by an adversarial review of
+  the raw logs). In the condition-B sessions of tasks 03, 04 and 06, the `system/init` record lists
+  eight claude.ai Google Drive MCP tools besides `Skill`, `Read` and `Glob`: an account connector
+  finished connecting before those sessions started, while in the paired condition-A sessions it
+  was still pending. `--tools` did not exclude it. None was invoked, and all three pairs scored
+  identically, so no result depends on it; a re-run should disable account connectors explicitly
+  and assert identical non-treatment tools in every `system/init`.
 - **`qlint-snippet` was never exercised.** The plugin's second skill shells out to KX qlint via
   `QLINT_DIR`, which is not installed on this machine, and the tool policy would not have permitted
   the Bash call anyway. Condition B's self-validation path is therefore untested here — a genuine

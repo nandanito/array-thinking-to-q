@@ -37,11 +37,17 @@ tag upstream, so the SHA is the pin.
 > it has also added new plugins and Codex support. The q skill's own content is **byte-identical** to
 > the pinned commit — I checked the tree hashes. So every number below still describes exactly what I
 > tested, but the plugin you install today also searches KX's documentation, and this eval did not
-> test that. My harness allowed only `Skill`, `Read` and `Glob`; a re-run would first have to decide
-> whether to let the docs server in.
+> test that. My harness allowed only `Skill`, `Read` and `Glob` (with one leak, below); a re-run would first
+> have to decide whether to let the docs server in.
 
 **Conditions:** A = baseline, no plugin. B = that plugin loaded. Identical prompts, identical
-model (`claude-opus-5`), identical settings.
+model (`claude-opus-5`), identical settings, with one exception I found only when an adversarial
+review re-read the raw logs. In three condition-B sessions (tasks 03, 04 and 06), a claude.ai Google
+Drive connector on my account had finished connecting before the session started, and eight of its
+tools were listed in the session's context; in their condition-A twins it was still pending, so the
+three intended tools were all there was. None of those tools was ever called, and all three pairs
+scored identically, so no result turns on it. But those three pairs were not isolated by the plugin
+alone, and I should have pinned the connectors off rather than trusting the tool flag.
 
 **Part A — does it fire?** A skill that never activates is worth zero regardless of content.
 20 prompts: 10 that should fire, 10 adjacent traps that should not (NumPy vectorization, plain
@@ -145,7 +151,7 @@ An exact two-sided sign test needs at least six discordant pairs, all going one 
 reach 5% significance. I got one.
 **The test never engaged.**
 
-![Fifteen tiles, one per paired task. Five (02, 07, 10, 13, 14) are byte-for-byte identical q in both conditions; eight differ in code but score the same; task 15 is a shared miss, failed identically by both; task 08 is the only discordant pair, decided by one checklist item. Correct 14/15 in both conditions; idiomatic 73/75 without the plugin, 74/75 with it; one discordant pair where the sign test needs about five.](figures/03/figure-2-the-ceiling.svg)
+![Fifteen tiles, one per paired task. Five (02, 07, 10, 13, 14) are byte-for-byte identical q in both conditions; eight differ in code but score the same; task 15 is a shared miss, failed identically by both; task 08 is the only discordant pair, decided by one checklist item. Correct 14/15 in both conditions; idiomatic 73/75 without the plugin, 74/75 with it; one discordant pair where an exact two-sided sign test needs at least six, all one way, to reach 5% significance.](figures/03/figure-2-the-ceiling.svg)
 
 *Figure 2. The ceiling. Fifteen pairs, one disagreement, and that one is a judgement call.*
 
@@ -181,9 +187,11 @@ degenerate cases is worth nothing if you then gesture at them approximately.)
 ## The mistake I made, stated plainly
 
 I wrote fifteen tasks that were easy to *verify*. Every one has a reference solution that runs and
-a golden output that diffs. That discipline is what makes the eval trustworthy — and it is exactly
-what broke it, because **tasks that are easy to verify are tasks that are easy to solve.** "Sum of
-squares." "Total qty by sym." A frontier model in 2026 does not need help with these from anyone.
+a golden output that diffs. That discipline is what makes the eval trustworthy, and the way I got
+it is what broke the eval: **I kept verification simple by choosing simple tasks, and simple tasks
+left no headroom.** "Sum of squares." "Total qty by sym." A frontier model in 2026 does not need
+help with these from anyone. Exact-output checking does not require easy tasks; I just did not
+write any hard ones.
 
 The fix costs an hour and I did not spend it: **run the baseline arm alone first, and check that it
 fails often enough to leave room for the treatment to show.** Fifteen sessions would have told me

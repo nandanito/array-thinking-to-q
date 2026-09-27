@@ -45,7 +45,7 @@ show sums 1 2 3 4 5
 
 The plugin worked: it fired reliably and wrote good q. So did the model without it.
 
-Tasks that are easy to verify are easy to solve. Mine left no headroom.
+I picked simple tasks to keep verification simple. They left no headroom.
 
 Measure the baseline's failure rate before you design the comparison.
 
@@ -91,7 +91,7 @@ show sums 1 2 3 4 5
 
 The plugin worked: it fired reliably and wrote good q. So did the model without it.
 
-Tasks that are easy to verify are easy to solve. Mine left no headroom.
+I picked simple tasks to keep verification simple. They left no headroom.
 
 Measure the baseline's failure rate before you design the comparison.
 
@@ -123,7 +123,7 @@ Article 3 of 6: <URL>
 
 When you compare a coding plugin against a frontier model, your task set is part of what you are measuring, and it can settle the result before the plugin gets a chance to.
 
-I ran a controlled eval of KX's official q plugin for Claude Code: 15 paired q tasks, with and without the plugin. Both arms were correct on 14 of 15, five pairs came back as identical code, and there was one discordant pair where a sign test needs six. The plugin fired reliably and wrote good q. So did the model without it. My tasks were easy to verify, which made them easy to solve.
+I ran a controlled eval of KX's official q plugin for Claude Code: 15 paired q tasks, with and without the plugin. Both arms were correct on 14 of 15, five pairs came back as identical code, and there was one discordant pair where a sign test needs six. The plugin fired reliably and wrote good q. So did the model without it. I picked simple tasks to keep verification simple, and they left no headroom.
 
 The lesson: measure the baseline's failure rate before you design the comparison.
 
