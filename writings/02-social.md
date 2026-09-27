@@ -43,7 +43,7 @@ A running total, no loop.
 
 **3/4**
 
-The plugin worked: it fired reliably and wrote good q. So did the model without it.
+The plugin's guidance worked: it fired reliably and wrote good q. So did the model without it.
 
 I picked simple tasks to keep verification simple. They left no headroom.
 
@@ -85,7 +85,7 @@ A running total, no loop.
 
 **3/4**
 
-The plugin worked: it fired reliably and wrote good q. So did the model without it.
+The plugin's guidance worked: it fired reliably and wrote good q. So did the model without it.
 
 I picked simple tasks to keep verification simple. They left no headroom.
 

@@ -22,8 +22,10 @@
 > **Client:** Claude Code `2.1.220`. **q:** KDB-X CE, `~/.kx/bin/q` (see docs/toolchain.md).
 > **Date run:** 2026-07-26 / 2026-07-27. **Harness commit:** this branch (`eval/m2-run`).
 >
-> **No blind scoring is claimed.** It is impossible in principle here — idiomatic output identifies
-> its own condition. The published-source checklist is the defense (PROTOCOL.md).
+> **No blind scoring is claimed.** ~~It is impossible in principle here — idiomatic output identifies
+> its own condition.~~ CORRECTED 2026-09-27: it was possible (the answers are code only and could
+> have been relabelled with random IDs); it was not done. The published-source checklist is the
+> defense actually used (PROTOCOL.md).
 
 ## Contamination control — what was actually done
 
@@ -210,8 +212,15 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 
 ## Threats to validity — carried into the eval article, not buried
 
-- **No blinding, impossible in principle.** Idiomatic output identifies its own condition. Never
-  claimed otherwise; the cited-source checklist is the defense.
+- **No blinding.** Not claimed. ~~Impossible in principle~~ — CORRECTED 2026-09-27: feasible
+  (code-only answers, five identical pairs) and not done; the cited-source checklist is the defense
+  used, and it is weakest on task 08, the one judgement call. A label-stripped rescore of the
+  committed answers is the cheap fix.
+- **Task 15's premise is false on the pinned build** (found 2026-09-27 by an adversarial review that
+  ran it). The prompt says the unsorted `aj` returns wrong quotes; on this data it returns the golden
+  rows unchanged. So the task tested "sort and set an attribute", not "find the bug". No score moves
+  (both arms failed it on an extra output line). Future repair tasks that claim a bug must be shown
+  to fail on the given input before use.
 - **n=15 detects only large effects.** Deliberate, and this run did not even reach the point where
   that matters — 1 discordant pair means the test never engaged.
 - **Ceiling effect is the headline limitation.** The tasks were chosen to keep verification
@@ -236,7 +245,8 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
   was still pending. `--tools` did not exclude it. None was invoked, and all three pairs scored
   identically, so no result depends on it; a re-run should disable account connectors explicitly
   and assert identical non-treatment tools in every `system/init`.
-- **`qlint-snippet` was never exercised.** The plugin's second skill shells out to KX qlint via
+- **`qlint-snippet`'s lint never ran.** Condition B invoked the skill four times (tasks 03, 04, 10,
+  13), but it shells out to KX qlint via
   `QLINT_DIR`, which is not installed on this machine, and the tool policy would not have permitted
   the Bash call anyway. Condition B's self-validation path is therefore untested here — a genuine
   capability of the plugin that this eval does not measure.

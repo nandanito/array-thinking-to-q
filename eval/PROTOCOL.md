@@ -30,8 +30,9 @@ subject under test (KX's `q-knowledge` plugin).
 - **Conditions:** identical prompts, same model+settings; **A = baseline (no plugin), B = KX
   `q-knowledge` plugin enabled.** (If a learner-gap skill is later authored, evaluate it as an
   ADDITIONAL condition on the same tasks — never in place of the KX-vs-baseline comparison.)
-- **No blind scoring — and say so.** Idiomatic output identifies its own condition; blinding is
-  impossible in principle here. The defense against evaluator drift is the published-source
+- **No blind scoring — and say so.** ~~Idiomatic output identifies its own condition; blinding is
+  impossible in principle here.~~ (CORRECTED 2026-09-27: blinding was feasible — code-only answers
+  can be relabelled — and was not done; say that, not "impossible".) The defense against evaluator drift is the published-source
   checklist below (every item justifiable against Q for Mortals / code.kx.com), NOT a blinding claim.
 - **Scores per task:** correctness (runs + right output, via `make verify` harness, 0/1),
   and idiomaticity as a BINARY CHECKLIST (not a 1–5 feel score — a numeric feel score drifts as

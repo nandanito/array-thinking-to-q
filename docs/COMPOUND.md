@@ -858,3 +858,13 @@ now disclosed. Transferable: **a harness's tool allow-list is not the model's co
 `system/init` tool list is identical across arms, per session, instead of trusting the flags you
 passed; account-level connectors arrive asynchronously, so two sessions with identical flags can see
 different tools.
+
+**Eval article, final adversarial pass (same day):** it *executed* task 15's prompt code on the pinned
+build, and the "silently wrong" join returns the golden rows. The task's premise was never tested;
+only its reference solution was. No score moves (both arms missed task 15 on an extra output line),
+but the article, verdict and task sheet now say so. It also corrected "blinding is impossible in
+principle" (the answers are code only; relabelling was feasible, just not done) and scoped the claim
+to the q guidance skill, because `qlint-snippet` was invoked but could never lint (no qlint, no shell).
+Transferable: **a repair task's premise is a claim; run the broken input and see it fail.** And
+"impossible in principle" is a phrase to distrust in your own methods section: here it excused a
+control that would have cost minutes.

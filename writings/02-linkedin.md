@@ -16,7 +16,7 @@ measuring, and it can settle the result before the plugin gets a chance to.
 
 I ran a controlled evaluation of @KX's official q plugin for Claude Code: fifteen paired q tasks
 with and without the plugin, correctness checked by exact output diff, idiomaticity scored on a
-five-item binary checklist, and a sign test fixed before any data existed. The plugin did its job:
+five-item binary checklist, and a sign test fixed before any data existed. The plugin's q guidance did its job:
 it activated reliably and wrote good q. So did the model without it. Both conditions were correct
 on 14 of 15 tasks, five pairs came back as byte-for-byte identical code, and there was one
 discordant pair where the test needs at least six. I kept verification simple by choosing simple

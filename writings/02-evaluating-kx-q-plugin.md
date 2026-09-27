@@ -19,11 +19,13 @@ authoring a q skill for Claude Code. Then I found that KX already ships a family
 plugins, covering q, PyKX, KDB-X and KDB.AI among others, with their own marketplace and a qlint
 integration.
 
-If you do not use Claude Code: a *plugin* there is mostly a bundle of *skills*, and a skill is a
-folder of written guidance that the model loads into its context when a request looks relevant. It
-does not change the model; it changes what the model has read just before it answers. KX's q plugin
-is guidance of exactly the kind this curriculum cares about: write q the way q wants to be written,
-reach for whole-list operations instead of loops, avoid the known traps.
+If you do not use Claude Code: a *plugin* there is a package that can bundle *skills*, agents, hooks
+and tool servers. A skill is a folder of written guidance that the model loads into its context
+when a request looks relevant. It does not change the model; it changes what the model has read
+just before it answers. KX's q plugin, at the commit I tested, was two skills: the q guidance
+itself, and `qlint-snippet`, which runs KX's linter over a piece of q. The guidance is exactly the
+kind this curriculum cares about: write q the way q wants to be written, reach for whole-list
+operations instead of loops, avoid the known traps.
 
 Writing a competing general-purpose q skill would be redundant. But the *learning* objective was
 never "author a skill" — it was "author and evaluate a skill". Evaluation survives the redundancy
@@ -86,7 +88,10 @@ them without any plugin's help, which is most of the story that follows.
 ## The design, in brief
 
 **Subject:** `q-knowledge@kx-skills`, pinned at commit `8b7040f` (plugin v0.1.0). There is no version
-tag upstream, so the SHA is the pin.
+tag upstream, so the SHA is the pin. What this run actually tested is the q guidance skill.
+`qlint-snippet` needs KX's linter installed locally and a shell to run it, and my harness had
+neither: in Part B the model invoked it four times and the lint never ran. The plugin's self-checking path is
+untested here, and nothing below speaks for it.
 
 > **Dated note, 2026-09-25.** KX has kept shipping since this run. On 14 Aug it bundled a
 > documentation-search MCP server into every plugin in the family and bumped `q-knowledge` to 0.1.1;
@@ -122,10 +127,13 @@ where the two conditions differ; the effect is real only if one side takes ≥~8
 spirit of a sign test rather than an exact one: a two-sided exact sign test cannot reach 5%
 significance with fewer than six discordant pairs, because even 5–0 gives p = 0.0625.)
 
-I want to flag one thing I am *not* claiming. **There is no blind scoring here, and blinding is
-impossible in principle.** Idiomatic q identifies its own condition — you cannot un-see which
-answer used `sums`. The published-source requirement is the defense against evaluator drift. It is
-a weaker defense than blinding. Saying so is the price of using it.
+I want to flag one thing I am *not* claiming. **The scoring was not blinded.** At the time I told
+myself it could not be, because idiomatic q gives away its condition. That was wrong: the saved
+answers are code only, five pairs turned out identical, and relabelling the thirty files with random
+IDs before scoring would have cost minutes. The published-source requirement on every checklist
+item is the defence I did use against evaluator drift. It is weaker than blinding, most of all on
+the one pair that turned on a judgement call. A blinded rescore of the committed answers is the
+cheapest improvement anyone repeating this could make.
 
 ## The control that decided whether any of this meant anything
 
@@ -279,16 +287,26 @@ q or KDB-X.)*
 
 ## The one genuinely interesting finding — which turned out to be mine, not theirs
 
-Task 15 hands the model an *as-of join*: for each trade, find the most recent quote at or before
-the trade's time. q's `aj` does this in one call, but it assumes the quote table is sorted by time
-within each symbol, and when it is not, `aj` returns wrong quotes without complaint. The task gives
-the model exactly that broken join and asks it to fix it and *set the appropriate in-memory
-attribute*. An attribute is a flag you put on a column to promise q something about how its values
+Task 15 is about the *as-of join*: for each trade, find the most recent quote at or before the
+trade's time. q's `aj` does this in one call, and it assumes the quote table is sorted by time
+within each symbol; when it is not, `aj` can return the wrong quote without complaint (lesson 04 of
+the curriculum shows it happening, with verified output). The task handed the model a join over an
+unsorted quote table, said it was returning wrong quotes, and asked for a fix and *the appropriate
+in-memory attribute*. An attribute is a flag you put on a column to promise q something about how its values
 are laid out: `` `g# `` (grouped) has q keep an index from each distinct value to the rows that hold it;
 `` `p# `` (parted) promises that equal values sit together in contiguous runs. (The as-of join gets its own article, the next in this series.)
 
-Both conditions sorted correctly. Both produced the exactly correct joined table. And both applied
-`` `p# `` where my task sheet cites `` `g# ``.
+The premise was false, and I did not know until the last adversarial review ran the task's own code
+on the pinned build: with this particular data, the unsorted join returns the right rows anyway.
+Task 15 never contained the bug it described. Both models were asked to repair a join that worked,
+did what the prompt said, and could not have been credited for spotting a bug that was not there.
+Nothing in the scores moves (both arms missed this task for an unrelated reason, an extra output
+line), but the instrument is wrong in a second way, and the fix is the discipline this repo applies
+to everything else: **a task that claims a bug must be run and shown to fail before it is used.** I
+checked that my reference *passed*. That is not the same check.
+
+Both conditions sorted the table, produced the correct joined table, and applied `` `p# `` where
+my task sheet cites `` `g# ``.
 
 **I first wrote this section up as a finding, and I had it wrong.** The draft said both arms had
 reached for "the disk attribute on an in-memory table", citing [the `aj`
@@ -341,8 +359,8 @@ in my own instrument. No skill, then — and a sharper task set goes in the note
 
 ## Verdict
 
-No lift, on a task set that could not have shown a small one. KX's `q-knowledge` plugin, as pinned
-at `8b7040f`, activates reliably and writes good q. So does the model without it, on tasks
+No lift, on a task set that could not have shown a small one. KX's `q-knowledge` guidance, as
+pinned at `8b7040f`, activates reliably and writes good q (its linter path was not tested). So does the model without it, on tasks
 this easy, for about a third of the tokens. No skill authored. The curriculum ships on its own merits.
 
 The eval was underpowered, and that is the finding I actually have. It is worth publishing because
