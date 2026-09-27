@@ -181,7 +181,7 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   → Article 1 "Array thinking, all the way to q";
   → Article 2 "Running q in a public repo: the KDB-X licensing maze" (stagger 3–5 days).
 - **M2 — Eval gate (wk 2–3):** trigger precision + output quality run; verdict written.
-  → Article 3 "Does KX's official q plugin actually make Claude better at q?" (flagship —
+  → Article 3 "I ran a controlled eval on KX's official q plugin. My tasks had no headroom." (was "Does KX's official q plugin actually make Claude better at q?") (flagship —
   an independent evaluation of a vendor plugin; genuinely new data for the community).
 - **M3 — The q core (wk 3–5):** Part II + `aj` showcase golden-filed; nightly q CI live.
   → Article 4 "The as-of join: what changes when the engine is built around one primitive"

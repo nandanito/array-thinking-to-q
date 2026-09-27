@@ -1,4 +1,4 @@
-# I ran a controlled eval on KX's official q plugin. The result was nothing.
+# I ran a controlled eval on KX's official q plugin. My tasks had no headroom.
 
 *Article 3 of 6 — draft. Reports the M2 eval result. Evidence: [`eval/verdict.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md).*
 
