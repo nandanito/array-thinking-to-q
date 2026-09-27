@@ -895,8 +895,9 @@ teaching order anyway, but a mechanical check quietly deciding section order is 
 about before the next lesson.
 
 Small correction found on the way: a trapped parse error's message is a single space (`," "`), not
-empty. Lesson 01's transcript comment ("the error MESSAGE is empty") describes what the REPL
-displays, which is blank, so it stands; the new chapter says "blank".
+empty. I first let lesson 01's transcript comment ("the error MESSAGE is empty") stand as a
+description of the display; the article's adversarial pass flagged it anyway, so it now says
+"blank" in lesson 01 and the article. Article 1 does not quote that block, so nothing published moved.
 
 Gate check, per habit: four planted corruptions in the new READMEs (a claim, an output, a J source
 line, output order) each failed `verify-prose`.

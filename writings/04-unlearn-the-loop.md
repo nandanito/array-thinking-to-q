@@ -8,9 +8,10 @@
 > plus one REPL transcript from
 > [lesson 01](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/01-atoms-and-lists/).
 > `make verify` runs those lessons on J 9.7.1 and KDB-X CE 5.0 and diffs every output against the
-> page, so nothing here was typed by hand. The one exception is that transcript: it shows q failing
-> to parse a line, which no runnable file can contain, so it is quoted from a real session and is
-> one of the two blocks the repo marks as not run.
+> lesson pages, and a second check requires every block in this article to be identical to a block
+> on those pages. So no output here was typed by hand. The one exception is that transcript: it
+> shows q failing to parse a line, which no runnable file can contain, so it is quoted from a real
+> session and is one of the two blocks the repo marks as not run.
 
 ---
 
