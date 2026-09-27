@@ -102,8 +102,11 @@ the second averages two, and only from the third is the window full. Six inputs,
 always.
 
 Neither convention is wrong, and neither announces itself. "The 3-period moving average" describes
-both. Carry the J habit into q and anything you line up against that column is off by two rows
-(width minus one, in general), with no error and a plausible-looking answer. [Lesson
+both. q's convention lines up with the data: each output belongs to the row where its window ends.
+The danger is the J habit. Read q's first value as the first full window, the way J's would be, and
+you are two positions early (width minus one, in general). Or keep q's first two values without
+noticing, and two numbers labelled "3-period average" average one and two items. Neither mistake
+raises an error, and both give a plausible-looking answer. [Lesson
 03](../03-qsql/#6-windows-mavg-and-the-by-that-makes-it-correct) puts `mavg` inside an `update`,
 and there the q convention is the useful one: a new column needs one value per row, and `n`
 inputs always give `n` outputs.

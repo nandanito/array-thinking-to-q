@@ -83,7 +83,7 @@ Same fifteen. J has `for_i.`, `while.`, `if.` and local assignment: the whole im
 
 The difference is what it *costs you in feel*. To write that loop I had to leave J's ordinary
 notation entirely. `3 : 0` opens an explicit definition, `=.` replaces `=:`, `y` is the argument's
-fixed name, there is an index to name, and the block closes with a lone `)` on its own line. That
+fixed name, `i` is a loop variable you name (it takes each item in turn), and the block closes with a lone `)` on its own line. That
 is five lines of visibly foreign machinery, in a language where the alternative is `+/`. Nothing
 stops you. Everything about it says *you have wandered off*.
 
@@ -283,12 +283,12 @@ Take `+/ % #`, the phrase that made composition feel like a first-class thing, a
 
 ```q
 q)(+/ % #) til 5
-'                     / the error MESSAGE is empty (q also stamps the line with a wall-clock time)
+'                     / the error MESSAGE is blank (q also stamps the line with a wall-clock time)
   [0]  (+/ % #) til 5
           ^           / the caret lands mid-fork — where the parser gives up
 ```
 
-It does not return the wrong answer. **It does not parse.** The message is empty and the caret
+It does not return the wrong answer. **It does not parse.** The message is blank and the caret
 lands in the middle of the fork.
 
 That is a parse-time rejection, not a runtime error, and the distinction has teeth: you cannot
@@ -348,14 +348,17 @@ average of one element, the second of two, and only from the third does a full w
 inputs, six outputs, always.
 
 Neither convention is wrong. They are different, they are silent about it, and *"the 3-period
-moving average"* names both. Carry the J habit into q and anything you align against that column is
-shifted, by two rows here and by *width − 1* in general, with no error and a perfectly plausible
-answer. That is the exact failure shape this curriculum's `aj` showcase exists to teach.
+moving average"* names both. In a q table, q's convention lines up exactly: each row gets the
+average of the window that ends at that row. The trouble is the habit you bring. Read q's first
+value as the first full window, the way J's would be, and you are two positions early (*width − 1*
+in general). Or keep q's first two values without noticing, and two numbers labelled "3-period
+average" are averages of one and two numbers. Either way there is no error and the answer looks
+plausible. That is the exact failure shape this curriculum's `aj` showcase exists to teach.
 
 **The thinking transfers. The plumbing does not.** That is the rule, and both examples above are
 just the rule with the volume turned up and down.
 
-![Two J habits that break in q. The fork +/ % # does not parse in q: it fails loudly and cannot ship. The 3-period moving average of 1 to 6 gives four results in J (2 3 4 5) and six in q (1 1.5 2 3 4 5); aligned by position, the same values sit two slots apart, and nothing complains.](figures/04/figure-3-where-the-laboratory-lies.svg)
+![Two J habits that break in q. The fork +/ % # does not parse in q: it fails loudly and cannot ship. The 3-period moving average of 1 to 6 gives four results in J (2 3 4 5) and six in q (1 1.5 2 3 4 5); compared position by position, the same values sit two slots apart, and nothing complains.](figures/04/figure-3-where-the-laboratory-lies.svg)
 
 *Figure 3. Where the laboratory lies. The fork fails loudly; the windows fail silently.*
 
@@ -374,39 +377,36 @@ Both conditions solved all three, immediately, correctly. `do[]` became `sum`, `
 `sums`, and the row walk became one vectorised `update`. The loop-transliteration failure mode this
 whole curriculum is built to prevent did not appear at all.
 
-What *did* separate both conditions from my reference answer was the one task about attributes and
-sort discipline: both applied `` `p# `` where the task sheet called for `` `g# ``. (I originally
-wrote that up as both of them getting the attribute *wrong*. They didn't. The
-[set-attribute page](https://code.kx.com/q/ref/set-attribute/) says parted applies in memory as well
-as on disk when the data is sorted so it can be set, and both had sorted first. The narrow
-instrument was mine.)
-
-I want to be careful about how much weight that split can carry, because my own verdict on that
-eval says it was **underpowered**. The fifteen tasks turned out to be easy enough that the baseline
-was already at the ceiling, so the study could not have detected a small effect at all. Three
-solved loop-fix tasks are three data points from a task set I built badly. They are not "models
-have absorbed array thinking".
+I want to be careful about how much weight that can carry, because my own verdict on that eval
+says it was **underpowered**. The fifteen tasks turned out to be easy enough that the baseline was
+already at the ceiling, so the study could not have detected a small effect at all. Three solved
+loop-fix tasks are three data points from a task set I built badly. They are not "models have
+absorbed array thinking".
 
 What they do support is narrower and still worth something. **On the loop-transliteration exercises
-I could think of, the failure mode this curriculum exists to prevent did not show up.** And the one
-task where both arms departed from my reference in the same way was not about loops or reductions or
-any other array idea. It was about sortedness, attributes, and what `aj` requires of the table you
-hand it. (The other deviations were smaller: one extra variable binding that cost the baseline a
-style point on a judgement call, and a second as-of-join task where the baseline also chose `` `p# ``
-without being asked about attributes at all.) It was even a case where I, not the models, had the
-documentation wrong.
+I could think of, the failure mode this curriculum exists to prevent did not show up.**
 
-**J has nothing to say about any of that.** There is no fork that teaches you `` `g# ``, and no
-rank that tells you when `` `p# `` is the better call.
+The rest of the eval does not say where the failures *are*, and I should not pretend it does. The
+one task where both arms departed from my reference was an as-of join: both set `` `p# `` where my
+task sheet expected `` `g# ``. (I first wrote that up as both of them getting the attribute
+*wrong*. They didn't. The [set-attribute page](https://code.kx.com/q/ref/set-attribute/) says
+parted applies in memory as well as on disk when the data is sorted so it can be set, and both had
+sorted first.) Both arms also lost that task's correctness point, for printing one extra line. And
+a later review ran the task's "broken" input and found that the unsorted join already returned the
+right rows on that data, so the task never tested whether a model can find a sort bug at all. That
+task is a record of my instrument's defects, not evidence about models.
+
+**J has nothing to say about sort order or attributes either.** There is no fork that teaches you
+`` `g# ``, and no rank that tells you when `` `p# `` is the better call.
 
 That is consistent with a short laboratory, which is what this curriculum commits to. J was cut from
 co-star to an illustrative prelude on a reviewer's advice, and it ended up as a single lesson. I went
-along with that at the time without evidence either way, and I still do not have strong evidence. I
-have one underpowered study pointing the same direction as the architectural argument, which is
-worth exactly as much as that sounds.
+along with that at the time without evidence either way, and the eval did not supply any. The case
+for keeping the laboratory small is the one from the section above: the J habits that hurt you in q
+are the silent ones, and catching them is q work.
 
 The errors that will actually cost you live on the q side of the wall. That is where the bulk of
-the curriculum has to be, and it is the better reason for keeping the laboratory small.
+the curriculum has to be.
 
 ---
 

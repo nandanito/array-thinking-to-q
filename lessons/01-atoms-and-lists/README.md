@@ -162,12 +162,12 @@ Now transliterate that phrase straight into q:
 
 ```q
 q)(+/ % #) til 5
-'                     / the error MESSAGE is empty (q also stamps the line with a wall-clock time)
+'                     / the error MESSAGE is blank (q also stamps the line with a wall-clock time)
   [0]  (+/ % #) til 5
           ^           / the caret lands mid-fork — where the parser gives up
 ```
 
-It does not merely give a wrong answer. **It does not parse.** The message is empty; the caret,
+It does not merely give a wrong answer. **It does not parse.** The message is blank; the caret,
 landing in the middle of the fork, is the whole story. Crucially this is a *parse-time* rejection,
 not a runtime type error, so you cannot guard against it in your own source: wrapping the fork in
 protected evaluation (`.[{(+/ % #) til 5};();{…}]`) fails in exactly the same way, because the
