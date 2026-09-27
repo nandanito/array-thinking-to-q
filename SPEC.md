@@ -127,7 +127,7 @@ already delivers it → publish the comparison, author nothing. Both are real fi
 
 - **J 9.7** (GPLv3, jsoftware) — `jconsole` headless; CI-safe; blocking checks.
 - **q via KDB-X Community Edition** (GA Nov 2025; **personal or internal-business use, including
-  commercial projects, within the resource caps** — Clause 2.1 / Attachment A plus the Usage
+  commercial projects, subject to the listed end-user restrictions** — Clause 2.1 / Attachment A plus the Usage
   Restrictions that Clause 11 incorporates; NOT redistribution, OEM bundling or competing products;
   **benchmark/performance publication prohibited without prior written KX consent** (Clause 9) —
   KX Community Edition License Agreement v1.1 (27 Aug 2025), see docs/licensing-notes.md. `.Q.lim`-confirmed caps:

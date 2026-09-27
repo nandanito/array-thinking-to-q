@@ -820,7 +820,7 @@ grant is "subject to the Usage Restrictions", a hyperlink, and Clause 11 makes t
 part of the complete agreement. The link now redirects to a docs home page, but the Wayback chain
 still works: the linked page's April and June 2026 captures are a "moved" stub pointing at KX's
 Usage Restrictions page, and that page's captures of 5 June and 14 August 2026, either side of the
-key's issue date, say CE "is free for both personal and commercial projects" within resource caps.
+key's issue date, say CE "is free for both personal and commercial projects", subject to listed end-user restrictions.
 Evidence and snapshot URLs are in docs/licensing-notes.md. Article 2's Finding 1, its figure 1,
 CLAUDE.md rule 4, SPEC and the README changed with it. Rule 4 keeps its spirit, re-aimed: quote the
 licence, never tell a reader what their own use permits. Both one-line summaries, "free for

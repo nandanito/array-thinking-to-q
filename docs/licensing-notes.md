@@ -123,7 +123,7 @@ stricter preview" is superseded: the stricter text IS the license. The earlier J
 concern was correct.)
 
 - ~~**Commercial use — NO. Personal / internal-business only.**~~ **CORRECTED 2026-09-27: personal
-  or internal-business use, including commercial projects, within the resource caps** — see
+  or internal-business use, including commercial projects, subject to the listed restrictions** — see
   "Usage Restrictions — what the agreement incorporates" below. The original bullet follows, kept for
   the record; its conclusion is struck, its clause quotes stand. Clause 2.1 grants a "limited,
   non-transferable, non-exclusive license, without right of sublicense … solely for the Permitted
@@ -144,7 +144,9 @@ concern was correct.)
   is live in KDB-X CE, not just the old Personal Edition.** Direct hit on **the as-of-join article**
   (Article 4 since the 2026-07-28 renumber): it may NOT publish KDB-X performance
   numbers/benchmarks without written KX authorization. The `aj` **showcase
-  is unaffected** — its golden file asserts *correctness/output*, not performance. That article must
+  asserts *correctness/output*, not performance** — ~~is unaffected~~ (CORRECTED 2026-09-27: Clause 9
+  also names "test" information and has no correctness carve-out; no timing is a risk-reduction
+  choice, not a reading that the clause permits publishing tests). That article must
   reframe to design/semantics/co-design (SPEC already leans this way) OR obtain written consent.
 - **Liability cap US$100** (Clause 7); **governing law New York** (Clause 15).
 - **Term: indefinite, terminable at-will by KX on email/website notice** (Clause 10) — NOT the fixed
@@ -164,7 +166,7 @@ Raised by a Codex adversarial review of article 2 (2026-09-25); checked first-ha
 - **The hook.** Clause 2.1 grants use "solely for the Permitted Use **and subject to the Usage
   Restrictions**". Clause 11: "This Agreement and the Usage Restrictions form the complete agreement".
   Attachment A: "Usage Restrictions" means "any limitations or restrictions on use of the Software
-  described at the point where this Agreement was presented to you". Clause 11 also says the
+  described at the point where this Agreement was presented to you". Clause 12 (Conflict) says the
   agreement's terms "take precedence in the event of any conflict with any other document".
 - **The link.** In the agreement, "Usage Restrictions" links to
   `https://docs.kx.com/product/licensing/usage-restrictions.htm`. Live today it 301s to the
@@ -187,11 +189,11 @@ Raised by a Codex adversarial review of article 2 (2026-09-25); checked first-ha
   https://code.kx.com/licensing/usage-restrictions.html (which itself has no Wayback capture). The
   earliest capture, [2026-04-13](https://web.archive.org/web/20260413151242/https://code.kx.com/insights/1.18/licensing/usage-restrictions.html),
   already has the commercial sentence but says 8 connections and lacks the GPU rule.
-- **Reading.** Personal or internal-business use, **including commercial projects**, within the caps.
+- **Reading.** Personal or internal-business use, **including commercial projects**, subject to the full list of end-user restrictions above (caps and anti-circumvention rules, not caps alone).
   Still forbidden: making the software available to third parties (2.1), competing products
   (2.1.xi), revenue-generating bundling without an OEM licence (2.2), benchmark publication (Clause 9).
   "Internal business use" is commercial use, so the grant and the Restrictions read as consistent;
-  the Clause 11 conflict rule exists and is quoted rather than resolved for readers.
+  the Clause 12 conflict rule exists and is quoted rather than resolved for readers.
 - **Limits of the evidence.** The Wayback cannot show what the Developer Center sign-up flow itself
   displayed on 2026-07-23; the page the agreement links to is the best available evidence.
 - **Why Task Zero missed it.** It read the agreement's clauses, not the document the agreement
@@ -272,7 +274,7 @@ RESOLVED 2026-07-24 by reading the license (see "License terms — CONFIRMED"):
   performance numbers without written KX consent.**
 - ~~[EULA] unqualified commercial use?~~ → ~~**NO. Personal / internal-business only (Clause 2.1 /
   Attachment A). Drop any commercial-friendliness claim.**~~ → **CORRECTED 2026-09-27: personal or
-  internal-business use, including commercial projects, within the caps (Clause 2.1 + the Usage
+  internal-business use, including commercial projects, subject to the listed restrictions (Clause 2.1 + the Usage
   Restrictions incorporated by Clause 11). Say what the licence says; never judge the reader's use.**
 - ~~[install] runtime phone-home?~~ → **License RESERVES periodic validation (Clause 4); treat
   offline verification as at-risk.**

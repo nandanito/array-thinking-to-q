@@ -18,7 +18,7 @@ of the Makefile, and the reading changed the design in three separate places.
 This is what I found, why the order I found it in mattered, and the three moments where a source I
 trusted turned out to be wrong. One of those sources was my own first reading.
 
-![Three rows pairing licence clauses with design changes. Clauses 2.1 and 11 and Attachment A, personal or internal business use, including commercial projects within resource caps: quote the licence and never judge the reader's use. Clause 9, no benchmark, test or performance information without written consent: the speed article became a design article with no numbers. Clause 4, periodic licence validation with no opt-out: air-gapped verification treated as at risk, CI only on runners with network egress.](figures/02/figure-1-three-findings.svg)
+![Three rows pairing licence clauses with design changes. Clauses 2.1 and 11 and Attachment A, personal or internal business use, including commercial projects, subject to listed restrictions: quote the licence and never judge the reader's use. Clause 9, no benchmark, test or performance information without written consent: the speed article became a design article with no numbers. Clause 4, usage information may be sent to a KX licence server for validation, with no opt-out: air-gapped verification treated as at risk, CI only on runners with network egress.](figures/02/figure-1-three-findings.svg)
 
 *Figure 1. Three clauses, three changes to the design. Paraphrased: the clause numbers are the
 authority, not the figure.*
@@ -52,20 +52,24 @@ CE, ever.
 
 I had stopped one phrase too early. The same sentence of 2.1 continues "and subject to the Usage
 Restrictions", and in the agreement that phrase is a link. Clause 11 says the agreement *and the
-Usage Restrictions* "form the complete agreement", and defines the Restrictions as whatever was
-"described at the point where this Agreement was presented to you": a web page, not a clause. The
+Usage Restrictions* "form the complete agreement", and Attachment A defines the Restrictions as
+whatever was "described at the point where this Agreement was presented to you": a web page, not a
+clause. The
 link now redirects to KX's documentation home page. The Internet Archive's copies of the linked page
 from April and June 2026 say only that it has moved, and point to KX's Usage Restrictions page. The
 archived copies of *that* page from 5 June and 14 August 2026, either side of the day my key was
 issued, say the same thing: the Community Edition licence "is free for both personal and commercial
-projects", subject to the resource caps listed under it. What the sign-up flow itself showed me
+projects", subject to the end-user restrictions listed under it. Those are resource caps (16 GB of
+RAM, one instance, 4 secondary threads and 16 connections per process, 24 cores in all), rules
+against getting round them (several registrations, GPU workflows that stage data past the RAM
+limit), and a ban on installing it on servers licensed for commercial support. What the sign-up flow itself showed me
 that day, the archive cannot say; the page the agreement links to is the best evidence I have.
 
 Read whole, then, the licence grants **personal or internal-business use, including commercial
-projects, within the resource caps.** What it forbids is just as specific: making the software
+projects, subject to that list of restrictions.** What it forbids is just as specific: making the software
 available to third parties (2.1), building a product or service that "competes with, or provides
 the same or similar features" (2.1.xi), and revenue-generating bundling without a separate OEM
-licence (2.2). Clause 11 also says the agreement's own terms take precedence over any conflicting
+licence (2.2). Clause 12 says the agreement's own terms take precedence over any conflicting
 document. I read "internal business use" and "commercial projects" as consistent, but that is my
 reading, not a ruling.
 
@@ -105,15 +109,21 @@ never really the story. The honest story is **co-design** — what changes when 
 storage engine are built around one primitive — and that argument needs no numbers at all. The
 constraint forced a better article.
 
-One thing the clause does *not* touch: the repo's `aj` showcase asserts **correctness**. Its golden
-file pins output, never timing. That distinction is what lets the technical material survive intact.
+One thing I do not claim: that the clause leaves correctness tests alone. Its words cover "test"
+information too, and it has no carve-out for tests that check answers rather than time them. The
+repo's `aj` showcase pins output, never timing, and every article is written without speed claims.
+That is my scope choice to keep risk low, not a reading that Clause 9 permits it; only KX's written
+consent, or a lawyer, could settle that.
 
 ## Finding 3: it phones home, and that shapes your CI
 
 Two separate mechanisms, and conflating them is easy:
 
 - **License validation — mandatory.** Clause 4 reserves that the software "may periodically
-  communicate with a license manager application running on a KX server". No opt-out. Whatever the
+  communicate with a license manager application running on a KX server by sending usage
+  information to it to confirm that you have a valid license". The same clause limits that
+  information to KX's own licence management. No opt-out, so declining telemetry (below) does not
+  stop it. Whatever the
   observed runtime behaviour, the license *reserves* the call.
 - **Usage telemetry — opt-in and separate.** A distinct consent prompt at install, covering
   analytics and "potential interest in our products". Declinable, reversible, unrelated to the

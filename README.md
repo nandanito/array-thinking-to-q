@@ -112,8 +112,9 @@ Per the [KX Community Edition License Agreement](https://kx.com/legal/community-
 
 - Use is granted for **personal or internal-business purposes** (Clause 2.1), subject to KX's
   Usage Restrictions, which the agreement incorporates (Clause 11). They describe the Community
-  Edition as free for personal and commercial projects within resource caps (16 GB RAM, one
-  instance, 4 secondary threads, 16 connections). It is not a grant to distribute, sell or bundle
+  Edition as free for personal and commercial projects, subject to listed end-user restrictions
+  (resource caps such as 16 GB RAM, one instance, 4 secondary threads and 16 connections, plus rules
+  against circumventing them). It is not a grant to distribute, sell or bundle
   the software, or to build a competing product. What that means for your use is for you to judge.
 - **Publishing benchmark or performance figures requires KX's prior written consent** (Clause 9).
   This project therefore publishes **no benchmark or performance numbers, and no competitive

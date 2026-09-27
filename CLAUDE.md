@@ -24,7 +24,7 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
 4. **Say what the KDB-X CE licence says; never tell readers what their own use permits.** The
    agreement grants personal or internal-business use (Clause 2.1 / Attachment A) subject to the
    Usage Restrictions it incorporates (Clause 11), which say CE is "free for both personal and
-   commercial projects" within resource caps. It forbids making the software available to third
+   commercial projects" subject to listed end-user restrictions (caps and anti-circumvention rules). It forbids making the software available to third
    parties, OEM bundling without a licence, and competing products, and restricts benchmark
    publication (Clause 9). Quote that with clause numbers; never shorten it to "free for commercial
    use" or "non-commercial" (both were wrong once here). Corrected 2026-09-27 — see
