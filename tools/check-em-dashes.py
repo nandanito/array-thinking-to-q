@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Em-dash budget for the blog articles and their posts in writings/.
+"""Em-dash budget for the blog articles and posts in writings/, and the lesson READMEs.
 
 Heavy em-dash use reads as machine-generated prose, and nandan.me (where these
 articles are published, and which is canonical) enforces a budget on import.
@@ -14,16 +14,21 @@ Code (fenced blocks and inline code) and HTML tags/attributes are not counted.
 En dashes in ranges ("2–4") are fine. Rewrite with commas, colons, parentheses
 or full stops; keep an em dash only where it carries a deliberate beat.
 
+Lesson READMEs (lessons/README.md and lessons/*/README.md) are held to the same
+budget since their pass on 2026-09-27: they are the curriculum itself, and it
+should not read as generated either.
+
 LEGACY lists articles written before the rule that have not had their pass
 yet. They are reported on every run (so the exemption cannot go quiet) and
 come off the list when they are next edited for publication.
 
 Usage:
-  check-em-dashes.py [FILE ...]   check files (default: all writings/*.md);
+  check-em-dashes.py [FILE ...]   check files (default: writings/*.md and the
+                                  lesson READMEs);
                                   exit 1 on any violation
   check-em-dashes.py --hook       Claude Code PostToolUse hook: read the hook
                                   JSON on stdin, check the edited file if it is
-                                  under writings/, exit 2 with the violations
+                                  in scope, exit 2 with the violations
                                   on stderr
 """
 
@@ -48,9 +53,12 @@ def rel(path):
 
 
 def in_scope(path):
-    r = rel(path)
-    return (r.startswith("writings" + os.sep) and r.endswith(".md")
-            and os.sep not in r[len("writings") + 1:])
+    parts = rel(path).split(os.sep)
+    if parts[0] == "writings":
+        return len(parts) == 2 and parts[1].endswith(".md")
+    if parts[0] == "lessons":
+        return parts[-1] == "README.md" and len(parts) in (2, 3)
+    return False
 
 
 def prose(text):
@@ -119,7 +127,9 @@ def hook():
 def main(argv):
     if argv[:1] == ["--hook"]:
         return hook()
-    files = argv or sorted(glob.glob(os.path.join(ROOT, "writings", "*.md")))
+    files = argv or (sorted(glob.glob(os.path.join(ROOT, "writings", "*.md")))
+                     + [os.path.join(ROOT, "lessons", "README.md")]
+                     + sorted(glob.glob(os.path.join(ROOT, "lessons", "*", "README.md"))))
     failed = False
     for f in files:
         problems, count, words = check(f)

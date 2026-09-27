@@ -1,7 +1,7 @@
-# Lesson 03 — qSQL
+# Lesson 03: qSQL
 
 > **Run it:** `$HOME/.kx/bin/q lessons/03-qsql/q/qsql.q -q < /dev/null`
-> (the tool binaries are not on `PATH` — see the [Part II index](../README.md)).
+> (the tool binaries are not on `PATH`; see the [Part II index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/qsql.q`](q/qsql.q), [`j/group-and-window.ijs`](j/group-and-window.ijs).
 
@@ -10,7 +10,7 @@ instinct is to import SQL's *execution model* along with its syntax: a row-proce
 aggregates as a special class of function, `GROUP BY` as something the engine does to rows.
 
 None of that is here. `select … by … from` is a readable surface over exactly the two moves from
-lesson 02 — **a column is a list, a row is a dictionary** — and nothing else. Every phrase you
+lesson 02, **a column is a list, a row is a dictionary**, and nothing else. Every phrase you
 write inside a `select` is an ordinary q expression evaluated on whole columns, and `by` hands
 back a keyed table, which is to say a dictionary you have already met.
 
@@ -54,8 +54,8 @@ notional
 ```
 
 Read that the imperative way and you get "for each row, multiply `qty` by `px`". That is not what
-happened. `qty` and `px` are two six-element lists, `qty*px` is **one vector multiply** — the very
-same operation as lesson 01's `2 * til 5` — and `select`'s entire contribution was to name the
+happened. `qty` and `px` are two six-element lists, `qty*px` is **one vector multiply** (the very
+same operation as lesson 01's `2 * til 5`), and `select`'s entire contribution was to name the
 result and wrap it in a table. There is no per-row visit to optimise away, because there was never
 a row loop to begin with.
 
@@ -84,7 +84,7 @@ cols select qty*px from t     / ,`qty  — it reused a column name from the expr
 cols select 2*qty from t      / ,`x    — and here it fell back to `x
 ```
 
-(The leading `,` is q showing you a *one-element list* rather than an atom — lesson 01's
+(The leading `,` is q showing you a *one-element list* rather than an atom: lesson 01's
 distinction, made visible in the display.) The invented name is not worth learning: name your
 derived columns.
 
@@ -102,7 +102,7 @@ Pull the constraint out of the query and evaluate it on its own:
 101010b
 ```
 
-A boolean vector — lesson 01's `(til 5) > 2`, nothing more. There is no predicate being called
+A boolean vector: lesson 01's `(til 5) > 2`, nothing more. There is no predicate being called
 once per row; there is one vector comparison producing six booleans, which `select` then uses to
 pick rows:
 
@@ -162,7 +162,7 @@ type r              / 99h   — a keyed table IS a dictionary
 ```
 
 A grouped query result is not a special "result set" object. It is the *same keyed table* you
-would get by building a table and calling `` `sym xkey `` on it — so it is a dictionary, so you
+would get by building a table and calling `` `sym xkey `` on it. So it is a dictionary, so you
 index it with a key like any other dictionary:
 
 ```q
@@ -200,7 +200,7 @@ way to *put* three prices in one row's cell. q does: cells hold lists, and a col
 ordinary column. So q simply hands back the groups.
 
 This is the definition to take away. **`by` means "cut every selected column into one list per
-group."** That is all it means. Aggregation is not part of it — aggregation happened in section 3
+group."** That is all it means. Aggregation is not part of it; aggregation happened in section 3
 only because you wrote `sum`, and `sum` of a list is an atom. Wrote nothing? You get the lists.
 Wrote `avg`? You get means. The grouping and the summarising are two separate ideas that SQL welds
 together and q leaves apart, which is why `by` is strictly more general than `GROUP BY`.
@@ -245,8 +245,8 @@ on | ,3
 mat| ,5
 ```
 
-`group` maps each distinct value to the **indices** where it occurs — a dictionary, of course.
-That is the same grouping `by` performs, handed to you as an ordinary function: everything a
+`group` maps each distinct value to the **indices** where it occurs. The result is a dictionary,
+of course. That is the same grouping `by` performs, handed to you as an ordinary function: everything a
 grouped query does is this dictionary plus something applied to each group's slice.
 
 Which makes word frequency a one-liner, with no table and no query anywhere in sight:
@@ -265,7 +265,7 @@ mat| 1
 
 Compare the instinct this replaces: initialise a hash map, loop the words, increment or insert.
 Three concepts (a mutable accumulator, iteration, a conditional) for something that is really one
-question — *how big is each group?* — asked of a structure q already gave you. `group` supplies
+question (*how big is each group?*) asked of a structure q already gave you. `group` supplies
 the groups, lesson 01's `each` supplies the "for each of them", and `count` answers. Nothing is
 accumulated and nothing is mutated.
 
@@ -283,7 +283,7 @@ sat| 1
 the| 3
 ```
 
-Same counts — **different order**, and this one bites people:
+Same counts, **different order**, and this one bites people:
 
 ```q
 (count each group w) ~ exec count i by w from ([] w:w)   / 0b
@@ -306,7 +306,7 @@ than part of it, and `~` does not look at them:
 ```
 
 So choose on ordering alone: `group` when first-appearance order carries meaning, `by` when you
-want keys sorted. The attribute rides along for free — and that `` `s `` is lesson 04's whole
+want keys sorted. The attribute rides along for free, and that `` `s `` is lesson 04's whole
 subject.
 
 ---
@@ -323,9 +323,9 @@ A moving average is the other thing everyone reaches for a loop to write, and q 
 1 1.5 2 3 4 5
 ```
 
-Six inputs, six outputs. The first two windows are **partial** — `1` is the average of just `1`,
-`1.5` the average of `1 2` — and from the third element on you get true 3-wide windows. q's
-windowed verbs ramp up rather than refusing to answer — the whole `m`-family shares the
+Six inputs, six outputs. The first two windows are **partial** (`1` is the average of just `1`,
+`1.5` the average of `1 2`), and from the third element on you get true 3-wide windows. q's
+windowed verbs ramp up rather than refusing to answer. The whole `m`-family shares the
 convention, so `n` inputs always give you `n` outputs:
 
 ```q
@@ -359,7 +359,7 @@ GOOG S    250 174.3 174.3
 
 `by` inside an `update` does something `select … by` does not: it cuts into groups, runs the
 window *within each group*, and writes the results **back in the original row order**. The table
-keeps its shape — same six rows, same sequence, one new column. AAPL's third trade averages 188.1
+keeps its shape: same six rows, same sequence, one new column. AAPL's third trade averages 188.1
 and 187.9, its own two most recent prices, and MSFT's rows are untouched by AAPL's.
 
 Drop the `by` and q does not complain:
@@ -383,7 +383,7 @@ GOOG S    250 174.3 181.1
 error, no warning, a full column of confident nonsense.
 
 This is worth sitting with, because it is the *actual* failure mode of the imperative instinct in
-q — and it is not the one you were braced for. Nobody wrote a loop here. The bug is subtler: a
+q, and it is not the one you were braced for. Nobody wrote a loop here. The bug is subtler: a
 column is **one vector spanning every group**, and any operation with memory (a window, a
 difference, a cumulative sum) will happily run straight across the boundary between two
 instruments unless you tell it not to. In a row-at-a-time language you would have had to
@@ -455,12 +455,12 @@ w =: ;: 'the cat sat on the mat the'   NB. ;: cuts a string into boxed words
 ```
 
 J's key adverb `/.` is the same operation as q's `group`: it groups items by value and applies a
-verb to each group. So `#/.~ w` — "count each group" in J's spelling — gives `3 1 1 1 1`, the
+verb to each group. So `#/.~ w`, "count each group" in J's spelling, gives `3 1 1 1 1`, the
 same five counts q produced.
 
 Look at what J *doesn't* give you. The counts arrive as a bare list. The labels are a second,
 independent computation (`~. w`), and the two align only because both are documented to run in
-first-appearance order. That is a guarantee you have to know and keep holding — nothing in the
+first-appearance order. That is a guarantee you have to know and keep holding. Nothing in the
 data structure enforces it, and one sort applied to either list breaks the correspondence
 silently. q's `by` returns the labels **attached**, as the key half of a keyed table.
 
@@ -468,7 +468,7 @@ That is lesson 02's names-versus-positions contrast again, now with visible cons
 q's groups carry their own labels, a grouped result is still a table: you can key into it, join it,
 filter it, group it again. J's grouped result is a list that means something only in the presence of
 another list you must keep in step yourself. This is the whole reason `select … by … from` can
-exist in q and has no J-native counterpart — there is nothing named to select, and nothing named
+exist in q and has no J-native counterpart: there is nothing named to select, and nothing named
 to group *by*.
 
 The last line is a translation trap worth memorising. `3 (+/ % #)\` gives **four** results from
@@ -482,36 +482,36 @@ silently changes the length of its result is exactly the kind of bug that surviv
 ## What to carry forward
 
 - **Every phrase in a `select` is an ordinary expression over whole columns.** `sum` is not a
-  special aggregate class — you get one row because `sum` of a list is an atom.
+  special aggregate class; you get one row because `sum` of a list is an atom.
 - **`where` is a boolean vector**, and comma-separated constraints apply *in sequence*, each on
-  the rows the previous kept. Most selective first.
-- **`select … by` returns a keyed table, which is a dictionary** (`99h`) — lesson 02's circle,
+  the rows the previous kept.
+- **`select … by` returns a keyed table, which is a dictionary** (`99h`): lesson 02's circle,
   closed by a keyword.
 - **`by` means "cut each column into one list per group"**, not "aggregate". Aggregation is
   whichever function you applied. This is why `by` is more general than `GROUP BY`.
 - **`group` is that same grouping as a plain function**, mapping value → indices; `count each
-  group w` *is* word frequency. `group` keeps first-appearance order, `by` sorts keys — that
+  group w` *is* word frequency. `group` keeps first-appearance order, `by` sorts keys. That
   ordering difference alone is what a `~` comparison catches, since `~` ignores the `` s# ``
   attribute `by` also attaches.
 - **`mavg`/`msum` are windows without loops**, with partial windows at the start. Inside `update`,
-  **`by` computes per group and writes back in row order** — and omitting it silently averages
+  **`by` computes per group and writes back in row order**, and omitting it silently averages
   across instruments, the real imperative failure mode in q.
 - **`exec` unwraps, `select` wraps.**
 
-**Next:** Lesson 04 — attributes & sort discipline (`` s# ``/`` g# ``/`` p# ``) *(planned)*, where
+**Next:** [lesson 04: attributes & sort discipline](../04-attributes/) (`` s# ``/`` g# ``/`` p# ``), where
 the `` `s `` that `by` quietly attached to its keys stops being a detail and becomes a correctness
-requirement — the one the `aj` showcase depends on.
+requirement: the one the `aj` showcase depends on.
 
 ---
 
 ### References
 
 - qSQL `select`/`exec`/`update`, and the sequential `where` phrases:
-  [code.kx.com — qSQL query templates](https://code.kx.com/q/basics/qsql/)
-- `group` (value → indices): [code.kx.com — group](https://code.kx.com/q/ref/group/)
+  [code.kx.com: qSQL query templates](https://code.kx.com/q/basics/qsql/)
+- `group` (value → indices): [code.kx.com: group](https://code.kx.com/q/ref/group/)
 - `mavg` and the moving-window verbs:
-  [code.kx.com — mavg](https://code.kx.com/q/ref/avg/#mavg)
+  [code.kx.com: mavg](https://code.kx.com/q/ref/avg/#mavg)
 - J's key adverb `/.`:
-  [J Dictionary — Oblique / Key](https://www.jsoftware.com/help/dictionary/d421.htm)
+  [J Dictionary: Oblique / Key](https://www.jsoftware.com/help/dictionary/d421.htm)
 - J's infix `\` (complete windows only):
-  [J Dictionary — Prefix / Infix](https://www.jsoftware.com/help/dictionary/d430.htm)
+  [J Dictionary: Prefix / Infix](https://www.jsoftware.com/help/dictionary/d430.htm)
