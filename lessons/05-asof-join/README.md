@@ -107,7 +107,8 @@ And look at what each pass recomputes. It asks two questions:
 2. *Of those, which is the latest at or before `t`?* This one genuinely depends on the trade. But
    it is answered by looking at every candidate, as though the quote times had no order at all.
 
-The rest of the lesson answers each question the array way — once, for the whole table.
+The rest of the lesson answers them the array way: the first once, for the whole table, and the
+second with a search that can use the order of the times.
 
 ---
 
@@ -157,6 +158,16 @@ bids times bin 3 2 -1      / 99.1 99.1 0n — and index -1 is null
 That is a join's worth of boundary semantics — inside, tie, and before-the-first — in one
 primitive and one indexing rule, and none of it had to be written.
 
+One assumption rides along: the quote times are not null. q sorts a null time before every real
+one, so `bin` counts it as at or before anything:
+
+```q
+(0Nv,10:00:00 10:00:02) bin 09:59:59   / 0 — the null-time quote, not -1
+```
+
+A quote with a null time would therefore match a trade that arrived before any real quote, where
+you wanted a null. If your quote feed can carry null times, drop those rows before you join.
+
 Now the cost of that convenience, which is lesson 04's cost in a new place. `bin` gets to answer
 without looking at every element because it *assumes* `x` is sorted, and it does not check:
 
@@ -170,7 +181,7 @@ makes `bin` worth having is exactly what makes it trust you.
 
 ---
 
-## 4. Sort once, and both questions become lookups
+## 4. Sort once, and both halves get what they need
 
 So each half of the join needs something from the quote table. The `group` half needs each
 symbol's rows to be findable. The `bin` half needs each symbol's times to be **ascending in row
@@ -261,8 +272,8 @@ as a spec: every column but the last is matched by **equality** (the `group` hal
 matched **as-of** (the `bin` half). The reference phrases the result as *"the last (in row order)
 matching record"* — and now you can see why it says *row order* rather than *greatest time*. It is
 describing `bin`. On a table sorted the way section 4 sorted it, the last row in order *is* the
-latest in time; on any other table, as lesson 04 showed, it is not, and `aj` returns what `bin`
-returns.
+latest in time; if the times are out of order within a symbol, as lesson 04 showed, it may not be,
+and `aj` still returns what `bin` returns.
 
 Look back at section 1 with this in hand. The loop said "greatest time", which is order-proof
 (short of exact ties, which it breaks by row order too) and costs a scan per trade. `aj` says "last in row order", which is a search per trade and costs you a

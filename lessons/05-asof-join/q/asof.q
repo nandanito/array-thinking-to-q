@@ -36,8 +36,9 @@ show times bin 2;                     / 1 — a tie counts: <=, not <
 show times bin -1;                    / -1 — nothing at or before: off the front
 show 2 0 5 bin 3;                     / 1 — unsorted: a confident, wrong index
 show bids times bin 3 2 -1;           / 99.1 99.1 0n — and index -1 is null
+show (0Nv,10:00:00 10:00:02) bin 09:59:59;  / 0 — a null time sorts first: at or before anything
 
-/ --- 4. sort once, and both questions become lookups ---------------------
+/ --- 4. sort once, and both halves get what they need -------------------
 sorted:`sym`time xasc quote;
 show sorted;
 show group sorted`sym;                / contiguous blocks, each time-ascending
