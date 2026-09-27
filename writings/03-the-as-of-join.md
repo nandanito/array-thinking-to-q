@@ -122,7 +122,8 @@ different questions and treats them the same way:
 2. *Of those, which is the latest at or before `t`?* This one genuinely depends on the trade. But
    it's answered by looking at every candidate, as though quote times had no order at all.
 
-The array way is to answer each question once, for the whole table.
+The array way is to stop re-asking: answer the first question once, for the whole table, and give
+the second a search that can use the order of the times.
 
 ## Question one is `group`
 
@@ -169,7 +170,9 @@ bids times bin 3 2 -1      / 99.1 99.1 0n — and index -1 is null
 ```
 
 Inside, on a tie, and before the first quote: a join's worth of edge semantics in one primitive and
-one indexing rule, none of which anyone had to write.
+one indexing rule, none of which anyone had to write. (One assumption rides along: the quote times
+are not null. q sorts a null time before every real one, so a quote with a null time counts as
+"at or before" every trade, and a trade that arrived before any real quote would match it.)
 
 ## The price: `bin` trusts you
 
@@ -223,7 +226,9 @@ idx
 
 `` g trade`sym `` looks up every trade's symbol at once and gives each trade its block of rows `r`.
 `` sorted[`time][r] `` is that block's times, `bin t` finds the position within the block, and indexing
-`r` with that position turns it back into a row of `sorted`. One quote row per trade.
+`r` with that position turns it back into a row of `sorted`. One quote row per trade. (The `'` still
+walks the trades one at a time, and it is not how you would write this join; you would write `aj`.
+The hand version exists to make the two parts visible.)
 
 Index the quotes with those rows, keep the `bid` and `ask` columns (`#` is "take"), and stitch
 them beside the trades with `,'`, which joins two tables row by row:
@@ -290,8 +295,8 @@ indexing does off the front of a list.
 
 I use J as a laboratory in this curriculum, and it makes a useful control here because it is an
 excellent array language that was *not* designed around this join. J's closest primitive is `I.`,
-the interval index: for each `y`, the **first** position whose item is at or after `y`. Step back one
-and it *looks* like `bin`.
+the interval index: on an ascending list, for each `y`, the **first** position whose item is at or
+after `y`. Step back one and it *looks* like `bin`.
 
 A few words of J to read the next block: `=:` assigns, `NB.` starts a comment, `echo` prints,
 `_1` is negative one, `<:` subtracts one (between two arguments it means ≤), and `bids {~ i` picks the items of `bids` at positions `i`.
@@ -327,7 +332,9 @@ echo bids {~ <: +/ times <:/ 3 2 _1
 99.1 99.1 99.4
 ```
 
-`1 1 _1` is exactly what q's `bin` returned. The value is *still* wrong, because the second edge was
+`1 1 _1` is exactly what q's `bin` returned. (`I.` also accepts a descending list, and searching the
+reversed times gets the same `1 1 _1` without the all-pairs comparison; in J the index is a one-line
+repair either way.) The value is *still* wrong, because the second edge was
 never in the search; it's in indexing. In q, `-1` is off the end and yields null. In J it wraps. So
 the J programmer writes a guard too.
 
@@ -363,9 +370,10 @@ After the above, both lines can be read rather than recited:
   showcase ships, not the only right answer.)
 
 Which gives you the one-line summary I wish someone had given me: **the attribute is optional; the
-sort is not.** Drop the attribute and you get the same table. Drop the sort and you get a *different*
-table: mostly right, wrong only for the symbols with several quotes in the window, and silent about
-it. That failure shape (partial, plausible, unannounced) is what the previous lesson in the
+sort is not.** Drop the attribute and you get the same table. Drop the sort and `bin` is searching input it was
+never defined for: on this lesson's data you get a *different* table, mostly right, wrong only for
+the symbols with several quotes in the window, and silent about it. On other data it might happen
+to come out right, which is worse, because nothing tells you which case you are in. That failure shape (partial, plausible, unannounced) is what the previous lesson in the
 curriculum was written to make you afraid of.
 
 And the half that decides correctness, time ascending *within* each symbol, is exactly the half no

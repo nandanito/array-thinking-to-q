@@ -19,8 +19,8 @@ It comes apart into two primitives: group, which finds each symbol's rows, and b
 latest time at or before each trade. The awkward cases (a trade at exactly a quote's time, a trade
 before the first quote, a symbol with no quotes) are all settled by those two primitives and one
 indexing rule, with no special-case code. The price is that bin trusts your sort and never checks
-it. Drop the attribute and you get the same table; drop the sort and you get a different one,
-silently.
+it. Drop the attribute and you get the same table. Drop the sort and the lesson's data gives a
+different one, silently.
 
 The article is written for people who have never read q, and every snippet is copied from a lesson
 that runs in CI. It contrasts J, an excellent array language that wasn't built around this join, to

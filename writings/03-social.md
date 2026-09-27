@@ -44,7 +44,7 @@ gives 99.1 99.1 0n. A tie counts; before the first quote is null.
 
 The price: bin trusts your sort and never checks it.
 
-Drop the attribute and aj gives the same table. Drop the sort and it gives a different one, silently.
+Drop the attribute and aj gives the same table. Drop the sort and, on the lesson's data, it gives a different one, silently.
 
 The attribute is optional. The sort is not.
 
@@ -85,7 +85,7 @@ gives 99.1 99.1 0n. A tie counts; before the first quote is null.
 
 The price: bin trusts your sort and never checks it.
 
-Drop the attribute and aj gives the same table. Drop the sort and it gives a different one, silently.
+Drop the attribute and aj gives the same table. Drop the sort and, on the lesson's data, it gives a different one, silently.
 
 The attribute is optional. The sort is not.
 
@@ -111,7 +111,7 @@ Article 3 of 5: <URL>
 
 pandas, Polars, DuckDB and ClickHouse all have an as-of join, so having one isn't what makes q interesting. What I wanted to see was what the join looks like when the language and its storage were built around it.
 
-In q, aj comes apart into two primitives: group finds each symbol's rows, and bin finds the latest time at or before each trade. The awkward cases (a tie, a trade before the first quote, a symbol with no quotes) are all settled by those primitives, with no special-case code. The price is that bin trusts your sort and never checks it: drop the attribute and you get the same table, drop the sort and you get a different one, silently.
+In q, aj comes apart into two primitives: group finds each symbol's rows, and bin finds the latest time at or before each trade. The awkward cases (a tie, a trade before the first quote, a symbol with no quotes) are all settled by those primitives, with no special-case code. The price is that bin trusts your sort and never checks it: drop the attribute and you get the same table; drop the sort and, on the lesson's data, you get a different one, silently.
 
 Written for people who have never read q; every snippet runs in CI.
 
