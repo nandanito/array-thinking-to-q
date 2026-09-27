@@ -24,3 +24,9 @@ show sums til 5;         / running total = + SCANNED across the list
 show (+\) til 5;         / the scan mechanism sums names
 show count ("aa"; "bbb"; "c");        / the WHOLE list: three items
 show count each ("aa"; "bbb"; "c");   / each item's length, one level down
+
+/ --- 5. the wall: q has no forks, so say the composition out loud -------
+/ (the fork itself is a parse error and cannot live in a runnable file; the
+/  README quotes it as a real REPL transcript instead, CLAUDE.md rule 3)
+show (sum til 5) % count til 5;       / 2f — the composition, said out loud
+show {(sum x) % count x} til 5;       / 2f — the explicit lambda q DOES accept

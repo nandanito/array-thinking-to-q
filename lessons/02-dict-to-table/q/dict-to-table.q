@@ -33,6 +33,6 @@ show exec sym from t;    / same list, via qSQL
 kt:`sym xkey t;
 show kt;
 show type kt;            / 99h — the dict type, not 98h
-show 98h~type key kt;    / its key half is a table  (1b)
-show 98h~type value kt;  / its value half is a table (1b)
+show 98h ~ type key kt;  / its key half is a table  (1b)
+show 98h ~ type value kt;  / its value half is a table (1b)
 show kt[`AAPL];          / look up a key row -> a value record (a dict)

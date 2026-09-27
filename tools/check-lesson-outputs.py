@@ -17,6 +17,18 @@ output, and is not checked here. That is also how the two blocks CLAUDE.md
 exempts stay exempt without a special case: the illustrative Python snippet
 and the deliberate q parse-error REPL transcript are both tagged.
 
+Source blocks are checked too. Every line of a ```q or ```j block must be a
+line of that lesson's own q/*.q or j/*.ijs file, compared after normalising
+what the narrative legitimately drops: comments, `show`, a trailing `;`, and
+runs of whitespace (collapsed to one space, never deleted: in q `10 20 30`
+and `102030` are different programs). An error demo the source runs inside a trap, `@[{`s#x}; 3 1 2;
+handler]`, is matched as `` `s#3 1 2 ``. Without this, a README could show a
+q line no file ever ran, and verify-writings (which trusts README blocks)
+would pass an article quoting it. The one exemption is lesson 01's
+deliberate parse error, quoted as a `q)` REPL transcript (CLAUDE.md rule 3);
+it is pinned by file and first line (REPL_EXEMPT), so any other `q)` block
+fails.
+
 Usage: check-lesson-outputs.py [lesson_dir ...]     (default: all lessons)
 Env:   Q, J — interpreter paths (same knobs the Makefile uses).
 """
@@ -132,13 +144,72 @@ def find(hay: list[str], needle: list[str], start: int) -> int:
     return -1
 
 
-def check(lesson: Path) -> tuple[list[str], int, int]:
+TRAP = re.compile(r"^@\[\{(.*)\}; ?(.*?); ?\{.*\}\]$")
+
+# The one q block CLAUDE.md rule 3 lets live outside a runnable file: lesson
+# 01's deliberate parse error, quoted as a REPL transcript. Pinned by file and
+# first line, so a second `q)` block anywhere fails instead of being skipped.
+REPL_EXEMPT = ("lessons/01-atoms-and-lists/README.md", "q)(+/ % #) til 5")
+
+
+def norm_source(line: str, lang: str) -> str:
+    """One source or README line reduced to what both must share (see docstring)."""
+    if lang == "q":
+        if re.match(r"^\s*/", line):
+            return ""
+        s = re.sub(r"(^|\s)/(\s.*)?$", "", line)
+        s = re.sub(r"\bshow\s+", "", s)
+        s = re.sub(r"\s+", " ", s).strip().rstrip(";").rstrip()
+        t = TRAP.match(s)
+        if t:
+            s = re.sub(r"\bx\b", t.group(2), t.group(1))
+        return s
+    s = re.sub(r"NB\..*$", "", line)
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def source_blocks(lesson: Path, readme: Path) -> tuple[list[str], int]:
+    """Every ```q / ```j line must be a line of the lesson's own source files."""
+    failures, n = [], 0
+    have = {}
+    for lang, sub, pat in (("q", "q", "*.q"), ("j", "j", "*.ijs")):
+        lines = []
+        for src in sorted((lesson / sub).glob(pat)):
+            for ln in src.read_text().splitlines():
+                lines.extend(x for x in (norm_source(p, lang) for p in [ln]) if x)
+        have[lang] = set(lines)
+    for tag, start, body in fenced_blocks(readme):
+        if tag not in ("q", "j"):
+            continue
+        first = next((ln for ln in body if ln.strip()), "")
+        if tag == "q" and first.lstrip().startswith("q)"):
+            if (str(readme.relative_to(REPO)), first.strip()) == REPL_EXEMPT:
+                continue  # the one exempt REPL transcript
+            failures.append(
+                f"{readme.relative_to(REPO)}:{start + 1}: REPL TRANSCRIPT — only "
+                f"lesson 01's parse error may be quoted as a `q)` transcript "
+                f"(CLAUDE.md rule 3); put this code in a runnable file."
+            )
+            continue
+        n += 1
+        for offset, line in enumerate(body):
+            key = norm_source(line, tag)
+            if key and key not in have[tag]:
+                failures.append(
+                    f"{readme.relative_to(REPO)}:{start + offset + 1}: NOT IN SOURCE — "
+                    f"```{tag} line {line.strip()!r} is not a line of this lesson's "
+                    f"{tag}/ files; the narrative shows code no file runs."
+                )
+    return failures, n
+
+
+def check(lesson: Path) -> tuple[list[str], int, int, int]:
     readme = lesson / "README.md"
     if not readme.exists():
-        return [], 0, 0
+        return [], 0, 0, 0
     sources = sorted((lesson / "q").glob("*.q")) + sorted((lesson / "j").glob("*.ijs"))
     if not sources:
-        return [f"{readme.relative_to(REPO)}: no q/ or j/ sources to verify against"], 0, 0
+        return [f"{readme.relative_to(REPO)}: no q/ or j/ sources to verify against"], 0, 0, 0
 
     hay: list[str] = []
     for src in sources:
@@ -163,9 +234,12 @@ def check(lesson: Path) -> tuple[list[str], int, int]:
                 f"({len(block)} line(s)); no run of the real output matches."
             )
 
+    src_failures, ns = source_blocks(lesson, readme)
+    failures += src_failures
+
     claims = inline_claims(readme)
     failures += check_claims(lesson, readme, claims)
-    return failures, len(output_blocks(readme)), len(claims)
+    return failures, len(output_blocks(readme)), len(claims), ns
 
 
 def check_claims(
@@ -221,23 +295,26 @@ def main() -> int:
         if args
         else sorted(p for p in (REPO / "lessons").iterdir() if p.is_dir())
     )
-    failures, checked, tot_b, tot_c = [], 0, 0, 0
+    failures, checked, tot_b, tot_c, tot_s = [], 0, 0, 0, 0
     for lesson in lessons:
         if not (lesson / "README.md").exists():
             continue
         checked += 1
-        f, nb, nc = check(lesson)
+        f, nb, nc, ns = check(lesson)
         failures += f
-        tot_b, tot_c = tot_b + nb, tot_c + nc
-        print(f"-- {lesson.relative_to(REPO)}  ({nb} block(s), {nc} inline claim(s))")
+        tot_b, tot_c, tot_s = tot_b + nb, tot_c + nc, tot_s + ns
+        print(
+            f"-- {lesson.relative_to(REPO)}  ({nb} output block(s), {ns} source block(s), "
+            f"{nc} inline claim(s))"
+        )
     for f in failures:
         print(f"   {f}")
     if failures:
         print(f"prose outputs: {len(failures)} MISMATCH(es) across {checked} lesson(s)")
         return 1
     print(
-        f"prose outputs: OK — {tot_b} block(s) and {tot_c} inline claim(s) "
-        f"across {checked} lesson(s)"
+        f"prose outputs: OK — {tot_b} output block(s), {tot_s} source block(s) and "
+        f"{tot_c} inline claim(s) across {checked} lesson(s)"
     )
     return 0
 
