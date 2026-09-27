@@ -12,12 +12,12 @@ gap between what you think you are doing when you set one and what q actually do
 If you come from SQL, you already have a model for this and it is wrong in an expensive way.
 `CREATE INDEX` is a promise the *engine* keeps: the index is a structure the database owns, it is
 maintained through every `INSERT` and `UPDATE`, you cannot desynchronise it from its table, and it
-is a pure speed decision — an index can never change an answer, and forgetting one can never make
+is purely an access-path decision: an index can never change an answer, and forgetting one can never make
 a query wrong.
 
 q keeps exactly one of those properties. An attribute is a claim **you** make about a vector,
-verified once at the moment you make it and never again; q maintains it only where maintenance is
-cheap, and where it is not, q *silently withdraws the claim* rather than checking. And the sting
+verified once at the moment you make it and never again; q maintains it only where one local check
+can confirm it, and where it cannot, q *silently withdraws the claim* rather than checking. And the sting
 in the tail is the last property — the one you were relying on. It is true that an attribute
 cannot change an answer. But the **sort discipline the attribute advertises** absolutely can, and
 `aj` is where that bill comes due.
@@ -67,8 +67,8 @@ And the claim is genuinely outside the value:
 
 This is the property to hold onto hardest, because it is the one that survives into the part of
 the lesson where things go wrong. **An attribute can never change a result.** A constraint like
-`` select from t where sym=`AAPL `` over an attributed column may reach its rows by binary search
-or a hash lookup instead of a scan, but it is the *same set of rows*. Any belief of the form "I set
+`` select from t where sym=`AAPL `` over an attributed column may locate its rows through the attribute
+(by binary search or a hash lookup), but it is the *same set of rows*. Any belief of the form "I set
 `` `g# ``, so now this query is right" is confused at the root: if the query is right with the
 attribute, it was right without it.
 
@@ -94,7 +94,7 @@ You cannot simply assert something false:
 
 (The runnable file traps these and prints the message; uncaught at a REPL, the first renders as
 `'2026.07.29T12:59:45.680 s-fail` — q stamps the line with a wall-clock time, as lesson 01's parse
-error also showed.) So there is a real check, and it costs a real pass over the data. Note the
+error also showed.) So there is a real check, and it reads the whole vector. Note the
 third one: `` `p# `` — *parted*, meaning equal values occupy contiguous blocks — reports `u-fail`
 rather than a `p-fail` of its own.
 
@@ -135,7 +135,7 @@ u2:`u#1 2 3; u2,:1;   attr u2
 Read that column of outputs slowly, because four different things are happening in it.
 
 `s1` appended `4` to `1 2 3` and **kept** `` `s ``: the claim is still true and q could tell
-cheaply, by comparing the new element to the last one. `s2` appended `0` and the attribute is
+with one comparison, of the new element against the last one. `s2` appended `0` and the attribute is
 gone — and notice what that is *not*. It is not an error. `s2` is `1 2 3 0`, exactly the data you
 asked for; the append succeeded completely. q did not reject your write to protect the index. It
 dropped the index to protect the answer.
@@ -147,12 +147,12 @@ vector identical to the one it started with — and still loses the attribute.
 
 q did not re-derive whether the claim survived, because re-deriving it means another full pass,
 and the entire point of the attribute is to avoid full passes. **The rule is not "q maintains your
-attribute". It is "q keeps the attribute when a cheap local check proves it survived, and abandons
+attribute". It is "q keeps the attribute when a local check proves it survived, and abandons
 it otherwise."** An append has such a check — compare the new element to the last one. Indexed
 assignment does not, so it abandons unconditionally, `s4` included.
 
 `p1` shows the extreme case: the parted attribute is removed by *any* operation on the list, even
-an append that visibly preserves partedness. And `u1`/`u2` show the cheap-check rule once more —
+an append that visibly preserves partedness. And `u1`/`u2` show the local-check rule once more —
 appending `4` to `1 2 3` keeps `` `u ``, appending a duplicate `1` drops it.
 
 The practical consequence is the opposite of the SQL habit. There, you create an index once and
@@ -275,7 +275,7 @@ MSFT 10:00:02 200.1 200
 ```
 
 Still 98.5. The attribute did not rescue anything, and section 1 already told you it could not:
-attributes do not change answers. Setting `` `g# `` on an unsorted quote table buys you a faster
+attributes do not change answers. Setting `` `g# `` on an unsorted quote table gives you a different
 route to the same wrong number.
 
 The converse is just as instructive: sort the table and set **no** attribute at all. That takes one
@@ -316,7 +316,7 @@ AAPL 10:00:03 99.25 99.1
 MSFT 10:00:02 200.1 200
 ```
 
-Correct, and now also fast. Those four results are the lesson in a box:
+Correct, and now attributed as well. Those four results are the lesson in a box:
 
 |                | no attribute | `` `g#sym `` |
 |----------------|--------------|--------------|
@@ -367,7 +367,7 @@ attr ready`sym
 `g
 ```
 
-Sort first — that is the correctness step. Attribute second, and last — that is the speed step,
+Sort first: that is the correctness step. Attribute second, and last: that is the optional step,
 placed after the data is final because section 3 showed attributes are perishable.
 
 Which attribute, though? The `aj` reference gives a table: in memory, `` `g# `` on the first join
@@ -375,14 +375,14 @@ column with the rest sorted within it; on disk, `` `p# ``, and it notes that "on
 attribute does not help". Taken alone that reads like a tidy rule — memory means grouped, disk
 means parted — and this repo has already been burned by exactly that reading. The sibling
 [set-attribute](https://code.kx.com/q/ref/set-attribute/) page says something the `aj` page does
-not: *"If the data can be sorted such that `p` can be set, it effects better speedups than
-grouped, both on disk and in memory."*
+not: parted applies in memory as well as on disk, whenever the data can be sorted so that it can
+be set.
 
 Both pages are KX's. They are not contradictory — the `aj` page gives a safe default, the
-set-attribute page gives the ceiling — but a reader who has only seen one of them will state the
+set-attribute page widens it — but a reader who has only seen one of them will state the
 rule too strongly, and a table you have already sorted `` `sym`time xasc `` is exactly a table
 where `` `p# `` is available. `` `g# `` is the reasonable default this lesson ships and the
-showcase uses; `` `p# `` on an already-sorted table is defensible and may be faster. What is
+showcase uses; `` `p# `` on an already-sorted table is defensible. What is
 *not* defensible is claiming either one is the single right answer on the strength of one page.
 
 ---
@@ -451,13 +451,13 @@ are documentation that q occasionally validates.
 ## What to carry forward
 
 - **An attribute is a claim about a vector, not part of its value.** `~` ignores it, and it can
-  never change an answer — only how fast q reaches the same one.
+  never change an answer, only the route q takes to the same one.
 - **Attributes are asserted, not deduced.** `til 5` is sorted and carries nothing; `distinct` is
   unique and carries nothing. Only primitives that established the property (`asc`, `xasc`, `by`)
   attach one for free.
 - **q checks the claim once, when you set it** (`s-fail`, `u-fail`) — so you cannot lie outright.
   `` `g# `` never fails because it *builds* an index rather than asserting a property.
-- **Attributes are perishable and drop silently.** Kept when a cheap local check proves they
+- **Attributes are perishable and drop silently.** Kept when a local check proves they
   survived (in-order append), abandoned otherwise — even by an indexed assignment that happens to
   preserve the property. `` `p# `` is dropped by any operation at all. Set attributes **last**,
   after the data is final.
@@ -466,7 +466,7 @@ are documentation that q occasionally validates.
   one thing that cannot be recorded.
 - **`aj`'s correctness comes from row order, not from the attribute.** It takes the last matching
   record *in row order*. Sorted-without-attribute is right; attributed-without-sorting is wrong.
-  Sort for correctness, attribute for speed, in that order.
+  Sort for correctness, then set the attribute, in that order.
 - **The wrong-sort bug is partial and silent** — only rows with several quotes in the window go
   wrong, so the output looks mostly fine and passes review.
 
