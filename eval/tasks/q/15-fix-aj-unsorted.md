@@ -36,3 +36,13 @@ committed instrument. Reproducibility beats tidiness.
 **Before this task is reused in any future run**, widen item 5 to accept either attribute on a
 sorted table — or state why `` `g# `` alone should count — and re-score from scratch. Do not mix
 results across the two versions.
+
+## Instrument note 2 — the premise is false on the pinned build (added 2026-09-27, not applied)
+
+The prompt says this join "returns silently wrong prevailing quotes". Run as given on KDB-X 5.0
+2026.07.23, the unsorted `aj` returns exactly the golden rows (`15-fix-aj-unsorted.expected`): this
+data does not exercise the unsorted-input failure. Found by an adversarial review that executed the
+prompt's code; lesson 04 demonstrates the real failure with different data. Left unchanged for the
+same reason as note 1. **Before reuse:** change the data so the unsorted join is demonstrably wrong,
+and add a check that the given input FAILS its golden (a repair task's premise must be tested, not
+just its reference).

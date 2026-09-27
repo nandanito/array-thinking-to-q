@@ -101,7 +101,7 @@ as findings:
 - **Too few discordant pairs** (say <5) → the sign test has nothing to work with. Report the
   count and say the eval was underpowered, which is itself worth publishing.
 
-## 5. Threats to validity — state these in Article 3, do not bury them
+## 5. Threats to validity — state these in the eval article, do not bury them
 
 - **No blinding, and it is impossible in principle** — idiomatic output identifies its own
   condition. The published-source checklist is the defense. Never claim blind scoring.
@@ -132,7 +132,7 @@ generation — see §3.
 - `results.csv` — 30 rows. `triggers/*.md` — tables filled.
 - `docs/COMPOUND.md` entry, **positive or negative** (CLAUDE.md makes this mandatory, and a
   negative result is the more interesting article).
-- Article 3 draft in `writings/` — the flagship. It reports the real result either way.
+- The eval article's draft in `writings/` — the flagship. It reports the real result either way.
 - **Only if a gap survives:** author `idiomatic-q` scoped to that gap (q-only, learner-facing),
   fold the observed failure modes in, then re-run a 5-task spot check **and** re-test triggers on
   **fresh** prompts — reusing the original 20 overfits the trigger to the test set.

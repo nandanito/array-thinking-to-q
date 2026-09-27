@@ -18,7 +18,7 @@ subject under test (KX's `q-knowledge` plugin).
   the body — then **re-test on FRESH prompts**: iterating on the same 20 overfits the trigger to
   the test set (SPEC.md). The fresh-prompt numbers, not the tuning-set numbers, are what publish.
 - These numbers were to be the marketplace quality evidence in a skill README. **No skill was
-  authored** (see verdict.md), so they publish in `triggers/` and Article 3 instead, and M5 ships
+  authored** (see verdict.md), so they publish in `triggers/` and the eval article instead, and M5 ships
   the harness rather than a skill.
 
 ## Part B — Output quality (post-activation)
@@ -30,8 +30,9 @@ subject under test (KX's `q-knowledge` plugin).
 - **Conditions:** identical prompts, same model+settings; **A = baseline (no plugin), B = KX
   `q-knowledge` plugin enabled.** (If a learner-gap skill is later authored, evaluate it as an
   ADDITIONAL condition on the same tasks — never in place of the KX-vs-baseline comparison.)
-- **No blind scoring — and say so.** Idiomatic output identifies its own condition; blinding is
-  impossible in principle here. The defense against evaluator drift is the published-source
+- **No blind scoring — and say so.** ~~Idiomatic output identifies its own condition; blinding is
+  impossible in principle here.~~ (CORRECTED 2026-09-27: blinding was feasible — code-only answers
+  can be relabelled — and was not done; say that, not "impossible".) The defense against evaluator drift is the published-source
   checklist below (every item justifiable against Q for Mortals / code.kx.com), NOT a blinding claim.
 - **Scores per task:** correctness (runs + right output, via `make verify` harness, 0/1),
   and idiomaticity as a BINARY CHECKLIST (not a 1–5 feel score — a numeric feel score drifts as
@@ -53,7 +54,7 @@ subject under test (KX's `q-knowledge` plugin).
   side wins **≥~80% of discordant pairs** (roughly: ≥4 more task-wins than losses). This detects
   only large effects — appropriate for a language models are measurably bad at.
 - **Two exits, both real findings:** (1) no lift → publish the negative result (docs/COMPOUND.md
-  and Article 3), ship curriculum-only. (2) lift exists but KX's plugin already delivers it →
+  and the eval article), ship curriculum-only. (2) lift exists but KX's plugin already delivers it →
   publish the comparison, author nothing. A self-authored skill ships ONLY if the eval exposes a
   gap KX's plugin does not fill — scoped to that gap; then fold observed failure modes back in and
   re-run a 5-task spot check.

@@ -1,6 +1,6 @@
 # The as-of join: what changes when the engine is built around one primitive
 
-*Article 4 of 6 — draft. Gated on M3 (the q core).*
+*Article 3 of 5 — draft. Gated on M3 (the q core).*
 
 > **Provenance.** Every q and J snippet below is copied from
 > [lesson 05](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/05-asof-join/), whose outputs `make verify` re-captures from KDB-X CE 5.0
@@ -34,7 +34,7 @@ time-series programmer eventually asks:
 Not a quote at exactly that time — there usually isn't one — but the most recent quote for the same
 symbol at or before it.
 
-![A time axis for one symbol, AAPL. Three quotes above it at 10:00:00 (bid 99), 10:00:02 (bid 99.1) and 10:00:05 (bid 99.4). Five trades below it, each with an arrow back to the quote it matches: 10:00:01 takes 99, 10:00:03 takes 99.1, 10:00:06 takes 99.4; a trade at exactly 10:00:02 takes that quote, 99.1; a trade at 09:59:59, before any quote, gets null and keeps its row.](figures/04/figure-1-trades-meet-quotes.svg)
+![A time axis for one symbol, AAPL. Three quotes above it at 10:00:00 (bid 99), 10:00:02 (bid 99.1) and 10:00:05 (bid 99.4). Five trades below it, each with an arrow back to the quote it matches: 10:00:01 takes 99, 10:00:03 takes 99.1, 10:00:06 takes 99.4; a trade at exactly 10:00:02 takes that quote, 99.1; a trade at 09:59:59, before any quote, gets null and keeps its row.](figures/03/figure-1-trades-meet-quotes.svg)
 
 *Figure 1. The as-of join: same symbol, at or before, most recent. The dashed trades are the edge
 cases this article comes back to.*
@@ -183,7 +183,7 @@ That is the as-of join, built by hand from two primitives, and it matches q's `a
 every column but the last is matched by **equality** (the group half), and the last is matched
 **as-of** (the bin half).
 
-![One trade, AAPL at 10:00:03, matched in two steps against the quote table sorted by sym then time. Step 1, group: looking up AAPL returns rows 0 1 2, the AAPL block. Step 2, bin: within that block the times are 10:00:00, 10:00:02, 10:00:05, and bin of 10:00:03 returns position 1, row 1, bid 99.1. Below: sym first makes each symbol one contiguous block; time second makes each block ascending so bin is right. aj[`sym`time; trade; quote] is equality on every column but the last, as-of on the last.](figures/04/figure-2-group-plus-bin.svg)
+![One trade, AAPL at 10:00:03, matched in two steps against the quote table sorted by sym then time. Step 1, group: looking up AAPL returns rows 0 1 2, the AAPL block. Step 2, bin: within that block the times are 10:00:00, 10:00:02, 10:00:05, and bin of 10:00:03 returns position 1, row 1, bid 99.1. Below: sym first makes each symbol one contiguous block; time second makes each block ascending so bin is right. aj[`sym`time; trade; quote] is equality on every column but the last, as-of on the last.](figures/03/figure-2-group-plus-bin.svg)
 
 *Figure 2. `aj` is `group` plus `bin`. The sort serves both halves; only one half can be recorded
 by an attribute.*

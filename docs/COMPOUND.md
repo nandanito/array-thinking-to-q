@@ -833,3 +833,38 @@ and archive what it pointed to on the day you accepted — the link here had alr
 second transferable point is the pattern: this is the third confident finding in this repo stated
 from a partial read of the right source (after `p#` and the offline-runtime line). Overcorrection is
 still a misreading; a correction deserves the same full read as the claim it replaces.
+
+## 2026-09-27 — the series is five articles; the licensing article is cut
+
+The standalone licensing article is cut. The series is about array thinking; a whole post on reading
+a vendor's licence was off-thesis, and the one article that interprets someone else's legal text is
+the riskiest to publish. The same day's adversarial pass found four more errors in it after the
+correction above. Its findings are still public where they can be checked: `docs/licensing-notes.md`,
+the README's licensing section, and the as-of join article's provenance note (which already explained
+why there are no speed numbers). Last full draft, figures included: commit a521549.
+
+**Renumbering, so older entries in this file can be decoded:** old 3 (eval) → 2, old 4 (as-of join)
+→ 3, old 5 (Unlearn the loop) → 4, old 6 (What compounds) → 5; files and figure folders moved with
+them. Entries above this one use the OLD numbers. This is the second renumber (the first, 2026-07-28,
+silently re-pointed a legal reference), so governing docs now name articles instead of numbering
+them. The eval article also gained a short q primer (three idioms, all quoted from the committed
+answers) because most readers have never seen q.
+
+**From the eval article's adversarial pass:** three with-plugin sessions (tasks 03, 04, 06) listed
+eight claude.ai Google Drive tools that their no-plugin twins did not. An account connector had
+finished connecting before those sessions started. `--tools Skill,Read,Glob` did not keep it out,
+and `--setting-sources ""` does not govern account connectors. Never invoked, all three pairs tied,
+now disclosed. Transferable: **a harness's tool allow-list is not the model's context.** Assert the
+`system/init` tool list is identical across arms, per session, instead of trusting the flags you
+passed; account-level connectors arrive asynchronously, so two sessions with identical flags can see
+different tools.
+
+**Eval article, final adversarial pass (same day):** it *executed* task 15's prompt code on the pinned
+build, and the "silently wrong" join returns the golden rows. The task's premise was never tested;
+only its reference solution was. No score moves (both arms missed task 15 on an extra output line),
+but the article, verdict and task sheet now say so. It also corrected "blinding is impossible in
+principle" (the answers are code only; relabelling was feasible, just not done) and scoped the claim
+to the q guidance skill, because `qlint-snippet` was invoked but could never lint (no qlint, no shell).
+Transferable: **a repair task's premise is a claim; run the broken input and see it fail.** And
+"impossible in principle" is a phrase to distrust in your own methods section: here it excused a
+control that would have cost minutes.
