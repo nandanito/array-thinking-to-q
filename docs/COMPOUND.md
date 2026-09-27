@@ -901,3 +901,54 @@ description of the display; the article's adversarial pass flagged it anyway, so
 
 Gate check, per habit: four planted corruptions in the new READMEs (a claim, an output, a J source
 line, output order) each failed `verify-prose`.
+
+## M4 close: the J laboratory ships, and "Unlearn the loop" is un-gated (2026-09-27)
+
+M4 is Part I (`lessons/00-j-laboratory/`), the transition chapter (`lessons/00-transition/`) and the
+un-gating of "Unlearn the loop". The article was drafted at M2 close, two months before its
+milestone, and marked with a snippet-check skip until then. That mitigation worked as designed.
+The skip marker named the dependency ("25 of 26 blocks"), the lessons were written to satisfy it,
+and un-gating was a mechanical diff: remove the marker, and all 28 blocks match.
+
+**Verified outputs do not verify what you say about them.** Every output in the draft had been
+executed and captured since July. The adversarial pass still found three wrong claims in it, all
+in the prose *around* correct outputs:
+
+- The article said J's `for_i.` loop makes you "name an index". It binds each *item*; the index is
+  `i_index`. The captured `15` on the same page refutes the claim, because an index loop over
+  `1 2 3 4 5` sums `0..4` to 10 (checked on J 9.7.1). The evidence against the prose was printed
+  directly under it, and nobody read it that way, me included.
+- The window section said anything aligned against q's `mavg` column is "shifted by width − 1".
+  q's column lines up with its rows. The shift happens only when you carry J's alignment into q, or
+  read q's first value as a full window. Figure 3 had been drawn around the overclaim, and its arrow
+  (J's first value belongs under q's third) was right while its caption was wrong.
+- The eval section used task 15 as evidence that the costly errors live on the q side.
+  `eval/verdict.md` had recorded that morning (`ca1ff8d`) that the task's "broken" input returns the
+  golden rows, so it tested nothing about sort bugs. The correction reached the verdict and the eval
+  article; it did not reach this article, which sat behind a skip marker the whole time.
+
+Transferable: **output gates prove the numbers; only a reader can check what the prose says the
+numbers mean.** Read each verified output as a test of the sentence next to it. And the M2
+lesson about downstream consumers holds again: when a finding is corrected, grep every document
+that cites it, **including gated drafts**. A skip marker hides a draft from the snippet check, and
+it also hides it from the corrections everyone else is making.
+
+**Model failure modes, from writing the lessons (me, Claude):** my first draft of the laboratory
+lesson carried a speed claim ("no slowdown you would notice"), with the no-speed-claims rule in
+context, and I caught it on self-review. The transition chapter's first draft credited lesson 03
+with a claim that lesson 03 does not make. Both are the "confident paraphrase" failure this file has
+recorded before, at sentence scale. The fix is the same: open the cited thing before writing that it
+says something.
+
+**Compression, in the end, meant not building.** CLAUDE.md's "compression pass" dates from when J was
+a co-star. What shipped is one lesson plus a chapter, and lesson 01 §5 now points back to Part I
+instead of re-teaching the fork. The two exempt blocks stay at two: the new chapter demonstrates the
+fork's parse failure with a runnable `parse` check instead of spending a third exemption.
+
+**Docs re-read (compound step):** SPEC's status line still said "Fable 5 pass pending" (its own
+review trail records that pass), it said the series publishes "1→6" (five articles since this
+morning), and it had no record of what v1 actually ships against "~10 lessons" (seven). CLAUDE.md's
+build order and blog duty still described M4 and "Unlearn the loop" as future work. All are fixed.
+Checked and still true: the two-exemption rule, the `idiomatic-q` stub's status, and the README
+obligations (why-J-not-BQN, prior art, WSL, disclaimers). Not done here: the `m4` tag, which follows
+the merge.
