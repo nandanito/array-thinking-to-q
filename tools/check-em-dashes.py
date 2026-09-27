@@ -43,9 +43,7 @@ PER_1000 = 2
 FLOOR = 2
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LEGACY = {
-    "writings/04-unlearn-the-loop.md",
-}
+LEGACY = set()  # empty since "Unlearn the loop" had its pass (2026-09-27)
 
 
 def rel(path):

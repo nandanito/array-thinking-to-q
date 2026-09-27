@@ -97,8 +97,8 @@ prose (floor 2 per file), none in titles, headings or figure captions. Default t
 parentheses or full stops; keep an em dash only for a deliberate beat, never as a pair around an
 aside. Same budget as nandan.me, so a site sync never has to rewrite punctuation. Enforced for
 `writings/*.md` and the lesson READMEs by `tools/check-em-dashes.py` (a PostToolUse hook in `.claude/settings.json`, and
-part of `make verify-writings`, so it blocks on PRs); pre-rule articles sit on its LEGACY list
-until their publication pass. The same habit applies to docs, code comments, commit messages and
+part of `make verify-writings`, so it blocks on PRs). Its LEGACY list for pre-rule articles has
+been empty since "Unlearn the loop" had its pass (2026-09-27); keep it empty. The same habit applies to docs, code comments, commit messages and
 PR text, unenforced. Other tells to avoid: "not X, it's Y" as a reflex, triplets for rhythm, and
 closing lines that restate the paragraph.
 
