@@ -126,18 +126,21 @@ already delivers it → publish the comparison, author nothing. Both are real fi
 ## Toolchain & licensing
 
 - **J 9.7** (GPLv3, jsoftware) — `jconsole` headless; CI-safe; blocking checks.
-- **q via KDB-X Community Edition** (GA Nov 2025; **personal / internal-business use ONLY** — NOT
-  commercial distribution or monetization, and **benchmark/performance publication prohibited
-  without prior written KX consent** — per the actual license read at Task Zero, KX Community
-  Edition License Agreement v1.1 (27 Aug 2025), see docs/licensing-notes.md. `.Q.lim`-confirmed caps:
+- **q via KDB-X Community Edition** (GA Nov 2025; **personal or internal-business use, including
+  commercial projects, within the resource caps** — Clause 2.1 / Attachment A plus the Usage
+  Restrictions that Clause 11 incorporates; NOT redistribution, OEM bundling or competing products;
+  **benchmark/performance publication prohibited without prior written KX consent** (Clause 9) —
+  KX Community Edition License Agreement v1.1 (27 Aug 2025), see docs/licensing-notes.md. `.Q.lim`-confirmed caps:
   16GB RAM / 4 secondary threads / 16 conns / no per-process core limit (24-core aggregate license
   cap); license key + license-validation phone-home reserved by Clause 4).
-  NOTE: the earlier "free personal+commercial per KX marketing" was NOT supported by the license text
-  — corrected 2026-07-24 (see docs/COMPOUND.md).
+  NOTE: the first version said "free personal+commercial per KX marketing" (unsourced); Task Zero
+  corrected it to "personal / internal-business ONLY" (2026-07-24), which read the agreement without
+  the Usage Restrictions it incorporates; corrected again 2026-09-27 (docs/licensing-notes.md).
 - **TASK ZERO — RESOLVED 2026-07-24** (full findings + sources: docs/licensing-notes.md). The three
   reads, done:
-  (1) license read (KX CE License Agreement v1.1, 27 Aug 2025): **personal / internal-business use
-      ONLY**, benchmark-restricted — the "more restrictive text" IS the license; no commercial claim;
+  (1) license read (KX CE License Agreement v1.1, 27 Aug 2025): personal / internal-business use,
+      benchmark-restricted (later read with its incorporated Usage Restrictions: commercial projects
+      are in scope — see the 2026-09-27 correction);
   (2) benchmark clause **FOUND** (Clause 9: no publishing performance/benchmark info without prior
       written KX consent) → the as-of-join article takes the no-numbers, design/semantics path;
   (3) KX ships `KxSystems/kx-skills` (5 plugins, incl. `q-knowledge` + qlint) + 2 MCP servers; none

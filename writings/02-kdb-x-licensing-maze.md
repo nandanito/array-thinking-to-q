@@ -15,10 +15,10 @@ prove it. The q in question runs on **KDB-X Community Edition** — the free tie
 runtime, which needs a licence key. That is a modest goal. It took a full day of reading before I could write the first line
 of the Makefile, and the reading changed the design in three separate places.
 
-This is what I found, why the order I found it in mattered, and the two moments where a source I
-trusted turned out to be wrong.
+This is what I found, why the order I found it in mattered, and the three moments where a source I
+trusted turned out to be wrong. One of those sources was my own first reading.
 
-![Three rows pairing licence clauses with design changes. Clause 2.1 and Attachment A, personal or internal business use only: no commercial-friendliness claims, ever. Clause 9, no benchmark, test or performance information without written consent: the speed article became a design article with no numbers. Clause 4, periodic licence validation with no opt-out: air-gapped verification treated as at risk, CI only on runners with network egress.](figures/02/figure-1-three-findings.svg)
+![Three rows pairing licence clauses with design changes. Clauses 2.1 and 11 and Attachment A, personal or internal business use, including commercial projects within resource caps: quote the licence and never judge the reader's use. Clause 9, no benchmark, test or performance information without written consent: the speed article became a design article with no numbers. Clause 4, periodic licence validation with no opt-out: air-gapped verification treated as at risk, CI only on runners with network egress.](figures/02/figure-1-three-findings.svg)
 
 *Figure 1. Three clauses, three changes to the design. Paraphrased: the clause numbers are the
 authority, not the figure.*
@@ -30,40 +30,57 @@ bundled with the actual download, find the benchmark clause if one exists, and r
 version as the pinned known-good build.
 
 I set that rule for a slightly different reason than the one it ended up serving. I expected to be
-*reassured* — to confirm the free tier was fine for what I was doing and move on. Instead, two of
-the highest-priority questions came back restrictive, and one of them took an article I had already
-planned and made it unwritable as planned.
+*reassured* — to confirm the free tier was fine for what I was doing and move on. Instead, the benchmark
+question came back restrictive and made an article I had already planned unwritable as planned, and
+the commercial-use question turned out more complicated than either my spec or my first reading.
 
 Had I written the CI first, I would have built the wrong CI. Had I written the README first, I
-would have published a claim that is false.
+would have published a claim I could not source to the agreement.
 
-## Finding 1: my own spec had it backwards on commercial use
+## Finding 1: I read the agreement, and missed the page it incorporates
 
 My spec said, in writing, that the community edition was free for personal *and commercial* use.
-I had taken that from marketing copy. The operative agreement is the [KX Community Edition License
-Agreement](https://kx.com/legal/community-edition-license-agreement-08-27/) (v1.1, 27 Aug 2025),
-and it does not say that.
+I had taken that from marketing copy. Then I read the operative agreement, the [KX Community Edition
+License Agreement](https://kx.com/legal/community-edition-license-agreement-08-27/) (v1.1, 27 Aug
+2025), and concluded the spec had it backwards.
 
 Clause 2.1 grants a "limited, non-transferable, non-exclusive license, without right of sublicense
 … solely for the Permitted Use", and Attachment A defines Permitted Use as **"personal or internal
-business use."** The same clause prohibits making the software available to third parties, and
-2.1.xi prohibits building a product or service that "competes with, or provides the same or similar
-features". Revenue-generating bundling needs a separate OEM license (2.2).
+business use."** I stopped there, wrote "no commercial grant" into my notes, and put a rule in the
+repo's contributor instructions as a non-negotiable: no commercial-friendliness claims about KDB-X
+CE, ever.
 
-So the governing rule I adopted, and put in the repo's contributor instructions as a
-non-negotiable, is blunt: **no commercial-friendliness claims about KDB-X CE, ever.**
+I had stopped one phrase too early. The same sentence of 2.1 continues "and subject to the Usage
+Restrictions", and in the agreement that phrase is a link. Clause 11 says the agreement *and the
+Usage Restrictions* "form the complete agreement", and defines the Restrictions as whatever was
+"described at the point where this Agreement was presented to you": a web page, not a clause. The
+link now redirects to KX's documentation home page. The Internet Archive's copies of the linked page
+from April and June 2026 say only that it has moved, and point to KX's Usage Restrictions page. The
+archived copies of *that* page from 5 June and 14 August 2026, either side of the day my key was
+issued, say the same thing: the Community Edition licence "is free for both personal and commercial
+projects", subject to the resource caps listed under it. What the sign-up flow itself showed me
+that day, the archive cannot say; the page the agreement links to is the best evidence I have.
 
-I am not going to tell you what that means for your project, or claim it settles mine — that is
-exactly the kind of conclusion the disclaimer at the top disclaims. What I did was narrower: I read
-the grant, saw it does not extend to distributing the software or building something competing with
-it, and shaped the project so those questions do not arise — this repo ships lessons and my own q
-snippets, never KX's software. Clause 9 then constrains what I may publish, which binds the README
-and every article including this one. Read the grant yourself before assuming your case looks like
-mine.
+Read whole, then, the licence grants **personal or internal-business use, including commercial
+projects, within the resource caps.** What it forbids is just as specific: making the software
+available to third parties (2.1), building a product or service that "competes with, or provides
+the same or similar features" (2.1.xi), and revenue-generating bundling without a separate OEM
+licence (2.2). Clause 11 also says the agreement's own terms take precedence over any conflicting
+document. I read "internal business use" and "commercial projects" as consistent, but that is my
+reading, not a ruling.
+
+So the rule changed, and I think it got better: **say what the licence says, with clause numbers,
+and never tell a reader what their own use permits.** I am not going to tell you what any of this
+means for your project, or claim it settles mine; that is exactly the kind of conclusion the
+disclaimer at the top disclaims. What I did was narrower: I shaped the project so the questions the
+licence does forbid never arise. This repo ships lessons and my own q snippets, never KX's software.
+Clause 9 then constrains what I may publish, which binds the README and every article including this
+one. Read the grant, and what it incorporates, before assuming your case looks like mine.
 
 The general form is worth stealing: **your spec's assumptions about a license are a claim like any
-other, and they degrade silently.** Mine sat there looking authoritative for weeks. Nothing was
-going to fail; a reader was just going to be misinformed.
+other, and they degrade silently.** So is your correction of them. Mine was based on the agreement's
+own text and still overreached, because a licence is its text plus every document the text pulls
+in. Nothing was going to fail either way; a reader was just going to be misinformed.
 
 ## Finding 2: the benchmark clause is real, and it killed the article I wanted to write
 
@@ -137,8 +154,8 @@ Other operational residue, in case it saves you the reading:
 - The key I received is marked non-expiring; the agreement is nonetheless **terminable at will** by
   KX on notice (Clause 10). KX's liability is capped at US$100 (Clause 7, with carve-outs for death or
   personal injury caused by negligence, and for fraud); governing law is New York (Clause 15).
-- Resource caps live in the *runtime*, not the license text: `.Q.lim` reports 16 GB memory, 4
-  secondary threads, 16 connections. The 24-core figure quoted around the web is an aggregate
+- Resource caps are listed in the Usage Restrictions, not in the agreement's own clauses, and the
+  runtime enforces them: `.Q.lim` reports 16 GB memory, 4 secondary threads, 16 connections. The 24-core figure quoted around the web is an aggregate
   **license** ceiling, not a per-process limit.
 - The older kdb+ Personal Edition still exists and is a **different agreement**. Do not read one as
   evidence about the other. I nearly did.
@@ -162,6 +179,12 @@ sources before you read, not after.** License text, then vendor documentation, t
 binary as tiebreak, then everyone else. And "everyone else" includes the blog you are reading now,
 which is why every clause above carries a number.
 
+The third case is a different mistake, and it was mine alone. I did read the primary text, the
+agreement, and still got commercial use wrong, because I read the agreement and not the page it
+incorporates. That page is vendor documentation, the second rank in my own list, and a clause in the
+first rank makes it part of the licence. Ranking sources is not enough if you stop at the edge of a
+document that points past itself.
+
 ![A ranked list: 1 the licence text, 2 the vendor's documentation, 3 the running binary as tiebreak, 4 everyone else including this blog. Two cases: a blog said the edition runs fully offline, but clause 4 reserves a licence check, so the licence wins; a secondary source said 8 connections and the docs said 16, and .Q.lim on the installed binary reported 16.](figures/02/figure-3-rank-your-sources.svg)
 
 *Figure 3. Rank your sources before you read. I got it wrong in both directions.*
@@ -171,7 +194,9 @@ which is why every clause above carries a number.
 If you plan to teach, benchmark, or CI a vendor's free tier in public:
 
 1. **Read the actual agreement bundled with the actual download, before you design anything.** Not
-   the marketing page, not the FAQ, not a summary — including your own spec's summary.
+   the marketing page, not the FAQ, not a summary — including your own spec's summary. And follow every document it incorporates by
+   reference: mine pulls in a web page through a link that now redirects, and that page changes the
+   answer.
 2. **Search it for a benchmark clause specifically.** Database vendors have a long tradition here.
    If you have a performance article planned, that clause decides whether it exists.
 3. **Separate mandatory license validation from optional telemetry.** They are different consents
@@ -181,8 +206,9 @@ If you plan to teach, benchmark, or CI a vendor's free tier in public:
    pinned because "the free tier" is not a version and a silent upgrade is a silent change in what
    your examples teach.
 
-None of this made the project harder to build. It made two of my planned claims impossible and one
-planned article better, and I would rather have learned all three on day one than after publishing.
+None of this made the project harder to build. It took one planned claim off the table, turned one
+planned article into a better one, and caught me overcorrecting on a third, and I would rather have
+learned all of that before publishing than after.
 
 ---
 

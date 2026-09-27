@@ -9,7 +9,7 @@ taught. Read it as a lab notebook, not as teaching material.
 | File | What it is |
 |---|---|
 | [`toolchain.md`](toolchain.md) | The pinned known-good versions of J and KDB-X, how they were installed, and the gotchas that bite (the macOS `jconsole`/Java name collision; why tool paths are passed to `make` rather than trusted on `PATH`). The one file here that is genuinely reader-facing — start here if you want to reproduce the setup. |
-| [`licensing-notes.md`](licensing-notes.md) | The full read of the KDB-X Community Edition license, done because this repo runs q in public and the terms are restrictive. Records what the license actually says (personal / internal-business use only; benchmark publication restricted), what was confirmed against a live install, and which secondary sources turned out to be wrong. |
+| [`licensing-notes.md`](licensing-notes.md) | The full read of the KDB-X Community Edition license, done because this repo runs q in public and the terms are restrictive. Records what the license actually says (personal or internal-business use, including commercial projects within resource caps via the incorporated Usage Restrictions; no redistribution; benchmark publication restricted), what was confirmed against a live install, and which secondary sources turned out to be wrong. |
 | [`COMPOUND.md`](COMPOUND.md) | Lessons learned, appended at every milestone: what worked, what broke, and what transfers to other projects. Deliberately candid, including about the author's own wrong guesses — a correction is more useful than a clean narrative. |
 
 Two things follow from "notes, not curriculum":

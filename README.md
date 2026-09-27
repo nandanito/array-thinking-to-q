@@ -110,8 +110,11 @@ This repo is a narrow, opinionated path, not a reference. These are the things i
 Per the [KX Community Edition License Agreement](https://kx.com/legal/community-edition-license-agreement-08-27/)
 (v1.1, 27 Aug 2025), as read in full for this project:
 
-- Use is granted for **personal or internal-business purposes only**. It is not a grant to
-  distribute, sell, or monetise the software, or to build a competing product.
+- Use is granted for **personal or internal-business purposes** (Clause 2.1), subject to KX's
+  Usage Restrictions, which the agreement incorporates (Clause 11). They describe the Community
+  Edition as free for personal and commercial projects within resource caps (16 GB RAM, one
+  instance, 4 secondary threads, 16 connections). It is not a grant to distribute, sell or bundle
+  the software, or to build a competing product. What that means for your use is for you to judge.
 - **Publishing benchmark or performance figures requires KX's prior written consent** (Clause 9).
   This project therefore publishes **no benchmark or performance numbers, and no competitive
   comparison** — the as-of join material argues design and semantics, never speed.

@@ -21,9 +21,14 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
    live in a verify-clean file, so it is quoted as a real REPL transcript). A lesson whose q side
    does not yet run stays **on its feature branch** until `make verify` is green — never
    half-verified on `main`. There is no `drafts/`; git branches already do this job.
-4. **No commercial-friendliness claims about KDB-X CE**, ever. TASK ZERO is DONE and settled this:
-   the license grants personal / internal-business use ONLY and restricts benchmark publication
-   (Clause 9). This is not a hold pending research — it is the finding. See docs/licensing-notes.md.
+4. **Say what the KDB-X CE licence says; never tell readers what their own use permits.** The
+   agreement grants personal or internal-business use (Clause 2.1 / Attachment A) subject to the
+   Usage Restrictions it incorporates (Clause 11), which say CE is "free for both personal and
+   commercial projects" within resource caps. It forbids making the software available to third
+   parties, OEM bundling without a licence, and competing products, and restricts benchmark
+   publication (Clause 9). Quote that with clause numbers; never shorten it to "free for commercial
+   use" or "non-commercial" (both were wrong once here). Corrected 2026-09-27 — see
+   docs/licensing-notes.md.
 5. **Narrative is the product.** Each lesson explains WHY the idiom is shaped that way and what
    the imperative instinct gets wrong. Two code blocks + a sentence = cut or merge.
 6. Names "q", "kdb+", "KDB-X", "J" are third-party marks used nominatively. Keep the
