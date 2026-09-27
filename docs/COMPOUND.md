@@ -925,7 +925,8 @@ in the prose *around* correct outputs:
 - The eval section used task 15 as evidence that the costly errors live on the q side.
   `eval/verdict.md` had recorded that morning (`ca1ff8d`) that the task's "broken" input returns the
   golden rows, so it tested nothing about sort bugs. The correction reached the verdict and the eval
-  article; it did not reach this article, which sat behind a skip marker the whole time.
+  article that day. It reached this draft only when the adversarial pass flagged it, because the
+  draft sat behind a skip marker the whole time. It is fixed in the M4 article PR.
 
 Transferable: **output gates prove the numbers; only a reader can check what the prose says the
 numbers mean.** Read each verified output as a test of the sentence next to it. And the M2

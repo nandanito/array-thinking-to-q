@@ -60,7 +60,8 @@ runs end-to-end, and the eval verify-harness exists.
    Q-first rule requires.)
 4. Part I (J laboratory) compression pass + transition chapter. (SPEC's **M4**.) **DONE 2026-09-27**:
    Part I is one read-along lesson (`lessons/00-j-laboratory/`), the transition chapter is
-   `lessons/00-transition/`, and "Unlearn the loop" is un-gated, with every block quoted from them.
+   `lessons/00-transition/`, and "Unlearn the loop" is un-gated: every block is quoted from them, except
+   lesson 01's exempt parse-error transcript.
 5. CI: `j-verify.yml` (blocking, on PR) and `q-verify.yml` (nightly + manual, trusted branches
    only, license key from repo secret; failures notify, never block). **`q-verify.yml` now exists
    and runs `make verify`** — so the eval-run checks are enforced, not just local. It is NOT a PR

@@ -199,7 +199,8 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   enthusiasm is high") was missed. Mitigated instead by drafting it at M2-close, before its
   milestone exists; that is what makes it safe for the J laboratory to run *after* the q core.
   **DONE 2026-09-27:** `lessons/00-j-laboratory/` and `lessons/00-transition/` verify, and the
-  article is un-gated (every block identical to a running lesson block; em-dash pass done).
+  article is un-gated (every block identical to a lesson README block, all of which run except
+  lesson 01's exempt parse-error transcript; em-dash pass done).
 - **M5 — Ship (wk 8):** curriculum v1; the **eval harness packaged as a reusable artifact**
   (`eval/harness/` published so anyone can A/B a Claude Code plugin: neutral-cwd contamination
   control, mechanical activation detection, self-verifying scorer); v1 tag.
