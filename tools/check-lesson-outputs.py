@@ -19,13 +19,15 @@ and the deliberate q parse-error REPL transcript are both tagged.
 
 Source blocks are checked too. Every line of a ```q or ```j block must be a
 line of that lesson's own q/*.q or j/*.ijs file, compared after normalising
-what the narrative legitimately drops: comments, `show`, whitespace and a
-trailing `;`. An error demo the source runs inside a trap, `@[{`s#x}; 3 1 2;
+what the narrative legitimately drops: comments, `show`, a trailing `;`, and
+runs of whitespace (collapsed to one space, never deleted: in q `10 20 30`
+and `102030` are different programs). An error demo the source runs inside a trap, `@[{`s#x}; 3 1 2;
 handler]`, is matched as `` `s#3 1 2 ``. Without this, a README could show a
 q line no file ever ran, and verify-writings (which trusts README blocks)
-would pass an article quoting it. The one exemption is structural, not a
-marker: a block whose first line starts with `q)` is a REPL transcript (the
-deliberate parse error of CLAUDE.md rule 3), which cannot live in a file.
+would pass an article quoting it. The one exemption is lesson 01's
+deliberate parse error, quoted as a `q)` REPL transcript (CLAUDE.md rule 3);
+it is pinned by file and first line (REPL_EXEMPT), so any other `q)` block
+fails.
 
 Usage: check-lesson-outputs.py [lesson_dir ...]     (default: all lessons)
 Env:   Q, J — interpreter paths (same knobs the Makefile uses).
@@ -142,7 +144,12 @@ def find(hay: list[str], needle: list[str], start: int) -> int:
     return -1
 
 
-TRAP = re.compile(r"^@\[\{(.*)\};(.*);\{.*\}\]$")
+TRAP = re.compile(r"^@\[\{(.*)\}; ?(.*?); ?\{.*\}\]$")
+
+# The one q block CLAUDE.md rule 3 lets live outside a runnable file: lesson
+# 01's deliberate parse error, quoted as a REPL transcript. Pinned by file and
+# first line, so a second `q)` block anywhere fails instead of being skipped.
+REPL_EXEMPT = ("lessons/01-atoms-and-lists/README.md", "q)(+/ % #) til 5")
 
 
 def norm_source(line: str, lang: str) -> str:
@@ -152,13 +159,13 @@ def norm_source(line: str, lang: str) -> str:
             return ""
         s = re.sub(r"(^|\s)/(\s.*)?$", "", line)
         s = re.sub(r"\bshow\s+", "", s)
-        s = re.sub(r"\s+", "", s).rstrip(";")
+        s = re.sub(r"\s+", " ", s).strip().rstrip(";").rstrip()
         t = TRAP.match(s)
         if t:
             s = re.sub(r"\bx\b", t.group(2), t.group(1))
         return s
     s = re.sub(r"NB\..*$", "", line)
-    return re.sub(r"\s+", "", s)
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def source_blocks(lesson: Path, readme: Path) -> tuple[list[str], int]:
@@ -176,7 +183,14 @@ def source_blocks(lesson: Path, readme: Path) -> tuple[list[str], int]:
             continue
         first = next((ln for ln in body if ln.strip()), "")
         if tag == "q" and first.lstrip().startswith("q)"):
-            continue  # REPL transcript: the exempt parse-error block
+            if (str(readme.relative_to(REPO)), first.strip()) == REPL_EXEMPT:
+                continue  # the one exempt REPL transcript
+            failures.append(
+                f"{readme.relative_to(REPO)}:{start + 1}: REPL TRANSCRIPT — only "
+                f"lesson 01's parse error may be quoted as a `q)` transcript "
+                f"(CLAUDE.md rule 3); put this code in a runnable file."
+            )
+            continue
         n += 1
         for offset, line in enumerate(body):
             key = norm_source(line, tag)
