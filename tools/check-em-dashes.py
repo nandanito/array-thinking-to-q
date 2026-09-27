@@ -40,7 +40,6 @@ FLOOR = 2
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEGACY = {
     "writings/02-evaluating-kx-q-plugin.md",
-    "writings/03-the-as-of-join.md",
     "writings/04-unlearn-the-loop.md",
 }
 
