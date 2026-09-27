@@ -92,6 +92,16 @@ Publishing/syndication steps live in RELEASE-CHECKLIST.md, not here and not in S
 the framing is a practitioner publishing verified work, misses included. Published articles take
 their title and slug from nandan.me, and the site URL is canonical — sync `writings/` to it.
 
+**Voice: write like a person, not a model.** Em dashes sparingly: at most 2 per 1,000 words of
+prose (floor 2 per file), none in titles, headings or figure captions. Default to commas, colons,
+parentheses or full stops; keep an em dash only for a deliberate beat, never as a pair around an
+aside. Same budget as nandan.me, so a site sync never has to rewrite punctuation. Enforced for
+`writings/*.md` by `tools/check-em-dashes.py` (a PostToolUse hook in `.claude/settings.json`, and
+part of `make verify-writings`, so it blocks on PRs); pre-rule articles sit on its LEGACY list
+until their publication pass. The same habit applies to lessons, docs, commit messages and PR
+text, unenforced. Other tells to avoid: "not X, it's Y" as a reflex, triplets for rhythm, and
+closing lines that restate the paragraph.
+
 **There is no skill and no marketplace submission.** The M2 eval authored none — objective 3's
 gate held — so M5 ships the curriculum plus `eval/harness/` packaged as a reusable
 plugin-A/B artifact. Do not reintroduce a skill deliverable without a NEW eval showing a gap.
