@@ -1,4 +1,4 @@
-# Part II — q
+# Part II: q
 
 > Everything in this directory is **q**. Part I (the J laboratory) is where the array
 > *paradigm* is felt; the full transition chapter ("everything after this point is q,
@@ -13,7 +13,7 @@ and an as-of join, in the language people are actually paid to write.
 - **Q-first.** The q side is written and *running* before a word of narrative or any J twin.
 - **Everything executes.** Every code block below comes from a file under `q/` or `j/` that
   `make verify` runs. The outputs shown in each lesson are **captured from the real tools**
-  (KDB-X CE 5.0, J 9.7.1) — never hand-typed, never guessed.
+  (KDB-X CE 5.0, J 9.7.1), never hand-typed, never guessed.
 - **Narrative is the product.** A lesson explains *why* an idiom is shaped the way it is and
   what the imperative instinct gets wrong. Two code blocks and a sentence is not a lesson.
 
@@ -34,7 +34,7 @@ unlearning the loop. The conceptual centre of Part II is lesson 02 (dict → tab
 ## Run the lessons yourself
 
 The tool binaries are not on a bare `PATH` (see [`docs/toolchain.md`](../docs/toolchain.md)
-for why — including the macOS `jconsole`/Java name collision), so pass them to `make`:
+for why, including the macOS `jconsole`/Java name collision), so pass them to `make`:
 
 ```sh
 make verify-q Q=$HOME/.kx/bin/q            # run every lesson's q

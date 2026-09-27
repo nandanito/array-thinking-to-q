@@ -1,8 +1,8 @@
-# Lesson 05 — The as-of join
+# Lesson 05: The as-of join
 
-> **Run it** (from the repo root — the last section reads the showcase's golden file):
+> **Run it** (from the repo root; the last section reads the showcase's golden file):
 > `$HOME/.kx/bin/q lessons/05-asof-join/q/asof.q -q < /dev/null`
-> (the tool binaries are not on `PATH` — see the [Part II index](../README.md)).
+> (the tool binaries are not on `PATH`; see the [Part II index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/asof.q`](q/asof.q), [`j/asof-boundaries.ijs`](j/asof-boundaries.ijs).
 > The runnable showcase this lesson explains: [`showcase/aj/`](../../showcase/aj/).
@@ -10,24 +10,24 @@
 You already know this join. If you have written `merge_asof` in pandas, `join_asof` in Polars,
 or an `ASOF JOIN` in DuckDB, QuestDB or ClickHouse, you have asked the question this lesson is
 about: *for each trade, what was the quote in force when it happened?* Not a quote at exactly that
-time — there usually isn't one — but the most recent quote for the same symbol at or before it.
+time (there usually isn't one), but the most recent quote for the same symbol at or before it.
 The as-of join is not rare and it is not q's secret. It exists wherever time series meet.
 
 So this lesson does not introduce `aj` as a feature. It does something more useful: it takes the
-join apart and shows that it is made of two things you have already met — lesson 03's `group`,
-and one primitive, `bin` — operating on the column lists of lesson 02, over a table whose row
+join apart and shows that it is made of two things you have already met (lesson 03's `group`
+and one primitive, `bin`) operating on the column lists of lesson 02, over a table whose row
 order lesson 04 made **your** responsibility. When those pieces are in place, `aj` is barely a
 function at all; it is what the layout was for. That is the honest version of the claim usually
 made about q and time series. It is not that q has the join and nobody else does. It is what the
 join looks like when the language and its storage were designed around it.
 
-And one practical payoff. The [showcase](../../showcase/aj/) opens with two lines of preamble —
-sort the quotes by `` `sym`time ``, then put `` `g# `` on `sym` — that the reference manual
+And one practical payoff. The [showcase](../../showcase/aj/) opens with two lines of preamble
+(sort the quotes by `` `sym`time ``, then put `` `g# `` on `sym`) that the reference manual
 prescribes and most code copies. By the end of this lesson you should be able to *derive* both
 lines, and say which half of the join each one serves.
 
 *(As in lesson 04: no timings. The KDB-X Community Edition license restricts publishing
-performance figures — see [`docs/licensing-notes.md`](../../docs/licensing-notes.md). Where this
+performance figures; see [`docs/licensing-notes.md`](../../docs/licensing-notes.md). Where this
 lesson says one shape does less work than another, it means it counts fewer things, which you can
 check by reading the code; it does not mean a measurement.)*
 
@@ -35,7 +35,7 @@ check by reading the code; it does not mean a measurement.)*
 
 ## 0. The data
 
-The showcase's tables, exactly — with the quotes still in the order they arrived, which is not
+The showcase's tables, exactly, with the quotes still in the order they arrived, which is not
 time order:
 
 ```q
@@ -95,14 +95,13 @@ whole section on an `aj` that returned 98.5 instead of 99.1 because the rows wer
 order; this version cannot make that mistake. (With one exception, and it is instructive: if two
 quotes for a symbol share the same timestamp, "the greatest time" names both, and *something* has
 to break the tie. Values cannot; only row order can. That is why the function says `last bid` and
-not `first bid` — to break ties the way `aj` does, as the rest of this lesson will show.)
+not `first bid`: to break ties the way `aj` does, as the rest of this lesson will show.)
 
 What it gets wrong is the shape of the work. For every trade it filters the **entire** quote
-table by symbol, filters the survivors by time, then scans what is left for a maximum. Five
-trades means five full passes; a day of trades against a day of quotes means trades × quotes.
-And look at what each pass recomputes. It asks two questions:
+table by symbol, filters the survivors by time, then scans what is left for a maximum. And look
+at what each call recomputes. It asks two questions:
 
-1. *Which quotes belong to this symbol?* The answer depends only on the symbol — yet it is
+1. *Which quotes belong to this symbol?* The answer depends only on the symbol, yet it is
    recomputed for every trade, including the three AAPL trades that ask it about the same `` `AAPL ``.
 2. *Of those, which is the latest at or before `t`?* This one genuinely depends on the trade. But
    it is answered by looking at every candidate, as though the quote times had no order at all.
@@ -136,7 +135,7 @@ filtering on `sym` can look the rows up instead of scanning for them.
 
 Within one symbol's quotes, "the latest at or before `t`" is a search, and q has a primitive whose
 definition is that sentence. `x bin y` returns the index of the **last element of `x` that is at
-or before `y`** — provided `x` is sorted. Here are AAPL's three quote times as seconds past
+or before `y`**, provided `x` is sorted. Here are AAPL's three quote times as seconds past
 10:00:00, with their bids:
 
 ```q
@@ -148,14 +147,14 @@ times bin -1               / -1 — nothing at or before: off the front
 
 Every edge of the as-of question is already decided by the primitive. A trade at exactly a quote's
 time gets *that* quote, because the comparison is at-or-before. A trade before any quote gets
-`-1` — and `-1` is not a valid position in q, so indexing with it yields a null rather than an
+`-1`, and `-1` is not a valid position in q, so indexing with it yields a null rather than an
 error or a wrapped-around value:
 
 ```q
 bids times bin 3 2 -1      / 99.1 99.1 0n — and index -1 is null
 ```
 
-That is a join's worth of boundary semantics — inside, tie, and before-the-first — in one
+That is a join's worth of boundary semantics (inside, tie, and before-the-first) in one
 primitive and one indexing rule, and none of it had to be written.
 
 One assumption rides along: the quote times are not null. q sorts a null time before every real
@@ -175,7 +174,7 @@ without looking at every element because it *assumes* `x` is sorted, and it does
 2 0 5 bin 3                / 1 — unsorted: a confident, wrong index
 ```
 
-Position 1 of `2 0 5` holds `0`. The quote at `2` was the right one. No error, no warning — the
+Position 1 of `2 0 5` holds `0`. The quote at `2` was the right one. No error, no warning: the
 same silence as lesson 04's `aj` over an unsorted table, and for the same reason. The search that
 makes `bin` worth having is exactly what makes it trust you.
 
@@ -217,10 +216,10 @@ ascending. Every block is now a ready-made argument for `bin`.
 This is the showcase's first preamble line, derived rather than copied, and both of its columns
 now have a job:
 
-- **`time` is for correctness.** It is what makes `bin` — and so `aj` — return the right row.
+- **`time` is for correctness.** It is what makes `bin`, and so `aj`, return the right row.
   Leave it out and you get section 3's confident wrong index.
 - **`sym` first is for the grouping.** It is what makes each symbol's rows a single block, which
-  is the shape the group half can exploit — and the shape lesson 04's `` `p# `` (*parted*) exists
+  is the shape the group half can exploit, and the shape lesson 04's `` `p# `` (*parted*) exists
   to claim.
 
 And lesson 04's section 4 lands here with its full weight. `xasc` stamps `` `s# `` on `sym` and
@@ -247,7 +246,7 @@ idx
 
 One quote row per trade: `bin` gives a position *within* the block, and `r` translates it back to
 a row of `sorted`. Index the quote table with those rows and stitch the columns alongside the
-trades — lesson 02's `,'`, joining two tables row by row:
+trades with lesson 02's `,'`, joining two tables row by row:
 
 ```q
 hand:trade,'`bid`ask#sorted idx
@@ -270,18 +269,19 @@ hand ~ aj[`sym`time; trade; sorted]   / 1b
 That is the as-of join. `aj`'s column argument `` `sym`time `` is this same decomposition written
 as a spec: every column but the last is matched by **equality** (the `group` half), and the last is
 matched **as-of** (the `bin` half). The reference phrases the result as *"the last (in row order)
-matching record"* — and now you can see why it says *row order* rather than *greatest time*. It is
+matching record"*, and now you can see why it says *row order* rather than *greatest time*. It is
 describing `bin`. On a table sorted the way section 4 sorted it, the last row in order *is* the
 latest in time; if the times are out of order within a symbol, as lesson 04 showed, it may not be,
 and `aj` still returns what `bin` returns.
 
 Look back at section 1 with this in hand. The loop said "greatest time", which is order-proof
 (short of exact ties, which it breaks by row order too) because it looks at every candidate. `aj`
-says "last in row order", which means "latest" only if you keep a promise about the sort. The difference between those two phrases *is* the co-design: q chose the definition that
-the storage can answer directly, and handed you the sort as the price of admission.
+says "last in row order", which means "latest" only if you keep a promise about the sort. The difference
+between those two phrases *is* the co-design: q chose the definition that the storage can answer
+directly, and handed you the sort as the price of admission.
 
 (The hand version still walks the trades one at a time with `'`, and it is not how you would write
-this join — you would write `aj`. Its job is to make the parts visible. Inside `aj` the same two
+this join; you would write `aj`. Its job is to make the parts visible. Inside `aj` the same two
 questions are answered by the engine, with the attribute telling it how to find each block.)
 
 ---
@@ -304,7 +304,7 @@ AAPL 10:00:02 99.12 99.1 99.3
 IBM  10:00:03 150
 ```
 
-Every trade survives — `aj` is a *left* join, so the result always has one row per trade, and
+Every trade survives. `aj` is a *left* join, so the result always has one row per trade, and
 where nothing prevailed you get nulls, not a missing row. The tie gets the quote stamped at the
 same second. And the hand-built version produces exactly this, with no code for any of the three
 cases:
@@ -325,7 +325,7 @@ eidx
 The early AAPL trade: `bin` returned `-1`, and row `-1` of the block is null. The IBM trade: `g`
 has no `` `IBM `` key, so the lookup returns an empty list, `bin` on an empty list is `-1`, and the
 same null follows. The tie: `bin` is at-or-before. The nulls in `aj`'s output are not a policy
-someone wrote — they are what indexing does off the front of a list.
+someone wrote. They are what indexing does off the front of a list.
 
 ---
 
@@ -348,8 +348,8 @@ MSFT 10:00:06 200.4 75   200.3 200.5
 ```
 
 That is the showcase, line for line, and the lesson's file checks that `res` renders
-line-for-line identical to [`showcase/aj/expected.txt`](../../showcase/aj/expected.txt) — the golden file
-`make verify` diffs the showcase against — exiting nonzero if it ever does not:
+line-for-line identical to [`showcase/aj/expected.txt`](../../showcase/aj/expected.txt) (the golden file
+`make verify` diffs the showcase against), exiting nonzero if it ever does not:
 
 ```
 1b
@@ -357,19 +357,19 @@ line-for-line identical to [`showcase/aj/expected.txt`](../../showcase/aj/expect
 
 Read the preamble back with sections 2–5 in hand:
 
-- **`` `sym`time xasc ``** — the correctness step. `time` ascending within each `sym` is what makes
+- **`` `sym`time xasc ``**: the correctness step. `time` ascending within each `sym` is what makes
   "last in row order" mean "latest", i.e. what makes `bin` right. `sym` first makes each symbol one
   contiguous block.
-- **`` `g# `` on `sym`** — the optional step. It records the *group* half of the join (section 2's
+- **`` `g# `` on `sym`**: the optional step. It records the *group* half of the join (section 2's
   dictionary) so the engine can find each symbol's block by lookup. It records nothing about the
   `bin` half; nothing can. It goes **last**, after the data is final, because lesson 04 showed
   attributes are perishable. (And lesson 04's section 6 still stands: on a table already sorted
   this way, `` `p# `` is also available and defensible. `` `g# `` is the default the showcase
   ships, not the single right answer.)
-- **`aj[`sym`time; …]`** — equality on every column but the last, `bin` on the last.
+- **`aj[`sym`time; …]`**: equality on every column but the last, `bin` on the last.
 
 Which is to say: the attribute is optional and the sort is not. Drop the `` `g# `` line and the
-showcase prints the same table. Drop the sort and it prints a *different* table — mostly right,
+showcase prints the same table. Drop the sort and it prints a *different* table, mostly right,
 wrong for the symbols with several quotes in the window, and silent about it.
 
 ---
@@ -381,17 +381,17 @@ definition of the join: find the matching group, then search it by time. What di
 of that is *native to the data* rather than *done to it*.
 
 In q, nearly all of it is native. A table is a dictionary of column lists (lesson 02), so
-`sorted`time` is not an extracted copy or a view — it is the column, a plain list, which `bin`
-accepts as-is. The search primitive was defined with as-of semantics — at-or-before, `-1` off the
-front, null on indexing — so the boundary cases of the join need no code. The group half is an
+`sorted`time` is not an extracted copy or a view; it is the column, a plain list, which `bin`
+accepts as-is. The search primitive was defined with as-of semantics (at-or-before, `-1` off the
+front, null on indexing), so the boundary cases of the join need no code. The group half is an
 attribute the column can carry. And the conventional on-disk layout for this kind of data is the
-same shape again: each partition sorted by symbol, with `` `p# `` claiming the blocks — which is why the `aj`
+same shape again: each partition sorted by symbol, with `` `p# `` claiming the blocks. That is why the `aj`
 reference's advice for tables on disk is `` `p# `` rather than `` `g# ``. The join, the in-memory
 table and the storage all agree about what order the rows are in.
 
 The bill for that agreement is the one lesson 04 itemised. Because the layout is what makes the
-search possible, the engine trusts the layout rather than checking it — a check is a full pass,
-and the full pass is what the layout exists to avoid. That is a design decision, not a missing
+search possible, the engine trusts the layout rather than checking it, just as `bin` takes the
+sort on trust. That is a design decision, not a missing
 feature: it puts the sort on you, and gives you back a join that is two ideas you can hold in your
 head at once.
 
@@ -399,8 +399,8 @@ head at once.
 
 ## The J twin: a search, and two edges to get right yourself
 
-J has no as-of join, and its closest primitive answers a subtly different question. `I.` —
-*interval index* — returns, for each `y`, the **first** position whose item is at or after `y`.
+J has no as-of join, and its closest primitive answers a subtly different question. `I.`,
+the *interval index*, returns, for each `y`, the **first** position whose item is at or after `y`.
 Step back one and you seem to have "the last item before `y`", which *looks* like `bin`:
 
 ```j
@@ -416,10 +416,10 @@ echo bids {~ <: times I. 3 2 _1
 99.1 99 99.4
 ```
 
-Right inside, wrong at both edges — and silently. On the tie at `2`, "first at or after" lands on
+Right inside, wrong at both edges, and silently. On the tie at `2`, "first at or after" lands on
 the tie itself, so stepping back skips *past* the quote that was stamped at exactly the trade
 time: `99`, not `99.1`. Before the first quote, stepping back from `0` gives `_1`, and `_1` is a
-perfectly legal J index — it means *the last item* — so a trade that should have no quote gets the
+perfectly legal J index (it means *the last item*), so a trade that should have no quote gets the
 day's latest one, `99.4`.
 
 The index can be repaired by asking the as-of question literally, "how many quotes are at or
@@ -436,7 +436,7 @@ echo bids {~ <: +/ times <:/ 3 2 _1
 ```
 
 `1 1 _1` is exactly what q's `bin` returned in section 3. But the value is still wrong, because
-the second edge was never in the search — it is in *indexing*. In q, `-1` is off the end and yields
+the second edge was never in the search; it is in *indexing*. In q, `-1` is off the end and yields
 a null; in J it wraps. So the J programmer writes a guard as well.
 
 None of this is a defect in J. `I.` is a general interval search and negative indices are a
@@ -455,20 +455,20 @@ you ever wrote `aj`.
 - **The loop's definition is order-proof; `aj`'s is not.** "Greatest time at or before" survives
   any row order (bar exact timestamp ties, which only row order can break). "Last in row order"
   is correct only on a sorted table. q chose the second on purpose.
-- **Derive the preamble, don't copy it.** `` `sym`time xasc `` — `time` for correctness (it makes
+- **Derive the preamble, don't copy it.** `` `sym`time xasc ``: `time` for correctness (it makes
   `bin` right), `sym` first for contiguous blocks. `` `g# `` on `sym` is optional, recording the
   group half, set last. The sort is mandatory; the attribute is not.
-- **The half that decides correctness is the half no attribute can record** — time ascending
+- **The half that decides correctness is the half no attribute can record**: time ascending
   *within* each symbol (lesson 04, section 4). Nothing checks it for you.
 - **The edges are in the primitives.** Tie → at-or-before; before the first quote or an unknown
   symbol → `bin` gives `-1`, indexing gives null, `aj` gives a null row rather than dropping the
   trade.
 - **"Built around it" means agreement, not exclusivity.** Other engines have this join. In q the
-  table layout, the search primitive, the attributes and the storage all assume the same row order
-  — which is why the join is small, and why the sort is your job.
+  table layout, the search primitive, the attributes and the storage all assume the same row order,
+  which is why the join is small, and why the sort is your job.
 
-**This is the last lesson of Part II.** The J laboratory (Part I) and the transition chapter —
-what does and does not carry over from J to q — land in a later milestone; see the
+**This is the last lesson of Part II.** The J laboratory (Part I) and the transition chapter
+(what does and does not carry over from J to q) land in a later milestone; see the
 [Part II index](../README.md).
 
 ---
@@ -476,12 +476,12 @@ what does and does not carry over from J to q — land in a later milestone; see
 ### References
 
 - `aj` / `aj0`, *"the last (in row order) matching record"*, and the memory/disk attribute table:
-  [code.kx.com — aj](https://code.kx.com/q/ref/aj/)
+  [code.kx.com: aj](https://code.kx.com/q/ref/aj/)
 - `bin` / `binr` (binary search, sortedness assumed):
-  [code.kx.com — bin](https://code.kx.com/q/ref/bin/)
-- `group`: [code.kx.com — group](https://code.kx.com/q/ref/group/)
-- `xasc`: [code.kx.com — xasc](https://code.kx.com/q/ref/asc/#xasc)
+  [code.kx.com: bin](https://code.kx.com/q/ref/bin/)
+- `group`: [code.kx.com: group](https://code.kx.com/q/ref/group/)
+- `xasc`: [code.kx.com: xasc](https://code.kx.com/q/ref/asc/#xasc)
 - Attributes, including `` `p# `` vs `` `g# ``:
-  [code.kx.com — Set Attribute](https://code.kx.com/q/ref/set-attribute/)
+  [code.kx.com: Set Attribute](https://code.kx.com/q/ref/set-attribute/)
 - J's `I.` interval index:
-  [J Dictionary — Indices / Interval Index](https://www.jsoftware.com/help/dictionary/dicapdot.htm)
+  [J Dictionary: Indices / Interval Index](https://www.jsoftware.com/help/dictionary/dicapdot.htm)
