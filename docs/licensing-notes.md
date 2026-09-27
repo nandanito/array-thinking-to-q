@@ -131,10 +131,12 @@ concern was correct.)
   "sell, rent, lease, license, sublicense … publish, transfer, distribute or otherwise make
   available to any third party" the Software (2.1), nor "build or offer a product or service … which
   competes with, or provides the same or similar features" (2.1.xi); revenue-generating bundling
-  needs an **OEM license** (2.2). → **This contradicts SPEC.md's "free personal+commercial per KX
+  needs an **OEM license** (2.2). → ~~**This contradicts SPEC.md's "free personal+commercial per KX
   marketing" (line 126). CLAUDE.md rule 4 resolves to: DO NOT claim commercial-friendliness.**
   The project itself is fine — it is *personal use* that distributes lessons/prose, not the Software
-  — but no README/article may say "free for commercial use."
+  — but no README/article may say "free for commercial use."~~ *(Historical, superseded 2026-09-27:
+  the current rule is CLAUDE.md rule 4 — quote the licence, including the incorporated Usage
+  Restrictions, and never judge the reader's use.)*
 - **Benchmark / performance publication — PROHIBITED without prior written consent.** Clause 9
   (Confidentiality): *"You will not disclose any benchmark, test or performance information or any
   report which contains a competitive analysis regarding the Software to any third party except as
