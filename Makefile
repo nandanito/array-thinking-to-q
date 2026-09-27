@@ -70,3 +70,5 @@ verify-prose:
 verify-writings:
 	@echo "== writings: article snippets vs. running lesson/eval code =="
 	@python3 tools/check-article-snippets.py
+	@echo "== writings: em-dash budget =="
+	@python3 tools/check-em-dashes.py
