@@ -276,8 +276,8 @@ latest in time; if the times are out of order within a symbol, as lesson 04 show
 and `aj` still returns what `bin` returns.
 
 Look back at section 1 with this in hand. The loop said "greatest time", which is order-proof
-(short of exact ties, which it breaks by row order too) and costs a scan per trade. `aj` says "last in row order", which is a search per trade and costs you a
-promise. The difference between those two phrases *is* the co-design: q chose the definition that
+(short of exact ties, which it breaks by row order too) because it looks at every candidate. `aj`
+says "last in row order", which means "latest" only if you keep a promise about the sort. The difference between those two phrases *is* the co-design: q chose the definition that
 the storage can answer directly, and handed you the sort as the price of admission.
 
 (The hand version still walks the trades one at a time with `'`, and it is not how you would write
@@ -360,7 +360,7 @@ Read the preamble back with sections 2–5 in hand:
 - **`` `sym`time xasc ``** — the correctness step. `time` ascending within each `sym` is what makes
   "last in row order" mean "latest", i.e. what makes `bin` right. `sym` first makes each symbol one
   contiguous block.
-- **`` `g# `` on `sym`** — the speed step. It records the *group* half of the join (section 2's
+- **`` `g# `` on `sym`** — the optional step. It records the *group* half of the join (section 2's
   dictionary) so the engine can find each symbol's block by lookup. It records nothing about the
   `bin` half; nothing can. It goes **last**, after the data is final, because lesson 04 showed
   attributes are perishable. (And lesson 04's section 6 still stands: on a table already sorted
@@ -453,11 +453,10 @@ you ever wrote `aj`.
   symbol's rows), the last is matched as-of (search them by time). `aj[`sym`time; …]` spells
   exactly that.
 - **The loop's definition is order-proof; `aj`'s is not.** "Greatest time at or before" survives
-  any row order (bar exact timestamp ties, which only row order can break) and costs a scan per
-  trade. "Last in row order" is a search per trade and is
-  correct only on a sorted table. q chose the second on purpose.
+  any row order (bar exact timestamp ties, which only row order can break). "Last in row order"
+  is correct only on a sorted table. q chose the second on purpose.
 - **Derive the preamble, don't copy it.** `` `sym`time xasc `` — `time` for correctness (it makes
-  `bin` right), `sym` first for contiguous blocks. `` `g# `` on `sym` — speed only, recording the
+  `bin` right), `sym` first for contiguous blocks. `` `g# `` on `sym` is optional, recording the
   group half, set last. The sort is mandatory; the attribute is not.
 - **The half that decides correctness is the half no attribute can record** — time ascending
   *within* each symbol (lesson 04, section 4). Nothing checks it for you.

@@ -133,10 +133,9 @@ AAPL B    300 187.9
 ```
 
 `qty>100` never saw the MSFT or GOOG rows. For pure filters the surviving rows are the same
-whichever order you write them in, but the *work* is not: put the most selective constraint first
-and every later constraint runs on a shorter vector. This is the first place in the lesson where q
-gives you a performance lever by exposing its evaluation order rather than hiding it behind a
-planner.
+whichever order you write them in, but what each constraint sees is not: every later constraint
+runs only on the rows the earlier ones kept. This is the first place in the lesson where q exposes
+its evaluation order rather than hiding it behind a planner.
 
 ---
 
