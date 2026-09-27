@@ -811,3 +811,25 @@ Also decided: no "learning in public" framing anywhere in the series (CLAUDE.md)
 nandan.me's tokens (writings/figures/STYLE.md), and qualitative speed wording is out of the articles
 as Clause 9 caution. Open, in memory: KDB-X CE commercial use (the Usage Restrictions say "personal
 and commercial projects"), which holds article 2.
+
+## 2026-09-27 — KDB-X CE commercial use: the correction was itself wrong
+
+The open item above is closed. Task Zero read Clause 2.1 + Attachment A ("personal or internal
+business use") and concluded "no commercial grant". It missed the rest of the same sentence: the
+grant is "subject to the Usage Restrictions", a hyperlink, and Clause 11 makes those Restrictions
+part of the complete agreement. The link now redirects to a docs home page, but the Wayback chain
+still works: the linked page's April and June 2026 captures are a "moved" stub pointing at KX's
+Usage Restrictions page, and that page's captures of 5 June and 14 August 2026, either side of the
+key's issue date, say CE "is free for both personal and commercial projects", subject to listed end-user restrictions.
+Evidence and snapshot URLs are in docs/licensing-notes.md. Article 2's Finding 1, its figure 1,
+CLAUDE.md rule 4, SPEC and the README changed with it. Rule 4 keeps its spirit, re-aimed: quote the
+licence, never tell a reader what their own use permits. Both one-line summaries, "free for
+commercial use" and "non-commercial", were wrong at some point in this repo.
+
+Transferable: **a contract is its text plus everything the text incorporates by reference.** Ranking
+sources (licence over docs over blogs) did not protect against this, because the incorporated page
+*is* vendor documentation promoted into the first rank by a clause. Follow every "subject to" link,
+and archive what it pointed to on the day you accepted — the link here had already died. The
+second transferable point is the pattern: this is the third confident finding in this repo stated
+from a partial read of the right source (after `p#` and the offline-runtime line). Overcorrection is
+still a misreading; a correction deserves the same full read as the claim it replaces.
