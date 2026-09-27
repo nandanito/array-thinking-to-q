@@ -67,7 +67,7 @@ show count each group words;
 q reads right to left. `" " vs` splits the string on spaces, `` `$ `` turns the pieces into
 *symbols* (q's interned strings), `group` maps each distinct word to the positions where it occurs,
 and `count each` counts each of those position lists: `the` 3, the others 1. There is no dictionary
-to fill in and no counter to increment; the grouping *is* the count.
+to fill in and no counter to increment; the count falls straight out of the grouping.
 
 And the database side. q has a SQL-like layer, qSQL, that runs over in-memory tables:
 
@@ -80,8 +80,8 @@ show select n:count i by sym,side from t
 keyed table: AAPL buy 2, the other three pairs 1. The imperative instinct here is a loop over rows
 that bumps a counter per key. Both conditions wrote this line character for character.
 
-Keep those three in mind. They are what "idiomatic" looked like in this eval, and they are why the
-result came out the way it did.
+Keep those three in mind. They are what "idiomatic" looked like in this eval, and the model wrote
+them without any plugin's help, which is most of the story that follows.
 
 ## The design, in brief
 
@@ -230,9 +230,9 @@ does not need — it does. But the task said "add a column `notional` … and sh
 mutating the table is a defensible reading of "add". A second scorer could call it a tie without
 straining. A margin that flips on one person's reading of one line is not a margin.
 
-Meanwhile **five of the fifteen task pairs came back byte-for-byte identical**. Both conditions
-wrote `show sums 1 2 3 4 5`. Both wrote `select n:count i by sym,side from t`. Both threw away the
-`while`-loop and wrote `sums x`.
+Meanwhile **five of the fifteen task pairs came back byte-for-byte identical**, including two you
+met above: the `select … by sym,side` and the `sums x` that replaced the `while` loop. Another was
+simply `show sums 1 2 3 4 5`.
 
 This is a **ceiling**, and it is the honest headline. The tasks cannot discriminate between the
 conditions because baseline `claude-opus-5` already solves them. (Pedantically: my protocol defined
@@ -284,8 +284,8 @@ the trade's time. q's `aj` does this in one call, but it assumes the quote table
 within each symbol, and when it is not, `aj` returns wrong quotes without complaint. The task gives
 the model exactly that broken join and asks it to fix it and *set the appropriate in-memory
 attribute*. An attribute is a flag you put on a column to promise q something about how its values
-are laid out: `` `g# `` (grouped) says "index me by value", `` `p# `` (parted) says "equal values sit
-together in contiguous runs". (The as-of join gets its own article, the next in this series.)
+are laid out: `` `g# `` (grouped) has q keep an index from each distinct value to the rows that hold it;
+`` `p# `` (parted) promises that equal values sit together in contiguous runs. (The as-of join gets its own article, the next in this series.)
 
 Both conditions sorted correctly. Both produced the exactly correct joined table. And both applied
 `` `p# `` where my task sheet cites `` `g# ``.
@@ -299,9 +299,8 @@ Both candidates sorted the table first. That is precisely the precondition. `` `
 defensible.
 
 The part that stings: **my own repository already contained that correction.** A licensing-and-docs
-audit I ran back at milestone one recorded, in writing, that `p#` "also works in memory …
-It is not useless in memory." I scored the eval only days
-later, cited the `aj` page, and never opened either the sibling page or my own notes on exactly
+audit I ran back at milestone one recorded, in writing, that `p#` "also works in memory … It is not useless in memory." I
+scored the eval only days later, cited the `aj` page, and never opened either the sibling page or my own notes on exactly
 this claim.
 
 So the honest version of this section is much smaller than the one I wanted to write. There is no
@@ -343,8 +342,8 @@ in my own instrument. No skill, then — and a sharper task set goes in the note
 ## Verdict
 
 No lift, on a task set that could not have shown a small one. KX's `q-knowledge` plugin, as pinned
-at `8b7040f`, activates reliably and writes good q. So does the model without it, on tasks this easy, for a third of the
-tokens. No skill authored. The curriculum ships on its own merits.
+at `8b7040f`, activates reliably and writes good q. So does the model without it, on tasks
+this easy, for about a third of the tokens. No skill authored. The curriculum ships on its own merits.
 
 The eval was underpowered, and that is the finding I actually have. It is worth publishing because
 the failure mode generalises far past q: **an A/B against a frontier model is measuring your task
