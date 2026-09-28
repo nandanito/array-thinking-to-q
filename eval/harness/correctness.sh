@@ -49,6 +49,12 @@ if [ "${INIT:-0}" = 1 ]; then
 fi
 [ -f "$CSV" ] || { echo "missing $CSV" >&2; exit 2; }
 [ -d "$TASKS" ] || { echo "missing task dir $TASKS" >&2; exit 2; }
+[ -d "$ANSWERS" ] || { echo "missing answers dir $ANSWERS" >&2; exit 2; }
+# Each answer runs from its own directory, so a relative path would not resolve
+# there: every answer would "fail" with file-not-found, and INIT=1 would record
+# those failures as scores (the first outside run did exactly that).
+TASKS="$(cd "$TASKS" && pwd)"; ANSWERS="$(cd "$ANSWERS" && pwd)"
+CSV="$(cd "$(dirname "$CSV")" && pwd)/$(basename "$CSV")"
 SCRATCH="$(mktemp -d "${TMPDIR:-/tmp}/atq-score.XXXXXX")" || { echo "cannot create a scratch dir" >&2; exit 2; }
 trap 'rm -rf "$SCRATCH"' EXIT
 

@@ -154,10 +154,19 @@ try:
             "TASKS": str(tasks), "ANSWERS": str(answers), "CSV": str(csv),
             "EXT": "py", "RUN": f"{sys.executable} {{}}"})
 
+    def score_relative(rows):
+        # Relative paths, as a user in their study directory would pass them.
+        csv.write_text("task,condition,correctness\n" + "".join(f"{r}\n" for r in rows))
+        return run("bash", "-c", f"cd {tmp} && TASKS=tasks ANSWERS=answers CSV=results.csv "
+                   f"EXT=py RUN='{sys.executable} {{}}' bash {HERE / 'correctness.sh'}")
+
     truth = ["t1,A,1", "t1,B,0", "t2,A,0", "t2,B,1"]
     rc, out = score(truth)
     expect("scorer agrees with a correct results.csv (wrong output and stderr both score 0)",
            rc == 0 and "4 candidates scored; correctness = 0 on 2" in out, out)
+    rc, out = score_relative(truth)
+    expect("scorer gives the same scores from relative paths", rc == 0 and
+           "4 candidates scored; correctness = 0 on 2" in out, out)
     rc, out = score(["t1,A,1", "t1,B,1", "t2,A,0", "t2,B,1"])
     expect("scorer fails a results.csv that claims a wrong answer passed",
            rc == 1 and "MISMATCH" in out, out)
