@@ -953,3 +953,40 @@ build order and blog duty still described M4 and "Unlearn the loop" as future wo
 Checked and still true: the two-exemption rule, the `idiomatic-q` stub's status, and the README
 obligations (why-J-not-BQN, prior art, WSL, disclaimers). Not done here: the `m4` tag, which follows
 the merge.
+
+## 2026-09-28: the eval article goes out, and its wording needed the power analysis too
+
+The eval article publishes on nandan.me on 2026-09-29 as "No headroom: what a null result on KX's
+q plugin actually measured" (file renamed to the slug, as article 1's is). Before it went out, a
+fresh-reader test and a thorough Codex content review read the whole body. Every number
+recomputed. The problems were all in what the sentences claimed about the numbers:
+
+- **"Detected no large one" was impossible under a ceiling.** With the baseline at 14/15 and 73/75,
+  the task set could not have *expressed* a large effect, so it cannot have failed to detect one.
+  The article said "no lift"; the honest sentence is "no measurable lift, on tasks with almost no
+  room to show one". Transferable: **a null result's wording needs the same power analysis as its
+  numbers.** Before writing "no effect", ask what the maximum observable effect was.
+- **Loaded, available and invoked were conflated** ("the plugin loaded in 14 of 15"; it loaded in
+  15 and was invoked in 14). **"Cost" meant output tokens** (dollars from the logs: 4.5×, not 2.8×).
+  **"Empty scratch directory, verified"** rested on a model's self-report, which the article
+  itself says is not a log; the committed `system/init` records prove the skill lists, not the
+  directory's contents. Each was a stronger word than the evidence, chosen when the claim was
+  friendly.
+- **The evidence file lagged the article.** The corrections went into the article first, leaving
+  `eval/verdict.md`, the file the article cites as evidence, claiming more than the article. It is
+  reconciled now, with dated CORRECTED notes. This is the M4 lesson running the other way: there,
+  a correction to the evidence never reached a gated draft; here, a correction to the publication
+  nearly never reached the evidence. **Corrections flow both ways between a publication and its
+  source of record, and each direction needs its own grep.**
+- **Figures and cards are copies of claims.** The body's "the comparison never got a chance to run"
+  was fixed, and figure 2's headline still said it, and the LinkedIn card was a render of figure 2.
+  Rendering every changed figure caught it; a text grep of the SVGs would have too. The new
+  figure-text em-dash check (STYLE.md) found three more dashes, one inside a `<tspan>`.
+- **Verify the rendered page, not the report.** The site session said the updates "were not huge"
+  (about 660 words had gone). A character-level diff of the rendered page against the repo body
+  found zero differences, and the served figures and card were byte-identical. Trust came from the
+  diff, not the summary.
+
+Posts: a fresh-reader test of the LinkedIn and social drafts found the "last week" preamble pushed
+the hook below the preview, and that "discordant pair", "sign test", "arms" and "headroom" lose a
+non-q reader. The posts now lead with the hook inside the preview and say it in plain words.
