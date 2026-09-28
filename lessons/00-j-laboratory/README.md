@@ -83,8 +83,9 @@ sumloop 1 2 3 4 5
 15
 ```
 
-`for_i.`, `while.`, `if.` and local assignment are all there. What differs is what writing the loop
-costs you. You leave J's ordinary notation entirely: `3 : 0` opens an explicit definition, `=.`
+`for_i.`, `while.`, `if.` and local assignment are all there. (In `for_i. y`, `i` is each *item* in
+turn, not an index; J keeps the index in `i_index` if you want it.) What differs is what writing the
+loop costs you. You leave J's ordinary notation entirely: `3 : 0` opens an explicit definition, `=.`
 replaces `=:` for local names, `y` is the argument's fixed name, and the block ends with a lone `)`.
 Five lines of visibly separate machinery, in a language where the alternative is two characters:
 
