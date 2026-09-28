@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-  <title id="title">The contamination control: why every session ran from an empty directory</title>
-  <desc id="desc">Two panels. Left, run from inside the repository: the repo contains its own q idiom skill, idiomatic-q, a CLAUDE.md with q guidance, and verified q lessons. Both conditions inherit them, so condition A, meant to be the baseline, is also treated. The results look completely normal. Right, what the eval actually did: all 50 sessions ran headless from an empty scratch directory outside the repository, with no CLAUDE.md and no .claude directory. The committed session logs confirm it: every condition A session loaded 16 skills, none q-related, and no project instructions; every condition B session loaded the same 16 plus exactly two, q-knowledge:q and q-knowledge:qlint-snippet. The footer says: a contaminated null and a clean null are the same numbers, so the control has to live in the harness.</desc>
+  <title id="title">The contamination control: why every session ran outside the repository</title>
+  <desc id="desc">Two panels. Left, run from inside the repository: the repo contains its own q idiom skill, idiomatic-q, a CLAUDE.md with q guidance, and verified q lessons. Both conditions inherit them, so condition A, meant to be the baseline, is also treated. The results look completely normal. Right, what the eval actually did: all 50 sessions ran headless from a scratch directory outside the repository, with no CLAUDE.md and no .claude directory. The committed session logs show every condition A session loaded 16 skills, none q-related; every condition B session loaded the same 16 plus exactly two, q-knowledge:q and q-knowledge:qlint-snippet. The footer says: a contaminated null and a clean null are the same numbers, so the control has to live in the harness.</desc>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
@@ -31,7 +31,7 @@
   <rect x="470" y="100" width="3" height="300" fill="#34374C"/>
   <text x="492" y="128" font-size="11" letter-spacing="2" fill="#777777">WHAT THE EVAL DID · ALL 50 SESSIONS</text>
   <rect rx="2" x="492" y="142" width="346" height="86" fill="#fafafa" stroke="#e5e5e5"/>
-  <text x="508" y="164" font-size="11" letter-spacing="1.5" fill="#777777">EMPTY SCRATCH DIRECTORY, HEADLESS</text>
+  <text x="508" y="164" font-size="11" letter-spacing="1.5" fill="#777777">SCRATCH DIRECTORY, HEADLESS</text>
   <g font-size="13" fill="#000000">
     <text x="508" y="188">outside the repository</text>
     <text x="508" y="210">no CLAUDE.md, no .claude/</text>
