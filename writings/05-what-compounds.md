@@ -152,29 +152,30 @@ Three times, I stated a confident finding from a partial read of the right sourc
 The eval's most interesting result was that both conditions used the `` `p# `` attribute on an
 in-memory table, where KX's `aj` reference pairs memory with `` `g# ``. It was the one paragraph
 that gave a null eval some teeth, so it got the least scrutiny. A sibling page, on setting
-attributes, says `` `p# `` "effects better speedups than grouped, both on disk and in memory" when
-the data is sorted, and the models had sorted it. Worse, the repo's own licensing notes had
+attributes, says parted applies in memory as well as on disk, whenever the data can be sorted so
+that it can be set, and the models had sorted it. Worse, the repo's own licensing notes had
 recorded that exact correction three days before the eval was scored. I retracted the finding.
 
 Later, CI setup needed an install token, or so I inferred from a phrase in my notes. I curled the
 install URL, got a 401, and took it as confirmation. The 401 came from my own mistyped URL, missing
 one path segment. The real endpoint needs no credential at all.
 
-And the licence. The spec, working from KX's marketing, said the free edition could be used for
-commercial projects. When I read the licence itself, its grant clause looked narrower, so I
-"corrected" the spec and carried that into the README and an article. The grant is "subject to the
-Usage Restrictions", a link, and another clause makes those restrictions part of the agreement;
-the page behind the link is the one that mentions commercial projects. I had read the sentence up
-to the comma, and replaced a right claim with a wrong one.
+And the licence. The spec carried a one-line summary of KX's marketing. When I read the licence
+itself, the grant in Clause 2.1 looked narrower than that line, so I replaced it with an equally
+short line saying the opposite, and carried that into the README and an article. The grant is
+"subject to the Usage Restrictions", a link, and Clause 11 makes those restrictions part of the
+agreement. I had read the sentence up to the comma. Both one-line summaries turned out to be
+wrong, and the repo now quotes the clauses instead of summarising them.
 
 **What transfers:** when a check agrees with what you already believed, check the check before the
 conclusion. Cite the source, then look for the page that contradicts it. And give a correction the
 same full read as the claim it replaces.
 
-## 4. Build the measurement to be worse than what it measures
+## 4. The test environment must know less than the thing it tests
 
-The eval compared Claude Code sessions with and without KX's q plugin. The single control that
-decided whether it meant anything was the working directory. Run from inside this repository, the
+The eval compared Claude Code sessions with and without KX's q plugin. For that to mean anything,
+the sessions' surroundings had to carry none of the help being measured. The single control that
+decided it was the working directory. Run from inside this repository, the
 "without" sessions would have inherited the repo's own q notes, roughly the thing under test, and
 nothing in the results would show it. A contaminated null looks exactly like a clean one.
 
@@ -206,17 +207,18 @@ session, from the session's own record, instead of trusting the flags you passed
 ## 5. A null result needs a power analysis for its wording
 
 The eval returned no measurable lift: one task out of fifteen where the two conditions disagreed,
-correctness 14 of 15 in both. The first draft said "no lift". The honest sentence is narrower. The
-tasks were written to be easy to *verify*, which made them easy to *solve*, and the baseline was
-already near the ceiling. A task set with that little room cannot express a large effect, so it
-cannot have failed to detect one. (The article is
+correctness 14 of 15 in both. The first draft said "no lift". The honest sentence is narrower. I
+kept verification simple by choosing simple tasks, and simple tasks left the baseline near the
+ceiling. (Exact-output checking does not require easy tasks; I just did not write any hard ones.)
+A task set with that little room cannot express a large effect, so it cannot have failed to detect
+one. (The article is
 "[No headroom: what a null result on KX's q plugin actually measured](https://nandan.me/writing/no-headroom-kx-q-plugin/)".)
 
 **What transfers:** before you write "no effect", ask what the largest observable effect was. For
 any A/B on a frontier model, establish the baseline's failure rate first; a pilot of the baseline
 arm alone would have shown this for 15 sessions instead of 50. And when the primary metric hits a
-ceiling, record the secondary ones: the plugin arm cost about three times the output tokens for
-equivalent code, which was the only thing that separated the arms.
+ceiling, record the secondary ones. Quality separated the arms on one task, by one judgement call;
+output tokens separated them on every one of the fifteen, at about three times the total for the plugin.
 
 ## 6. Documents rot downstream, and in both directions
 
@@ -278,7 +280,7 @@ finishing one, is what makes it an asset.
 - **Keep one append-only log of what broke, and read it before you start**, not just after.
 
 The curriculum, the eval and the harness are at
-[array-thinking-to-q](https://github.com/nandanito/array-thinking-to-q), tagged `v1`.
+[array-thinking-to-q](https://github.com/nandanito/array-thinking-to-q).
 
 ---
 

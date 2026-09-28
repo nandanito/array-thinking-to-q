@@ -1043,8 +1043,9 @@ footer claim re-proved by planting the `98h` corruption in lesson 02 again: `ver
 `WRONG CLAIM`.
 
 **Packaging a log still needs a fact-check against the log.** The first draft, written from this
-file with it open, got the licence story backwards (the spec was right from KX's marketing, and my
-"correction" made it wrong, not the other way round), turned "the next day" into "weeks later",
+file with it open, told the licence story as though the spec's original one-liner had been right
+(this file records that both one-line summaries were wrong), reintroduced a KX "better speedups"
+quote that PR #35 had removed as Clause 9 caution, turned "the next day" into "weeks later",
 said a correction "never reached" a draft that a review did reach, and credited a figure's check
 with catching "all three" planted claims when the log only records the one. Each was a stronger or
 tidier sentence than the entry it summarised. The same confident-paraphrase failure this file
