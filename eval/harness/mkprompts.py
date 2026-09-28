@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Build Part B prompt files from the task sheets.
+"""mkprompts.py <tasks-dir> <out-dir>
 
-Each prompt = the verbatim blockquote under "## Prompt" in eval/tasks/q/NN-*.md,
+Build Part B prompt files from the task sheets.
+
+Each prompt = the verbatim blockquote under "## Prompt" in <tasks-dir>/NN-*.md,
 de-quoted, plus one fixed OUTPUT CONTRACT appended identically in both
 conditions. The contract exists only so a candidate answer can be turned into a
 runnable script deterministically; it names no idiom under test.
+
+The contract is <tasks-dir>/CONTRACT.txt when that file exists, so a task set
+in another language brings its own; without it, the M2 q contract below.
 """
 import pathlib, re, sys, textwrap
 
@@ -17,6 +22,9 @@ CONTRACT = (
     "no alternatives, and no `q)` REPL prompts. The block must be a complete, self-contained "
     "q script that prints the required result to stdout using `show` when run as `q script.q -q`."
 )
+
+if (TASKS / "CONTRACT.txt").exists():
+    CONTRACT = (TASKS / "CONTRACT.txt").read_text().strip()
 
 for md in sorted(TASKS.glob("[0-9][0-9]-*.md")):
     text = md.read_text()

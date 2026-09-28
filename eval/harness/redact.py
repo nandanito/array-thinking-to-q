@@ -9,67 +9,77 @@ Exactly two changes are made, and they are the only two:
    quota utilisation, which is not eval data and does not belong in a public
    repo. Nothing else reads them.
 2. **Machine-specific absolute paths are rewritten** to stable placeholders, so
-   the logs do not hard-code one laptop's directory layout. `$NEUTRAL` is the
-   session cwd (the neutral directory outside the repo); `$KX` is the
-   q-knowledge plugin checkout; `$HOME` catches the rest (notably the
-   `memory_paths.auto` directory Claude Code derives for any cwd — which was
-   **empty** for the neutral directory when checked during redaction, an
-   observation rather than anything logged; it shows no session left memory
-   behind, not what the directory held before the first session).
+   the logs do not hard-code one laptop's directory layout. `$PLUGIN` is the
+   plugin checkout; `$TMPDIR` is the directory session.sh makes its per-session
+   neutral directories in, so each log keeps its own `atq-neutral.XXXXXX` name
+   (audit.py checks those stay distinct); `$HOME` catches the rest, notably the
+   `memory_paths.auto` directory Claude Code derives from each cwd.
 
-Everything else is byte-for-byte the session output — including the `system/init`
-line, which is the per-session proof of the contamination control: condition A
-logs carry `"plugins": []` and no q skill, condition B logs carry exactly
-`q-knowledge` 0.1.0 plus `q-knowledge:q` / `q-knowledge:qlint-snippet`.
+Everything else is byte-for-byte the session output, including the `system/init`
+line, which is the per-session proof of the contamination control.
+
+The M2 logs in eval/runs/logs were redacted by the earlier version of this
+script (see git history), when every session shared one directory: there, the
+whole cwd became `$NEUTRAL` and the plugin path `$KX`.
 """
 import json, os, pathlib, re, sys
 
 src, dest = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
 HOME = os.path.expanduser("~")
 
-# Learn the two machine-specific prefixes from the logs themselves rather than
-# hard-coding one machine's layout.
-NEUTRAL = KX = None
-for p in sorted(src.rglob("*.jsonl")):
-    for line in p.open():
-        line = line.strip()
-        if not line:
-            continue
-        d = json.loads(line)
-        if d.get("type") == "system" and d.get("subtype") == "init":
-            NEUTRAL = NEUTRAL or d.get("cwd")
-            for pl in d.get("plugins") or []:
-                KX = KX or pl.get("path")
-            break
-    if NEUTRAL and KX:
-        break
-if not NEUTRAL:
-    sys.exit("no system/init line found — is this a stream-json log directory?")
+
+def mangled(path):
+    # How Claude Code turns a cwd into a directory name under ~/.claude/projects.
+    return re.sub(r"[^A-Za-z0-9-]", "-", path)
+
 
 dropped = rewritten = kept = 0
+learned = set()
 for p in sorted(src.rglob("*.jsonl")):
+    lines = [ln.rstrip("\n") for ln in p.open() if ln.strip()]
+    # Learn this log's own prefixes from its init line, rather than assuming one
+    # machine's layout or one directory for the whole run.
+    subs = []
+    for ln in lines:
+        d = json.loads(ln)
+        if d.get("type") == "system" and d.get("subtype") == "init":
+            # Only the --plugin-dir plugin has a real path; built-ins record the
+            # literal "builtin", which must not be rewritten wherever it appears.
+            for pl in d.get("plugins") or []:
+                if (str(pl.get("source", "")).endswith("@inline")
+                        and str(pl.get("path", "")).startswith("/")):
+                    subs.append((pl["path"], "$PLUGIN"))
+            if d.get("cwd"):
+                parent = os.path.dirname(d["cwd"])
+                subs += [(parent, "$TMPDIR"), (mangled(parent), "$TMPDIR")]
+            break
+    else:
+        sys.exit(f"{p}: no system/init line, is this a stream-json log?")
+    subs.append((HOME, "$HOME"))
+    learned.update(f"{v} = {k}" for k, v in subs if v != "$HOME")
+
     out = dest / p.relative_to(src)
     out.parent.mkdir(parents=True, exist_ok=True)
-    lines = []
-    for line in p.open():
-        line = line.rstrip("\n")
-        if not line.strip():
-            continue
+    keep = []
+    for line in lines:
         if json.loads(line).get("type") == "rate_limit_event":
             dropped += 1
             continue
-        new = line.replace(KX, "$KX") if KX else line
-        new = new.replace(NEUTRAL, "$NEUTRAL").replace(HOME, "$HOME")
+        new = line
+        for k, v in subs:
+            new = new.replace(k, v)
         rewritten += new != line
         kept += 1
-        lines.append(new)
-    out.write_text("\n".join(lines) + "\n")
+        keep.append(new)
+    out.write_text("\n".join(keep) + "\n")
 
 print(f"{kept} lines kept, {dropped} rate_limit_event dropped, {rewritten} path-rewritten")
-print(f"  $NEUTRAL = {NEUTRAL}")
-print(f"  $KX      = {KX}")
+for s in sorted(learned):
+    print("  " + s)
 # Nothing may survive that names the real home directory.
-leaked = [p.name for p in dest.rglob("*.jsonl") if re.search(r"/Users/[^/\"]+", p.read_text())]
+user = os.path.basename(HOME)
+leaked = [p.name for p in dest.rglob("*.jsonl")
+          if HOME in p.read_text() or re.search(rf"[/-]{re.escape(user)}[/-]", p.read_text())]
 if leaked:
-    sys.exit(f"redaction incomplete, absolute home paths remain in: {leaked[:5]}")
-print("no absolute home paths remain")
+    sys.exit(f"redaction incomplete, the home directory or user name remains in: {leaked[:5]}")
+print("no home directory or user name remains")

@@ -1,10 +1,10 @@
 # Raw session traces — M2 eval
 
-**Derived from the committed logs in [`logs/`](logs/)** by `eval/harness/mktraces.py`, and re-checked by `make verify-eval-run` — so the
-activation and token numbers in `../verdict.md` can be audited without trusting this
-table. "Fired" means the session actually emitted a `Skill` tool call naming a
+**Derived from the committed logs in [`logs/`](logs/)** by `mktraces.py`, and `mktraces.py --check` fails if the two drift apart, so the
+activation and token numbers built on this table can be audited without trusting it.
+"Fired" means the session actually emitted a `Skill` tool call naming a
 `q-knowledge` skill, not that the answer *looked* q-flavoured. Condition A has no such
-skill to call; its logs record `"plugins": []`.
+skill to call: its logs record no `--plugin-dir` plugin.
 
 ## Part A — 20 trigger sessions (condition B only)
 

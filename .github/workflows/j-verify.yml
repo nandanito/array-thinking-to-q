@@ -38,3 +38,5 @@ jobs:
         run: make verify-j J=$HOME/j9.7/bin/jconsole
       - name: Verify article snippets (pure text, no q or J needed)
         run: make verify-writings
+      - name: Verify the eval harness's own gates (pure Python, no q, no model)
+        run: make verify-harness

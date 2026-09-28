@@ -4,9 +4,9 @@ J       ?= jconsole
 Q       ?= q
 LESSONS := $(wildcard lessons/*)
 
-.PHONY: verify verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose verify-writings
+.PHONY: verify verify-j verify-q verify-showcase verify-eval verify-eval-run verify-harness verify-prose verify-writings
 
-verify: verify-j verify-q verify-showcase verify-eval verify-eval-run verify-prose verify-writings
+verify: verify-j verify-q verify-showcase verify-eval verify-eval-run verify-harness verify-prose verify-writings
 
 verify-j:
 	@echo "== J examples =="
@@ -48,9 +48,16 @@ verify-eval-run:
 		|| { cat /tmp/eval-run.txt; exit 1; }
 	@tail -1 /tmp/eval-run.txt
 	@echo "== eval run: runs/traces.md vs. the committed session logs =="
-	@python3 eval/harness/mktraces.py eval/runs/logs --check eval/runs/traces.md
+	@python3 eval/harness/mktraces.py eval/runs/logs --title "M2 eval" --lang q --check eval/runs/traces.md
 	@echo "== eval run: runs/aggregates.md vs. the committed Part B logs =="
-	@python3 eval/harness/aggregates.py eval/runs/logs/partB --check eval/runs/aggregates.md
+	@cd eval && python3 harness/aggregates.py runs/logs/partB --lang q --check runs/aggregates.md
+
+# The packaged harness's own gates (audit, schedule, scorer, prompt builder),
+# each shown to fail as well as pass. No q, no model, no session: pure Python,
+# so j-verify runs it on every PR. See eval/harness/README.md.
+verify-harness:
+	@echo "== eval harness: self-test =="
+	@python3 eval/harness/selftest.py
 
 # The other verify- targets prove the lesson SOURCES run. None of them look at
 # the outputs pasted into each lesson's narrative, which is exactly where the

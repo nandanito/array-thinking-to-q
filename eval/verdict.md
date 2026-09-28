@@ -35,8 +35,8 @@ repository** (set up as not a git repo, with no `CLAUDE.md` and no `.claude/`).
 was also asked to enumerate what it had loaded (a self-report, kept below as an observation):
 
 > **CORRECTED 2026-09-28** (content review of the eval article). "Empty" and "verified by asking"
-> claim more than the committed evidence shows. `harness/session.sh` reuses one directory
-> (`mkdir -p "$NEUTRAL"`) and neither asserts nor logs that it is empty, and the run-time
+> claim more than the committed evidence shows. The M2 run's `harness/session.sh` reused one
+> directory (`mkdir -p "$NEUTRAL"`) and neither asserted nor logged that it was empty, and the run-time
 > self-report below is not a committed transcript; a model's account of its own context is not a
 > log. What the committed `system/init` records do prove: every session's cwd was that scratch
 > directory, condition A loaded the same 16 skills (none q-related, no `idiomatic-q`), condition B
@@ -45,8 +45,9 @@ was also asked to enumerate what it had loaded (a self-report, kept below as an 
 > self-report, but it still says the directory had no `CLAUDE.md` and no `.claude/`: that is the
 > run-time setup, consistent with the init records but not shown by them. The same holds for the
 > bullets below: every one after the first two is an observation made at run or redaction time,
-> not committed evidence, and the directory no longer exists to be checked. A re-run should create
-> a fresh `mktemp -d` per session and commit a pre-run listing.
+> not committed evidence, and the directory no longer exists to be checked. The packaged harness
+> (M5) creates a fresh `mktemp -d` per session and writes a pre-run listing of it; see
+> [`harness/README.md`](harness/README.md).
 
 - **Condition A** reported 41 skills (the model's own count; the committed logs' `system/init`
   records list 16 for A and 18 for B), none q-related, and "Project instructions (CLAUDE.md): none
@@ -75,7 +76,8 @@ i.e. approximately the thing under test, leaving no trace in the results.
 ## How the sessions were driven
 
 Headless `claude -p`, one fresh session per data point, 50 in total, scripted in
-[`harness/session.sh`](harness/session.sh). This was settled *before* generating anything: the
+`harness/session.sh` as it stood at tag `m2` (the packaged M5 version differs where
+[`harness/README.md`](harness/README.md) lists the known gaps). This was settled *before* generating anything: the
 alternative was 50 sessions by hand, which is neither reproducible nor honest about ordering.
 Activation is decided **mechanically** — a session "fired" iff it emitted a `Skill` tool call
 naming a `q-knowledge` skill — never by whether the prose felt q-flavoured. Traces:
@@ -282,8 +284,9 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
   finished connecting before those sessions started, while in the paired condition-A sessions it
   was still pending. `--tools` did not exclude it. None was invoked, and all three pairs scored
   identically, so no scored result depends on it (the output-token ratio moves from 2.8× to 3.4×
-  without those pairs); a re-run should disable account connectors explicitly
-  and assert identical non-treatment tools in every `system/init`.
+  without those pairs). The packaged harness (M5) disables account connectors on every session,
+  and its `audit.py` fails any run whose `system/init` records differ in non-treatment tools; run on
+  these logs, it fails and names exactly these three sessions.
 - **`qlint-snippet`'s lint never ran.** Condition B invoked the skill four times (tasks 03, 04, 10,
   13), but it shells out to KX qlint via
   `QLINT_DIR`, which is not installed on this machine, and the tool policy would not have permitted
@@ -295,7 +298,7 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 - [`results.csv`](results.csv) — 30 rows.
 - [`runs/`](runs/) — all 30 answers verbatim, the exact prompt bytes for all 50 sessions, the raw
   stream-json logs, per-task scoring rationale, and the derived tool traces.
-- [`harness/`](harness/) — the scripts, re-runnable.
+- [`harness/`](harness/) — the scripts, packaged for reuse on other plugins since M5.
 - [`triggers/`](triggers/) — Part A tables.
 
 **The files the numbers above are copied from are re-derived by `make verify-eval-run`,** which is part of `make verify`

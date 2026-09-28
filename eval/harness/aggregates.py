@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""aggregates.py <partB-logs-dir> [--check <aggregates.md>]
+"""aggregates.py <partB-logs-dir> [--lang L] [--check <aggregates.md>]
 
 Derive the Part B aggregates that `verdict.md` and the eval article quote
 (output-token totals and ratios, the connector sensitivity, dollar totals,
@@ -12,52 +12,43 @@ numbers built on top of it. Without it, those numbers were prose that happened
 to be true on the day (added 2026-09-28, when the eval article's content review
 added the dollar and connector figures).
 """
-import json, pathlib, statistics, sys
+import pathlib, statistics, sys
+
+from sessionlog import load, treatment
 
 logs = pathlib.Path(sys.argv[1])
 check = sys.argv[sys.argv.index("--check") + 1] if "--check" in sys.argv else None
+# The task language, if the study has one ("q" for M2): only used in wording.
+lang = sys.argv[sys.argv.index("--lang") + 1] if "--lang" in sys.argv else None
 
-# The tools the harness grants every session (session.sh: --tools Skill,Read,Glob).
-# A pair is excluded from the "without extra tools" row when either session's
-# system/init lists anything else (in the M2 run: an account connector,
-# verdict.md, Threats to validity). Derived per session, never hardcoded.
-INTENDED = {"Skill", "Read", "Glob"}
+every = load(logs)
+plugin = treatment(every)
+
+# The tools every session was granted. session.sh passes both conditions the
+# same --tools, so the baseline is what ALL sessions saw; a pair is excluded
+# from the "without extra tools" row when either session's system/init lists
+# anything beyond it (in the M2 run: an account connector, verdict.md, Threats
+# to validity). Derived per session, never hardcoded. audit.py is the stricter
+# gate for new runs: it fails the run outright instead of reporting around it.
+INTENDED = set.intersection(*(set(s.init.get("tools", [])) for s in every))
 
 
-def read(p):
-    first_ts, res, loaded, invoked, extra = None, None, False, False, False
-    for line in p.open():
-        line = line.strip()
-        if not line:
-            continue
-        d = json.loads(line)
-        if first_ts is None and d.get("timestamp"):
-            first_ts = d["timestamp"]
-        if d.get("type") == "system" and d.get("subtype") == "init":
-            loaded = any("q-knowledge" in str(pl) for pl in d.get("plugins", []))
-            extra = bool(set(d.get("tools", [])) - INTENDED)
-        elif d.get("type") == "assistant":
-            for b in d["message"].get("content", []):
-                if (b.get("type") == "tool_use" and b.get("name") == "Skill"
-                        and str(b.get("input", {}).get("skill", "")).startswith("q-knowledge")):
-                    invoked = True
-        elif d.get("type") == "result":
-            res = d
+def read(s):
     return {
-        "ts": first_ts,
-        "tokens": res["usage"]["output_tokens"],
-        "usd": res["total_cost_usd"],
-        "loaded": loaded,
-        "invoked": invoked,
-        "extra": extra,
+        "ts": s.first_ts,
+        "tokens": s.result["usage"]["output_tokens"],
+        "usd": s.result["total_cost_usd"],
+        "loaded": plugin in s.plugins,
+        "invoked": s.fired(plugin),
+        "extra": bool(set(s.init.get("tools", [])) - INTENDED),
     }
 
 
-sessions = {}
-for p in sorted(logs.glob("*.jsonl")):
-    task, cond = p.name.split(".")[0], p.name.split(".")[1]
-    sessions[(task, cond)] = read(p)
+sessions = {(s.task, s.cond): read(s) for s in every}
 tasks = sorted({t for t, _ in sessions})
+unpaired = [t for t in tasks if (t, "A") not in sessions or (t, "B") not in sessions]
+if unpaired:
+    sys.exit(f"tasks without both an A and a B log: {unpaired}")
 CONNECTOR = {t[:2] for t in tasks if sessions[(t, "A")]["extra"] or sessions[(t, "B")]["extra"]}
 
 
@@ -72,10 +63,22 @@ xa, xb = total("A", "tokens", CONNECTOR), total("B", "tokens", CONNECTOR)
 ua, ub = total("A", "usd"), total("B", "usd")
 ts = {c: sorted(sessions[(t, c)]["ts"] for t in tasks) for c in "AB"}
 
+
+def runs():
+    """The run order as condition runs, e.g. "A x15, B x15" or "B, A, B, A"."""
+    seq = [c for _, c in sorted((v["ts"], c) for (_, c), v in sessions.items())]
+    out = []
+    for c in seq:
+        if out and out[-1][0] == c:
+            out[-1][1] += 1
+        else:
+            out.append([c, 1])
+    return ", ".join(c if n == 1 else f"{c} x{n}" for c, n in out)
+
 out = f"""# Part B aggregates
 
-Derived from `runs/logs/partB/` by `harness/aggregates.py`; `make verify-eval-run`
-fails if this file drifts from the logs. Condition A = baseline, B = q-knowledge plugin.
+Derived from `{sys.argv[1].rstrip('/')}/` by `{pathlib.Path(sys.argv[0]).name}`, and `--check` fails if this
+file drifts from the logs. Condition A = baseline, B = {plugin} plugin.
 
 | | A | B | B / A |
 |---|---:|---:|---:|
@@ -86,8 +89,9 @@ fails if this file drifts from the logs. Condition A = baseline, B = q-knowledge
 | Dollars (`total_cost_usd`) | ${ua:.3f} | ${ub:.3f} | {ub / ua:.1f}x |
 
 - Plugin loaded: A {sum(sessions[(t, 'A')]['loaded'] for t in tasks)}/{len(tasks)}, B {sum(sessions[(t, 'B')]['loaded'] for t in tasks)}/{len(tasks)}.
-- q skill invoked (`Skill` call naming `q-knowledge`): A {sum(sessions[(t, 'A')]['invoked'] for t in tasks)}/{len(tasks)}, B {sum(sessions[(t, 'B')]['invoked'] for t in tasks)}/{len(tasks)}.
+- {lang + ' ' if lang else ''}skill invoked (`Skill` call naming `{plugin}`): A {sum(sessions[(t, 'A')]['invoked'] for t in tasks)}/{len(tasks)}, B {sum(sessions[(t, 'B')]['invoked'] for t in tasks)}/{len(tasks)}.
 - Session run order: A {ts['A'][0]} to {ts['A'][-1]}; B {ts['B'][0]} to {ts['B'][-1]}.
+- Condition sequence, by each log's first timestamp: {runs()}.
 """
 
 if check:

@@ -1,0 +1,1 @@
+Reply with exactly one python code block and nothing else: no prose before or after it, and no alternatives. The block must be a complete, self-contained Python 3 script that uses openpyxl, writes any files to the current directory, and prints the required result to stdout when run as `python3 script.py`.

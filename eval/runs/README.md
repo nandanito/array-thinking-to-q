@@ -25,7 +25,8 @@ the redaction pass surfaced the path.
 
 `../harness/redact.py` made exactly two changes for publication, and they are the only two:
 `rate_limit_event` lines were dropped (they carry the *author's account* quota, not eval data), and
-machine-specific absolute paths were rewritten to `$NEUTRAL` / `$KX` / `$HOME`. Everything else is
+machine-specific absolute paths were rewritten to `$NEUTRAL` / `$KX` / `$HOME` (by the version of
+`redact.py` at tag `m2`; the packaged one keeps each session's own directory name). Everything else is
 byte-for-byte session output.
 
 **The `.q` files are the model's replies verbatim.** All 30 answers obeyed the output contract
@@ -45,23 +46,25 @@ an otherwise exactly-correct join.
 
 ## Re-running the generation
 
-Needs the plugin checked out at the pinned SHA in `../verdict.md`:
+Needs the plugin checked out at the pinned SHA in `../verdict.md`. With the packaged harness
+(see [`../harness/README.md`](../harness/README.md)), from a directory outside this repository:
 
 ```sh
 git clone https://github.com/KxSystems/kx-skills && git -C kx-skills checkout 8b7040f
-export KX="$PWD/kx-skills/plugins/q-knowledge"
-mkdir -p out                       # session.sh redirects into it; it will not create it
-python3 ../harness/mkprompts.py ../tasks/q ./prompts
-../harness/session.sh A out/01-sum-squares.A ./prompts/01-sum-squares.txt
-../harness/session.sh B out/01-sum-squares.B ./prompts/01-sum-squares.txt
+export PLUGIN="$PWD/kx-skills/plugins/q-knowledge"
+H=/path/to/array-thinking-to-q/eval/harness
+python3 $H/mkprompts.py $H/../tasks/q prompts
+python3 $H/schedule.py --prompts prompts --out logs --seed 1
+python3 $H/audit.py logs --order logs/order.tsv
 ```
 
 `mkprompts.py` regenerates exactly the bytes in [`prompts/B/`](prompts/B/) from the task sheets —
 `diff -r` them if you want to check that the committed prompts are the ones the sheets describe.
 
-`session.sh` runs each session from `$NEUTRAL` (default `$TMPDIR/atq-eval-neutral`) — outside this
-repository, so condition A cannot inherit `.claude/skills/idiomatic-q/`. That control is the whole
-ballgame; see PLAN-M2.md §1.
+`session.sh` runs each session from its own fresh directory outside this repository, so
+condition A cannot inherit `.claude/skills/idiomatic-q/`. That control is the whole ballgame; see
+PLAN-M2.md §1. The M2 run itself used one shared directory and ran all of condition A before all
+of condition B; `../harness/README.md` lists those gaps and what replaced them.
 
 Sampling is not deterministic, so a re-run will not reproduce these answers token-for-token. It
 should reproduce the *shape* of the finding: both conditions at the correctness ceiling, near-zero
