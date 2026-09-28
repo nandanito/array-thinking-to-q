@@ -368,7 +368,7 @@ just the rule with the volume turned up and down.
 ## Does the shift actually take? Some evidence I did not expect
 
 I ran a controlled evaluation in late July for a different purpose, [testing whether KX's
-official q plugin improves a frontier model's q](02-evaluating-kx-q-plugin.md), and three of its
+official q plugin improves a frontier model's q](https://nandan.me/writing/no-headroom-kx-q-plugin/), and three of its
 fifteen tasks are exactly this article's thesis stated as an exercise: *here is q that was
 transliterated from an imperative loop; make it idiomatic.* A `do` loop accumulating a sum. A
 `while` loop building a running total. Row-index iteration over a table. Several of the

@@ -14,6 +14,10 @@ Code (fenced blocks and inline code) and HTML tags/attributes are not counted.
 En dashes in ranges ("2–4") are fine. Rewrite with commas, colons, parentheses
 or full stops; keep an em dash only where it carries a deliberate beat.
 
+Figures (writings/figures/**/*.svg) may carry no em dash at all in their
+<text> elements, since figure text is a caption in all but name
+(writings/figures/STYLE.md). <title>/<desc> are alt text, not checked.
+
 Lesson READMEs (lessons/README.md and lessons/*/README.md) are held to the same
 budget since their pass on 2026-09-27: they are the curriculum itself, and it
 should not read as generated either.
@@ -53,6 +57,8 @@ def rel(path):
 def in_scope(path):
     parts = rel(path).split(os.sep)
     if parts[0] == "writings":
+        if len(parts) > 2 and parts[1] == "figures":
+            return parts[-1].endswith(".svg")
         return len(parts) == 2 and parts[1].endswith(".md")
     if parts[0] == "lessons":
         return parts[-1] == "README.md" and len(parts) in (2, 3)
@@ -65,9 +71,22 @@ def prose(text):
     return re.sub(r"<[^>]+>", "", text)
 
 
+def check_svg(text):
+    """Figure text: every <text> element's visible content, no em dash allowed."""
+    problems = []
+    for m in re.finditer(r"<text\b[^>]*>(.*?)</text>", text, flags=re.S):
+        visible = re.sub(r"<[^>]+>", "", m.group(1))
+        if EM in visible:
+            problems.append("figure text has an em dash: %s" % " ".join(visible.split())[:90])
+    return problems
+
+
 def check(path):
     """Return (problems, count, words) for one file."""
     text = open(path, encoding="utf-8").read()
+    if path.endswith(".svg"):
+        problems = check_svg(text)
+        return problems, len(problems), 0
     p = prose(text)
     problems = []
     for line in p.split("\n"):
@@ -126,6 +145,8 @@ def main(argv):
     if argv[:1] == ["--hook"]:
         return hook()
     files = argv or (sorted(glob.glob(os.path.join(ROOT, "writings", "*.md")))
+                     + sorted(glob.glob(os.path.join(ROOT, "writings", "figures", "**", "*.svg"),
+                                        recursive=True))
                      + [os.path.join(ROOT, "lessons", "README.md")]
                      + sorted(glob.glob(os.path.join(ROOT, "lessons", "*", "README.md"))))
     failed = False
@@ -139,7 +160,8 @@ def main(argv):
             failed = True
             print("FAIL %s:\n- %s" % (name, "\n- ".join(problems)))
         else:
-            print("ok   %s (%d em dashes, %d words)" % (name, count, words))
+            print("ok   %s (%d em dashes, %d words)" % (name, count, words)
+                  if not name.endswith(".svg") else "ok   %s (figure text)" % name)
     return 1 if failed else 0
 
 

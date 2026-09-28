@@ -35,6 +35,8 @@ paths filled with the arrow's own colour.
 
 ## Hard rules
 
+- No em dashes in figure text (the same rule as headings and captions in CLAUDE.md's Voice
+  section); use a colon or a full stop. `tools/check-em-dashes.py` scans every `<text>` element.
 - Real `<text>` elements, never text converted to outlines. `<title>` + `<desc>` with
   `aria-labelledby` on the root, and a `<desc>` full enough to replace the image.
 - No external references: no `@import`, no webfont links, no `<image>`, no `href` to other files.

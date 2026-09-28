@@ -184,7 +184,7 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   docs/licensing-notes.md, the README and the as-of join article's provenance note. Last draft:
   commit a521549. Articles below were renumbered then; older docs use the old numbers.)
 - **M2 — Eval gate (wk 2–3):** trigger precision + output quality run; verdict written.
-  → Article 2 "I ran a controlled eval on KX's official q plugin. My tasks had no headroom." (was "Does KX's official q plugin actually make Claude better at q?") (flagship —
+  → Article 2 "No headroom: what a null result on KX's q plugin actually measured" (published 2026-09-29; was "I ran a controlled eval on KX's official q plugin. My tasks had no headroom.", and before that "Does KX's official q plugin actually make Claude better at q?") (flagship —
   an independent evaluation of a vendor plugin; genuinely new data for the community).
 - **M3 — The q core (wk 3–5):** Part II + `aj` showcase golden-filed; nightly q CI live.
   → Article 3 "The as-of join: what changes when the engine is built around one primitive"

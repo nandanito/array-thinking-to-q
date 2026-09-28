@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">The ceiling: fifteen paired tasks, one discordant pair</title>
-  <desc id="desc">Fifteen tiles, one per paired task, each run once without the plugin (condition A) and once with KX's q plugin (condition B). Five tiles, tasks 02, 07, 10, 13 and 14, are filled dark: both conditions wrote byte-for-byte identical q. Eight tiles, tasks 01, 03, 04, 05, 06, 09, 11 and 12, are outlined: the code differed but scored identically. Task 15 is outlined and marked as a shared miss: both conditions produced the correct joined table but failed the exact output diff on an extra line, identically. Task 08 is the only discordant pair, highlighted: the plugin condition won on one checklist item, a judgement call about an unnecessary binding. A summary row reads: correctness 14 of 15 in both conditions; idiomaticity 73 of 75 without the plugin and 74 of 75 with it; discordant pairs, 1, where an exact two-sided sign test needs at least six, all one way, to reach 5% significance. The footer says the test never engaged: baseline already solves these tasks.</desc>
+  <desc id="desc">Fifteen tiles, one per paired task, each run once without the plugin (condition A) and once with KX's q plugin (condition B). Five tiles, tasks 02, 07, 10, 13 and 14, are filled dark: both conditions wrote byte-for-byte identical q. Eight tiles, tasks 01, 03, 04, 05, 06, 09, 11 and 12, are outlined: the code differed but scored identically. Task 15 is outlined and marked as a shared miss: both conditions produced the correct joined table but failed the exact output diff on an extra line, identically. Task 08 is the only discordant pair, highlighted: the plugin condition won on one checklist item, a judgement call about an unnecessary binding. A summary row reads: correctness 14 of 15 in both conditions; idiomaticity 73 of 75 without the plugin and 74 of 75 with it; discordant pairs, 1, where an exact two-sided sign test needs at least six, all one way, to reach 5% significance. On one pair the exact test gives p = 1.0. The footer says the baseline already solves these tasks, so the instrument had no headroom.</desc>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
   <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">15 PAIRED TASKS · WITHOUT vs WITH KX'S q PLUGIN</text>
-  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">The comparison never got a chance to run.</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">The comparison could not tell the arms apart.</text>
 
   <!-- tiles: 15 across, x from 60, 52 wide, gap 4 -->
   <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="14" text-anchor="middle">
@@ -54,7 +54,7 @@
   <text x="440" y="352" font-size="44" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" fill="#000000">1</text>
   <text x="480" y="330" font-size="14" fill="#555555">An exact sign test needs at least six,</text>
   <text x="480" y="350" font-size="14" fill="#555555">all one way, to reach 5% significance.</text>
-  <text x="480" y="370" font-size="14" fill="#555555">It never engaged.</text>
+  <text x="480" y="370" font-size="14" fill="#555555">On one pair, p = 1.0.</text>
 
   <text x="450" y="430" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">Not "the plugin doesn't help". The baseline model already solves these tasks, so the instrument had no headroom.</text>
   <text x="450" y="450" text-anchor="middle" font-size="11" fill="#777777">claude-opus-5 · q-knowledge@kx-skills pinned at 8b7040f · run 2026-07-26/27</text>

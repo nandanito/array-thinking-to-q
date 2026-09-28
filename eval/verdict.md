@@ -190,7 +190,7 @@ here rather than left to be inferred from a column of zeros.
 
 ## Verdict — pick one exit
 
-- [x] **No lift** → publish the negative result (the eval article, writings/02-evaluating-kx-q-plugin.md); ship curriculum-only, author no skill.
+- [x] **No lift** → publish the negative result (the eval article, writings/02-no-headroom-kx-q-plugin.md); ship curriculum-only, author no skill.
 - [ ] **Lift, but KX's plugin already delivers it** → publish the comparison; author nothing.
 - [ ] **Lift AND a gap KX's plugin does not fill** → author a skill scoped to that gap.
 
