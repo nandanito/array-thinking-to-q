@@ -204,8 +204,8 @@ evaluation harness I trust — mostly because it has already caught me.
 ## The five articles
 
 1. **This one**: the project, the rules, and what they cost.
-2. **I ran a controlled eval on KX's official q plugin. My tasks had no headroom.**
-   A controlled evaluation, a null result, and why the null is about my benchmark rather
+2. **[No headroom: what a null result on KX's q plugin actually measured](https://nandan.me/writing/no-headroom-kx-q-plugin/)**:
+   a controlled evaluation, a null result, and why the null is about my benchmark rather
    than their plugin.
 3. **The as-of join**: what changes when the language and the storage engine are designed
    around one primitive. No benchmark numbers; the article explains why.

@@ -1,7 +1,6 @@
 <!--
 Social posts for article 2 (the eval) (RELEASE-CHECKLIST: "X + Bluesky: short thread — hook + one snippet +
 canonical link"; "Mastodon: single-post summary + link"; Nostr, same shape as Mastodon).
-DRAFT: <URL> is the article's canonical URL, unknown until nandan.me publishes it.
 Snippet provenance: `show sums 1 2 3 4 5` is byte-identical in eval/runs/02-running-total.A.q and
 .B.q (line 1), the committed answers the eval scored.
 Tagging: KX is @kxsystems on X. KX has no Bluesky, Mastodon or Nostr account (checked
@@ -53,7 +52,7 @@ Measure the baseline's failure rate before you design the comparison.
 
 Also: the control that made the null trustworthy, and a finding I retracted after one more page of KX's docs.
 
-<URL>
+https://nandan.me/writing/no-headroom-kx-q-plugin/
 
 Not affiliated with KX.
 
@@ -95,7 +94,7 @@ Measure the baseline's failure rate before you design the comparison.
 
 Also: the control that made the null trustworthy, and a finding I retracted after one more page of KX's docs.
 
-<URL>
+https://nandan.me/writing/no-headroom-kx-q-plugin/
 
 Not affiliated with KX.
 
@@ -105,7 +104,7 @@ When you compare a coding plugin against a frontier model, your task set is part
 
 I ran a controlled eval of KX's official q plugin for Claude Code: 15 paired q tasks. Correct 14/15 in both arms, five pairs byte-identical, one discordant pair where a sign test needs six. The plugin worked; my tasks had no headroom. Check the baseline's failure rate first.
 
-Article 2 of 5: <URL>
+Article 2 of 5: https://nandan.me/writing/no-headroom-kx-q-plugin/
 
 #LLM #kdb #ClaudeCode #Evaluation
 
@@ -117,7 +116,7 @@ I ran a controlled eval of KX's official q plugin for Claude Code: 15 paired q t
 
 The lesson: measure the baseline's failure rate before you design the comparison.
 
-Article 2 of 5: <URL>
+Article 2 of 5: https://nandan.me/writing/no-headroom-kx-q-plugin/
 Repo: https://github.com/nandanito/array-thinking-to-q
 
 #LLM #kdb #programming

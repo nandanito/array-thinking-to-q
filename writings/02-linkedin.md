@@ -1,6 +1,6 @@
 <!--
 LinkedIn post for article 2, the eval (RELEASE-CHECKLIST: "2–3 paragraph professional framing").
-DRAFT: the canonical URL is not known until nandan.me publishes; <URL> is a placeholder.
+Scheduled: 2026-09-29 08:30 CEST (the article goes live on nandan.me from about 07:15 CEST).
 Image: attach writings/figures/02/linkedin-card.png.
 Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems.
 Every number is from the article / eval/verdict.md: 14/15 correctness in both arms, 73/75 vs 74/75
@@ -29,7 +29,7 @@ check I should have run first: measure the baseline's failure rate before design
 comparison. It tests the plugin at a pinned commit; KX has since added a documentation-search
 server that this eval did not cover.
 
-<URL>
+https://nandan.me/writing/no-headroom-kx-q-plugin/
 
 Independent work; not affiliated with KX.
 

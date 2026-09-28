@@ -1,6 +1,7 @@
-# I ran a controlled eval on KX's official q plugin. My tasks had no headroom.
+# No headroom: what a null result on KX's q plugin actually measured
 
-*Article 2 of 5, draft. Reports the M2 eval result. Evidence: [`eval/verdict.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md).*
+*Article 2 of 5, published 2026-09-29 on nandan.me, which is the canonical version:
+<https://nandan.me/writing/no-headroom-kx-q-plugin/>. Evidence: [`eval/verdict.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/eval/verdict.md).*
 
 ---
 

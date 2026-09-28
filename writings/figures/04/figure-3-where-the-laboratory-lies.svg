@@ -18,7 +18,7 @@
   <rect rx="2" x="62" y="238" width="296" height="54" fill="#fafafa" stroke="#e5e5e5"/>
   <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="14" fill="#000000" xml:space="preserve">
     <text x="74" y="260">(+/ % #) til 5</text>
-    <text x="74" y="280">'   <tspan fill="#777777">— does not parse</tspan></text>
+    <text x="74" y="280">'   <tspan fill="#777777">/ does not parse</tspan></text>
   </g>
   <text x="62" y="326" font-size="15" fill="#000000">You cannot ship it.</text>
   <text x="62" y="350" font-size="13" font-style="italic" fill="#555555">Say the composition out loud: avg,</text>
