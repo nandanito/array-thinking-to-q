@@ -1,6 +1,7 @@
 # array-thinking-to-q — Project Specification
 
-> Status: reviewed seed (Claude self-review + 2 ChatGPT cross-reviews incorporated; Fable 5 pass pending) 2026-07-22
+> Status: reviewed seed (Claude self-review, 2 ChatGPT cross-reviews and the Fable 5 round 3 pass incorporated; see Review trail) 2026-07-22.
+> Kept current at every milestone's compound step; M1 to M4 are done (M4 closed 2026-09-27).
 > Owner: Nandan (personal). Home: `nandanito/array-thinking-to-q`.
 > (Deliberately NOT under qmilab — this is a personal project: verified work published as it is built.)
 > Renamed from `from-j-to-q` after the reframe made J ~25% of content: the old name gave equal
@@ -54,8 +55,8 @@ playgrounds/tracers, covering k/APL/BQN beyond honest pointers.
 
 ## Product shape (MVP — hard scope)
 
-1. **Curriculum (~10 lessons):**
-   - Part I — The J prelude (1–2 lessons, ILLUSTRATIVE): snippets with captured outputs showing
+1. **Curriculum (~10 lessons; v1 has seven: the J laboratory, the transition chapter and five q lessons):**
+   - Part I — The J prelude (1–2 lessons, ILLUSTRATIVE; shipped as one, `lessons/00-j-laboratory/`): snippets with captured outputs showing
      where the paradigm comes from — mean-as-fork `(+/ % #)`, rank, trains. **No reader toolchain
      required**; J is read-along, not install-and-run. (Examples stay executable in author-side CI
      because jconsole is free and license-free — the one green check independent of KX.)
@@ -197,6 +198,9 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   novelty for the author (he already knows J), and its mitigation ("draft it during M1 while
   enthusiasm is high") was missed. Mitigated instead by drafting it at M2-close, before its
   milestone exists; that is what makes it safe for the J laboratory to run *after* the q core.
+  **DONE 2026-09-27:** `lessons/00-j-laboratory/` and `lessons/00-transition/` verify, and the
+  article is un-gated (every block identical to a lesson README block, all of which run except
+  lesson 01's exempt parse-error transcript; em-dash pass done).
 - **M5 — Ship (wk 8):** curriculum v1; the **eval harness packaged as a reusable artifact**
   (`eval/harness/` published so anyone can A/B a Claude Code plugin: neutral-cwd contamination
   control, mechanical activation detection, self-verifying scorer); v1 tag.
@@ -208,7 +212,7 @@ already delivers it → publish the comparison, author nothing. Both are real fi
 **M3/M4 were swapped on 2026-07-28** (they read J-laboratory-then-q-core). The old order predates
 J's demotion from co-star to illustrative laboratory, and it contradicts both CLAUDE.md's build
 order and the Q-first rule — a J prelude cannot be written before its q side runs. Articles moved
-with their milestones so the series still publishes 1→6 in order. COMPOUND.md entries dated before
+with their milestones so the series still publishes in order (1→5 since the licensing article was cut). COMPOUND.md entries dated before
 that reconciliation label the Part II lessons "M4"; they mean what is now M3.
 
 Article drafts live in `writings/`. Publishing/syndication is an operational checklist
