@@ -5,7 +5,7 @@ Image: attach writings/figures/02/linkedin-card.png.
 Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems.
 Every number is from the article / eval/verdict.md: 14/15 correctness in both arms, 73/75 vs 74/75
 idiomaticity, one discordant pair against the six a two-sided exact sign test needs, five
-byte-identical pairs, plugin loaded in 14 of 15 Part B runs.
+byte-identical pairs, q skill invoked in 14 of 15 Part B runs.
 Deliberately left out: the 2.8x output-token ratio. It is in the article with its context; stripped
 of that context in a post it reads as a knock on the plugin, and the post's claim is about the task
 set, not the plugin.
@@ -22,8 +22,8 @@ on 14 of 15 tasks, five pairs came back as byte-for-byte identical code, and the
 discordant pair where the test needs at least six. I kept verification simple by choosing simple
 tasks, and they left no room for any plugin to show a difference.
 
-So the finding is not that the plugin does not help. It is that my instrument could not have
-detected a small effect and detected no large one. The article covers the control that made the
+So the finding is not that the plugin does not help. It is that my instrument showed no measurable
+lift, on tasks that left almost no room to show one. The article covers the control that made the
 null trustworthy, a finding I retracted after reading one more page of KX's documentation, and the
 check I should have run first: measure the baseline's failure rate before designing the
 comparison. It tests the plugin at a pinned commit; KX has since added a documentation-search

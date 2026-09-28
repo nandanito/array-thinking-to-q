@@ -9,7 +9,7 @@ I set out to answer a narrow question with an experiment instead of an opinion: 
 official Claude Code plugin for q measurably improve a frontier model's q output?**
 
 The answer, on fifteen paired tasks, is that I could not measure any improvement, and the more
-useful finding is *why* I could not. The comparison never got a chance to run. That is a different
+useful finding is *why* I could not. The comparison ran, but it could not tell the two arms apart. That is a different
 and more interesting result than "the plugin doesn't help", and the distance between those two
 sentences is most of what this article is about.
 
@@ -95,10 +95,10 @@ neither: in Part B the model invoked it four times and the lint never ran. The p
 untested here, and nothing below speaks for it.
 
 > **Dated note, 2026-09-25.** KX has kept shipping since this run. On 14 Aug it bundled a
-> documentation-search MCP server into every plugin in the family and bumped `q-knowledge` to 0.1.1;
+> documentation-search MCP server into `q-knowledge` (now 0.1.1) and its five sibling knowledge plugins;
 > it has also added new plugins and Codex support. The q skill's own content is **byte-identical** to
 > the pinned commit (I checked the tree hashes). So every number below still describes exactly what I
-> tested, but the plugin you install today also searches KX's documentation, and this eval did not
+> tested, but the plugin you install today also bundles a KX documentation search, and this eval did not
 > test that. My harness allowed only `Skill`, `Read` and `Glob` (with one leak, below); a re-run would first
 > have to decide whether to let the docs server in.
 
@@ -107,9 +107,11 @@ model (`claude-opus-5`), identical settings, with one exception I found only whe
 review re-read the raw logs. In three condition-B sessions (tasks 03, 04 and 06), a claude.ai Google
 Drive connector on my account had finished connecting before the session started, and eight of its
 tools were listed in the session's context; in their condition-A twins it was still pending, so the
-three intended tools were all there was. None of those tools was ever called, and all three pairs
-scored identically, so no result turns on it. But those three pairs were not isolated by the plugin
-alone, and I should have pinned the connectors off rather than trusting the tool flag.
+three intended tools were all there was. That could happen because the order was fixed: all fifteen
+A sessions ran first, then all fifteen B sessions, about two minutes later. None of those tools was
+ever called and all three pairs scored identically, so no scored result turns on it; dropping those
+pairs moves the output-token ratio below from 2.8× to 3.4×. But those three pairs were not isolated
+by the plugin alone, and I should have pinned the connectors off rather than trusting the tool flag.
 
 **Part A: does it fire?** A skill that never activates is worth zero regardless of content.
 20 prompts: 10 that should fire, 10 adjacent traps that should not (NumPy vectorization, plain
@@ -121,11 +123,13 @@ golden-file diff. Idiomaticity as a **five-item binary checklist**, never a 1–
 because a feel score drifts upward as my own q taste improves while the benchmark stays fixed.
 Every checklist item has to be justifiable against a published source, Q for Mortals or
 code.kx.com, rather than against my preferences. (One item did not live up to that, and it is the
-one that decided the only discordant pair; more below.)
+one that decided the only discordant pair; more below. Another, "uses qSQL where a table op is
+expected", scored a pass on all thirty answers, including tasks with no table in them, so it added a
+point to both arms equally and discriminated nothing.)
 
-**Decision rule, fixed in advance:** a paired sign test on discordant pairs. Count only the tasks
-where the two conditions differ; the effect is real only if one side takes ≥~80% of them. (Strictly, that is a heuristic in the
-spirit of a sign test rather than an exact one: a two-sided exact sign test cannot reach 5%
+**Decision rule, fixed in advance:** a heuristic in the spirit of a paired sign test. Count only the
+tasks where the two conditions differ; the effect is real only if one side takes ≥~80% of them. (It
+is not an exact test, and it is looser than one: a two-sided exact sign test cannot reach 5%
 significance with fewer than six discordant pairs, because even 5–0 gives p = 0.0625.)
 
 I want to flag one thing I am *not* claiming. **The scoring was not blinded.** At the time I told
@@ -147,12 +151,11 @@ It silently inherits a q idiom skill, which is approximately the thing under tes
 treated, the comparison measures nothing, and **the results look completely normal.** That is the
 part that should scare you. A contaminated null and a clean null are the same numbers.
 
-So every one of the 50 sessions ran from an empty scratch directory outside the repository, with
-no `CLAUDE.md` and no `.claude/`, driven headless. I verified it rather than assuming it. The committed
-session logs record what each session loaded: every condition-A session had the same 16 skills,
+So every one of the 50 sessions ran headless from a scratch directory outside the repository, with
+no `CLAUDE.md` and no `.claude/`. The committed session logs record what each session loaded: every condition-A session had the same 16 skills,
 none q-related, no project instructions, and specifically no `idiomatic-q`. Every condition-B
 session had the same 16 plus exactly `q-knowledge:q` and `q-knowledge:qlint-snippet`. (When I
-asked a session to list its own skills it said 41. A model's account of its context is not a
+asked a session at run time to list its own skills, it said 41. A model's account of its context is not a
 log, which is this article's point in miniature.)
 
 The general form: **when the environment can leak the treatment into the control, that control is a
@@ -187,7 +190,7 @@ domain skill on the bench, and every trap built to bait a keyword match (`merge_
 J's rank operator) held firm. The mis-fire came from the *least* q-flavoured prompt in the set.
 
 The reason Part A matters is that it forecloses the easy explanation for what comes next. **In Part
-B the plugin loaded in 14 of 15 runs.** Whatever follows is a finding about an active plugin.
+B the plugin's q skill was invoked in 14 of 15 runs.** Whatever follows is a finding about an active plugin.
 
 One methodological note that paid for itself immediately. I decided firing **mechanically** (the
 session emitted a `Skill` tool call naming a `q-knowledge` skill, read off the session log) rather
@@ -262,14 +265,14 @@ The fix costs an hour and I did not spend it: **run the baseline arm alone first
 fails often enough to leave room for the treatment to show.** Fifteen sessions would have told me
 this task set had no headroom, before I spent fifty on a comparison that could not resolve.
 
-So the result I am publishing is not "the plugin doesn't help". It is **"this instrument could not
-have detected a small effect, and detected no large one."** Those differ, and only the second is
+So the result I am publishing is not "the plugin doesn't help". It is **"this instrument showed no
+measurable lift, on tasks that left almost no room to show one."** Those differ, and only the second is
 something I earned. The first would be the cleaner sentence, which is precisely why I have to
 resist writing it.
 
 ## What did separate the conditions
 
-The tasks could not discriminate on quality. They discriminated cleanly on cost.
+The tasks could not discriminate on quality. They did separate cleanly on output tokens.
 
 | | A | B | ratio |
 |---|---:|---:|---:|
@@ -278,8 +281,9 @@ The tasks could not discriminate on quality. They discriminated cleanly on cost.
 | Widest single task | 23 | 407 | **17.7×** |
 
 Roughly three times the output tokens, for code that scored identically on fourteen of fifteen
-tasks and was *literally the same code* on five of them. When your primary metric hits a ceiling,
-the secondary metrics are the finding.
+tasks and was *literally the same code* on five of them. (The session logs' own dollar figures,
+which also count input and cache tokens, put the gap at about 4.5×: $0.47 against $2.10 for the
+fifteen tasks.) When your primary metric hits a ceiling, the secondary metrics are the finding.
 
 ![Bar chart of total output tokens over 15 tasks: 3,671 without the plugin, 10,337 with it, 2.8 times. Median per-task ratio 3.9 times; widest single task 23 to 407 tokens, 17.7 times. These are the language model's tokens, not a measurement of q.](figures/02/figure-3-the-cost.svg)
 
@@ -330,7 +334,8 @@ that was too narrow.** It names one attribute as though it were the only right a
 I have left the score at zero, because the scoring rule was fixed before the pass and gets applied
 consistently or it is not a rule. As a sensitivity check: scored as the documentation supports,
 idiomaticity would be 74/75 without the plugin and 75/75 with it: still one discordant pair, still
-no verdict. But the interpretation is retracted, and since both arms diverged
+no verdict. Score task 08 as the tie it arguably is as well, and both arms are 75/75 with no
+discordant pair at all. But the interpretation is retracted, and since both arms diverged
 identically it never touched the comparison anyway.
 
 That is also the end of the one candidate "gap" this eval produced. My protocol permits authoring a
@@ -343,8 +348,8 @@ in my own instrument. No skill, then — and a sharper task set goes in the note
   an instrument with no headroom and find out fifty sessions later.
 - **Measure activation as a tool call, not a vibe.** Fluent domain output is not evidence that a
   domain skill loaded.
-- **Build the harness so it cannot leak the treatment into the control**, and verify that by
-  asking, not by assuming. A contaminated null is indistinguishable from a clean one.
+- **Build the harness so it cannot leak the treatment into the control**, and verify that from the
+  session logs, not by assuming (or by asking the model). A contaminated null is indistinguishable from a clean one.
 - **Smoke-test the treatment arm's happy path specifically.** My first run had condition B's reads
   of its own bundled reference files being permission-denied. The harness was handicapping the
   plugin against its own design. A harness bug that weakens the treatment reads as a null result.
@@ -360,9 +365,9 @@ in my own instrument. No skill, then — and a sharper task set goes in the note
 
 ## Verdict
 
-No lift, on a task set that could not have shown a small one. KX's `q-knowledge` guidance, as
+No measurable lift, on a task set with almost no room to show one. KX's `q-knowledge` guidance, as
 pinned at `8b7040f`, activates reliably and writes good q (its linter path was not tested). So does the model without it, on tasks
-this easy, for about a third of the tokens. No skill authored. The curriculum ships on its own merits.
+this easy, for about a third of the output tokens. No skill authored. The curriculum ships on its own merits.
 
 The eval was underpowered, and that is the finding I actually have. It is worth publishing because
 the failure mode generalises far past q: **an A/B against a frontier model is measuring your task
