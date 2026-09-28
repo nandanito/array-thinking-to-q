@@ -1,54 +1,43 @@
 #!/usr/bin/env python3
-"""extract.py <log.jsonl> [--field name]
+"""extract.py <log.jsonl> [--field name] [--plugin name]
 
 Reads one subject-session stream-json log and prints one of:
   --field result   the model's final answer, verbatim (default)
-  --field code     the first fenced code block in the answer (the candidate q script)
+  --field code     the first fenced code block in the answer (the candidate script)
   --field tools    one line per tool_use: NAME<TAB>json-input
-  --field fired    "y" if the KX q skill was invoked, else "n"
+  --field fired    "y" if the plugin's skill was invoked, else "n"
   --field tokens   output tokens
   --field turns    num_turns
+
+`fired` needs to know the plugin under test. It defaults to the plugin this
+log's own system/init loaded, so a condition-A log (no plugin) always prints
+"n"; pass --plugin to test an A log against the B plugin's name explicitly.
 """
 import json, re, sys
 
-path = sys.argv[1]
-field = "result"
-if "--field" in sys.argv:
-    field = sys.argv[sys.argv.index("--field") + 1]
+from sessionlog import Session
 
-tools, res = [], None
-for line in open(path):
-    line = line.strip()
-    if not line:
-        continue
-    try:
-        d = json.loads(line)
-    except Exception:
-        continue
-    if d.get("type") == "assistant":
-        for b in d["message"].get("content", []):
-            if b.get("type") == "tool_use":
-                tools.append((b["name"], b.get("input", {})))
-    elif d.get("type") == "result":
-        res = d
 
-txt = (res or {}).get("result") or ""
+def arg(name, default=None):
+    return sys.argv[sys.argv.index(name) + 1] if name in sys.argv else default
+
+
+s = Session(sys.argv[1])
+field = arg("--field", "result")
+txt = s.answer
 
 if field == "result":
     sys.stdout.write(txt)
 elif field == "tools":
-    for n, i in tools:
+    for n, i in s.tool_uses:
         print(f"{n}\t{json.dumps(i)}")
 elif field == "fired":
-    hit = any(
-        n == "Skill" and str(i.get("skill", "")).startswith("q-knowledge")
-        for n, i in tools
-    )
-    print("y" if hit else "n")
+    plugin = arg("--plugin", s.plugins[0] if s.plugins else None)
+    print("y" if s.fired(plugin) else "n")
 elif field == "tokens":
-    print(((res or {}).get("usage") or {}).get("output_tokens", ""))
+    print(s.output_tokens)
 elif field == "turns":
-    print((res or {}).get("num_turns", ""))
+    print((s.result or {}).get("num_turns", ""))
 elif field == "code":
     # First fenced block. Contract asks for exactly one; if a model emits more,
     # the first is its answer and the extras are scored as protocol deviation.
