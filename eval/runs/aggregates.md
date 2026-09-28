@@ -1,7 +1,7 @@
 # Part B aggregates
 
-Derived from `runs/logs/partB/` by `harness/aggregates.py`; `make verify-eval-run`
-fails if this file drifts from the logs. Condition A = baseline, B = q-knowledge plugin.
+Derived from `runs/logs/partB/` by `aggregates.py`, and `--check` fails if this
+file drifts from the logs. Condition A = baseline, B = q-knowledge plugin.
 
 | | A | B | B / A |
 |---|---:|---:|---:|
@@ -14,3 +14,4 @@ fails if this file drifts from the logs. Condition A = baseline, B = q-knowledge
 - Plugin loaded: A 0/15, B 15/15.
 - q skill invoked (`Skill` call naming `q-knowledge`): A 0/15, B 14/15.
 - Session run order: A 2026-07-26T14:42:20.599Z to 2026-07-26T14:43:14.934Z; B 2026-07-26T14:43:23.422Z to 2026-07-26T14:44:20.952Z.
+- Condition sequence, by each log's first timestamp: A x15, B x15.

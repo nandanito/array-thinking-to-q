@@ -63,10 +63,22 @@ xa, xb = total("A", "tokens", CONNECTOR), total("B", "tokens", CONNECTOR)
 ua, ub = total("A", "usd"), total("B", "usd")
 ts = {c: sorted(sessions[(t, c)]["ts"] for t in tasks) for c in "AB"}
 
+
+def runs():
+    """The run order as condition runs, e.g. "A x15, B x15" or "B, A, B, A"."""
+    seq = [c for _, c in sorted((v["ts"], c) for (_, c), v in sessions.items())]
+    out = []
+    for c in seq:
+        if out and out[-1][0] == c:
+            out[-1][1] += 1
+        else:
+            out.append([c, 1])
+    return ", ".join(c if n == 1 else f"{c} x{n}" for c, n in out)
+
 out = f"""# Part B aggregates
 
-Derived from `{sys.argv[1].rstrip('/')}/` by `{sys.argv[0]}`; `make verify-eval-run`
-fails if this file drifts from the logs. Condition A = baseline, B = {plugin} plugin.
+Derived from `{sys.argv[1].rstrip('/')}/` by `{pathlib.Path(sys.argv[0]).name}`, and `--check` fails if this
+file drifts from the logs. Condition A = baseline, B = {plugin} plugin.
 
 | | A | B | B / A |
 |---|---:|---:|---:|
@@ -79,6 +91,7 @@ fails if this file drifts from the logs. Condition A = baseline, B = {plugin} pl
 - Plugin loaded: A {sum(sessions[(t, 'A')]['loaded'] for t in tasks)}/{len(tasks)}, B {sum(sessions[(t, 'B')]['loaded'] for t in tasks)}/{len(tasks)}.
 - {lang + ' ' if lang else ''}skill invoked (`Skill` call naming `{plugin}`): A {sum(sessions[(t, 'A')]['invoked'] for t in tasks)}/{len(tasks)}, B {sum(sessions[(t, 'B')]['invoked'] for t in tasks)}/{len(tasks)}.
 - Session run order: A {ts['A'][0]} to {ts['A'][-1]}; B {ts['B'][0]} to {ts['B'][-1]}.
+- Condition sequence, by each log's first timestamp: {runs()}.
 """
 
 if check:

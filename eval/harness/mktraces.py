@@ -42,13 +42,14 @@ def chain(s):
 out = []
 out.append(f"# Raw session traces — {title}")
 out.append("")
+script = pathlib.Path(sys.argv[0]).name
 out.append("**Derived from the committed logs in [`logs/`](logs/)** by "
-           f"`{sys.argv[0]}`, and re-checked by `make verify-eval-run` — so the")
-out.append("activation and token numbers in `../verdict.md` can be audited without trusting this")
-out.append("table. \"Fired\" means the session actually emitted a `Skill` tool call naming a")
+           f"`{script}`, and `{script} --check` fails if the two drift apart, so the")
+out.append("activation and token numbers built on this table can be audited without trusting it.")
+out.append("\"Fired\" means the session actually emitted a `Skill` tool call naming a")
 out.append(f"`{plugin}` skill, not that the answer *looked* "
            + (f"{lang}-flavoured" if lang else "like it used one") + ". Condition A has no such")
-out.append("skill to call; its logs record `\"plugins\": []`.")
+out.append("skill to call: its logs record no `--plugin-dir` plugin.")
 out.append("")
 if part_a:
     # "Condition B only" is a claim about the logs, so it is checked, not typed.

@@ -43,8 +43,11 @@ for p in sorted(src.rglob("*.jsonl")):
     for ln in lines:
         d = json.loads(ln)
         if d.get("type") == "system" and d.get("subtype") == "init":
+            # Only the --plugin-dir plugin has a real path; built-ins record the
+            # literal "builtin", which must not be rewritten wherever it appears.
             for pl in d.get("plugins") or []:
-                if pl.get("path"):
+                if (str(pl.get("source", "")).endswith("@inline")
+                        and str(pl.get("path", "")).startswith("/")):
                     subs.append((pl["path"], "$PLUGIN"))
             if d.get("cwd"):
                 parent = os.path.dirname(d["cwd"])

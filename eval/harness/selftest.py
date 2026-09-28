@@ -186,6 +186,22 @@ try:
     expect("scorer INIT=1 records the missing answer as a failure and refuses to overwrite",
            rc == 1 and "t2,B" not in csv.read_text() and rc2 == 2, out + out2)
 
+    # ---- redact.py -------------------------------------------------------
+    raw, pub = tmp / "raw", tmp / "pub"
+    raw.mkdir()
+    ini = init("B", "x", cwd=f"{tmp}/atq-neutral.Ab12Cd")
+    ini["plugins"] = [{"name": "demo", "path": f"{tmp}/plug", "source": "demo@inline"},
+                      {"name": "telemetry", "path": "builtin", "source": "telemetry@builtin"}]
+    (raw / "t1.B.jsonl").write_text("\n".join(json.dumps(x) for x in [
+        ini, {"type": "rate_limit_event", "quota": 0.5},
+        {"type": "result", "result": f"read {tmp}/plug/SKILL.md; the builtin works"}]) + "\n")
+    rc, out = run(sys.executable, HERE / "redact.py", raw, pub)
+    red = (pub / "t1.B.jsonl").read_text() if rc == 0 else ""
+    expect("redact rewrites the plugin and tmp paths, keeps each dir name, leaves 'builtin' alone",
+           rc == 0 and "rate_limit_event" not in red and "$PLUGIN/SKILL.md" in red
+           and '"cwd": "$TMPDIR/atq-neutral.Ab12Cd"' in red and "telemetry@builtin" in red
+           and '"path": "builtin"' in red and "the builtin works" in red, out + red)
+
     # ---- extract.py ----------------------------------------------------------
     b = EVAL / "runs/logs/partB/01-sum-squares.B.jsonl"
     a = EVAL / "runs/logs/partB/01-sum-squares.A.jsonl"
