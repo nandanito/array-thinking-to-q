@@ -26,8 +26,10 @@ A curriculum published as it is built: one verified lesson at a time, misses inc
 | Part I: J laboratory | **Done**: [one read-along lesson](lessons/00-j-laboratory/). J outputs are captured; readers need no J install, and `make verify` still runs every line |
 | Transition chapter | **Done**: [everything after this point is q](lessons/00-transition/), with what does and does not carry over from J |
 | Eval of KX's official q plugin | **Run and published** — 50 headless sessions, [null result](eval/verdict.md). No measurable lift, on a task set that could not have measured a small one. Raw material in [`eval/runs/`](eval/runs/) |
+| Eval harness | **Packaged for reuse** ([README](eval/harness/README.md)): A/B any Claude Code plugin against no plugin, each session from a fresh neutral directory, audited from its own log, scored by scripts that re-derive the published numbers. Proven from a clean checkout against another vendor's plugin |
+| Release | **`v1`** (2026-09-28): the curriculum, the eval and the harness. The last article, "What compounds", is drafted |
 | `idiomatic-q` skill | **Not authored, and not planned.** The eval exposed no gap, so the conditional never fired |
-| CI | `j-verify` blocking on every PR; **`q-verify` green** (nightly + manual on `main` — secrets are unavailable to fork PRs, so it cannot be a PR check). Both legs of `make verify` now run off-machine |
+| CI | `j-verify` blocking on every PR (J twins, article snippets, the harness self-test); **`q-verify` green** (nightly + manual on `main` — secrets are unavailable to fork PRs, so it cannot be a PR check). Both legs of `make verify` now run off-machine |
 
 ## Start here
 
