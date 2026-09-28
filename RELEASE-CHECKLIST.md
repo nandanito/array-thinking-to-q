@@ -31,4 +31,4 @@ Done 2026-09-28 (PRs #43, #44 and the M5-close PR):
       plugin (`eval/harness/README.md`, "Clean-checkout run"), which found four defects first
 - [x] Eval numbers still re-derive: `make verify-eval-run` green
 - [x] README status updated
-- [ ] `v1` tag (annotated, on the merge of the M5-close PR)
+- [x] `v1` tag (annotated, on the merge commit of #45, the M5-close PR)
