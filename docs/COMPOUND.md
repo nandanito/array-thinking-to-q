@@ -974,7 +974,11 @@ recomputed. The problems were all in what the sentences claimed about the number
   friendly.
 - **The evidence file lagged the article.** The corrections went into the article first, leaving
   `eval/verdict.md`, the file the article cites as evidence, claiming more than the article. It is
-  reconciled now, with dated CORRECTED notes. This is the M4 lesson running the other way: there,
+  reconciled now, with dated CORRECTED notes, and the numbers the review added (dollars, the
+  connector sensitivity, load and invocation counts, run order) are derived by a new
+  `eval/harness/aggregates.py --check` in `make verify-eval-run`, which three planted corruptions
+  each fail. The first draft of this reconciliation annotated around stale sentences instead of
+  striking them, and two light passes caught the verdict still contradicting itself. This is the M4 lesson running the other way: there,
   a correction to the evidence never reached a gated draft; here, a correction to the publication
   nearly never reached the evidence. **Corrections flow both ways between a publication and its
   source of record, and each direction needs its own grep.**

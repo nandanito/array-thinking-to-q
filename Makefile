@@ -49,6 +49,8 @@ verify-eval-run:
 	@tail -1 /tmp/eval-run.txt
 	@echo "== eval run: runs/traces.md vs. the committed session logs =="
 	@python3 eval/harness/mktraces.py eval/runs/logs --check eval/runs/traces.md
+	@echo "== eval run: runs/aggregates.md vs. the committed Part B logs =="
+	@python3 eval/harness/aggregates.py eval/runs/logs/partB --check eval/runs/aggregates.md
 
 # The other verify- targets prove the lesson SOURCES run. None of them look at
 # the outputs pasted into each lesson's narrative, which is exactly where the

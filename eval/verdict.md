@@ -29,9 +29,10 @@
 
 ## Contamination control — what was actually done
 
-Every subject session ran with cwd set to an **empty scratch directory outside this repository**
-(not a git repo, no `CLAUDE.md`, no `.claude/`). Verified at run time by asking a session to
-enumerate what it had loaded:
+Every subject session ran with cwd set to a ~~**empty**~~ **scratch directory outside this
+repository** (set up as not a git repo, with no `CLAUDE.md` and no `.claude/`).
+~~Verified at run time by asking a session to enumerate what it had loaded:~~ At run time a session
+was also asked to enumerate what it had loaded (a self-report, kept below as an observation):
 
 > **CORRECTED 2026-09-28** (content review of the eval article). "Empty" and "verified by asking"
 > claim more than the committed evidence shows. `harness/session.sh` reuses one directory
@@ -185,7 +186,7 @@ For 14 of 15 tasks that bought identically scored code. The extreme is task 15, 
 condition B spent 3,848 tokens — loading the skill, globbing, reading a bundled reference — to
 reach the *same* attribute choice as baseline's 978.
 
-Two sensitivities, added 2026-09-28. **Dollars:** the session logs' own `total_cost_usd`, which
+Two sensitivities, added 2026-09-28, both derived in [`runs/aggregates.md`](runs/aggregates.md). **Dollars:** the session logs' own `total_cost_usd`, which
 also counts input and cache tokens, sums to $0.469 for condition A and $2.104 for condition B, about
 4.5×. **Connector:** dropping the three pairs whose condition-B session saw extra tools (tasks 03,
 04, 06; see Threats to validity) gives 2,522 against 8,622 output tokens, 3.4×. Neither changes the
@@ -296,12 +297,15 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 - [`harness/`](harness/) — the scripts, re-runnable.
 - [`triggers/`](triggers/) — Part A tables.
 
-**Every number above is re-derived by `make verify-eval-run`,** which is part of `make verify`
+**Every number above that comes from the runs is re-derived by `make verify-eval-run`,** which is part of `make verify`
 (it needs a licensed q, so blocking PR CI does not run it — `j-verify.yml` is the only PR check;
 since 2026-07-29 `q-verify.yml` runs the whole of `make verify` nightly on `main`):
 `correctness.sh` recomputes the correctness column from the committed answers and **exits nonzero
 if `results.csv` disagrees**, and `mktraces.py --check` regenerates `runs/traces.md` from the
-committed logs and **exits nonzero on any drift**. Both were negative-tested — corrupt a row and
+committed logs and **exits nonzero on any drift**, and (since 2026-09-28) `aggregates.py --check`
+does the same for [`runs/aggregates.md`](runs/aggregates.md): the token totals and ratios, the
+connector sensitivity, the dollar totals, load and invocation counts, and the session run order.
+All three were negative-tested — corrupt a row and
 the build fails. This repo's recurring defect is documents that were true when written and
 silently became false; published eval numbers are exactly that hazard, so they get a check rather
 than a promise.
