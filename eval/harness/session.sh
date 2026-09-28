@@ -90,14 +90,16 @@ for attempt in 1 2 3; do
   if [ -e "$MEMORY" ] && [ -n "$(ls -A "$MEMORY")" ]; then
     echo "auto-memory for a fresh directory is not empty: $MEMORY" >&2; exit 2
   fi
-  # Claude Code also reads CLAUDE.md from every parent of the cwd, and the init
-  # record does not list what it read, so a TMPDIR inside a project would leak
-  # that project's guidance into both conditions unseen. Refuse to run there.
+  # Claude Code also reads CLAUDE.md (and, through its agents-md built-in,
+  # AGENTS.md) from every parent of the cwd, and the init record does not list
+  # what it read, so a TMPDIR inside a project would leak that project's
+  # guidance into both conditions unseen. Refuse to run there.
   # ($HOME/.claude is Claude Code's own config directory, not project guidance.)
   up="$NEUTRAL"; found=""
   while [ "$up" != "/" ]; do
     up="$(dirname "$up")"
     [ -e "$up/CLAUDE.md" ] && found="$found $up/CLAUDE.md"
+    [ -e "$up/AGENTS.md" ] && found="$found $up/AGENTS.md"
     [ -e "$up/.claude" ] && [ "$up" != "$HOME" ] && found="$found $up/.claude"
   done
   echo "project guidance above the neutral cwd: ${found:-none}" >> "$OUT.pre"

@@ -2,8 +2,12 @@
 
 Shared by extract.py, mktraces.py, aggregates.py and audit.py so that every
 number they report comes from one parser. Nothing here knows which plugin is
-under test: the treatment is whatever plugin the condition-B logs loaded, read
-from their own `system/init` lines (see `treatment`).
+under test: the treatment is whatever plugin `--plugin-dir` loaded, which the
+`system/init` line records with source `<name>@inline` (see `treatment`).
+Other plugins can be present in every session: Claude Code 2.1.284 loads
+`agents-md@builtin` and `telemetry@builtin` into both conditions (2.1.220, the
+M2 build, loaded none). Those are context, and audit.py requires them to be
+identical across sessions.
 """
 import json, pathlib
 
@@ -46,7 +50,16 @@ class Session:
 
     @property
     def plugins(self):
-        return [p.get("name") for p in (self.init or {}).get("plugins") or []]
+        """Plugins loaded by --plugin-dir: the treatment, if any."""
+        return [p.get("name") for p in (self.init or {}).get("plugins") or []
+                if str(p.get("source", "")).endswith("@inline")]
+
+    @property
+    def other_plugins(self):
+        """Every other plugin (built-ins): context, identical in both conditions."""
+        return sorted(f"{p.get('name')}@{p.get('version', '')}" for p in
+                      (self.init or {}).get("plugins") or []
+                      if not str(p.get("source", "")).endswith("@inline"))
 
     @property
     def answer(self):
@@ -72,7 +85,7 @@ def load(logs):
 
 
 def treatment(sessions):
-    """The single plugin the logs loaded. Exactly one name, or it is an error."""
+    """The single plugin --plugin-dir loaded across the logs. Exactly one, or it is an error."""
     names = {n for s in sessions for n in s.plugins}
     if len(names) != 1:
         raise SystemExit(f"expected exactly one plugin across the logs, found {sorted(names)}")

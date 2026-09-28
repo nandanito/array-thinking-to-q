@@ -37,7 +37,11 @@ try:
              "model": "m", "permissionMode": "default", "claude_code_version": "1",
              "output_style": "default", "agents": ["general-purpose"],
              "skills": ["builtin"] + (["demo:x"] if cond == "B" else []),
-             "plugins": [{"name": "demo", "path": "/p"}] if cond == "B" else [],
+             # A built-in plugin in every session is context, not treatment
+             # (Claude Code 2.1.284 loads two); --plugin-dir's plugin is `@inline`.
+             "plugins": ([{"name": "demo", "path": "/p", "source": "demo@inline"}]
+                         if cond == "B" else [])
+                        + [{"name": "telemetry", "path": "builtin", "source": "telemetry@builtin"}],
              "memory_paths": {"auto": f"/h/.claude/projects/-tmp-atq-neutral-{n}/memory/"}}
         d.update(over)
         return d
@@ -89,8 +93,14 @@ try:
     expect("audit fails a run that did not follow order.tsv",
            rc == 1 and "did not run in the order" in out, out)
 
+    builtin_b = copy.deepcopy(clean)
+    builtin_b[0][1]["plugins"].append({"name": "extra", "path": "builtin", "source": "extra@builtin"})
+    rc, out = audit(builtin_b, label="builtin")
+    expect("audit fails a built-in plugin present in one session only",
+           rc == 1 and "other plugins differs" in out, out)
+
     contam = copy.deepcopy(clean)
-    contam[1][1]["plugins"] = [{"name": "demo", "path": "/p"}]
+    contam[1][1]["plugins"].append({"name": "demo", "path": "/p", "source": "demo@inline"})
     rc, out = audit(contam, label="contam")
     expect("audit fails a condition-A session that loaded the plugin",
            rc == 1 and "expected []" in out, out)
@@ -119,10 +129,10 @@ try:
     rc, out, rows = sched(7, tmp / "s1")
     _, _, again = sched(7, tmp / "s2")
     pairs = [(rows[i][1], rows[i + 1][1]) for i in range(0, len(rows), 2)]
-    firsts = {rows[i][2] for i in range(0, len(rows), 2)}
-    expect("schedule: each task once per condition, pairs adjacent, both orders used, seed-stable",
+    firsts = [rows[i][2] for i in range(0, len(rows), 2)]
+    expect("schedule: each task once per condition, pairs adjacent, A-first in 7 or 8 of 15, seed-stable",
            rc == 0 and len(rows) == 30 and all(a == b for a, b in pairs)
-           and firsts == {"A", "B"} and rows == again, out)
+           and sorted([firsts.count("A"), firsts.count("B")]) == [7, 8] and rows == again, out)
     rc, out = run(sys.executable, HERE / "schedule.py", "--prompts", prompts,
                   "--out", tmp / "s1", "--seed", "7", "--dry-run")
     expect("schedule refuses to overwrite an existing run", rc != 0, out)

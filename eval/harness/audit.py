@@ -7,10 +7,11 @@ Fail a run whose sessions did not see the same world. Reads every
 
   1. exactly one init per log, and every task has both an A and a B log
      (unless the run was B-only, per order.tsv);
-  2. the plugin under test: A sessions loaded no plugin, B sessions loaded
-     exactly it (one name across the whole run, read from the logs);
+  2. the plugin under test (the one `--plugin-dir` loaded, source `@inline`):
+     absent from every A session, alone in every B session;
   3. identical NON-TREATMENT context in every session: tools, MCP servers,
-     skills and agents, once the plugin's own entries are set aside; plus the
+     skills, agents and built-in plugins, once the treatment's own entries are
+     set aside; plus the
      same model, Claude Code version, permission mode and output style;
   4. no account connector (a `claude.ai ...` MCP server) in any session;
   5. a distinct cwd and auto-memory path per session (a fresh directory each);
@@ -79,6 +80,7 @@ def context(s):
                               if not own(m.get("name", ""))),
         "skills": sorted(k for k in i.get("skills", []) if not own(k)),
         "agents": sorted(i.get("agents", [])),
+        "other plugins": s.other_plugins,
         "model": i.get("model"),
         "claude_code_version": i.get("claude_code_version"),
         "permissionMode": i.get("permissionMode"),

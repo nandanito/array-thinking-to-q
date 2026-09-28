@@ -14,8 +14,9 @@ and record that order BEFORE the first session starts.
 Why: in M2 every condition-A session ran before every condition-B one, so
 anything that changed during the run (an account connector finishing its
 connection, a rate limit, a model-side deploy) lands on one condition only.
-Here the tasks are shuffled and each task's conditions run back to back in a
-random order, so drift within the run is spread across both conditions and a
+Here the tasks are shuffled and each task's conditions run back to back, with
+A first in half the pairs and B first in the other half (which half is random),
+so drift within the run is spread across both conditions and a
 pair's two sessions are minutes apart, not a whole run apart. audit.py --order
 checks afterwards that the logs' own timestamps follow the recorded order.
 """
@@ -42,11 +43,13 @@ if any(a.out.glob("*.jsonl")) or (a.out / "order.tsv").exists():
 
 rng = random.Random(a.seed)
 rng.shuffle(tasks)
-order = []
-for t in tasks:
-    conds = list(a.conditions)
-    rng.shuffle(conds)
-    order += [(t, c) for c in conds]
+# Which condition goes first in each pair is BALANCED, then shuffled: an
+# independent coin per task can put B first in every pair (the first run of
+# this script, seed 20260928 on three tasks, drew exactly that).
+firsts = [a.conditions, a.conditions[::-1]] * ((len(tasks) + 1) // 2)
+firsts = firsts[:len(tasks)]
+rng.shuffle(firsts)
+order = [(t, c) for t, f in zip(tasks, firsts) for c in f]
 
 lines = [f"# seed={a.seed} conditions={a.conditions} prompts={a.prompts}"]
 lines += [f"{i}\t{t}\t{c}" for i, (t, c) in enumerate(order, 1)]
