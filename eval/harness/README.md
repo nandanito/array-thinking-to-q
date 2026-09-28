@@ -22,8 +22,10 @@ condition A this repo's own q skill, which is roughly the thing under test.
 
 `session.sh` therefore starts every session in a directory made by `mktemp -d` for that session
 alone, outside any repository, writes what the directory and its would-be auto-memory held into
-`<name>.pre` before the model starts, refuses to run if that memory directory is not empty, and
-deletes the directory afterwards. `--setting-sources ""` drops user and project settings;
+`<name>.pre` before the model starts, and deletes the directory afterwards. It refuses to run if
+that memory directory is not empty, or if any parent of the directory holds a `CLAUDE.md` or a
+`.claude/` (Claude Code reads parents' `CLAUDE.md` too, and `system/init` does not record it; if
+your `TMPDIR` sits inside a project, point it elsewhere). `--setting-sources ""` drops user and project settings;
 account connectors are switched off (see gap b); the tool policy is identical in both conditions.
 Afterwards, `audit.py` checks from each session's own `system/init` line that this held: see
 "The gate" below.

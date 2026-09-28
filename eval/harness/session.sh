@@ -85,9 +85,25 @@ for attempt in 1 2 3; do
     ls -la "$NEUTRAL"
     echo "auto-memory: $MEMORY"
     if [ -e "$MEMORY" ]; then ls -la "$MEMORY"; else echo "(absent)"; fi
+    echo "user CLAUDE.md: $([ -e "$HOME/.claude/CLAUDE.md" ] && echo present || echo absent)"
   } > "$OUT.pre"
   if [ -e "$MEMORY" ] && [ -n "$(ls -A "$MEMORY")" ]; then
     echo "auto-memory for a fresh directory is not empty: $MEMORY" >&2; exit 2
+  fi
+  # Claude Code also reads CLAUDE.md from every parent of the cwd, and the init
+  # record does not list what it read, so a TMPDIR inside a project would leak
+  # that project's guidance into both conditions unseen. Refuse to run there.
+  # ($HOME/.claude is Claude Code's own config directory, not project guidance.)
+  up="$NEUTRAL"; found=""
+  while [ "$up" != "/" ]; do
+    up="$(dirname "$up")"
+    [ -e "$up/CLAUDE.md" ] && found="$found $up/CLAUDE.md"
+    [ -e "$up/.claude" ] && [ "$up" != "$HOME" ] && found="$found $up/.claude"
+  done
+  echo "project guidance above the neutral cwd: ${found:-none}" >> "$OUT.pre"
+  if [ -n "$found" ]; then
+    rm -rf "$NEUTRAL"
+    echo "neutral directory sits under project guidance:$found (set TMPDIR elsewhere)" >&2; exit 2
   fi
 
   ( cd "$NEUTRAL" && ENABLE_CLAUDEAI_MCP_SERVERS=false \
