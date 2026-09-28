@@ -23,15 +23,15 @@ A curriculum published as it is built: one verified lesson at a time, misses inc
 |---|---|
 | Part II — q lessons | **Complete — 5 lessons**: [atoms & lists](lessons/01-atoms-and-lists/), [dict → table](lessons/02-dict-to-table/), [qSQL](lessons/03-qsql/), [attributes & sort discipline](lessons/04-attributes/), [the as-of join](lessons/05-asof-join/). Every output is re-captured and diffed by `make verify` |
 | Showcase — as-of join | [Runs end-to-end](showcase/aj/), golden-filed; lesson 05 derives it and checks it reproduces the golden file |
-| Part I — J laboratory | Not yet written (1–2 illustrative, read-along lessons) |
-| Transition chapter | Not yet written |
+| Part I: J laboratory | **Done**: [one read-along lesson](lessons/00-j-laboratory/). J outputs are captured; readers need no J install, and `make verify` still runs every line |
+| Transition chapter | **Done**: [everything after this point is q](lessons/00-transition/), with what does and does not carry over from J |
 | Eval of KX's official q plugin | **Run and published** — 50 headless sessions, [null result](eval/verdict.md). No measurable lift, on a task set that could not have measured a small one. Raw material in [`eval/runs/`](eval/runs/) |
 | `idiomatic-q` skill | **Not authored, and not planned.** The eval exposed no gap, so the conditional never fired |
 | CI | `j-verify` blocking on every PR; **`q-verify` green** (nightly + manual on `main` — secrets are unavailable to fork PRs, so it cannot be a PR check). Both legs of `make verify` now run off-machine |
 
 ## Start here
 
-- **[`lessons/`](lessons/)** — the curriculum, in order. Start with the [Part II index](lessons/README.md).
+- **[`lessons/`](lessons/)** — the curriculum, in order. Start with the [curriculum index](lessons/README.md).
 - **[`showcase/aj/`](showcase/aj/)** — trades matched to prevailing quotes, end-to-end.
 - **[`SPEC.md`](SPEC.md)** — what this project is and is not, including its non-goals.
 - **[`docs/COMPOUND.md`](docs/COMPOUND.md)** — lessons learned at each milestone, kept continuously.

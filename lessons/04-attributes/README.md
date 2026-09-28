@@ -1,7 +1,7 @@
 # Lesson 04: Attributes & sort discipline
 
 > **Run it:** `$HOME/.kx/bin/q lessons/04-attributes/q/attributes.q -q < /dev/null`
-> (the tool binaries are not on `PATH`; see the [Part II index](../README.md)).
+> (the tool binaries are not on `PATH`; see the [curriculum index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/attributes.q`](q/attributes.q), [`j/sorted-assumption.ijs`](j/sorted-assumption.ijs).
 

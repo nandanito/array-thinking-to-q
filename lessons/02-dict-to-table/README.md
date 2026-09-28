@@ -1,7 +1,7 @@
 # Lesson 02: dict → table
 
 > **Run it:** `$HOME/.kx/bin/q lessons/02-dict-to-table/q/dict-to-table.q -q < /dev/null`
-> (the tool binaries are not on `PATH`; see the [Part II index](../README.md)).
+> (the tool binaries are not on `PATH`; see the [curriculum index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/dict-to-table.q`](q/dict-to-table.q), [`j/transpose.ijs`](j/transpose.ijs).
 

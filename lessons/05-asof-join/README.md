@@ -2,7 +2,7 @@
 
 > **Run it** (from the repo root; the last section reads the showcase's golden file):
 > `$HOME/.kx/bin/q lessons/05-asof-join/q/asof.q -q < /dev/null`
-> (the tool binaries are not on `PATH`; see the [Part II index](../README.md)).
+> (the tool binaries are not on `PATH`; see the [curriculum index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/asof.q`](q/asof.q), [`j/asof-boundaries.ijs`](j/asof-boundaries.ijs).
 > The runnable showcase this lesson explains: [`showcase/aj/`](../../showcase/aj/).
@@ -467,9 +467,10 @@ you ever wrote `aj`.
   table layout, the search primitive, the attributes and the storage all assume the same row order,
   which is why the join is small, and why the sort is your job.
 
-**This is the last lesson of Part II.** The J laboratory (Part I) and the transition chapter
-(what does and does not carry over from J to q) land in a later milestone; see the
-[Part II index](../README.md).
+**This is the last lesson of Part II**, and of the curriculum. If you started here, the
+[J laboratory](../00-j-laboratory/) and the [transition chapter](../00-transition/) show where the
+array idea comes from and which J habits to leave at the border; see the
+[curriculum index](../README.md).
 
 ---
 

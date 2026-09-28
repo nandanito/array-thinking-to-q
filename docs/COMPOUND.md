@@ -868,3 +868,35 @@ to the q guidance skill, because `qlint-snippet` was invoked but could never lin
 Transferable: **a repair task's premise is a claim; run the broken input and see it fail.** And
 "impossible in principle" is a phrase to distrust in your own methods section: here it excused a
 control that would have cost minutes.
+
+## 2026-09-27: Part I (the J laboratory) and the transition chapter
+
+Part I is one read-along lesson, `lessons/00-j-laboratory/`, and the transition chapter is
+`lessons/00-transition/`. Part II kept its numbers, since published articles link to
+`lessons/05-asof-join/` and lesson 01. Both new lessons were built to host, byte for byte, the
+blocks the "Unlearn the loop" draft quotes. It was drafted at M2 close precisely so this milestone
+would have a spec. That worked, with one risk worth naming: an article-shaped lesson. The lesson
+gained what the article skips, a four-line "enough J to read the rest" primer, and it keeps the
+section order that capture order demands.
+
+**The one block that could not be ported became a better demonstration.** The draft quoted a second
+`q)` REPL transcript: protected evaluation around the fork, failing to parse. It can never live in
+a runnable file, and CLAUDE.md pins the one REPL exemption to lesson 01. Handing the text to `parse`
+under a trap turns the parse failure into a value, so the chapter now *shows* the guard failing
+(`parses ".[{(+/ % #) til 5};();...]"` is `0b`) and a verify-clean file can hold it. The trap
+works only because the text is a runtime string, which is the article's own "pedantic" point, now
+the mechanism of the demo. Transferable: **when an example cannot execute, ask what question it
+answers and whether a program can answer it.** The failure is often expressible as data.
+
+**The ordering gate shaped the lesson.** `verify-prose` requires output blocks in capture order, and
+a lesson's capture is its q files, then its J files. So the q loop (whose output is `15`) has to
+come before the J primer, or the checker matches a later `15`. It turned out to be the better
+teaching order anyway, but a mechanical check quietly deciding section order is worth knowing
+about before the next lesson.
+
+Small correction found on the way: a trapped parse error's message is a single space (`," "`), not
+empty. Lesson 01's transcript comment ("the error MESSAGE is empty") describes what the REPL
+displays, which is blank, so it stands; the new chapter says "blank".
+
+Gate check, per habit: four planted corruptions in the new READMEs (a claim, an output, a J source
+line, output order) each failed `verify-prose`.

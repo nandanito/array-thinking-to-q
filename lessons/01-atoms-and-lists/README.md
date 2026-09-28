@@ -1,7 +1,7 @@
 # Lesson 01: Atoms, lists, and the death of the loop
 
 > **Run it:** `$HOME/.kx/bin/q lessons/01-atoms-and-lists/q/atoms.q -q < /dev/null`
-> (the tool binaries are not on `PATH`; see the [Part II index](../README.md)).
+> (the tool binaries are not on `PATH`; see the [curriculum index](../README.md)).
 > Every output below is captured from KDB-X CE 5.0; the J twin from J 9.7.1.
 > Files: [`q/atoms.q`](q/atoms.q), [`j/mean-fork.ijs`](j/mean-fork.ijs).
 
@@ -137,9 +137,10 @@ reframing (`each` is about controlling *depth*, not looping) is the thing to car
 
 ## 5. The wall: what J shows and q refuses
 
-The array *idea* (reduce, scan, don't loop) came from somewhere, and it is worth seeing it in its
-purest form once. In J, "the average" is written as a **fork**: three functions glued into a single
-wordless phrase.
+The array *idea* (reduce, scan, don't loop) came from somewhere, and the
+[J laboratory](../00-j-laboratory/) shows it in its purest form. One piece of it is worth seeing
+again here, at the point where it stops working. In J, "the average" is written as a **fork**:
+three functions glued into a single wordless phrase.
 
 ```j
 sum  =: +/         NB. insert + between items
