@@ -29,20 +29,36 @@
 
 ## Contamination control — what was actually done
 
-Every subject session ran with cwd set to an **empty scratch directory outside this repository**
-(not a git repo, no `CLAUDE.md`, no `.claude/`). Verified at run time by asking a session to
-enumerate what it had loaded:
+Every subject session ran with cwd set to a ~~**empty**~~ **scratch directory outside this
+repository** (set up as not a git repo, with no `CLAUDE.md` and no `.claude/`).
+~~Verified at run time by asking a session to enumerate what it had loaded:~~ At run time a session
+was also asked to enumerate what it had loaded (a self-report, kept below as an observation):
+
+> **CORRECTED 2026-09-28** (content review of the eval article). "Empty" and "verified by asking"
+> claim more than the committed evidence shows. `harness/session.sh` reuses one directory
+> (`mkdir -p "$NEUTRAL"`) and neither asserts nor logs that it is empty, and the run-time
+> self-report below is not a committed transcript; a model's account of its own context is not a
+> log. What the committed `system/init` records do prove: every session's cwd was that scratch
+> directory, condition A loaded the same 16 skills (none q-related, no `idiomatic-q`), condition B
+> the same 16 plus exactly `q-knowledge:q` and `q-knowledge:qlint-snippet`, and the only memory
+> path was the scratch directory's own auto-memory. The article dropped "empty" and the
+> self-report, but it still says the directory had no `CLAUDE.md` and no `.claude/`: that is the
+> run-time setup, consistent with the init records but not shown by them. The same holds for the
+> bullets below: every one after the first two is an observation made at run or redaction time,
+> not committed evidence, and the directory no longer exists to be checked. A re-run should create
+> a fresh `mktemp -d` per session and commit a pre-run listing.
 
 - **Condition A** reported 41 skills (the model's own count; the committed logs' `system/init`
   records list 16 for A and 18 for B), none q-related, and "Project instructions (CLAUDE.md): none
   loaded". Critically, `idiomatic-q` — this repo's own q skill — was absent.
 - **Condition B** reported exactly two additional skills: `q-knowledge:q` and
   `q-knowledge:qlint-snippet`.
-- Re-checked at run time per PLAN-M2 §1: there is still **no user-level `~/.claude/CLAUDE.md`**,
+- Re-checked at run time per PLAN-M2 §1 (an observation, not logged): there is still **no user-level `~/.claude/CLAUDE.md`**,
   and `~/.claude/skills/` holds only Cloudflare-related skills. Neither arm saw q guidance from
   the environment.
-- **Auto-memory was empty.** Claude Code derives a per-cwd memory directory, which the neutral
-  directory had; it contained no `MEMORY.md` and no memories, so no session loaded any. This was
+- **Auto-memory was empty** (observed when redacting the logs; not logged). Claude Code derives a per-cwd memory directory, which the neutral
+  directory had; after the run it contained no `MEMORY.md` and no memories, so no session left any
+behind (its state before the first session was not recorded). This was
   not on the pre-flight list — it surfaced only when redacting the logs for publication, and it
   would have been a silent contamination vector had the neutral directory been reused from an
   earlier q session.
@@ -98,7 +114,9 @@ J's rank) all held; the mis-fire came from the *least* q-flavoured prompt in the
 stripped of all ambient context, where `q-knowledge` was the only domain skill on the bench.
 
 **This matters for reading Part B:** the plugin cannot be dismissed as never firing. In Part B it
-loaded in **14 of 15** condition-B runs. Whatever Part B shows, it shows about an *active* plugin.
+~~loaded in **14 of 15**~~ was *invoked* (a `Skill` call in the log) in **14 of 15** condition-B
+runs. Whatever Part B shows, it shows about an *active* plugin. (CORRECTED 2026-09-28: the plugin
+*loaded* in all 15 condition-B sessions; task 12 is loaded-not-invoked.)
 
 ## Part B — output quality (n = 15 q tasks, paired A vs B)
 
@@ -106,6 +124,12 @@ Generation and scoring were separate sittings, as required: all 30 outputs were 
 saved verbatim first, then scored in a single pass with both conditions in view. Presentation
 order was fixed and recorded in advance — **all of condition A in numeric task order, then all of
 condition B in numeric task order.**
+
+That is the *scoring* order. The *sessions* also ran in a fixed order, which the first version of
+this file did not say (added 2026-09-28): all fifteen condition-A sessions first
+(2026-07-26 14:42:20–14:43:14 UTC), then all fifteen condition-B sessions
+(14:43:23–14:44:20 UTC). A fixed order is what let an account connector appear in three B sessions
+only (see Threats to validity).
 
 Combined per-task score = correctness (0/1) + `idiom_total` (0–5). A task is a **win** for the
 condition with the higher combined score; ties are non-discordant and excluded.
@@ -117,7 +141,14 @@ condition with the higher combined score; ties are non-discordant and excluded.
 - **Wins B: 1 · Wins A: 0**
 - **Decision rule (PROTOCOL.md):** effect is real only if one side wins ≥~80% of discordant pairs
   (≈ ≥4 more wins than losses). **The rule cannot be applied: 1 discordant pair is far below the
-  ~5 minimum PLAN-M2 §4 sets for the sign test to mean anything.**
+  ~5 minimum PLAN-M2 §4 sets for the sign test to mean anything.** (Added 2026-09-28: the ≥~80%
+  rule is a heuristic in the spirit of a sign test, not an exact test. For the record, an exact
+  two-sided sign test on one discordant pair gives p = 1.0; it needs six, all one way, to reach 5%.)
+- **Scoring sensitivity (added 2026-09-28).** Rescore task 15 as KX's documentation supports and
+  idiomaticity reads 74/75 (A) against 75/75 (B); count task 08 as a tie as well and it is 75/75
+  each, with no discordant pair at all.
+- **The qSQL checklist item discriminated nothing (added 2026-09-28).** It scored a pass on all 30
+  answers, including tasks with no table in them, so it adds one point to both arms equally.
 
 ### The degenerate cases both fired at once
 
@@ -141,9 +172,10 @@ t` counts as an unnecessary binding against the reference's one-liner. Under the
 scoring it does; under a reading of "add a column" as "mutate the table" it does not. A margin that
 would flip on one scorer's reading of one line is not a margin.
 
-### The one thing that did separate the conditions: cost
+### The one thing that did separate the conditions: output tokens
 
-The tasks could not discriminate on quality. They discriminated cleanly on tokens.
+The tasks could not discriminate on quality. They discriminated cleanly on output tokens. (The
+heading said "cost" until 2026-09-28; the table measures model output tokens only.)
 
 | | condition A | condition B | ratio |
 |---|---:|---:|---:|
@@ -154,6 +186,12 @@ The tasks could not discriminate on quality. They discriminated cleanly on token
 For 14 of 15 tasks that bought identically scored code. The extreme is task 15, where
 condition B spent 3,848 tokens — loading the skill, globbing, reading a bundled reference — to
 reach the *same* attribute choice as baseline's 978.
+
+Two sensitivities, added 2026-09-28, both derived in [`runs/aggregates.md`](runs/aggregates.md). **Dollars:** the session logs' own `total_cost_usd`, which
+also counts input and cache tokens, sums to $0.469 for condition A and $2.104 for condition B, about
+4.5×. **Connector:** dropping the three pairs whose condition-B session saw extra tools (tasks 03,
+04, 06; see Threats to validity) gives 2,522 against 8,622 output tokens, 3.4×. Neither changes the
+reading.
 
 ### The shared divergence on task 15 — and a correction to how this was first written
 
@@ -222,7 +260,7 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
   (both arms failed it on an extra output line). Future repair tasks that claim a bug must be shown
   to fail on the given input before use.
 - **n=15 detects only large effects.** Deliberate, and this run did not even reach the point where
-  that matters — 1 discordant pair means the test never engaged.
+  that matters — 1 discordant pair means the decision rule never had anything to decide.
 - **Ceiling effect is the headline limitation.** The tasks were chosen to keep verification
   simple, and the ones chosen were easy. A frontier model in 2026 solves "sum of squares" and "select sum qty by sym"
   without help from anyone. Any future re-run needs tasks where baseline is *known* to fail.
@@ -243,7 +281,8 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
   eight claude.ai Google Drive MCP tools besides `Skill`, `Read` and `Glob`: an account connector
   finished connecting before those sessions started, while in the paired condition-A sessions it
   was still pending. `--tools` did not exclude it. None was invoked, and all three pairs scored
-  identically, so no result depends on it; a re-run should disable account connectors explicitly
+  identically, so no scored result depends on it (the output-token ratio moves from 2.8× to 3.4×
+  without those pairs); a re-run should disable account connectors explicitly
   and assert identical non-treatment tools in every `system/init`.
 - **`qlint-snippet`'s lint never ran.** Condition B invoked the skill four times (tasks 03, 04, 10,
   13), but it shells out to KX qlint via
@@ -259,12 +298,16 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 - [`harness/`](harness/) — the scripts, re-runnable.
 - [`triggers/`](triggers/) — Part A tables.
 
-**Every number above is re-derived by `make verify-eval-run`,** which is part of `make verify`
+**The files the numbers above are copied from are re-derived by `make verify-eval-run`,** which is part of `make verify`
 (it needs a licensed q, so blocking PR CI does not run it — `j-verify.yml` is the only PR check;
 since 2026-07-29 `q-verify.yml` runs the whole of `make verify` nightly on `main`):
 `correctness.sh` recomputes the correctness column from the committed answers and **exits nonzero
 if `results.csv` disagrees**, and `mktraces.py --check` regenerates `runs/traces.md` from the
-committed logs and **exits nonzero on any drift**. Both were negative-tested — corrupt a row and
-the build fails. This repo's recurring defect is documents that were true when written and
+committed logs and **exits nonzero on any drift**, and (since 2026-09-28) `aggregates.py --check`
+does the same for [`runs/aggregates.md`](runs/aggregates.md): the token totals and ratios, the
+connector sensitivity, the dollar totals, load and invocation counts, and the session run order.
+All three were negative-tested: corrupt a row and the build fails. What the checks do *not* cover
+is this file's own copies of those numbers: a mistyped figure here would still pass, so read the
+tables against the linked files. This repo's recurring defect is documents that were true when written and
 silently became false; published eval numbers are exactly that hazard, so they get a check rather
 than a promise.

@@ -13,7 +13,9 @@ Exactly two changes are made, and they are the only two:
    session cwd (the neutral directory outside the repo); `$KX` is the
    q-knowledge plugin checkout; `$HOME` catches the rest (notably the
    `memory_paths.auto` directory Claude Code derives for any cwd — which was
-   **empty** for the neutral directory, so no session loaded any memory).
+   **empty** for the neutral directory when checked during redaction, an
+   observation rather than anything logged; it shows no session left memory
+   behind, not what the directory held before the first session).
 
 Everything else is byte-for-byte the session output — including the `system/init`
 line, which is the per-session proof of the contamination control: condition A
