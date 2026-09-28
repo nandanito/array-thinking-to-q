@@ -19,7 +19,8 @@ contamination control, per session, machine-checkable:** condition A logs carry 
 with no q skill in the list; condition B logs carry exactly `q-knowledge` `0.1.0` plus
 `q-knowledge:q` and `q-knowledge:qlint-snippet`. The `memory_paths.auto` directory those lines name
 was **empty** when checked during the redaction pass (an observation, not logged; the directory no
-longer exists), so no session loaded any stored memory — an unexamined contamination vector until
+longer exists). That shows no session left memory behind; whether it was empty before the first
+session was not recorded — an unexamined contamination vector until
 the redaction pass surfaced the path.
 
 `../harness/redact.py` made exactly two changes for publication, and they are the only two:

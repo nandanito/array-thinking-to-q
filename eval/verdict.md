@@ -57,7 +57,8 @@ was also asked to enumerate what it had loaded (a self-report, kept below as an 
   and `~/.claude/skills/` holds only Cloudflare-related skills. Neither arm saw q guidance from
   the environment.
 - **Auto-memory was empty** (observed when redacting the logs; not logged). Claude Code derives a per-cwd memory directory, which the neutral
-  directory had; it contained no `MEMORY.md` and no memories, so no session loaded any. This was
+  directory had; after the run it contained no `MEMORY.md` and no memories, so no session left any
+behind (its state before the first session was not recorded). This was
   not on the pre-flight list — it surfaced only when redacting the logs for publication, and it
   would have been a silent contamination vector had the neutral directory been reused from an
   earlier q session.
@@ -297,7 +298,7 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 - [`harness/`](harness/) — the scripts, re-runnable.
 - [`triggers/`](triggers/) — Part A tables.
 
-**Every number above that comes from the runs is re-derived by `make verify-eval-run`,** which is part of `make verify`
+**The files the numbers above are copied from are re-derived by `make verify-eval-run`,** which is part of `make verify`
 (it needs a licensed q, so blocking PR CI does not run it — `j-verify.yml` is the only PR check;
 since 2026-07-29 `q-verify.yml` runs the whole of `make verify` nightly on `main`):
 `correctness.sh` recomputes the correctness column from the committed answers and **exits nonzero
@@ -305,7 +306,8 @@ if `results.csv` disagrees**, and `mktraces.py --check` regenerates `runs/traces
 committed logs and **exits nonzero on any drift**, and (since 2026-09-28) `aggregates.py --check`
 does the same for [`runs/aggregates.md`](runs/aggregates.md): the token totals and ratios, the
 connector sensitivity, the dollar totals, load and invocation counts, and the session run order.
-All three were negative-tested — corrupt a row and
-the build fails. This repo's recurring defect is documents that were true when written and
+All three were negative-tested: corrupt a row and the build fails. What the checks do *not* cover
+is this file's own copies of those numbers: a mistyped figure here would still pass, so read the
+tables against the linked files. This repo's recurring defect is documents that were true when written and
 silently became false; published eval numbers are exactly that hazard, so they get a check rather
 than a promise.
