@@ -40,18 +40,22 @@ enumerate what it had loaded:
 > log. What the committed `system/init` records do prove: every session's cwd was that scratch
 > directory, condition A loaded the same 16 skills (none q-related, no `idiomatic-q`), condition B
 > the same 16 plus exactly `q-knowledge:q` and `q-knowledge:qlint-snippet`, and the only memory
-> path was the scratch directory's own auto-memory. The article now claims only that. A re-run
-> should create a fresh `mktemp -d` per session and commit a pre-run listing.
+> path was the scratch directory's own auto-memory. The article dropped "empty" and the
+> self-report, but it still says the directory had no `CLAUDE.md` and no `.claude/`: that is the
+> run-time setup, consistent with the init records but not shown by them. The same holds for the
+> bullets below: every one after the first two is an observation made at run or redaction time,
+> not committed evidence, and the directory no longer exists to be checked. A re-run should create
+> a fresh `mktemp -d` per session and commit a pre-run listing.
 
 - **Condition A** reported 41 skills (the model's own count; the committed logs' `system/init`
   records list 16 for A and 18 for B), none q-related, and "Project instructions (CLAUDE.md): none
   loaded". Critically, `idiomatic-q` — this repo's own q skill — was absent.
 - **Condition B** reported exactly two additional skills: `q-knowledge:q` and
   `q-knowledge:qlint-snippet`.
-- Re-checked at run time per PLAN-M2 §1: there is still **no user-level `~/.claude/CLAUDE.md`**,
+- Re-checked at run time per PLAN-M2 §1 (an observation, not logged): there is still **no user-level `~/.claude/CLAUDE.md`**,
   and `~/.claude/skills/` holds only Cloudflare-related skills. Neither arm saw q guidance from
   the environment.
-- **Auto-memory was empty.** Claude Code derives a per-cwd memory directory, which the neutral
+- **Auto-memory was empty** (observed when redacting the logs; not logged). Claude Code derives a per-cwd memory directory, which the neutral
   directory had; it contained no `MEMORY.md` and no memories, so no session loaded any. This was
   not on the pre-flight list — it surfaced only when redacting the logs for publication, and it
   would have been a silent contamination vector had the neutral directory been reused from an
@@ -108,9 +112,9 @@ J's rank) all held; the mis-fire came from the *least* q-flavoured prompt in the
 stripped of all ambient context, where `q-knowledge` was the only domain skill on the bench.
 
 **This matters for reading Part B:** the plugin cannot be dismissed as never firing. In Part B it
-loaded in **14 of 15** condition-B runs. Whatever Part B shows, it shows about an *active* plugin.
-(CORRECTED 2026-09-28: the plugin *loaded* in all 15 condition-B sessions; its q skill was
-*invoked*, a `Skill` call in the log, in 14 of 15. Task 12 is loaded-not-invoked.)
+~~loaded in **14 of 15**~~ was *invoked* (a `Skill` call in the log) in **14 of 15** condition-B
+runs. Whatever Part B shows, it shows about an *active* plugin. (CORRECTED 2026-09-28: the plugin
+*loaded* in all 15 condition-B sessions; task 12 is loaded-not-invoked.)
 
 ## Part B — output quality (n = 15 q tasks, paired A vs B)
 
