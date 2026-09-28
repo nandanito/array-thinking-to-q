@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title id="title">Membership is not equality</title>
+  <desc id="desc">A planted wrong claim in lesson 02: the comment says type d is 98h, but q prints 99h for a dictionary. Two ways to check it. Left, a membership check asks whether 98h appears anywhere in the lesson's captured output. It does, because type t, a table, prints 98h one block later, so the wrong claim passes. Right, an equality check re-evaluates type d, gets 99h, finds it is not equal to the claimed 98h and fails the claim. Footer: of three planted wrong claims, membership caught two; this was the one it missed, and equality catches it.</desc>
+
+  <defs>
+    <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34374C"/>
+    </marker>
+    <marker id="arrow-tint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a7a9b7"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="480" fill="#ffffff"/>
+
+  <text x="450" y="38" text-anchor="middle" font-size="11" letter-spacing="2.2" fill="#777777">CHECKING ONE CLAIM IN LESSON 02</text>
+  <text x="450" y="72" text-anchor="middle" font-size="22" font-weight="600" fill="#000000">A wrong claim can hide behind a real value.</text>
+
+  <!-- the planted claim -->
+  <rect rx="2" x="300" y="94" width="300" height="44" fill="#fafafa" stroke="#c8c8c8"/>
+  <text x="450" y="122" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="17" fill="#000000" xml:space="preserve">type d     / 98h</text>
+  <text x="450" y="158" text-anchor="middle" font-size="13" font-style="italic" fill="#555555">the planted claim; q prints 99h for a dictionary</text>
+
+  <line x1="298" y1="116" x2="232" y2="188" stroke="#a7a9b7" stroke-width="1.2" marker-end="url(#arrow-tint)"/>
+  <line x1="602" y1="116" x2="668" y2="188" stroke="#34374C" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+  <!-- membership panel -->
+  <rect rx="2" x="40" y="196" width="390" height="210" fill="#fafafa" stroke="#e5e5e5"/>
+  <rect x="40" y="196" width="4" height="210" fill="#a7a9b7"/>
+  <text x="64" y="226" font-size="11" letter-spacing="2" fill="#777777">MEMBERSHIP</text>
+  <text x="64" y="252" font-size="15" fill="#555555">Does 98h appear in the lesson's output?</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="16" fill="#555555" xml:space="preserve">
+    <text x="64" y="292">type d   99h</text>
+    <text x="64" y="322">type t   98h</text>
+  </g>
+  <rect rx="2" x="145" y="305" width="40" height="24" fill="none" stroke="#8a8c9e" stroke-width="1.2"/>
+  <text x="196" y="322" font-size="13" font-style="italic" fill="#555555">found: a table's type</text>
+  <text x="64" y="378" font-size="17" font-weight="600" fill="#000000">Yes. The wrong claim passes.</text>
+
+  <!-- equality panel -->
+  <rect rx="2" x="470" y="196" width="390" height="210" fill="#fafafa" stroke="#e5e5e5"/>
+  <rect x="470" y="196" width="4" height="210" fill="#34374C"/>
+  <text x="494" y="226" font-size="11" letter-spacing="2" fill="#777777">EQUALITY</text>
+  <text x="494" y="252" font-size="15" fill="#555555">Re-evaluate type d. Is it 98h?</text>
+  <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="16" fill="#555555" xml:space="preserve">
+    <text x="494" y="292">type d   99h</text>
+    <text x="494" y="322">claimed  98h</text>
+  </g>
+  <rect rx="2" x="575" y="275" width="40" height="54" fill="none" stroke="#34374C" stroke-width="1.4"/>
+  <text x="626" y="310" font-size="13" font-style="italic" fill="#555555">not equal</text>
+  <text x="494" y="378" font-size="17" font-weight="600" fill="#000000">No. The claim fails.</text>
+
+  <text x="450" y="446" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">Of three planted wrong claims, membership caught two. This is the one it missed.</text>
+</svg>

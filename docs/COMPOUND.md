@@ -1,7 +1,8 @@
 # COMPOUND.md
 
-Append at EVERY milestone — this file is the raw material for article 6, which is packaging,
-not new writing. Keeping this current is what makes the final article cost an hour.
+Append at EVERY milestone. This file is the raw material for the final article, "What compounds",
+which is packaging, not new writing. Keeping this current is what makes the final article cost an
+hour.
 
 Per entry: what worked / what broke / what transfers to other projects.
 
@@ -994,3 +995,58 @@ recomputed. The problems were all in what the sentences claimed about the number
 Posts: a fresh-reader test of the LinkedIn and social drafts found the "last week" preamble pushed
 the hook below the preview, and that "discordant pair", "sign test", "arms" and "headroom" lose a
 non-q reader. The posts now lead with the hook inside the preview and say it in plain words.
+
+## M5: the eval harness, packaged, and run from outside the repo (2026-09-28)
+
+`eval/harness/` is now a tool for A/B testing any Claude Code plugin, with its own README. The four
+gaps the M2 run left are closed: a fresh `mktemp -d` per session with a pre-run listing, account
+connectors off plus an `audit.py` that fails any run whose sessions saw different non-treatment
+context, a seeded interleaved run order recorded before the first session, and no task set or
+plugin name typed into the scripts. M2's numbers still re-derive from the same logs; every table
+row in `traces.md` and `aggregates.md` is unchanged. A new `selftest.py` shows each gate failing as
+well as passing, and runs on every PR.
+
+**The claim "it works outside this repo" was tested outside this repo, and that is where the
+defects were.** A clean clone, six sessions against `document-skills` from anthropics/skills, and
+a harness with a green self-test produced four defects in the first hour:
+
+- Claude Code 2.1.284 loads two built-in plugins into every session; 2.1.220, the M2 build, loaded
+  none. The audit's "baseline has no plugins" was a fact about one version. The treatment is now
+  identified by mechanism (`--plugin-dir` registers it as `<name>@inline`), not by absence, and
+  built-ins join the context that must match.
+- The seeded order put condition B first in all three pairs (a 1-in-8 draw with per-pair coin
+  flips). Small-n randomisation can be degenerate; balance first, then shuffle.
+- The scorer ran each answer from a fresh directory but was given relative paths, so every answer
+  "failed", `INIT=1` wrote those failures into `results.csv`, and the check then agreed with them.
+  **A self-consistency check cannot see a bug both passes share.**
+- `redact.py` rewrote the word "builtin" everywhere, and the "derived" tables still had
+  M2-specific sentences typed into their headers, one of them ("A logs record `"plugins": []`")
+  false on the new version. A derived file is only derived where the script computes it.
+
+What the run did not show: no condition-B session invoked the plugin (its xlsx skill declines
+tasks whose deliverable is a standalone script, which the output contract makes every answer), so
+outside the repo activation detection ran only its negative path. Recorded in the harness README
+rather than rounded up.
+
+The Codex light pass on the PR raised four findings: two real (activation matched a bare prefix,
+so plugin `foo` would count `foobar:x`; plugin-bundled agents would fail the audit), two not (a
+B-only schedule does not duplicate tasks; plugin MCP names are namespaced and already matched).
+The two false positives were disproved with a dry run and with this session's own tool names, and
+both became tests anyway. Transferable: **a rejected finding is still a cheap test case.**
+
+## M5: article "What compounds" drafted (2026-09-28)
+
+Drafted as packaging, per SPEC: this file already held every incident with a date, so the work
+was choosing and checking, not remembering. Nine code blocks, all identical to lesson blocks (`make
+verify-writings`); two new figures, one of which (the membership-versus-equality diagram) had its
+footer claim re-proved by planting the `98h` corruption in lesson 02 again: `verify-prose` reports
+`WRONG CLAIM`.
+
+**Packaging a log still needs a fact-check against the log.** The first draft, written from this
+file with it open, got the licence story backwards (the spec was right from KX's marketing, and my
+"correction" made it wrong, not the other way round), turned "the next day" into "weeks later",
+said a correction "never reached" a draft that a review did reach, and credited a figure's check
+with catching "all three" planted claims when the log only records the one. Each was a stronger or
+tidier sentence than the entry it summarised. The same confident-paraphrase failure this file
+records for lesson prose happens one level up, when the source is your own notes.
+
