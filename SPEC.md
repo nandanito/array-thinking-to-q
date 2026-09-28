@@ -1,7 +1,7 @@
 # array-thinking-to-q — Project Specification
 
 > Status: reviewed seed (Claude self-review, 2 ChatGPT cross-reviews and the Fable 5 round 3 pass incorporated; see Review trail) 2026-07-22.
-> Kept current at every milestone's compound step; M1 to M4 are done (M4 closed 2026-09-27).
+> Kept current at every milestone's compound step; M1 to M5 are done (M5 closed 2026-09-28; `v1`).
 > Owner: Nandan (personal). Home: `nandanito/array-thinking-to-q`.
 > (Deliberately NOT under qmilab — this is a personal project: verified work published as it is built.)
 > Renamed from `from-j-to-q` after the reframe made J ~25% of content: the old name gave equal
@@ -205,9 +205,16 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   (`eval/harness/` published so anyone can A/B a Claude Code plugin: neutral-cwd contamination
   control, mechanical activation detection, self-verifying scorer); v1 tag.
   **No skill, and no marketplace submission** — M2 authored none, per objective 3's gate.
-  → Article 5 "Teaching an AI a niche language: what compounds" — **packaging, not new writing.**
-  COMPOUND.md is appended continuously at every milestone; the final article publishes what it already
-  contains. If that discipline holds, this article costs an hour.
+  → Article 5 "What compounds: notes from a project where everything had to run" (was "Teaching an
+  AI a niche language: what compounds", which promised a skill-authoring story that M2 cancelled)
+  — **packaging, not new writing.** COMPOUND.md is appended continuously at every milestone; the
+  final article publishes what it already contains.
+  **DONE 2026-09-28:** `eval/harness/` has its own README, closes the four gaps the M2 run left
+  (fresh directory per session, connectors off plus a per-session `system/init` audit, a recorded
+  interleaved order, nothing task-specific typed into the scripts), self-tests every gate on each PR
+  (`make verify-harness`), and was proven from a clean checkout against another vendor's plugin
+  (anthropics/skills `document-skills`), which found four more defects, all fixed. M2's numbers
+  still re-derive. The article is drafted and publishes after "Unlearn the loop". Tagged `v1`.
 
 **M3/M4 were swapped on 2026-07-28** (they read J-laboratory-then-q-core). The old order predates
 J's demotion from co-star to illustrative laboratory, and it contradicts both CLAUDE.md's build

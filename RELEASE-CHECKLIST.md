@@ -22,10 +22,13 @@
 The marketplace-submission checklist that used to live here is **cut**: the M2 eval authored no
 skill, so there is nothing to submit (eval/verdict.md). What ships instead:
 
-- [ ] Curriculum complete and `make verify` green end-to-end
-- [ ] `eval/harness/` packaged as a standalone reusable artifact — README covering the neutral-cwd
+Done 2026-09-28 (PRs #43, #44 and the M5-close PR):
+
+- [x] Curriculum complete and `make verify` green end-to-end
+- [x] `eval/harness/` packaged as a standalone reusable artifact — README covering the neutral-cwd
       contamination control, mechanical activation detection, and the self-verifying scorer
-- [ ] Harness works **outside this repo** — verify on a clean checkout against some other plugin,
-      since "run it from a neutral directory" is the one claim that cannot be tested from in here
-- [ ] Eval numbers still re-derive: `make verify-eval-run` green
-- [ ] v1 tag; README status updated
+- [x] Harness works **outside this repo** — verified on a clean checkout against another vendor's
+      plugin (`eval/harness/README.md`, "Clean-checkout run"), which found four defects first
+- [x] Eval numbers still re-derive: `make verify-eval-run` green
+- [x] README status updated
+- [x] `v1` tag (annotated, on the merge commit of #45, the M5-close PR)

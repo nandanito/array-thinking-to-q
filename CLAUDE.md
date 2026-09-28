@@ -62,7 +62,8 @@ runs end-to-end, and the eval verify-harness exists.
    Part I is one read-along lesson (`lessons/00-j-laboratory/`), the transition chapter is
    `lessons/00-transition/`, and "Unlearn the loop" is un-gated: every block is quoted from them, except
    lesson 01's exempt parse-error transcript.
-5. CI: `j-verify.yml` (blocking, on PR) and `q-verify.yml` (nightly + manual, trusted branches
+5. CI: `j-verify.yml` (blocking, on PR; it also runs `make verify-writings` and
+   `make verify-harness`, both pure Python) and `q-verify.yml` (nightly + manual, trusted branches
    only, license key from repo secret; failures notify, never block). **`q-verify.yml` now exists
    and runs `make verify`** — so the eval-run checks are enforced, not just local. It is NOT a PR
    check by design: secrets are unavailable to fork PRs. Needs **one** repo secret, `KX_B64LIC` —
@@ -70,6 +71,10 @@ runs end-to-end, and the eval verify-harness exists.
    required despite the Developer Center's copy-paste command containing one. **GREEN since
    2026-07-29**, so the eval-run checks are now enforced off the author's machine.
 6. README: thesis, why-J-not-BQN, prior art, disclaimers, quickstart.
+7. Ship (SPEC's **M5**). **DONE 2026-09-28**, tagged `v1`: `eval/harness/` packaged as a reusable
+   plugin A/B tool (its README records the clean-checkout run against another vendor's plugin), and
+   "What compounds" drafted. Every milestone is done; new work starts from a new plan, and still
+   appends to COMPOUND.md.
 
 ## Environment notes
 
@@ -89,7 +94,8 @@ rest renumbered — so refer to articles by NAME in docs, not number (a renumber
 number-based reference before). The eval article reported the real result (it was negative — DONE,
 2026-07-27). "Unlearn the loop" was the low-novelty one whose "draft it early" mitigation was
 missed; drafting it out of milestone order closed that, and M4 un-gated it (2026-09-27).
-The final article, "What compounds", is PACKAGING of docs/COMPOUND.md, so append to COMPOUND.md at every milestone.
+The final article, "What compounds", is PACKAGING of docs/COMPOUND.md (drafted 2026-09-28; publishes
+after "Unlearn the loop"), so keep appending to COMPOUND.md.
 Publishing/syndication steps live in RELEASE-CHECKLIST.md, not here and not in SPEC.md.
 **Never use "learning in public"** in any title, heading, social post or hashtag for this series:
 the framing is a practitioner publishing verified work, misses included. Published articles take
@@ -106,8 +112,9 @@ PR text, unenforced. Other tells to avoid: "not X, it's Y" as a reflex, triplets
 closing lines that restate the paragraph.
 
 **There is no skill and no marketplace submission.** The M2 eval authored none — objective 3's
-gate held — so M5 ships the curriculum plus `eval/harness/` packaged as a reusable
-plugin-A/B artifact. Do not reintroduce a skill deliverable without a NEW eval showing a gap.
+gate held — so M5 shipped the curriculum plus `eval/harness/` packaged as a reusable
+plugin-A/B artifact. Do not reintroduce a skill deliverable without a NEW eval showing a gap; if one
+is run, it uses the packaged harness and starts by measuring the baseline's failure rate alone.
 
 ## Compound step (mandatory at each milestone)
 

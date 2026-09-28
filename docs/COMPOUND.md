@@ -1051,3 +1051,31 @@ with catching "all three" planted claims when the log only records the one. Each
 tidier sentence than the entry it summarised. The same confident-paraphrase failure this file
 records for lesson prose happens one level up, when the source is your own notes.
 
+
+## M5 close: the re-read, and what it found stale (2026-09-28)
+
+M5 is done: the harness is packaged and proven outside the repo (#43), "What compounds" is drafted
+(#44), and `v1` tags the result. The compound step's re-read of SPEC.md and CLAUDE.md against
+reality found four stale statements, none of which any check could have caught:
+
+- **SPEC's title for the last article still promised the old story.** "Teaching an AI a niche
+  language: what compounds" dates from when M5 meant hardening a self-authored skill. The M2-close
+  re-read rewrote M5's deliverables and left the article title under them, so for two months the
+  plan described a story the project had cancelled. Titles are claims too.
+- **CLAUDE.md's build order stopped at step 6** and described M5 in the future tense, and its CI
+  item did not say what `j-verify` runs (article snippets since the article-1 publication pass, and now the harness
+  self-test).
+- **COMPOUND's own header pointed at "article 6"**, two renumbers after the entry that says docs
+  must name articles, not number them. Fixed in #44. The lesson was recorded in the one file that
+  still broke it.
+- **Outside the repo, the assistant's memory note** said the lessons' speed wording was still open
+  a day after PR #35 closed it. The same day, the article draft reintroduced the KX "better
+  speedups" quote that #35 had removed, and the adversarial pass caught it. Memory is a governing
+  document too, and it goes stale the same way: nothing fails.
+
+Transferable: **a rule that lives only in a PR description is not enforced.** "No comparative speed
+wording" was decided twice (articles, then lessons) and came back in the next piece of writing. A
+grep in `make verify-writings` for the removed phrases would cost minutes; it is the obvious
+candidate if a sixth article is ever written. The same re-read also confirmed what is still true:
+the two-exemption rule, the `idiomatic-q` stub's status, the licence wording in rule 4, and that
+there is no skill deliverable.
