@@ -61,9 +61,11 @@ sources, see `../PROTOCOL.md`), and the interpretation.
 ## The gate: `audit.py`
 
 Run it on a finished run before scoring anything. It fails the run unless every session's
-`system/init` shows: condition A loaded no plugin and condition B exactly the plugin under test;
-the same tools, MCP servers, skills and agents in every session once the plugin's own entries
-are set aside; the same model, Claude Code version, permission mode and output style; no
+`system/init` shows: condition A loaded no `--plugin-dir` plugin and condition B exactly the
+plugin under test; the same tools, MCP servers, skills, agents and built-in plugins in every
+session once the plugin's own entries are set aside (Claude Code 2.1.284 loads
+`agents-md@builtin` and `telemetry@builtin` into every session; the treatment is recognised as
+the plugin recorded with source `<name>@inline`, which is how `--plugin-dir` registers it); the same model, Claude Code version, permission mode and output style; no
 `claude.ai` account connector; a different cwd and auto-memory path for every session; and, with
 `--order`, that the sessions ran in the order `schedule.py` recorded. A run that fails measured
 something other than the plugin, and none of its numbers should be published.
@@ -82,7 +84,10 @@ those logs for exactly these reasons, which is how `selftest.py` proves the audi
 | (d) | the verdict first rested partly on a model's account of its own context, and the scripts carried the M2 task set in their text (a hardcoded 30, the plugin's name) | every count, name and pair set is derived from the logs or the task directory; `correctness.sh INIT=1` writes a new study's `results.csv` from the scores rather than by hand |
 
 On (d): M2's published numbers are unchanged. `make verify-eval-run` re-derives them with these
-scripts from the same committed logs, byte for byte.
+scripts from the same committed logs. Every table row in `../runs/traces.md` and
+`../runs/aggregates.md` is byte-identical; only their headers changed, where the old scripts had
+M2-specific sentences typed into them, and `aggregates.md` gained one derived line (the
+condition sequence, `A x15, B x15`).
 
 ## Quickstart
 
@@ -90,32 +95,34 @@ scripts from the same committed logs, byte for byte.
 H=/path/to/eval/harness                 # a checkout of this directory
 export PLUGIN=/path/to/plugin           # pinned to a commit you will report
 mkdir study && cd study
+L=runs/logs/partB
 
 # 1. Task sheets: tasks/NN-name.md (a "## Prompt" blockquote), NN-name.expected (golden
 #    stdout), and optionally tasks/CONTRACT.txt, appended to every prompt.
 python3 $H/mkprompts.py tasks prompts
 
 # 2. Generate: one session per task and condition, in a seeded interleaved order.
-python3 $H/schedule.py --prompts prompts --out logs --seed 20260928
+python3 $H/schedule.py --prompts prompts --out $L --seed 20260928
 
 # 3. Gate: stop here if this fails.
-python3 $H/audit.py logs --order logs/order.tsv
+python3 $H/audit.py $L --order $L/order.tsv
 
 # 4. Answers: the first fenced block of each reply.
 mkdir answers
-for l in logs/*.jsonl; do python3 $H/extract.py "$l" --field code > "answers/$(basename "$l" .jsonl).py"; done
+for l in $L/*.jsonl; do python3 $H/extract.py "$l" --field code > "answers/$(basename "$l" .jsonl).py"; done
 
 # 5. Score once to write results.csv, then check it on every later run.
-INIT=1 TASKS=tasks ANSWERS=answers CSV=results.csv EXT=py RUN='python3 {}' $H/correctness.sh
-TASKS=tasks ANSWERS=answers CSV=results.csv EXT=py RUN='python3 {}' $H/correctness.sh
+export TASKS=tasks ANSWERS=answers CSV=results.csv EXT=py RUN='python3 {}'
+INIT=1 $H/correctness.sh
+$H/correctness.sh
 
-# 6. Derived tables. Copy or move the logs under logs/partB/ first (mktraces reads partA/ too,
-#    if you ran activation prompts with --conditions B).
+# 6. Derived tables, each with --check for CI. mktraces also reads runs/logs/partA/ if you
+#    ran activation-only prompts (schedule.py --conditions B).
 python3 $H/mktraces.py runs/logs --title "my study" > runs/traces.md
-python3 $H/aggregates.py runs/logs/partB > runs/aggregates.md
+python3 $H/aggregates.py $L > runs/aggregates.md
 
 # 7. Before publishing logs: drop account quota lines and rewrite local paths.
-python3 $H/redact.py logs public-logs
+python3 $H/redact.py runs/logs public-logs
 ```
 
 `MODEL` (default `opus`) and `TOOLS` (default `Skill,Read,Glob`, granted to both conditions)
@@ -151,7 +158,46 @@ conditions sit further from a real working session than practice does. Activatio
 sees `Skill` calls only: a plugin that acts through hooks, agents or MCP tools alone needs a
 different signal, and `extract.py --field tools` is where to start.
 
-## Proof outside this repo
+## Clean-checkout run (2026-09-28)
 
 "Run it from a neutral directory" is the one claim that cannot be tested from inside this
-repository, so it was tested from outside it: see "Clean-checkout run" below.
+repository, so it was tested from outside it. A fresh clone of this branch from GitHub, in a
+directory outside the working copy, ran sessions against a different vendor's plugin:
+`document-skills` from [anthropics/skills](https://github.com/anthropics/skills) at `3337550`
+(its xlsx, docx, pptx and pdf skills, assembled into a `--plugin-dir` exactly as its
+`marketplace.json` entry lists them), on Claude Code 2.1.284 with `claude-opus-5-5`. Three tasks
+from `examples/document-skills/`, two conditions, six sessions, seed `20260928`. The quickstart
+above is the sequence that ran.
+
+This was a test of the harness, not of the plugin. Three tasks are not a study, and no number
+from the run is reported here as a finding about `document-skills`.
+
+What held: every session ran from its own `mktemp -d` with an empty pre-run listing, no parent
+`CLAUDE.md` and no connector; `audit.py` passed with the recorded order; the scorer ran all six
+answers against goldens computed by the reference solutions, wrote `results.csv` with `INIT=1`,
+agreed with it on the next pass, and failed when one row was edited; `mktraces.py` and
+`aggregates.py` derived their tables and their `--check` failed on a stale header; `redact.py`
+removed the home directory and the redacted logs still passed the audit.
+
+What it found, all fixed on this branch before merging, each with a self-test that fails on the
+old code:
+
+- **Claude Code now loads built-in plugins** (`agents-md`, `telemetry`) into every session. The
+  first audit failed with "three plugins". The treatment is now the `@inline` plugin, and
+  built-ins must match across sessions. Because `agents-md` reads `AGENTS.md`, `session.sh` now
+  refuses a neutral directory with one above it, as it does for `CLAUDE.md`.
+- **The seeded order was degenerate**: tasks in their original order and B first in all three
+  pairs, since each pair had its own coin flip. Pair order is now balanced across pairs.
+- **The scorer broke on relative paths**, and `INIT=1` recorded the breakage as six failed
+  answers that the check then confirmed. A shared bug passes a self-consistency check; only the
+  relative-path self-test would have caught it.
+- **`redact.py` rewrote the word "builtin" everywhere**, and the derived tables' headers still
+  carried M2-only sentences, one of them now false.
+
+What it did not show: no condition-B session invoked a `document-skills` skill (the xlsx skill's
+own description excludes tasks whose deliverable is a standalone Python script, which the output
+contract makes every answer). So outside the repo, activation detection ran only its negative
+path; its positive path is exercised on the committed M2 logs by `selftest.py`. And the six
+sessions were generated by `session.sh` and `schedule.py` at `d0a14ee`: the balanced pair order
+and the `AGENTS.md` refusal came after the run and are covered by `selftest.py`, not by a live
+session. The analysis half was re-run on the final scripts.
