@@ -17,13 +17,15 @@ import json, pathlib, statistics, sys
 logs = pathlib.Path(sys.argv[1])
 check = sys.argv[sys.argv.index("--check") + 1] if "--check" in sys.argv else None
 
-# Tasks whose condition-B session saw an account connector's extra tools
-# (verdict.md, Threats to validity).
-CONNECTOR = {"03", "04", "06"}
+# The tools the harness grants every session (session.sh: --tools Skill,Read,Glob).
+# A pair is excluded from the "without extra tools" row when either session's
+# system/init lists anything else (in the M2 run: an account connector,
+# verdict.md, Threats to validity). Derived per session, never hardcoded.
+INTENDED = {"Skill", "Read", "Glob"}
 
 
 def read(p):
-    first_ts, res, loaded, invoked = None, None, False, False
+    first_ts, res, loaded, invoked, extra = None, None, False, False, False
     for line in p.open():
         line = line.strip()
         if not line:
@@ -33,6 +35,7 @@ def read(p):
             first_ts = d["timestamp"]
         if d.get("type") == "system" and d.get("subtype") == "init":
             loaded = any("q-knowledge" in str(pl) for pl in d.get("plugins", []))
+            extra = bool(set(d.get("tools", [])) - INTENDED)
         elif d.get("type") == "assistant":
             for b in d["message"].get("content", []):
                 if (b.get("type") == "tool_use" and b.get("name") == "Skill"
@@ -46,6 +49,7 @@ def read(p):
         "usd": res["total_cost_usd"],
         "loaded": loaded,
         "invoked": invoked,
+        "extra": extra,
     }
 
 
@@ -54,6 +58,7 @@ for p in sorted(logs.glob("*.jsonl")):
     task, cond = p.name.split(".")[0], p.name.split(".")[1]
     sessions[(task, cond)] = read(p)
 tasks = sorted({t for t, _ in sessions})
+CONNECTOR = {t[:2] for t in tasks if sessions[(t, "A")]["extra"] or sessions[(t, "B")]["extra"]}
 
 
 def total(cond, key, skip=()):
@@ -77,7 +82,7 @@ fails if this file drifts from the logs. Condition A = baseline, B = q-knowledge
 | Output tokens, {len(tasks)} tasks | {ta:,} | {tb:,} | {tb / ta:.1f}x |
 | Median per-task output-token ratio | | | {statistics.median(ratios.values()):.1f}x |
 | Widest single task ({wide[:2]}) | {sessions[(wide, 'A')]['tokens']:,} | {sessions[(wide, 'B')]['tokens']:,} | {ratios[wide]:.1f}x |
-| Output tokens without tasks {', '.join(sorted(CONNECTOR))} | {xa:,} | {xb:,} | {xb / xa:.1f}x |
+| Output tokens without tasks whose sessions saw extra tools ({', '.join(sorted(CONNECTOR)) or 'none'}) | {xa:,} | {xb:,} | {xb / xa:.1f}x |
 | Dollars (`total_cost_usd`) | ${ua:.3f} | ${ub:.3f} | {ub / ua:.1f}x |
 
 - Plugin loaded: A {sum(sessions[(t, 'A')]['loaded'] for t in tasks)}/{len(tasks)}, B {sum(sessions[(t, 'B')]['loaded'] for t in tasks)}/{len(tasks)}.

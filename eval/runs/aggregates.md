@@ -8,7 +8,7 @@ fails if this file drifts from the logs. Condition A = baseline, B = q-knowledge
 | Output tokens, 15 tasks | 3,671 | 10,337 | 2.8x |
 | Median per-task output-token ratio | | | 3.9x |
 | Widest single task (14) | 23 | 407 | 17.7x |
-| Output tokens without tasks 03, 04, 06 | 2,522 | 8,622 | 3.4x |
+| Output tokens without tasks whose sessions saw extra tools (03, 04, 06) | 2,522 | 8,622 | 3.4x |
 | Dollars (`total_cost_usd`) | $0.469 | $2.104 | 4.5x |
 
 - Plugin loaded: A 0/15, B 15/15.
