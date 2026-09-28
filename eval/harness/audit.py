@@ -67,7 +67,8 @@ for s in sessions:
 
 # 3. identical non-treatment context
 def own(name):
-    """Entries the plugin itself contributes: skills `<plugin>:x`, MCP tools and servers."""
+    """Entries the plugin itself contributes: skills and agents `<plugin>:x`, and MCP
+    servers `plugin:<plugin>:x` with tools `mcp__plugin_<plugin>_x__y`."""
     return (name.startswith(plugin + ":") or name.startswith(f"mcp__plugin_{plugin}_")
             or name.startswith(f"plugin:{plugin}:"))
 
@@ -79,7 +80,7 @@ def context(s):
         "mcp_servers": sorted(m.get("name", "") for m in i.get("mcp_servers", [])
                               if not own(m.get("name", ""))),
         "skills": sorted(k for k in i.get("skills", []) if not own(k)),
-        "agents": sorted(i.get("agents", [])),
+        "agents": sorted(a for a in i.get("agents", []) if not own(a)),
         "other plugins": s.other_plugins,
         "model": i.get("model"),
         "claude_code_version": i.get("claude_code_version"),

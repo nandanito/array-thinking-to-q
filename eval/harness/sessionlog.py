@@ -72,11 +72,14 @@ class Session:
     def fired(self, plugin):
         """Mechanical activation: a Skill tool call naming one of the plugin's skills.
 
-        Plugin skills are namespaced `<plugin>:<skill>`; M2 matched the bare prefix,
-        and so does this, so a call to the plugin's own name also counts.
+        Plugin skills are namespaced `<plugin>:<skill>`, so the match includes the
+        colon: plugin `foo` must not count a call to `foobar:x`. A call naming the
+        plugin alone also counts. (M2 matched the bare prefix; every one of its
+        29 Skill calls was `q-knowledge:...`, so its counts are the same.)
         """
         return bool(plugin) and any(
-            n == "Skill" and str(i.get("skill", "")).startswith(plugin)
+            n == "Skill" and (str(i.get("skill", "")) == plugin
+                              or str(i.get("skill", "")).startswith(plugin + ":"))
             for n, i in self.tool_uses)
 
 

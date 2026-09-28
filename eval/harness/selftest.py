@@ -93,6 +93,15 @@ try:
     expect("audit fails a run that did not follow order.tsv",
            rc == 1 and "did not run in the order" in out, out)
 
+    own_agent = copy.deepcopy(clean)
+    for name, ini in own_agent:
+        if name.endswith(".B.jsonl"):
+            ini["agents"] = ini["agents"] + ["demo:helper"]
+            ini["mcp_servers"] = [{"name": "plugin:demo:srv", "status": "connected"}]
+            ini["tools"] = ini["tools"] + ["mcp__plugin_demo_srv__go"]
+    rc, out = audit(own_agent, label="own")
+    expect("audit allows the plugin's own agent, MCP server and MCP tool in condition B", rc == 0, out)
+
     builtin_b = copy.deepcopy(clean)
     builtin_b[0][1]["plugins"].append({"name": "extra", "path": "builtin", "source": "extra@builtin"})
     rc, out = audit(builtin_b, label="builtin")
@@ -136,6 +145,13 @@ try:
     rc, out = run(sys.executable, HERE / "schedule.py", "--prompts", prompts,
                   "--out", tmp / "s1", "--seed", "7", "--dry-run")
     expect("schedule refuses to overwrite an existing run", rc != 0, out)
+    rc, out = run(sys.executable, HERE / "schedule.py", "--prompts", prompts, "--out",
+                  tmp / "s3", "--seed", "7", "--conditions", "B", "--dry-run")
+    brows = [ln.split("\t") for ln in (tmp / "s3/order.tsv").read_text().splitlines()
+             if not ln.startswith("#")] if rc == 0 else []
+    expect("schedule --conditions B runs each task once, in condition B",
+           len(brows) == 15 and {r[2] for r in brows} == {"B"}
+           and len({r[1] for r in brows}) == 15, out)
 
     # ---- correctness.sh on a tiny Python task set ---------------------------
     tasks, answers = tmp / "tasks", tmp / "answers"
@@ -207,8 +223,10 @@ try:
     a = EVAL / "runs/logs/partB/01-sum-squares.A.jsonl"
     _, fb = run(sys.executable, HERE / "extract.py", b, "--field", "fired")
     _, fa = run(sys.executable, HERE / "extract.py", a, "--field", "fired", "--plugin", "q-knowledge")
-    expect("extract --field fired reads activation off the log (M2 01: B y, A n)",
-           fb.strip() == "y" and fa.strip() == "n", fb + fa)
+    _, fx = run(sys.executable, HERE / "extract.py", b, "--field", "fired", "--plugin", "q-know")
+    expect("extract --field fired reads activation off the log (M2 01: B y, A n; "
+           "a prefix of the plugin name is not the plugin)",
+           fb.strip() == "y" and fa.strip() == "n" and fx.strip() == "n", fb + fa + fx)
 finally:
     shutil.rmtree(tmp)
 
