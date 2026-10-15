@@ -28,7 +28,11 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
    parties, OEM bundling without a licence, and competing products, and restricts benchmark
    publication (Clause 9). Quote that with clause numbers; never shorten it to "free for commercial
    use" or "non-commercial" (both were wrong once here). Corrected 2026-09-27 — see
-   docs/licensing-notes.md.
+   docs/licensing-notes.md. As Clause 9 caution, nothing published here describes q or KDB-X as
+   fast, faster or cheap: articles, posts, figures and lessons say what an attribute or join
+   does, not how quickly. Enforced by `tools/check-speed-wording.py` (`make verify-writings`, so
+   on every PR, and a PostToolUse hook); article 1's live "can be *faster*" is its one named
+   exemption.
 5. **Narrative is the product.** Each lesson explains WHY the idiom is shaped that way and what
    the imperative instinct gets wrong. Two code blocks + a sentence = cut or merge.
 6. Names "q", "kdb+", "KDB-X", "J" are third-party marks used nominatively. Keep the

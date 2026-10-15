@@ -1079,3 +1079,29 @@ grep in `make verify-writings` for the removed phrases would cost minutes; it is
 candidate if a sixth article is ever written. The same re-read also confirmed what is still true:
 the two-exemption rule, the `idiomatic-q` stub's status, the licence wording in rule 4, and that
 there is no skill deliverable.
+
+## 2026-10-15: the speed-wording rule becomes a check
+
+The M5-close entry called this the obvious candidate. `tools/check-speed-wording.py` now runs in
+`make verify-writings` (so on every PR) and as a PostToolUse hook, over the articles, their posts
+and figures, and the lessons (READMEs and sources). It flags the phrase families PRs #28 and #35
+removed, and lets through text that says there is no speed claim.
+
+**Test a pattern list against the history it exists to prevent, not just the corpus it must pass.**
+The first version passed today's text cleanly, which proved nothing. Run against the 26 lines #28
+and #35 actually deleted, it caught 18: it missed a `/ speed:` comment label, "cheap" and
+"cheaply" used for an operation, and a figure's "(Speed; ...)". After tightening, it catches all
+26, it fails the first draft of "What compounds" on the KX quote that slipped in on 2026-09-28,
+it fails a stale exemption, and the hook rejects a planted "q is fast here".
+
+**It found one more on the first run: article 1, live since 2026-09-25, says `p#` "can be
+*faster*".** The 2026-09-25 cleanup (3c361b1) covered the three later articles; article 1 was published
+the same day and was not part of it. The repo copy mirrors the live page, so it is not edited here; it is the
+check's one named exemption, printed on every run, and the run fails once the phrase is gone, so
+the exemption cannot outlive the fix. Whether to change the live article is the author's call.
+
+Also on this branch, at the author's request: "What compounds" no longer has a section saying the
+project was built with an AI coding assistant. Its one lesson about evidence (a baseline session
+reported 41 loaded skills where every committed baseline log lists 16) moved into section 4, where
+it is about the eval rather than the authoring.
+
