@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""No comparative speed wording in the articles, posts, figures or lessons.
+"""No comparative speed wording in the articles, posts, figures, lessons or the
+eval verdict.
 
 The KDB-X Community Edition licence restricts publishing "benchmark, test or
 performance information" without KX's written consent (Clause 9). As a
@@ -19,6 +20,13 @@ timing figures (3 ms); latency and throughput. Saying that there is no speed
 claim ("no speed or performance wording", "no benchmark numbers") is fine and
 is not matched. Code blocks are checked too: a comment can carry a claim.
 
+eval/verdict.md is in scope because the articles link it as the eval's
+write-up, so readers reach it as published text. It joined on 2026-10-15,
+after the scope had followed directories (writings/, lessons/) and missed it.
+The other repo files the articles link, docs/COMPOUND.md and
+docs/licensing-notes.md, are records: they quote KX's documentation as
+evidence and discuss this rule, so they stay out.
+
 ALLOWED lists the exemptions: text already published before the rule. Each
 covers exactly one occurrence, so a second copy of an exempted phrase fails.
 Each is printed on every run, so an exemption cannot go quiet, and a default
@@ -27,8 +35,8 @@ stale either.
 
 Usage:
   check-speed-wording.py [FILE ...]  check files (default: writings/*.md, the
-                                     figures, the lesson READMEs and sources);
-                                     exit 1 on any violation
+                                     figures, the lesson READMEs and sources,
+                                     eval/verdict.md); exit 1 on any violation
   check-speed-wording.py --hook      Claude Code PostToolUse hook: check the
                                      edited file if in scope; exit 2 with the
                                      matches on stderr
@@ -78,6 +86,8 @@ def rel(path):
 
 def in_scope(path):
     r = rel(path).split(os.sep)
+    if r == ["eval", "verdict.md"]:
+        return True
     if r[0] == "writings":
         return (len(r) == 2 and r[1].endswith(".md")) or (
             len(r) > 2 and r[1] == "figures" and r[-1].endswith(".svg"))
@@ -146,7 +156,8 @@ def default_files():
             + [os.path.join(ROOT, "lessons", "README.md")]
             + sorted(glob.glob(os.path.join(ROOT, "lessons", "*", "README.md")))
             + sorted(glob.glob(os.path.join(ROOT, "lessons", "**", "*.q"), recursive=True))
-            + sorted(glob.glob(os.path.join(ROOT, "lessons", "**", "*.ijs"), recursive=True)))
+            + sorted(glob.glob(os.path.join(ROOT, "lessons", "**", "*.ijs"), recursive=True))
+            + [os.path.join(ROOT, "eval", "verdict.md")])
 
 
 def main(argv):

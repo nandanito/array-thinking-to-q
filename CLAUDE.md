@@ -29,8 +29,8 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
    publication (Clause 9). Quote that with clause numbers; never shorten it to "free for commercial
    use" or "non-commercial" (both were wrong once here). Corrected 2026-09-27 — see
    docs/licensing-notes.md. As Clause 9 caution, nothing published here describes q or KDB-X as
-   fast, faster or cheap: articles, posts, figures and lessons say what an attribute or join
-   does, not how quickly. Enforced by `tools/check-speed-wording.py` (`make verify-writings`, so
+   fast, faster or cheap: articles, posts, figures, lessons and `eval/verdict.md` (which the
+   articles link) say what an attribute or join does, not how quickly. Enforced by `tools/check-speed-wording.py` (`make verify-writings`, so
    on every PR, and a PostToolUse hook). Its ALLOWED list of pre-rule exemptions has been empty
    since the live "Array thinking, all the way to q" dropped "can be *faster*" (2026-10-15); keep
    it empty.
