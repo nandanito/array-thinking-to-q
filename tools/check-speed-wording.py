@@ -19,9 +19,11 @@ timing figures (3 ms); latency and throughput. Saying that there is no speed
 claim ("no speed or performance wording", "no benchmark numbers") is fine and
 is not matched. Code blocks are checked too: a comment can carry a claim.
 
-ALLOWED lists the exemptions: text already published before the rule. Each is
-printed on every run, so an exemption cannot go quiet, and a run FAILS if an
-exempted phrase is no longer in its file, so the list cannot go stale either.
+ALLOWED lists the exemptions: text already published before the rule. Each
+covers exactly one occurrence, so a second copy of an exempted phrase fails.
+Each is printed on every run, so an exemption cannot go quiet, and a default
+run FAILS if an exempted phrase or its file is gone, so the list cannot go
+stale either.
 
 Usage:
   check-speed-wording.py [FILE ...]  check files (default: writings/*.md, the
@@ -109,11 +111,15 @@ def check(path):
         line = text.split("\n")[n - 1].strip()
         problems.append("line %d (%s): %s" % (n, label(m.group(0)), line[:110]))
     for t, why in allowed:
-        if t in text:
+        n = text.count(t)
+        if n == 1:
             exempted.append("%r: %s" % (t, why))
-        else:
+        elif n == 0:
             problems.append("stale exemption: %r is no longer in this file; remove it "
                             "from ALLOWED in tools/check-speed-wording.py" % t)
+        else:
+            problems.append("exemption %r covers one published occurrence, but the file "
+                            "has %d" % (t, n))
     return problems, exempted
 
 
@@ -150,6 +156,13 @@ def main(argv):
         return hook()
     files = argv or default_files()
     failed = False
+    if not argv:
+        # An exemption whose file was renamed or deleted would otherwise never be
+        # visited, and would outlive the text it was written for.
+        for f, t, _ in ALLOWED:
+            if not os.path.exists(os.path.join(ROOT, f)):
+                failed = True
+                print("FAIL stale exemption: %s no longer exists; remove %r from ALLOWED" % (f, t))
     for f in files:
         problems, exempted = check(f)
         for e in exempted:
