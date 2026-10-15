@@ -9,6 +9,12 @@
             "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/check-em-dashes.py\" --hook",
             "timeout": 15,
             "statusMessage": "Checking em-dash budget"
+          },
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/check-speed-wording.py\" --hook",
+            "timeout": 15,
+            "statusMessage": "Checking for speed wording"
           }
         ]
       }

@@ -201,8 +201,9 @@ with-plugin session first in every pair. The log redactor rewrote the word "buil
 appeared. And there was the scorer bug from section 1.
 
 **What transfers:** the tool allow-list is not the model's context. Assert the context per
-session, from the session's own record, instead of trusting the flags you passed. And the claim
-"it works outside my repo" can only be tested outside your repo.
+session, from the session's own record, instead of trusting the flags you passed or the session's
+own account of itself: asked what it had loaded, a baseline session reported 41 skills, where
+every committed baseline log lists 16. And the claim "it works outside my repo" can only be tested outside your repo.
 
 ## 5. A null result needs a power analysis for its wording
 
@@ -243,17 +244,6 @@ the article cites as its evidence. Each direction needs its own search.
 with whatever was supposed to consume the thing you just finished. Refer to stable names, not
 positions. When a claim changes, search every document that cites it, including the ones your
 checks skip.
-
-## The model in the loop
-
-I wrote this project with an AI coding assistant, Claude Code, and its failures were mostly one
-failure: the confident paraphrase. It drafted a speed claim with the no-speed-claims rule in its
-context. It credited a lesson with a point the lesson does not make. The eval writeup we drafted
-together reported a skill count taken from a session's description of itself (41) rather than from
-that session's log (16).
-Each read well and was wrong in a way only opening the source would show. The remedy was the same
-as for my own mistakes above: open the cited thing before writing that it says something, and
-treat a model's account of its own context as a claim, not a log.
 
 ## What did not compound
 

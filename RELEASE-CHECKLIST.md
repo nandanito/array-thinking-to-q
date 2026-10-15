@@ -5,6 +5,8 @@
 - [ ] Draft in `writings/` reviewed; every code snippet copied from a RUNNING lesson file
       (enforced: `make verify-writings`, also run by `j-verify` on every PR; an article may opt out
       only with a visible `<!-- snippet-check: skip — reason -->`, which blocks publication)
+- [ ] No speed wording about q or KDB-X, in the article, its posts or its figures (enforced:
+      `make verify-writings` runs `tools/check-speed-wording.py`; Clause 9 caution)
 - [ ] Publish canonical on nandan.me/writing/
 - [ ] X + Bluesky: short thread — hook + one snippet + canonical link
 - [ ] Mastodon: single-post summary + link
