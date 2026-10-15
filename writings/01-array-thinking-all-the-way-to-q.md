@@ -156,7 +156,7 @@ kdb+ as-of join, against KX's own documentation. It was the single result with a
 otherwise flat writeup.
 
 It was wrong. The sibling page of the same reference says the attribute they chose is legitimate
-and can be *faster* under exactly the conditions present. Worse: **my own repository had already
+under exactly the conditions present. Worse: **my own repository had already
 recorded that correction, in writing, three days earlier**, in an audit I ran and then never re-read.
 I cited one page, drew the opposite conclusion, and shipped it.
 

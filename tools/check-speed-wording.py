@@ -65,13 +65,11 @@ PATTERNS = [
 ]
 PATTERN = re.compile("|".join(f"(?:{p})" for p, _ in PATTERNS), re.I)
 
-# (file, exact text, reason). Published before the rule; change the live page
-# first, then sync the repo copy and delete the entry.
-ALLOWED = [
-    ("writings/01-array-thinking-all-the-way-to-q.md", "can be *faster*",
-     "article 1, live on nandan.me since 2026-09-25, before the speed-wording "
-     "decision; edit the site first if it should go"),
-]
+# (file, exact text, reason): text published before the rule. Change the live
+# page first, then sync the repo copy and delete the entry in the same commit.
+# Empty since "Array thinking, all the way to q" dropped "can be *faster*" from
+# its live page (2026-10-15).
+ALLOWED = []
 
 
 def rel(path):
