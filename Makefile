@@ -81,5 +81,5 @@ verify-writings:
 	@python3 tools/check-article-snippets.py
 	@echo "== writings + lesson READMEs: em-dash budget =="
 	@python3 tools/check-em-dashes.py
-	@echo "== writings + lessons: no comparative speed wording (Clause 9 caution) =="
+	@echo "== writings + lessons + eval verdict: no comparative speed wording (Clause 9 caution) =="
 	@python3 tools/check-speed-wording.py

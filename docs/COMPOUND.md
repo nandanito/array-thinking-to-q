@@ -1125,3 +1125,18 @@ Nothing in the check can see nandan.me, though: a commit that synced the repo an
 without touching the site would pass, and leave the live page saying what the repo no longer did.
 "Site first" is still enforced only by the comment above ALLOWED and by doing it in that order.
 
+## 2026-10-15: the eval verdict joins the speed check's scope
+
+With "Array thinking, all the way to q" clean, the same wording was still one click away:
+`eval/verdict.md`, which the articles link as the eval's write-up, carried KX's "better speedups"
+quote, two "possibly faster" clauses, the audit's "can outperform", and a "cheap fix". All five came out
+without moving a finding, and the check now covers the file (default run and hook). Its pre-change
+text fails with five hits, and a planted "possibly a faster one" fails both `make verify-writings`
+and the hook.
+
+**Scope a check on published text by what readers can reach, not by directory.** The check followed
+`writings/` and `lessons/` because that is where publishing happens, and the verdict lives in
+`eval/`. The useful question is which files the published pieces link. The other two answers,
+`docs/COMPOUND.md` and `docs/licensing-notes.md`, are records that quote KX as evidence and discuss
+the rule itself, so they stay out on purpose, and the check's docstring says so.
+

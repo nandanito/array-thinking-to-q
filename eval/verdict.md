@@ -203,15 +203,14 @@ cites `` `g# `` and <https://code.kx.com/q/ref/aj/> frames the pair as memory �
 and therefore irrelevant to the comparison.
 
 **This was first written up as both arms picking "the wrong attribute", and that was wrong.**
-<https://code.kx.com/q/ref/set-attribute/> says of parted: *"If the data can be sorted such that
-`p` can be set, it effects better speedups than grouped, both on disk and in memory."* Both
+<https://code.kx.com/q/ref/set-attribute/> says parted applies in memory as well as on disk,
+whenever the data can be sorted so that `p` can be set, and prefers it to grouped there. Both
 candidates ran `` `sym`time xasc quote `` first, which makes sym contiguous — precisely the
-condition under which that sentence applies. `` `p# `` in memory is a **defensible choice, possibly
-a faster one**, not a defect.
+condition that page names. `` `p# `` in memory is a **defensible choice**, not a defect.
 
 Worse, this repo already knew that. `docs/licensing-notes.md` §C recorded it as **CORRECTED claim
-5** on 2026-07-24, three days before the eval was scored: *"`p#` also works in memory and can outperform
-`g#` when values are contiguous. It is not useless in memory."* The scoring pass cited the `aj`
+5** on 2026-07-24, three days before the eval was scored: `` `p# `` also works in memory when values
+are contiguous, so it is not useless there. The scoring pass cited the `aj`
 page and never opened the sibling `set-attribute` page or the repo's own audit of exactly this
 claim.
 
@@ -242,7 +241,7 @@ tokens.
 **No skill is authored.** PROTOCOL.md permits authoring only if the eval exposes a gap KX's plugin
 does not fill. This eval exposed none. The `` `p#``/`` `g# `` result was written up as a candidate
 gap and has since been **retracted** (see above): `` `p# `` on a sorted in-memory table is
-documented as legitimate and possibly faster, so what that task actually surfaced was a defect in
+documented as legitimate, so what that task actually surfaced was a defect in
 the instrument, not in either condition. Nothing else came close.
 
 **M5 was reshaped around this** (2026-07-28): it had read "skill hardened from eval findings;
@@ -255,7 +254,7 @@ eval on a task set where baseline is *known* to fail — not a re-reading of thi
 - **No blinding.** Not claimed. ~~Impossible in principle~~ — CORRECTED 2026-09-27: feasible
   (code-only answers, five identical pairs) and not done; the cited-source checklist is the defense
   used, and it is weakest on task 08, the one judgement call. A label-stripped rescore of the
-  committed answers is the cheap fix.
+  committed answers would fix it without new runs.
 - **Task 15's premise is false on the pinned build** (found 2026-09-27 by an adversarial review that
   ran it). The prompt says the unsorted `aj` returns wrong quotes; on this data it returns the golden
   rows unchanged. So the task tested "sort and set an attribute", not "find the bug". No score moves
