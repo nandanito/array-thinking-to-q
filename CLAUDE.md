@@ -31,8 +31,9 @@ Read SPEC.md first. It is the contract; this file is operational guidance.
    docs/licensing-notes.md. As Clause 9 caution, nothing published here describes q or KDB-X as
    fast, faster or cheap: articles, posts, figures and lessons say what an attribute or join
    does, not how quickly. Enforced by `tools/check-speed-wording.py` (`make verify-writings`, so
-   on every PR, and a PostToolUse hook); article 1's live "can be *faster*" is its one named
-   exemption.
+   on every PR, and a PostToolUse hook). Its ALLOWED list of pre-rule exemptions has been empty
+   since the live "Array thinking, all the way to q" dropped "can be *faster*" (2026-10-15); keep
+   it empty.
 5. **Narrative is the product.** Each lesson explains WHY the idiom is shaped that way and what
    the imperative instinct gets wrong. Two code blocks + a sentence = cut or merge.
 6. Names "q", "kdb+", "KDB-X", "J" are third-party marks used nominatively. Keep the
