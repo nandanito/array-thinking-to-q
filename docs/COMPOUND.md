@@ -1105,3 +1105,23 @@ project was built with an AI coding assistant. Its one lesson about evidence (a 
 reported 41 loaded skills where every committed baseline log lists 16) moved into section 4, where
 it is about the eval rather than the authoring.
 
+## 2026-10-15: the exemption goes
+
+The author changed the live "Array thinking, all the way to q" (nandan.me, gh-pages 286e21e): the
+attribute they chose "is legitimate under exactly the conditions present", with "and can be
+*faster*" gone. The repo copy syncs to that sentence and the speed check's ALLOWED list is empty,
+in one commit. A planted "can be *faster*" still fails `make verify-writings` and the hook.
+
+**Check a cut against the source the sentence paraphrases, not only against its paragraph.** The KX
+page (code.kx.com/q/ref/set-attribute/) prefers `p#` to `g#` for a speed reason, but it attaches
+that reason to a condition: the data sorted so that `p` can be set, in memory as well as on disk.
+Both runs had sorted in memory first. The correction only needed the condition, so cutting the
+reason left a claim the page still supports.
+
+**A check can enforce atomicity inside the repo but not order across systems.** With the exemption
+in place, the repo copy could not change alone (the phrase fails without its entry), and the entry
+could not go alone (a stale exemption fails), so the sync and the deletion had to share a commit.
+Nothing in the check can see nandan.me, though: a commit that synced the repo and dropped the entry
+without touching the site would pass, and leave the live page saying what the repo no longer did.
+"Site first" is still enforced only by the comment above ALLOWED and by doing it in that order.
+
