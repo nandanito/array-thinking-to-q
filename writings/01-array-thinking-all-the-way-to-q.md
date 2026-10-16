@@ -207,14 +207,15 @@ evaluation harness I trust — mostly because it has already caught me.
 2. **[No headroom: what a null result on KX's q plugin actually measured](https://nandan.me/writing/no-headroom-kx-q-plugin/)**:
    a controlled evaluation, a null result, and why the null is about my benchmark rather
    than their plugin.
-3. **The as-of join**: what changes when the language and the storage engine are designed
-   around one primitive. No benchmark numbers; the article explains why.
+3. **[The as-of join: what changes when the engine is built around one primitive](https://nandan.me/writing/the-as-of-join/)**:
+   two primitives you already know, standing on a sort you are responsible for. No benchmark
+   numbers; the article explains why.
 4. **Unlearn the loop: what J shows that q hides**: the laboratory, and the two places it
    lies to you on the way home.
 5. **What compounds**: packaging the lessons-learned file that gets appended at every
    milestone.
 
-Articles 2–4 are drafted; 5 is packaging. Each publishes only when the artifacts it describes
+Article 4 is drafted; 5 is packaging. Each publishes only when the artifacts it describes
 actually verify, which is the same rule as the code, applied
 to the writing.
 

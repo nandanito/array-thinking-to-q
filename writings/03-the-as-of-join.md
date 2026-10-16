@@ -1,6 +1,7 @@
 # The as-of join: what changes when the engine is built around one primitive
 
-*Article 3 of 5, draft. Its milestone, M3 (the q lessons), is done and verifies.*
+*Article 3 of 5, published 2026-10-16 on nandan.me, which is the canonical version:
+<https://nandan.me/writing/the-as-of-join/>.*
 
 > **Provenance.** Every q and J snippet below is copied from
 > [lesson 05](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/05-asof-join/), whose outputs `make verify` re-captures from KDB-X CE 5.0
