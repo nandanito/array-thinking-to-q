@@ -43,7 +43,10 @@ paths filled with the arrow's own colour.
   (The site forbids external font dependencies, and an SVG in `<img>` can't load them anyway.)
 - viewBox 900 wide (height to fit, about 470–500). Hand-written, readable SVG that diffs well in
   git: no embedded metadata/C2PA blocks, no editor cruft.
-- LinkedIn/OG cards: 1200×627 PNG rendered from the same SVG source, same tokens.
+- LinkedIn/OG cards: 1200×627 PNG rendered from the same SVG source, same tokens. A 900×470 figure
+  is already that ratio: `rsvg-convert -w 1200 figure.svg -o linkedin-card.png` (the as-of join
+  card is figure 1 rendered exactly so). Figures attached to social posts render at 2x,
+  `rsvg-convert -w 1800`, since the networks accept no SVG.
 
 ## Accuracy
 
