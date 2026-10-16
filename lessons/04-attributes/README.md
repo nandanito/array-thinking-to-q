@@ -22,7 +22,7 @@ in the tail is the last property, the one you were relying on. It is true that a
 cannot change an answer. But the **sort discipline the attribute advertises** absolutely can, and
 `aj` is where that bill comes due.
 
-*(A note on what this lesson does not contain: timings. The KDB-X Community Edition license
+*(A note on what this lesson does not contain: timings. The KDB-X Community Edition licence
 restricts publishing performance figures; see [`docs/licensing-notes.md`](../../docs/licensing-notes.md).
 Everything below is about semantics and what the engine is permitted to assume, which is the more
 durable half anyway.)*
