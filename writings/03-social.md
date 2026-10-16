@@ -101,7 +101,7 @@ Not affiliated with KX.
 
 # Mastodon (single post)
 
-pandas, Polars and DuckDB all have an as-of join; it isn't q's secret. What's different in q is what the join looks like when the language and storage were built around it: aj is two primitives, group and bin, and every edge case (ties, trades before the first quote, unknown symbols) is settled by them. The price is a sort that bin trusts and never checks.
+pandas, Polars and DuckDB all have an as-of join; it isn't q's secret. What's different in q is what the join looks like when the language and storage were built around it: aj is two primitives, group and bin, and every edge case (ties, trades before the first quote, unknown symbols) is settled by them and one indexing rule. The price is a sort that bin trusts and never checks.
 
 Article 3 of 5: <URL>
 
@@ -111,7 +111,7 @@ Article 3 of 5: <URL>
 
 pandas, Polars, DuckDB and ClickHouse all have an as-of join, so having one isn't what makes q interesting. What I wanted to see was what the join looks like when the language and its storage were built around it.
 
-In q, aj comes apart into two primitives: group finds each symbol's rows, and bin finds the latest time at or before each trade. The awkward cases (a tie, a trade before the first quote, a symbol with no quotes) are all settled by those primitives, with no special-case code. The price is that bin trusts your sort and never checks it: drop the attribute and you get the same table; drop the sort and, on the lesson's data, you get a different one, silently.
+In q, aj comes apart into two primitives: group finds each symbol's rows, and bin finds the latest time at or before each trade. The awkward cases (a tie, a trade before the first quote, a symbol with no quotes) are all settled by those primitives and one indexing rule, with no special-case code. The price is that bin trusts your sort and never checks it: drop the attribute and you get the same table; drop the sort and, on the lesson's data, you get a different one, silently.
 
 Written for people who have never read q; every snippet runs in CI.
 

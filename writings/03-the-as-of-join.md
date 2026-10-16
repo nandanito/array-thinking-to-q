@@ -163,10 +163,11 @@ times bin -1               / -1 — nothing at or before: off the front
 ```
 
 This is the part I did not appreciate until I wrote the lesson. **Every boundary case of the as-of
-join is already decided by that primitive.** A trade at exactly a quote's time gets *that* quote,
-because the comparison is at-or-before. A trade before any quote gets `-1`, and in q `-1` is not
-a position, so indexing with it gives a null instead of an error or a wrapped-around value. (Indexing
-is just juxtaposition: `bids 1` is the second bid, and `0n` is q's null float.)
+join is already decided by that primitive and one indexing rule.** A trade at exactly a quote's
+time gets *that* quote, because the comparison is at-or-before. A trade before any quote gets `-1`,
+and in q `-1` is not a position, so indexing with it gives a null instead of an error or a
+wrapped-around value. (Indexing is just juxtaposition: `bids 1` is the second bid, and `0n` is q's
+null float.)
 
 ```q
 bids times bin 3 2 -1      / 99.1 99.1 0n — and index -1 is null
@@ -253,7 +254,7 @@ That is the as-of join, built by hand from two primitives, and it matches q's `a
 every column but the last is matched by **equality** (the group half), and the last is matched
 **as-of** (the bin half).
 
-![One trade, AAPL at 10:00:03, matched in two steps against the quote table sorted by sym then time. Step 1, group: looking up AAPL returns rows 0 1 2, the AAPL block. Step 2, bin: within that block the times are 10:00:00, 10:00:02, 10:00:05, and bin of 10:00:03 returns position 1, row 1, bid 99.1. Below: sym first makes each symbol one contiguous block; time second makes each block ascending so bin is right. aj[`sym`time; trade; quote] is equality on every column but the last, as-of on the last.](figures/03/figure-2-group-plus-bin.svg)
+![One trade, AAPL at 10:00:03, matched in two steps against the quote table sorted by sym then time. Step 1, group: looking up AAPL returns rows 0 1 2, the AAPL block. Step 2, bin: within that block the times are 10:00:00, 10:00:02, 10:00:05, and bin of 10:00:03 returns position 1, row 1, bid 99.1. Below: sym first makes each symbol one contiguous block; time second makes each block ascending so bin is right. aj[`sym`time; trade; sorted] is equality on every column but the last, as-of on the last.](figures/03/figure-2-group-plus-bin.svg)
 
 *Figure 2. `aj` is `group` plus `bin`. The sort serves both halves; only one half can be recorded
 by an attribute.*
@@ -407,8 +408,8 @@ chose; that takes an input the fixture was never built to contain.
 
 ## What to carry forward
 
-- **The as-of join is everywhere.** What is distinctive about q is that the table layout, the
-  search primitive and the attributes all assume the same row order.
+- **The as-of join is everywhere.** What is distinctive about q is that the join is two primitives
+  you already know, standing on one sort that serves both of them.
 - **`aj` is `group` plus `bin`.** Equality on every key but the last, as-of on the last.
   `` aj[`sym`time; …] `` spells exactly that.
 - **The edges live in the primitives.** At-or-before settles ties; `-1` plus null-on-index settles
