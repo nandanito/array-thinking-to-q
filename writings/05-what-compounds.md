@@ -5,7 +5,7 @@ Publishes after "Unlearn the loop".*
 
 > **Provenance.** This article packages
 > [`docs/COMPOUND.md`](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/COMPOUND.md),
-> a log the project appended to at every milestone from July to September 2026: what worked, what
+> a log the project has appended to at every milestone since July 2026: what worked, what
 > broke, what transfers. Each lesson below points to the incident it came from, and the incidents
 > are dated there. Every q and J snippet is copied from a lesson page in the
 > [curriculum](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/), where
@@ -20,8 +20,8 @@ rules I did not bend: every example runs, and every milestone appends what it ta
 Along the way it grew an evaluation of KX's official q plugin for Claude Code, four articles, and
 a harness for A/B testing plugins that anyone can now run.
 
-This is the fifth article, and the one the rules were for. Almost nothing below is about q. It is
-about checking your own work, because that is what kept going wrong, and the file that recorded
+This is the fifth article, and the one the rules were for. Almost nothing below is about q; the
+subject is checking your own work, because that is what kept going wrong, and the file that recorded
 each failure turned out to be the most reusable thing the project made.
 
 ## q and J in ninety seconds
@@ -96,7 +96,8 @@ equality instead.
 
 ![Two ways to check the comment "type d / 98h" in lesson 02. A membership check searches the lesson's captured output, finds 98h (printed by type t, a table) and passes the wrong claim. An equality check re-evaluates type d, gets 99h, and fails it. Of three planted wrong claims, membership caught two; this was the one it missed.](figures/05/figure-1-membership-is-not-equality.svg)
 
-*Figure 1. A containment check is not an equality check, and it fails exactly where they differ.*
+*Figure 1. A containment check passes wherever the value appears; only an equality check fails the
+wrong claim.*
 
 The pattern repeated at every scale. The eval's scoring script first *printed* each answer's
 correctness while the committed `results.csv` could have said anything; it only became a check
@@ -118,8 +119,8 @@ because an index loop over `1 2 3 4 5` would sum `0` to `4` and print `10`. The 
 the sentence was on the page, and nobody read it that way, including me.
 
 A subtler version came up in lesson 04, about why an as-of join needs sorted input. I showed four
-joins in a grid (sorted or not, with an attribute or not) to prove the sort, not the attribute,
-decides correctness. The claim was true. But the "sorted, no attribute" cell used a table sorted
+joins in a grid (sorted or not, with or without an attribute, the flag q keeps on a column about
+its layout) to prove the sort, not the attribute, decides correctness. The claim was true. But the "sorted, no attribute" cell used a table sorted
 with `xasc`, and q marks what `xasc` sorts:
 
 ```q
@@ -223,8 +224,8 @@ output tokens separated them on every one of the fifteen, at about three times t
 
 ## 6. Documents rot downstream, and in both directions
 
-The recurring defect in this repo was never wrong code. It was documents that were true when
-written and silently became false, with nothing failing. Lessons had `make verify`; the plan, the
+The recurring defect in this repo was documents that were true when written and silently became
+false, with nothing failing, far more often than wrong code. Lessons had `make verify`; the plan, the
 spec and the checklists had nothing. Three shapes kept recurring.
 
 **The stale text is where the result gets consumed.** When the eval authored no skill, the spec's
@@ -235,10 +236,10 @@ from eval findings; marketplace submission", for a skill that would never exist.
 "Article 5". The series was renumbered, and a real legal constraint silently pointed at the wrong
 article. Docs now name articles instead of numbering them.
 
-**Corrections flow both ways.** One day, a correction to the eval's evidence reached the published
-article but not a draft that sat behind a skip marker, until a review flagged it. The next day, it
-ran the other way: corrections to the eval article's wording nearly never reached the verdict file
-the article cites as its evidence. Each direction needs its own search.
+**Corrections flow both ways.** One day, a correction to the eval's evidence reached the eval
+article but not another draft, one that sat behind a skip marker, until a review flagged it. The
+next day, it ran the other way: corrections to the eval article's wording nearly never reached the
+verdict file the article cites as its evidence. Each direction needs its own search.
 
 **What transfers:** at every milestone, re-read the governing documents against reality, starting
 with whatever was supposed to consume the thing you just finished. Refer to stable names, not
@@ -251,10 +252,10 @@ The log compounds only when it is read. Early on I treated `COMPOUND.md` as some
 milestones, and it paid off only at review time: the lesson 03 draft cited documentation URLs that
 an earlier entry had already recorded as unfetchable, and the `` `p# `` correction was in the repo
 before the finding it corrected. Nothing routed me back to either. A compounding document that
-is only ever written is a diary; reading it before starting a class of work, not only after
-finishing one, is what makes it an asset.
+is only ever written is a diary. Reading it before starting a class of work is what makes it an
+asset.
 
-![Thirteen defects from the project's log, sorted into four columns by the kind of check that found them. A gate that runs (make verify, CI): typed q prompts in lesson 02's outputs; em dashes in figure text, one in a tspan; a missing CI secret that turned main red. An independent review (Codex): a no-attribute grid cell that had one; first bid where aj takes the last; name an index over a loop that binds items; connector tools in 3 of 15 plugin sessions. Preparing to publish (redaction, rendering): an auto-memory folder nobody had checked; a corrected claim left in a figure and its card. Running it elsewhere (a clean checkout, a new plugin): built-in plugins in every session; a seeded order with B first in every pair; a scorer that broke on relative paths; a redactor that rewrote the word builtin.](figures/05/figure-2-where-defects-surfaced.svg)
+![Thirteen defects from the project's log, sorted into four columns by the kind of check that found them. A gate that runs (make verify, CI): typed q prompts in lesson 02's outputs; em dashes in figure text, one in a tspan; a missing CI secret that turned main red. An independent review: a no-attribute grid cell that had one; first bid where aj takes the last; name an index over a loop that binds items; connector tools in 3 of 15 plugin sessions. Preparing to publish (redaction, rendering): an auto-memory folder nobody had checked; a corrected claim left in a figure and its card. Running it elsewhere (a clean checkout, a new plugin): built-in plugins in every session; a seeded order with B first in every pair; a scorer that broke on relative paths; a redactor that rewrote the word builtin.](figures/05/figure-2-where-defects-surfaced.svg)
 
 *Figure 2. Where the defects surfaced. Each kind of check found a different kind.*
 
@@ -266,7 +267,7 @@ finishing one, is what makes it an asset.
 - **Outputs are checkable by machine; claims about them are not.** Budget a reader for the claims.
 - **Distrust confirmation you could have manufactured**, and read the whole sentence.
 - **Assert the environment per run** from the run's own record, and test portability away from home.
-- **Word a null result by its headroom**, not by its headline.
+- **Word a null result by its headroom**, the largest effect it could have seen.
 - **Keep one append-only log of what broke, and read it before you start**, not just after.
 
 The curriculum, the eval and the harness are at

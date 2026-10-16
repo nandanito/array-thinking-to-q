@@ -26,7 +26,7 @@ And one practical payoff. The [showcase](../../showcase/aj/) opens with two line
 prescribes and most code copies. By the end of this lesson you should be able to *derive* both
 lines, and say which half of the join each one serves.
 
-*(As in lesson 04: no timings. The KDB-X Community Edition license restricts publishing
+*(As in lesson 04: no timings. The KDB-X Community Edition licence restricts publishing
 performance figures; see [`docs/licensing-notes.md`](../../docs/licensing-notes.md). Where this
 lesson says one shape does less work than another, it means it counts fewer things, which you can
 check by reading the code; it does not mean a measurement.)*

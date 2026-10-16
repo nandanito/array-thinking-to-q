@@ -15,6 +15,11 @@
 
 ---
 
+*New to q? It is the language of kdb+, a column-oriented time-series database best known in
+finance. [Article 1](https://nandan.me/writing/array-thinking-all-the-way-to-q/) has a one-minute
+primer on array languages. Beyond that, this article explains each piece of q and J syntax the
+first time it appears.*
+
 Here is a perfectly good q program. It sums a list.
 
 ```q
@@ -28,7 +33,7 @@ show r
 15
 ```
 
-Fifteen. Correct. It will still be correct next year, on a bigger list, in production.
+Fifteen. Correct. It will still be correct next year, in production.
 
 That is the problem.
 
@@ -39,9 +44,9 @@ perfectly ordinary notion of a counter you increment yourself. Every reflex you 
 Python or Java or C has somewhere to land, and the answers come out right. (The idiom, for the
 record, is `sum x`.)
 
-So you can write q for months, shipping and passing tests and reviewing other people's code, and
-never once make the shift the language was built around. Nothing fails. There is no error and no
-warning. The loop is *right there*, and it works.
+So you can write q for months, shipping and passing tests, and never once make the shift the
+language was built around. Nothing fails. There is no error and no warning. The loop is *right
+there*, and it works.
 
 I want to be precise about the contrast, because the easy version of this argument is wrong. J does
 not forbid loops either. To show that I need about two minutes of J, so here they are.
@@ -60,8 +65,9 @@ _5
 0 1 2 3 4
 ```
 
-J reads right to left with no operator precedence (so does q). Most primitives mean one thing with
-a single argument on the right and another with arguments on both sides. Negative numbers are
+J reads right to left with no operator precedence (so does q), and `i. 5` counts from zero the
+way q's `til 5` does. Most primitives mean one thing with a single argument on the right and
+another with arguments on both sides. Negative numbers are
 written `_5`, `NB.` starts a comment, and `=:` assigns a name. That is enough to read everything
 below.
 
@@ -98,8 +104,8 @@ Tuesday.
 
 **That is the whole case for the laboratory.** J is no stricter than q. What it does is make the
 imperative path *feel* like what it is, where q makes it feel like home. A language that lets you
-stay comfortable will not teach you a paradigm shift. You have to go somewhere the shift is
-unavoidable, feel it, and come back.
+stay comfortable will not teach you a paradigm shift. You have to go somewhere the shift cannot
+be avoided, and feel it before you come back.
 
 Three things become visible over there, and two of them will betray you on the way back.
 
@@ -112,7 +118,8 @@ can use them for a year without noticing that several of them are the *same cons
 different labels.
 
 They are. `sum` is `+` inserted between the items. q spells that with the `over` adverb, and the
-curriculum shows the machine under the built-in:
+curriculum shows the machine under the built-in (in q, `/` starts a comment, and these comments
+show what each line returns):
 
 ```q
 sum til 5          / 10
@@ -143,8 +150,9 @@ and this, the *same three characters* with a left argument in front, is a 3-wide
 6 9 12 15
 ```
 
-One phrase. Supply a left argument and "scan the prefixes" becomes "scan the windows." The
-relationship is right there in the notation: a window is a scan with a width.
+One phrase. Supply a left argument and "scan the prefixes" becomes "scan the windows" (J calls
+this windowed form the **infix** use of `\`). The relationship is right there in the notation: a
+window is a scan with a width.
 
 Now q:
 
@@ -211,7 +219,8 @@ m =: 2 3 $ 1 2 3 4 5 6
 The first result is `1 2 3 + 4 5 6`, because "insert `+` between the items" means exactly that and
 a matrix's items are its rows. The second is one conjunction and a number: `"1` says *apply to each
 rank-1 cell*, so each row is summed on its own. `"0` would say each atom; `"2` the whole matrix.
-Boxing makes the difference visible without any arithmetic in the way:
+Boxing makes the difference visible without any arithmetic in the way (`<` is *box*: it wraps
+each value in a cell, and J draws the cells):
 
 ```j
 <"0 m
@@ -238,9 +247,9 @@ sum (1 2 3; 4 5 6)        / 5 7 9
 sum each (1 2 3; 4 5 6)   / 6 15
 ```
 
-but by a different route, and the route is the point. **`each` is not a depth parameter you can
-dial.** It is one fixed move, "one level down", and there is no `each 2`. Where J turns a knob, q
-gives you a word that only ever means 1.
+but by a different route, and the route is the point. **`each` is one fixed move, "one level
+down", with no depth to dial.** There is no `each 2`. Where J turns a knob, q gives you a word that
+only ever means 1.
 
 Be careful how far you push that, though, because q's other iterators are *not* rank in disguise:
 
@@ -248,8 +257,8 @@ Be careful how far you push that, though, because q's other iterators are *not* 
 (-':) 1 3 6 10 15   / 1 2 3 4 5     each-prior
 ```
 
-`each-prior` walks adjacent pairs. That is not a statement about depth at all, and no rank number
-expresses it. J puts adjacent pairs in a different family entirely, the **infix** one from §1
+`each-prior` walks adjacent pairs, which says nothing about depth, and no rank number expresses
+it. J puts adjacent pairs in a different family entirely, the **infix** one from §1
 (`~` swaps a verb's arguments, so each pair gives later minus earlier):
 
 ```j
@@ -292,7 +301,7 @@ q)(+/ % #) til 5
 It does not return the wrong answer. **It does not parse.** The message is blank and the caret
 lands in the middle of the fork.
 
-That is a parse-time rejection, not a runtime error, and the distinction has teeth: you cannot
+The rejection happens at parse time, before anything runs, and that has teeth: you cannot
 defend against it. The reflex is to wrap the risky expression in protected evaluation and handle
 the failure, but the wrapper sits on the same line, and the line never parses. You can check that
 without a REPL by handing the text to q's own parser as a string, which turns the failure into a
@@ -311,8 +320,8 @@ the text arrives as a runtime string, so the parsing happens *inside* the protec
 the only way to trap this error, and it means building code as a string on purpose, which is not a
 program anyone writes by accident.
 
-**q has no tacit forks or trains.** A parenthesised run of functions is not a new function; it is a
-syntax error. What q wants is for you to say the composition out loud:
+**q has no tacit forks or trains.** A parenthesised run of functions is a syntax error. What q
+wants is for you to say the composition out loud (`2f` is the float 2.0):
 
 ```q
 avg til 5                    / 2f
@@ -338,7 +347,7 @@ J's moving average of six numbers, three wide:
 Four results. J's infix `\` gives you **complete windows only**. There is no 3-wide window ending
 at the first or second element, so there is no output for them.
 
-q, same request:
+q, same request (the `f` on `6f` makes the whole list floats):
 
 ```q
 3 mavg 1 2 3 4 5 6f    / 1 1.5 2 3 4 5
@@ -348,8 +357,8 @@ Six results. q's `m` family **ramps up through the partial windows**: the first 
 average of one element, the second of two, and only from the third does a full window exist. Six
 inputs, six outputs, always.
 
-Neither convention is wrong. They are different, they are silent about it, and *"the 3-period
-moving average"* names both. In a q table, q's convention lines up exactly: each row gets the
+Neither convention is wrong. They differ silently, and *"the 3-period moving average"* names
+both. In a q table, q's convention lines up exactly: each row gets the
 average of the window that ends at that row. The trouble is the habit you bring. Read q's first
 value as the first full window, the way J's would be, and you are two positions early (*width − 1*
 in general). Or keep q's first two values without noticing, and two numbers labelled "3-period
@@ -381,16 +390,16 @@ whole curriculum is built to prevent did not appear at all.
 I want to be careful about how much weight that can carry, because my own verdict on that eval
 says it was **underpowered**. The fifteen tasks turned out to be easy enough that the baseline was
 already at the ceiling, so the study could not have detected a small effect at all. Three solved
-loop-fix tasks are three data points from a task set I built badly. They are not "models have
-absorbed array thinking".
+loop-fix tasks are three data points from a task set I built badly, and no evidence that models
+have absorbed array thinking.
 
 What they do support is narrower and still worth something. **On the loop-transliteration exercises
 I could think of, the failure mode this curriculum exists to prevent did not show up.**
 
 The rest of the eval does not say where the failures *are*, and I should not pretend it does. The
 one task where both arms departed from my reference was an as-of join: both set `` `p# `` where my
-task sheet expected `` `g# ``. (I first wrote that up as both of them getting the attribute
-*wrong*. They didn't. The [set-attribute page](https://code.kx.com/q/ref/set-attribute/) says
+task sheet expected `` `g# ``, two of q's column *attributes*, the flags a table carries about how a
+column is laid out. (I first wrote that up as both of them getting the attribute *wrong*. They didn't. The [set-attribute page](https://code.kx.com/q/ref/set-attribute/) says
 parted applies in memory as well as on disk when the data is sorted so it can be set, and both had
 sorted first.) Both arms also lost that task's correctness point, for printing one extra line. And
 a later review ran the task's "broken" input and found that the unsorted join already returned the
@@ -404,10 +413,8 @@ That is consistent with a short laboratory, which is what this curriculum commit
 co-star to an illustrative prelude on a reviewer's advice, and it ended up as a single lesson. I went
 along with that at the time without evidence either way, and the eval did not supply any. The case
 for keeping the laboratory small is the one from the section above: the J habits that hurt you in q
-are the silent ones, and catching them is q work.
-
-The errors that will actually cost you live on the q side of the wall. That is where the bulk of
-the curriculum has to be.
+are the silent ones, catching them is q work, and that is where the bulk of the curriculum has to
+be.
 
 ---
 
@@ -420,11 +427,11 @@ If you are arriving with no destination in mind, [BQN](https://mlochbaum.github.
 probably the better first array language. The glyphs are more regular, the documentation is
 friendlier, and it was designed with hindsight about what APL got awkward. J's advantages here are
 narrower and specific to this project: it is pure ASCII, so it survives any editor and any blog
-renderer; it is GPLv3 and needs no license key, which makes it the one green check in this repo's
+renderer; it is GPLv3 and needs no licence key, which makes it the one green check in this repo's
 CI that does not depend on a vendor; and its fork and its rank are the two ideas I most wanted to
 put in front of you.
 
-The concepts are the same wherever you meet them. Meet them somewhere.
+The concepts are the same wherever you meet them.
 
 ---
 
@@ -443,7 +450,7 @@ The concepts are the same wherever you meet them. Meet them somewhere.
 - **The thinking transfers; the plumbing does not.** The fork fails loudly. The window convention
   fails silently. Respect the second one more.
 
-**Next:** everything is q.
+**Next in the series:** "What compounds: notes from a project where everything had to run".
 
 ---
 
