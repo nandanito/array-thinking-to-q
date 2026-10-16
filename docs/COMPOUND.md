@@ -1169,5 +1169,7 @@ against the brief as well as against the text, and expect the brief to be over-a
 
 Also on this branch: the provenance note quotes Clause 9 with its number instead of paraphrasing
 it (rule 4 had a gap the review found), and the article spells "licence" as the rest of the series
-does.
+does. The light review pass at the end caught CLAUDE.md's build order still calling the article
+drafted: the compound step's re-read of the governing docs, which this entry's author had skipped,
+done by a reviewer instead. SPEC's article line records the date too, as article 2's does.
 
