@@ -1140,3 +1140,36 @@ and the hook.
 `docs/COMPOUND.md` and `docs/licensing-notes.md`, are records that quote KX as evidence and discuss
 the rule itself, so they stay out on purpose, and the check's docstring says so.
 
+## 2026-10-16: "The as-of join" published
+
+Live at nandan.me/writing/the-as-of-join/ (gh-pages 63a0790), under the title SPEC recorded, after
+a two-reader review (a programmer new to q and J; a q practitioner) and an adversarial pass over
+the article, its posts and its figures. The repo copy, the posts and the series list in "Array
+thinking, all the way to q" take the live title and URL in the same PR as this entry.
+
+**A claim about code that is not in the lesson has no gate.** The article said J's `I.` accepts a
+descending list and that searching the reversed times gives the as-of index `1 1 _1`. On J 9.7.1,
+`(|. 0 2 5) I. 3 2 _1` is `1 1 3`. The snippet check proves every fenced block is identical to a
+running lesson; this was prose beside a block that was verified, the shape the series opener calls
+"claims fail silently". Cut. When an article says something its lesson does not, run it before it
+ships, or move it into the lesson where `make verify` will.
+
+**Figure text is checked for wording, not for truth.** Figure 2 pictured the quote table sorted
+and quoted the expression `aj[`sym`time; trade; quote]`; at that point in the article `quote` is
+the arrival-ordered table, and run as written the expression gives bid 99 for the pictured trade,
+not the 99.1 the figure shows. `make verify-writings` reads figure text for em dashes and speed
+wording only. The adversarial pass caught it. A figure that quotes an expression should quote one
+the lesson runs, under the name the lesson uses.
+
+**Given a focus, a reviewer applies it everywhere.** The adversarial brief asked for anything that
+said how the article was written; the pass flagged the provenance note, the review section and the
+posts' `<URL>` placeholders, which are the series' subject and the release checklist's design. Four
+of nine findings were real, and all four were about q semantics or the figure. Check each finding
+against the brief as well as against the text, and expect the brief to be over-applied.
+
+Also on this branch: the provenance note quotes Clause 9 with its number instead of paraphrasing
+it (rule 4 had a gap the review found), and the article spells "licence" as the rest of the series
+does. The light review pass at the end caught CLAUDE.md's build order still calling the article
+drafted: the compound step's re-read of the governing docs, which this entry's author had skipped,
+done by a reviewer instead. SPEC's article line records the date too, as article 2's does.
+

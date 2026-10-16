@@ -1,7 +1,7 @@
 <!--
 Social posts for article 3, the as-of join (RELEASE-CHECKLIST: "X + Bluesky: short thread — hook + one
 snippet + canonical link"; "Mastodon: single-post summary + link"; Nostr, same shape as Mastodon).
-DRAFT: <URL> is the article's canonical URL, unknown until nandan.me publishes it.
+The article's canonical URL is https://nandan.me/writing/the-as-of-join/ (published 2026-10-16).
 Snippet provenance: `times:0 2 5; bids:99 99.1 99.4` is line 1 of lesson 05's section 3 block,
 verbatim; `bids times bin 3 2 -1` is the next block's code with its trailing comment removed, and
 that comment is where "99.1 99.1 0n" comes from (make verify-prose checks it).
@@ -54,7 +54,7 @@ Also: J as a control, an excellent array language that wasn't built for this joi
 
 Every snippet runs in CI. No timings, by choice.
 
-<URL>
+https://nandan.me/writing/the-as-of-join/
 
 Not affiliated with KX.
 
@@ -95,15 +95,15 @@ Also: J as a control, an excellent array language that wasn't built for this joi
 
 Every snippet runs in CI. No timings, by choice.
 
-<URL>
+https://nandan.me/writing/the-as-of-join/
 
 Not affiliated with KX.
 
 # Mastodon (single post)
 
-pandas, Polars and DuckDB all have an as-of join; it isn't q's secret. What's different in q is what the join looks like when the language and storage were built around it: aj is two primitives, group and bin, and every edge case (ties, trades before the first quote, unknown symbols) is settled by them. The price is a sort that bin trusts and never checks.
+pandas, Polars and DuckDB all have an as-of join; it isn't q's secret. What's different in q is what the join looks like when the language and storage were built around it: aj is two primitives, group and bin, and every edge case (ties, trades before the first quote, unknown symbols) is settled by them and one indexing rule. The price is a sort that bin trusts and never checks.
 
-Article 3 of 5: <URL>
+Article 3 of 5: https://nandan.me/writing/the-as-of-join/
 
 #kdb #q #TimeSeries #ArrayProgramming
 
@@ -111,11 +111,11 @@ Article 3 of 5: <URL>
 
 pandas, Polars, DuckDB and ClickHouse all have an as-of join, so having one isn't what makes q interesting. What I wanted to see was what the join looks like when the language and its storage were built around it.
 
-In q, aj comes apart into two primitives: group finds each symbol's rows, and bin finds the latest time at or before each trade. The awkward cases (a tie, a trade before the first quote, a symbol with no quotes) are all settled by those primitives, with no special-case code. The price is that bin trusts your sort and never checks it: drop the attribute and you get the same table; drop the sort and, on the lesson's data, you get a different one, silently.
+In q, aj comes apart into two primitives: group finds each symbol's rows, and bin finds the latest time at or before each trade. The awkward cases (a tie, a trade before the first quote, a symbol with no quotes) are all settled by those primitives and one indexing rule, with no special-case code. The price is that bin trusts your sort and never checks it: drop the attribute and you get the same table; drop the sort and, on the lesson's data, you get a different one, silently.
 
 Written for people who have never read q; every snippet runs in CI.
 
-Article 3 of 5: <URL>
+Article 3 of 5: https://nandan.me/writing/the-as-of-join/
 Repo: https://github.com/nandanito/array-thinking-to-q
 
 #kdb #programming #TimeSeries

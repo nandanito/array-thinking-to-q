@@ -188,7 +188,7 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   an independent evaluation of a vendor plugin; genuinely new data for the community).
 - **M3 — The q core (wk 3–5):** Part II + `aj` showcase golden-filed; nightly q CI live.
   → Article 3 "The as-of join: what changes when the engine is built around one primitive"
-  (NOT "why quants pay" — the primitive has spread to pandas/Polars/DuckDB/QuestDB/ClickHouse;
+  (published 2026-10-16) (NOT "why quants pay" — the primitive has spread to pandas/Polars/DuckDB/QuestDB/ClickHouse;
   the story is co-design, not scarcity). Benchmark clause CHECKED (2026-07-24): license Clause 9
   bars publishing KDB-X performance/benchmark numbers without prior written KX consent →
   DECISION (provisional): design/semantics framing, NO benchmark numbers; revisit authorization

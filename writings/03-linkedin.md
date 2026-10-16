@@ -1,6 +1,6 @@
 <!--
 LinkedIn post for article 3, the as-of join (RELEASE-CHECKLIST: "2–3 paragraph professional framing").
-DRAFT: the canonical URL is not known until nandan.me publishes; <URL> is a placeholder.
+The article is live at https://nandan.me/writing/the-as-of-join/ (published 2026-10-16).
 Image: attach writings/figures/03/linkedin-card.png.
 Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems.
 Every claim is from the article: aj as group plus bin, the three edge cases, the unchecked sort,
@@ -27,7 +27,7 @@ that runs in CI. It contrasts J, an excellent array language that wasn't built a
 show which edge cases a general design leaves to you. There are no timings, by choice: the
 argument doesn't need them.
 
-<URL>
+https://nandan.me/writing/the-as-of-join/
 
 Independent work; not affiliated with KX.
 

@@ -1,15 +1,18 @@
 # The as-of join: what changes when the engine is built around one primitive
 
-*Article 3 of 5, draft. Its milestone, M3 (the q lessons), is done and verifies.*
+*Article 3 of 5, published 2026-10-16 on nandan.me, which is the canonical version:
+<https://nandan.me/writing/the-as-of-join/>.*
 
 > **Provenance.** Every q and J snippet below is copied from
 > [lesson 05](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/05-asof-join/), whose outputs `make verify` re-captures from KDB-X CE 5.0
 > and J 9.7.1 and diffs against the page. No output here was typed by hand. There are no timings or
-> speed claims here, deliberately: the KDB-X Community Edition license restricts publishing
-> benchmark, test or performance information without KX's written consent, and staying well clear
-> of it is my choice of caution, not a reading of where that line falls. Where the article says one
-> shape looks at less of the data than another, that is a statement about what the code does,
-> which you can check by reading it, not a measurement ([licensing notes](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md)).
+> speed claims here, deliberately. Clause 9 of the KDB-X Community Edition licence reads: *"You will
+> not disclose any benchmark, test or performance information or any report which contains a
+> competitive analysis regarding the Software to any third party except as explicitly authorized in
+> advance by us in writing."* Staying well clear of it is my choice of caution, not a reading of
+> where that line falls. Where the article says one shape looks at less of the data than another,
+> that is a statement about what the code does, which you can check by reading it, not a
+> measurement ([licensing notes](https://github.com/nandanito/array-thinking-to-q/blob/main/docs/licensing-notes.md)).
 > Everything below is about *what* the join does and *why it is shaped that way*, which it turns
 > out is the more interesting half anyway.
 
@@ -24,8 +27,9 @@ There is a sentence people like to write about q, and it goes something like: *k
 join, and that is why trading firms pay for it.*
 
 I don't want to write that sentence, for two reasons. The first is that I can't back it up: the
-license I run q under restricts publishing the numbers that sentence implies. The second is
-better. **It isn't true in the way it sounds.** pandas has `merge_asof`. Polars has `join_asof`.
+licence I run q under (Clause 9, quoted at the top) restricts publishing the numbers that sentence
+implies. The second is better. **It isn't true in the way it sounds.** pandas has `merge_asof`.
+Polars has `join_asof`.
 DuckDB, QuestDB and ClickHouse all have an `ASOF JOIN`. The as-of join is not rare and it is not
 q's secret. It exists wherever time series meet, because the question it answers is one every
 time-series programmer eventually asks:
@@ -141,9 +145,9 @@ MSFT| 1 3
 
 `group` maps each distinct value to the positions where it occurs; the output is a dictionary, keys
 on the left of the `|`, values on the right. One pass, and every trade's first question becomes a
-dictionary lookup. This is also what q's `` `g# `` attribute *is*: not a mysterious index, but
-`group` of the column, built once and kept attached so anything filtering on `sym` can look the
-rows up instead of scanning for them.
+dictionary lookup. This is also what q's `` `g# `` attribute *is* (an attribute is a flag q keeps on
+a column; more on them below): `group` of the column, built once and kept attached so anything
+filtering on `sym` can look the rows up instead of scanning for them.
 
 ## Question two is `bin`
 
@@ -160,10 +164,11 @@ times bin -1               / -1 — nothing at or before: off the front
 ```
 
 This is the part I did not appreciate until I wrote the lesson. **Every boundary case of the as-of
-join is already decided by that primitive.** A trade at exactly a quote's time gets *that* quote,
-because the comparison is at-or-before. A trade before any quote gets `-1`, and in q `-1` is not
-a position, so indexing with it gives a null instead of an error or a wrapped-around value. (Indexing
-is just juxtaposition: `bids 1` is the second bid, and `0n` is q's null float.)
+join is already decided by that primitive and one indexing rule.** A trade at exactly a quote's
+time gets *that* quote, because the comparison is at-or-before. A trade before any quote gets `-1`,
+and in q `-1` is not a position, so indexing with it gives a null instead of an error or a
+wrapped-around value. (Indexing is just juxtaposition: `bids 1` is the second bid, and `0n` is q's
+null float.)
 
 ```q
 bids times bin 3 2 -1      / 99.1 99.1 0n — and index -1 is null
@@ -185,7 +190,7 @@ check:
 
 Position 1 of `2 0 5` holds `0`. The right answer was the `2`. No error, no warning.
 
-That silence is the design, not an oversight: `bin` is defined for sorted input and takes the sort
+That silence is the design: `bin` is defined for sorted input and takes the sort
 on trust. So q makes the trade explicitly: **the search is yours if the sort is yours.**
 
 ## Sort once, and both halves get what they need
@@ -250,12 +255,12 @@ That is the as-of join, built by hand from two primitives, and it matches q's `a
 every column but the last is matched by **equality** (the group half), and the last is matched
 **as-of** (the bin half).
 
-![One trade, AAPL at 10:00:03, matched in two steps against the quote table sorted by sym then time. Step 1, group: looking up AAPL returns rows 0 1 2, the AAPL block. Step 2, bin: within that block the times are 10:00:00, 10:00:02, 10:00:05, and bin of 10:00:03 returns position 1, row 1, bid 99.1. Below: sym first makes each symbol one contiguous block; time second makes each block ascending so bin is right. aj[`sym`time; trade; quote] is equality on every column but the last, as-of on the last.](figures/03/figure-2-group-plus-bin.svg)
+![One trade, AAPL at 10:00:03, matched in two steps against the quote table sorted by sym then time. Step 1, group: looking up AAPL returns rows 0 1 2, the AAPL block. Step 2, bin: within that block the times are 10:00:00, 10:00:02, 10:00:05, and bin of 10:00:03 returns position 1, row 1, bid 99.1. Below: sym first makes each symbol one contiguous block; time second makes each block ascending so bin is right. aj[`sym`time; trade; sorted] is equality on every column but the last, as-of on the last.](figures/03/figure-2-group-plus-bin.svg)
 
 *Figure 2. `aj` is `group` plus `bin`. The sort serves both halves; only one half can be recorded
 by an attribute.*
 
-It also explains a phrase in the reference manual that reads oddly the first time: `aj` returns
+It also explains a phrase in [the reference manual](https://code.kx.com/q/ref/aj/) that reads oddly the first time: `aj` returns
 *"the last (in row order) matching record"*. Row order, not greatest time. The manual is describing
 `bin`. On a table sorted the way we just sorted it, the last row in order *is* the latest in time;
 if the times are out of order within a symbol it may not be, and `aj` still returns what `bin`
@@ -290,8 +295,8 @@ prevailed you get nulls (shown as blanks) rather than a missing row. The tie get
 at the same second. The hand-built version from above produces exactly the same table (the lesson
 checks it with `~`), with no code for any of the three cases. The early trade: `bin` said `-1`, and
 indexing with `-1` gives null. The unknown symbol: the `group` lookup returns an empty list, `bin`
-on an empty list is `-1`, and the same null follows. The tie: `bin` is at-or-before. The nulls in
-`aj`'s output are not a policy someone wrote. They are what indexing does off the front of a list.
+on an empty list is `-1`, and the same null follows. The tie: `bin` is at-or-before. Nobody wrote a
+null policy for `aj`; the blanks are what indexing does off the front of a list.
 
 ## What the same join looks like in a language that wasn't built for it
 
@@ -335,13 +340,11 @@ echo bids {~ <: +/ times <:/ 3 2 _1
 99.1 99.1 99.4
 ```
 
-`1 1 _1` is exactly what q's `bin` returned. (`I.` also accepts a descending list, and searching the
-reversed times gets the same `1 1 _1` without the all-pairs comparison; in J the index is a
-one-line repair either way.) The value is *still* wrong, because the second edge was never in the
-search; it's in indexing. In q, `-1` is off the end and yields null. In J it wraps. So
-the J programmer writes a guard too.
+`1 1 _1` is exactly what q's `bin` returned; in J the index is a one-line repair. The value is
+*still* wrong, because the second edge was never in the search; it's in indexing. In q, `-1` is off
+the end and yields null. In J it wraps. So the J programmer writes a guard too.
 
-None of that is a defect in J. A general interval search and wrap-around negative indices are the
+None of that is a defect in J: a general interval search and wrap-around negative indices are the
 right defaults for a general-purpose array language. That is precisely the point: **q's `bin` and
 q's out-of-range null were chosen together, for this join**, and J's equally sensible choices were
 made for something else. You can see co-design without a single benchmark, just by looking at
@@ -368,7 +371,7 @@ After the above, both lines can be read rather than recited:
   one block.
 - **`` `g# `` on `sym`** is the optional step. It records the group half of the join, so each
   block can be found by lookup. It records nothing about the `bin` half. It goes last, after the
-  data is final, because the previous lesson showed attributes are perishable. (On a table sorted
+  data is final, because [lesson 04](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/04-attributes/) showed attributes are perishable. (On a table sorted
   this way,
   `` `p# ``, the *parted* attribute, is a legitimate alternative; `` `g# `` is the default the
   showcase ships, not the only right answer.)
@@ -378,8 +381,7 @@ sort is not.** Drop the attribute and you get the same table. Drop the sort and 
 input it was never defined for: on this lesson's data you get a *different* table, mostly right,
 wrong only for the symbols with several quotes in the window, and silent about it. On other data it
 might happen to come out right, which is worse, because nothing tells you which case you are in.
-That failure shape (partial, plausible, unannounced) is what the previous lesson in the curriculum
-was written to make you afraid of.
+That shape of failure is what lesson 04 was written to make you afraid of.
 
 And the half that decides correctness, time ascending *within* each symbol, is exactly the half no
 q attribute can record for you. `xasc` stamps a sorted attribute on `sym` and nothing on `time`,
@@ -391,7 +393,7 @@ The engine trusts the layout. The layout is yours.
 One more thing, because this series has a habit of reporting its own misses.
 
 Every snippet in the lesson was verified: `make verify` reruns the q and J and fails if any printed
-output drifts. It was green. And an independent Codex review still found a real bug in it.
+output drifts. It was green. And an independent review still found a real bug in it.
 
 The first version of the loop above said `first bid`, not `last bid`. On the lesson's data that makes
 no difference. But if two quotes for a symbol share a timestamp, "the greatest time" names both, and
@@ -403,12 +405,12 @@ The fix was one word, and it made the lesson better: the loop's order-independen
 hole, and it's the same hole `aj` fills with "last in row order". But the transferable part is the
 failure mode. **A verified fixture is not a verified claim.** `make verify` proves the outputs on the
 page are real. It cannot prove that a sentence with "always" in it generalises past the inputs you
-chose. When the prose says always, test an input the fixture wasn't built to contain.
+chose; that takes an input the fixture was never built to contain.
 
 ## What to carry forward
 
-- **The as-of join is everywhere.** What's distinctive about q isn't having it; it's that the table
-  layout, the search primitive and the attributes all assume the same row order.
+- **The as-of join is everywhere.** What is distinctive about q is that the join is two primitives
+  you already know, standing on one sort that serves both of them.
 - **`aj` is `group` plus `bin`.** Equality on every key but the last, as-of on the last.
   `` aj[`sym`time; …] `` spells exactly that.
 - **The edges live in the primitives.** At-or-before settles ties; `-1` plus null-on-index settles
@@ -417,7 +419,7 @@ chose. When the prose says always, test an input the fixture wasn't built to con
 - **You can argue co-design without benchmarks.** Look at which edge cases a tool's primitives
   settle for free, and which ones it leaves to you.
 
-**Next in the series:** the J laboratory, and what it shows about loops that q hides.
+**Next in the series:** "Unlearn the loop: what J shows that q hides".
 
 ---
 
