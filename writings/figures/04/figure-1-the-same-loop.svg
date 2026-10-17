@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc" font-family="'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title id="title">The same loop in two languages</title>
-  <desc id="desc">Two panels, each summing the list 1 2 3 4 5 with an explicit loop, and each printing 15. Left, J: a five-line explicit definition opened with 3 colon 0, using local assignment, a for_i. loop and a closing parenthesis on its own line, then called as sumloop 1 2 3 4 5; the caption says you had to leave the ordinary notation to write this, and the idiom is two characters, plus-slash. Right, q: x colon 1 2 3 4 5, r colon 0, i colon 0, then one line, do count x, r plus-colon x i, i plus-colon 1, then show r; the caption says it is one line of ordinary q that looks like every other line, and the idiom is sum. The footer says: a language that lets you stay comfortable will not teach you a paradigm shift; go where the shift is unavoidable, then come back.</desc>
+  <desc id="desc">Two panels, each summing the list 1 2 3 4 5 with an explicit loop, and each printing 15. Left, J: a five-line explicit definition opened with 3 colon 0, using local assignment, a for_i. loop and a closing parenthesis on its own line, then called as sumloop 1 2 3 4 5; the caption says you had to leave the ordinary notation to write this, and the idiom is two characters, plus-slash. Right, q: x colon 1 2 3 4 5, r colon 0, i colon 0, then one line, do count x, r plus-colon x i, i plus-colon 1, then show r; the caption says it is one line of ordinary q that looks like every other line, and the idiom is sum. The footer says: a language that lets you stay comfortable will not teach you a paradigm shift; go where the loop cannot pass for ordinary code, then come back.</desc>
 
   <rect width="900" height="470" fill="#ffffff"/>
 
@@ -42,5 +42,5 @@
   <text x="492" y="332" font-size="13" font-style="italic" fill="#555555">to land. It doesn't look like a detour.</text>
   <text x="492" y="368" font-size="13" fill="#555555">The idiom: <tspan font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="15" fill="#000000">sum</tspan></text>
 
-  <text x="450" y="432" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">A language that lets you stay comfortable will not teach you a paradigm shift. Go where the shift is unavoidable, then come back.</text>
+  <text x="450" y="432" text-anchor="middle" font-size="13" font-style="italic" fill="#777777">A language that lets you stay comfortable will not teach you a paradigm shift. Go where the loop cannot pass for ordinary code, then come back.</text>
 </svg>

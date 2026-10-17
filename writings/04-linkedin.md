@@ -39,7 +39,7 @@ fails, so nothing ever pushes you toward the idiom, sum. J, the array language t
 first, allows loops too. The difference is what writing one costs you: you leave J's ordinary
 notation for five lines of visibly foreign machinery, where the idiom is two characters. That
 feeling of having wandered off is the whole case for a short detour through J. Three ideas come
-back from it: iteration is something you attach to a function (a moving window is a running total
+back from it: iteration is something you attach to a function (a moving sum is a running total
 with a width), a function can be written with no data in it, and depth is a number you choose.
 
 Two of those ideas break on the way back, and the second is the dangerous one. A mean written J's
