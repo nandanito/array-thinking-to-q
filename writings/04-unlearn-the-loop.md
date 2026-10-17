@@ -104,8 +104,8 @@ Tuesday.
 
 **That is the whole case for the laboratory.** J is no stricter than q. What it does is make the
 imperative path *feel* like what it is, where q makes it feel like home. A language that lets you
-stay comfortable will not teach you a paradigm shift. You have to go somewhere the shift cannot
-be avoided, and feel it before you come back.
+stay comfortable will not teach you a paradigm shift. You have to go somewhere the loop cannot
+pass for ordinary code, and feel that before you come back.
 
 Three things become visible over there, and two of them will betray you on the way back.
 
@@ -320,8 +320,9 @@ the text arrives as a runtime string, so the parsing happens *inside* the protec
 the only way to trap this error, and it means building code as a string on purpose, which is not a
 program anyone writes by accident.
 
-**q has no tacit forks or trains.** A parenthesised run of functions is a syntax error. What q
-wants is for you to say the composition out loud (`2f` is the float 2.0):
+**q has no tacit forks or trains.** A parenthesised run of functions does not make a new function
+in q, and the fork does not even parse. What q wants is for you to say the composition out loud
+(`2f` is the float 2.0):
 
 ```q
 avg til 5                    / 2f
@@ -401,10 +402,11 @@ one task where both arms departed from my reference was an as-of join: both set 
 task sheet expected `` `g# ``, two of q's column *attributes*, the flags a table carries about how a
 column is laid out. (I first wrote that up as both of them getting the attribute *wrong*. They didn't. The [set-attribute page](https://code.kx.com/q/ref/set-attribute/) says
 parted applies in memory as well as on disk when the data is sorted so it can be set, and both had
-sorted first.) Both arms also lost that task's correctness point, for printing one extra line. And
-a later review ran the task's "broken" input and found that the unsorted join already returned the
-right rows on that data, so the task never tested whether a model can find a sort bug at all. That
-task is a record of my instrument's defects, not evidence about models.
+sorted first.) Both arms also lost that task's correctness point, for printing an extra block, the
+table's schema, before the answer. And a later review ran the task's "broken" input and found that
+the unsorted join already returned the right rows on that data, so the task never tested whether a
+model can find a sort bug at all. That task is a record of my instrument's defects, not evidence
+about models.
 
 **J has nothing to say about sort order or attributes either.** There is no fork that teaches you
 `` `g# ``, and no rank that tells you when `` `p# `` is the better call.

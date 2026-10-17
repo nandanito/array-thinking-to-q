@@ -176,7 +176,7 @@ handing the same text to `value` as a runtime **string**, where parsing happens 
 protected call, which is a different program from anything you would write by accident.)
 
 **q has no tacit trains or forks.** A parenthesised run of functions is not a new function
-in q; it is a syntax error.
+in q, and the fork does not even parse.
 
 What q wants instead is that you say the composition out loud: name it, or use the built-in:
 
