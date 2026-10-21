@@ -7,18 +7,20 @@ Image: attach writings/figures/04/linkedin-card.png (1200×627; it is figure 1 r
 Alt text below.
 Tag: type "@KX" and pick the company page linkedin.com/company/kx-systems. J is named in plain
 text; no account is tagged for it.
-Picks up from the as-of join post (2026-10-16) in paragraph 2, but the hook (q will let you write
-the loop, and it works; that is why q cannot teach you to stop) sits inside the ~210-character
-preview. Jargon translated for readers of neither language: "a counter and a loop" rather than
-do[], "the idiom, sum" rather than sum x, the fork becomes "a mean written with no data in it",
-the adverb becomes "something you attach to a function", rank becomes "depth as a number you
-choose", and "3-period moving average" stays in English.
+Rewritten 2026-10-21 for a reader who skims: short paragraphs, one idea each, and no word the post
+does not explain. The hook (q will let you write the loop, and it works; that is why q cannot
+teach you to stop) sits inside the ~210-character preview. Picks up from the as-of join post
+(2026-10-16) in one sentence at the top of paragraph 2. The three ideas the detour sends back are
+counted, not named (the article names them); "the idiom" became "the one-word version, sum" and
+"the array version"; the fork became "a mean written J's way, with no data mentioned"; the eval's
+"both arms" became "with and without the plugin".
 Every claim is from the article: the loop that works and reads like ordinary q; J allows loops but
-makes them feel foreign (five lines of machinery where the idiom is two characters); the three
-ideas; the fork does not parse (loud, cannot ship); the moving-average windows (four results in J,
-six in q, two positions early, no error); the eval's three loop-transliteration tasks, both arms
-solved them, and the article's own caveat that the eval was underpowered; written for people who
-have never read q or J; every snippet copied from a lesson that runs in CI.
+makes them feel foreign (five lines of visibly foreign machinery where the alternative is two
+characters); three ideas come back and two break; the fork does not parse and cannot ship; the
+moving-average windows (four results in J, six in q, two positions early, no error); the eval's
+three loop-transliteration tasks, both conditions solved all three, and the article's own caveat
+that the eval was underpowered; written for people who have never read q or J; every snippet
+copied from a lesson that runs in CI.
 No speed or performance wording (Clause 9 caution, same as the article).
 
 Alt text:
@@ -32,25 +34,27 @@ Here is a perfectly good q program. It sums a list with a counter and a loop, an
 will still be correct next year, in production. That is the problem, and it is what article 4 of my
 array-thinking series is about.
 
-Last week I took q's as-of join apart and found the part nothing checks: a sort. This article is
-about a quieter gap. q, the language of @KX's kdb+, has loops, counters and add-and-assign, so every
-reflex you bring from Python or Java has somewhere to land, and the answers come out right. Nothing
-fails, so nothing ever pushes you toward the idiom, sum. J, the array language the curriculum visits
-first, allows loops too. The difference is what writing one costs you: you leave J's ordinary
-notation for five lines of visibly foreign machinery, where the idiom is two characters. That
-feeling of having wandered off is the whole case for a short detour through J. Three ideas come
-back from it: iteration is something you attach to a function (a moving sum is a running total
-with a width), a function can be written with no data in it, and depth is a number you choose.
+Last week's article took q's as-of join apart. This one is about a quieter gap. q, the language of
+@KX's kdb+, has loops, counters and add-and-assign. Every reflex you bring from Python or Java has
+somewhere to land, and the answers come out right. Nothing fails, so nothing ever nudges you toward
+the one-word version, sum.
 
-Two of those ideas break on the way back, and the second is the dangerous one. A mean written J's
-way, with no data in it, does not parse in q at all: loud, and it cannot ship. The 3-period moving
-average ships. Of six numbers, J returns four averages, complete windows only; q returns six,
-ramping up through the partial windows at the start. Neither is wrong, both are called the same
-thing, and if you read q's first value as the first full window you are two positions early, with
-no error. The article also looks at what my eval of KX's q plugin says about whether the shift
-takes (both arms fixed all three loop-transliteration tasks, and why that carries little weight).
-It is written for people who have never read q or J, and every snippet is copied from a lesson
-that runs in CI.
+J, the array language the series visits before q, allows loops too. The difference is what a loop
+costs you there: you leave J's ordinary notation for five lines of visibly foreign machinery, where
+the array version is two characters. That feeling of having wandered off is the whole case for a
+short detour through J before q.
+
+The detour sends three habits back with you, and two of them break on the way home. One breaks
+loudly: a mean written J's way, with no data mentioned, does not even parse in q, so it can never
+ship. One breaks silently: a 3-period moving average of six numbers gives four results in J,
+complete windows only, and six in q, which ramps up through partial windows at the start. Both are
+right, both are called the same thing, and if you read q's first value as a full window you are two
+positions early, with no error.
+
+The article also asks whether the shift actually takes, using my earlier eval of KX's q plugin:
+with and without the plugin, all three loop-to-array tasks were solved, and the article explains
+why that carries little weight. It is written for people who have never read q or J, and every
+snippet is copied from a lesson that runs in CI.
 
 https://nandan.me/writing/unlearn-the-loop/
 
