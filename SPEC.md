@@ -194,7 +194,8 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   DECISION (provisional): design/semantics framing, NO benchmark numbers; revisit authorization
   later if wanted. See docs/licensing-notes.md.
 - **M4 — J laboratory (wk 6–7):** Part I + transition chapter verified.
-  → Article 4 "Unlearn the loop: what J shows that q hides". **WAS the at-risk article** — least
+  → Article 4 "Unlearn the loop: what J shows that q hides" (published 2026-10-21). **WAS the at-risk
+  article** — least
   novelty for the author (he already knows J), and its mitigation ("draft it during M1 while
   enthusiasm is high") was missed. Mitigated instead by drafting it at M2-close, before its
   milestone exists; that is what makes it safe for the J laboratory to run *after* the q core.
@@ -214,7 +215,8 @@ already delivers it → publish the comparison, author nothing. Both are real fi
   interleaved order, nothing task-specific typed into the scripts), self-tests every gate on each PR
   (`make verify-harness`), and was proven from a clean checkout against another vendor's plugin
   (anthropics/skills `document-skills`), which found four more defects, all fixed. M2's numbers
-  still re-derive. The article is drafted and publishes after "Unlearn the loop". Tagged `v1`.
+  still re-derive. The article is drafted and is the last one unpublished ("Unlearn the loop"
+  went out 2026-10-21). Tagged `v1`.
 
 **M3/M4 were swapped on 2026-07-28** (they read J-laboratory-then-q-core). The old order predates
 J's demotion from co-star to illustrative laboratory, and it contradicts both CLAUDE.md's build

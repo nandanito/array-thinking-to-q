@@ -1,6 +1,7 @@
 # Unlearn the loop: what J shows that q hides
 
-*Article 4 of 5, draft. Its milestone, M4 (the J laboratory), is done and verifies.*
+*Article 4 of 5, published 2026-10-21 on nandan.me, which is the canonical version:
+<https://nandan.me/writing/unlearn-the-loop/>.*
 
 > **Provenance.** Every q and J snippet below is copied from the curriculum's
 > [J laboratory](https://github.com/nandanito/array-thinking-to-q/tree/main/lessons/00-j-laboratory/)

@@ -67,7 +67,8 @@ runs end-to-end, and the eval verify-harness exists.
 4. Part I (J laboratory) compression pass + transition chapter. (SPEC's **M4**.) **DONE 2026-09-27**:
    Part I is one read-along lesson (`lessons/00-j-laboratory/`), the transition chapter is
    `lessons/00-transition/`, and "Unlearn the loop" is un-gated: every block is quoted from them, except
-   lesson 01's exempt parse-error transcript.
+   lesson 01's exempt parse-error transcript. The article is published (`writings/04-unlearn-the-loop.md`,
+   live on nandan.me 2026-10-21).
 5. CI: `j-verify.yml` (blocking, on PR; it also runs `make verify-writings` and
    `make verify-harness`, both pure Python) and `q-verify.yml` (nightly + manual, trusted branches
    only, license key from repo secret; failures notify, never block). **`q-verify.yml` now exists
@@ -99,9 +100,9 @@ licensing article was cut 2026-09-27 (off-thesis; findings live in docs/licensin
 rest renumbered — so refer to articles by NAME in docs, not number (a renumber has misdirected a
 number-based reference before). The eval article reported the real result (it was negative — DONE,
 2026-07-27). "Unlearn the loop" was the low-novelty one whose "draft it early" mitigation was
-missed; drafting it out of milestone order closed that, and M4 un-gated it (2026-09-27).
-The final article, "What compounds", is PACKAGING of docs/COMPOUND.md (drafted 2026-09-28; publishes
-after "Unlearn the loop"), so keep appending to COMPOUND.md.
+missed; drafting it out of milestone order closed that, M4 un-gated it (2026-09-27), and it
+published 2026-10-21. The final article, "What compounds", is PACKAGING of docs/COMPOUND.md (drafted
+2026-09-28; the only article still unpublished), so keep appending to COMPOUND.md.
 Publishing/syndication steps live in RELEASE-CHECKLIST.md, not here and not in SPEC.md.
 **Never use "learning in public"** in any title, heading, social post or hashtag for this series:
 the framing is a practitioner publishing verified work, misses included. Published articles take
