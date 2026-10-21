@@ -1,7 +1,7 @@
 <!--
 LinkedIn post for article 4, "Unlearn the loop" (RELEASE-CHECKLIST: "2–3 paragraph professional framing").
-Scheduled: 2026-10-21 08:30 CEST (the article goes live on nandan.me from about 07:15 CEST, at the
-canonical URL below, slug unlearn-the-loop; the sync PR after publication confirms it).
+The article is live at https://nandan.me/writing/unlearn-the-loop/ (published 2026-10-21).
+Slot: 2026-10-21 08:30 CEST, as the as-of join post had (2026-10-16).
 Image: attach writings/figures/04/linkedin-card.png (1200×627; it is figure 1 rendered with
 `rsvg-convert -w 1200`, and the committed PNG is byte-identical to that render, checked 2026-10-17).
 Alt text below.

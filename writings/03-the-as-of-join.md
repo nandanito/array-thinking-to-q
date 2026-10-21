@@ -419,7 +419,7 @@ chose; that takes an input the fixture was never built to contain.
 - **You can argue co-design without benchmarks.** Look at which edge cases a tool's primitives
   settle for free, and which ones it leaves to you.
 
-**Next in the series:** "Unlearn the loop: what J shows that q hides".
+**Next in the series:** ["Unlearn the loop: what J shows that q hides"](https://nandan.me/writing/unlearn-the-loop/).
 
 ---
 

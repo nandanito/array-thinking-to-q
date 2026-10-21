@@ -1173,3 +1173,51 @@ does. The light review pass at the end caught CLAUDE.md's build order still call
 drafted: the compound step's re-read of the governing docs, which this entry's author had skipped,
 done by a reviewer instead. SPEC's article line records the date too, as article 2's does.
 
+
+## 2026-10-21: "Unlearn the loop" published
+
+Live at nandan.me/writing/unlearn-the-loop/ (gh-pages 330cf20), under the title SPEC recorded, after
+the two-reader review of 2026-10-17, an adversarial pass over the article, its three figures and its
+posts, and a light pass over the publication PR. The repo copy, the posts, the series list in "Array
+thinking, all the way to q" and the as-of join's "Next in the series" line take the live URL in the
+same PR as this entry.
+
+**A sentence about what the parser rejects is a claim about code the lesson does not run.** The
+article, and lesson 01 before it, said a parenthesised run of functions "is a syntax error" in q.
+The fork `(+/ % #)` does fail to parse, and that transcript is the one exempt block; but
+`(sum max count) 1 2 3` parses and returns 3 (q reads it as `max` applied to two function atoms,
+which yields `count`). The sentence generalised from the one example the lesson shows. The
+adversarial pass found it; running q found the counterexample in one line. Same shape as the as-of
+join's `I.` claim: prose beside a verified block has no gate, so a claim about the grammar gets run
+before it ships, with the smallest expression that could break it.
+
+**An article can contradict itself across sections, and a per-section reading never sees it.** The
+laboratory section argued that J does not forbid loops; the closing argument sent the reader
+"somewhere the shift cannot be avoided". Each sentence read fine in place. Figure 1's footer
+carried the second one, so the fix had to reach the SVG and the card. A review that reads the whole
+piece for its argument is a different review from the two-reader pass, and it is the one that
+catches this.
+
+**Alt text written from memory describes the figure the author remembers.** Figure 3's alt text
+described a caret under the fork, which the article's transcript shows and the figure never drew,
+and put J's values in the wrong row. Alt text is checked against the SVG's text elements, in
+order, and against nothing else. The same pass caught an eval detail restated from memory ("one
+extra line" for a six-line schema block) that the eval record and the eval article had right:
+quote the record.
+
+**Text review does not see layout.** Both passes read figure 3's SVG and accepted an arrow that
+crossed a 16-pixel gap as a shallow diagonal, off-centre, head on the border of the target box. It
+was seen in the local build at reading size, after the reviews. Serving the site locally with
+`--future` and looking at each figure where it will sit is a gate the text checks cannot replace;
+the fix (wider rows, a curve between box centres) took one commit and changed no text.
+
+**A diff review covers the PR that carries the change, not the next one.** The plan put the light
+pass on the post-publication sync PR and assumed it would also cover the publication PR's
+rewrites; it would not, since the sync PR diffs against a main that already contains them. Run
+the light pass on the PR whose diff holds the change, last, once. There it found nothing and
+re-ran the q counterexample itself.
+
+Also on this branch: the commit signer refused mid-session after the password manager had
+updated ("failed to fill whole buffer"); the staged state in both repos waited for the desktop
+app to be unlocked, and nothing was retried in parallel. The lesson 01 wording fix went out in the
+publication PR, beyond the publishing brief and flagged as such.

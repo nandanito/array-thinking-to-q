@@ -3,8 +3,7 @@ Social posts for article 4, "Unlearn the loop" (RELEASE-CHECKLIST: X + Bluesky +
 Each is a single post, the shape the eval and as-of join posts settled on: the personal X account
 has Premium (long posts), and Bluesky's 300-character cap is met by one short post instead of a
 thread.
-Scheduled: 2026-10-21 (the article goes live on nandan.me from about 07:15 CEST at the canonical
-URL below, slug unlearn-the-loop; the sync PR after publication confirms it).
+The article is live at https://nandan.me/writing/unlearn-the-loop/ (published 2026-10-21).
 Each picks up from the as-of join posts (2026-10-16), but the hook (q will let you write the loop,
 and it works; that is why q cannot teach you to stop) comes first. Plain language for readers of
 neither language: "a counter, a loop, an accumulator" rather than do[], the fork is glossed as
